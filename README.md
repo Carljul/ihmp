@@ -129,3 +129,13 @@ meta = {
 
 DATABASE SCHEMA LINK: (GOOGLE DOCS)
 https://docs.google.com/document/d/1UQ4LriTQrrvKfdAdIRtXFnws_Ahz9vEAzZUsEmtDnuw/edit?usp=sharing
+
+
+<!--
+Software Developer Agreement
+added by Jul
+date added: May 13, 2021
+-->
+
+Software Developer Agreement
+https://docs.google.com/document/d/1QECWJZkKJkxefsHrKBkzPI6nl6XyAev-gCGGAkxbGzI/edit?usp=sharing
