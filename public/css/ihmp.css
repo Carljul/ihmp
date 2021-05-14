@@ -1,0 +1,31 @@
+body, html {
+    height: 100%;
+}
+    
+/* Logo */
+.logo{
+    width: 24%;
+    height: 24%;
+}
+
+
+.parallax-container {
+    height: 100%;
+}
+
+.bg{
+    background-image: url('../storage/bg/bg.jpg');
+    
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.loginInputs{
+    background-color: white !important;
+    border-radius: 50px !important;
+}
