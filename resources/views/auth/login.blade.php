@@ -7,8 +7,9 @@
     <div class="section row">
         <div class="col s12 m12 vertical-center">
             <div class="center">
-                <img src="{{ asset('storage/logo/ihm.jpg') }}" class="responsive-img circle logo" alt="Logo"/>
-                <h4 class="systemName">IHMP - SOR</h4>
+                <h4 class="systemName">{{ setting('site.title') }}</h4>
+                <img src="{{ asset('storage/') }}/{{setting('site.logo')}}" class="responsive-img circle logo" alt="Logo"/>
+                <h4 class="systemName">{{ setting('site.title') }}</h4>
             </div>
             <div class="container">
                 <div class="col s12 m4"></div>
