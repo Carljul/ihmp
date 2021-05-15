@@ -1,11 +1,33 @@
 body, html {
     height: 100%;
+    background-color: #F2F2F2;
 }
     
+.loginBtn {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
 /* Logo */
 .logo{
-    width: 24%;
-    height: 24%;
+    width: 15vw;
+    height: 15vh;
+    -webkit-box-shadow: 1px 1px 4px 4px rgba(3,151,242,0.31); 
+    box-shadow: 1px 1px 4px 4px rgba(3,151,242,0.31);
 }
 
 
@@ -28,4 +50,40 @@ body, html {
 .loginInputs{
     background-color: white !important;
     border-radius: 50px !important;
+}
+
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 45%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.border-radius-100px{
+    border-radius: 100px;
+}
+
+
+
+.box {
+    height:50%;
+    background: url('../storage/bg/ihmp.jpg') center/cover;
+    -webkit-mask:
+      radial-gradient(var(--r1,100%) var(--r2,50%) at top   ,white 79.5%,transparent 80%) top left,
+      radial-gradient(var(--r1,100%) var(--r2,50%) at bottom,transparent 79.5%,white 80%) top center,
+      radial-gradient(var(--r1,100%) var(--r2,50%) at top   ,white 79.5%,transparent 80%) top right;
+    mask:
+      radial-gradient(var(--r1,100%) var(--r2,50%) at top   ,white 79.5%,transparent 80%) top left,
+      radial-gradient(var(--r1,100%) var(--r2,50%) at bottom,transparent 79.5%,white 80%) top center,
+      radial-gradient(var(--r1,100%) var(--r2,50%) at top   ,white 79.5%,transparent 80%) top right;
+     /* adjust the 150% to control the covered area, the bigger the value the bigger the area will be*/
+    -webkit-mask-size:33.4% 150%;
+    -webkit-mask-repeat:no-repeat;
+    mask-size:33.4% 150%;
+    mask-repeat:no-repeat;
 }
