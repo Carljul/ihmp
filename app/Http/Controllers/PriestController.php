@@ -15,17 +15,16 @@ class PriestController extends Controller
     public function index()
     {
         //return all data for Priest table
-        return Priest::all();
-    }
+        $result = Priest::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        //declaring our return response
+        $response = [
+            'data' => $result,
+            'status' => 200, //OK
+        ];
+
+        //returning json response
+        return response()->json($response);
     }
 
     /**
@@ -36,7 +35,31 @@ class PriestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //creating our payload here...
+        $payload = [
+            "user_id" => $request->user_id,
+            "latitude"=> $request->latitude,
+            "longitude"=> $request->longitude,
+            "status"=> $request->status,
+            "time_created"=> $this->customCurrentTime(),
+            'day_created' => $this->customCurrentDay(),
+            'month_created' => $this->customCurrentMonth(),
+            'year_created' => $this->customCurrentYear(),
+            "created_at" => $this->customCurrentDate(),
+            "updated_at" => $this->customCurrentDate()
+        ];
+
+        //inserting the new resource...
+        $result = Priest::insert($payload);
+
+        //declaring our return response
+        $response = [
+            'data' => $result,
+            'status' => 201, //CREATED
+        ];
+
+        //return json response
+        return response()->json($response);
     }
 
     /**
@@ -48,18 +71,16 @@ class PriestController extends Controller
     public function show($id)
     {
         //return specific row using id
-        return Article::find($id);
-    }
+        $result = Priest::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Priest  $priest
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Priest $priest)
-    {
-        //
+        //declaring our return response
+        $response = [
+            'data' => $result,
+            'status' => 200, //OK
+        ];
+
+        //return json response
+        return response()->json($response);
     }
 
     /**
@@ -69,9 +90,28 @@ class PriestController extends Controller
      * @param  \App\Priest  $priest
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Priest $priest)
+    public function update(Request $request, Priest $id)
     {
-        //
+        //creating our payload here...
+        $payload = [
+            "user_id" => $request->user_id,
+            "latitude"=> $request->latitude,
+            "longitude"=> $request->longitude,
+            "status"=> $request->status,
+        ];
+
+        //inserting the new resource...
+        $result = Priest::find($id);
+        $result->update($payload);
+
+        //declaring our return response
+        $response = [
+            'data' => $result,
+            'status' => 200, //OK
+        ];
+
+        //return json response
+        return response()->json($response);
     }
 
     /**

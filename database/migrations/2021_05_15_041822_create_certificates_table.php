@@ -21,6 +21,7 @@ class CreateCertificatesTable extends Migration
             $table->string('certificate_type');
             $table->integer('priest_id');
             $table->longText('meta');
+            $table->integer('is_deleted');
             $table->integer('created_by');
             $table->string('created_date');
             $table->timestamps();

@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 // 202 : Accepted -> soft delete
 // 400 : Bad request -> syntax error from client, size too large
 // 401 : Unauthorized -> if access token mismatched
-// 500	: ISE -> internal server error, query error
+// 500 : ISE -> internal server error, query error
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
