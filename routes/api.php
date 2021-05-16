@@ -32,3 +32,6 @@ Route::resource('priest', 'PriestController');
 
 // controller for Template Model
 Route::resource('template', 'TemplateController');
+
+// controller for AccessToken Model
+Route::resource('accesstoken', 'AccessTokenController');

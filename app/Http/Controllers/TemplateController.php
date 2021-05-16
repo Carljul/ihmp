@@ -65,6 +65,15 @@ class TemplateController extends Controller
         //return specific row using id
         $result = Template::find($id);
 
+        //if id is not found
+        if(!$result){
+            //declaring our return response
+            $response = $this->customApiResponse([], 404); //ID NOT FOUND
+
+            //return json response
+            return response()->json($response);
+        }
+
         //declaring our return response
         $response = $this->customApiResponse($result, 200); //OK
 

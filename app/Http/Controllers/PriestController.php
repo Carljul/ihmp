@@ -20,10 +20,7 @@ class PriestController extends Controller
         $result = Priest::all();
 
         //declaring our return response
-        $response = [
-            'data' => $result,
-            'status' => 200, //OK
-        ];
+        $response = $this->customApiResponse($result, 200); //OK
 
         //returning json response
         return response()->json($response);
@@ -52,10 +49,7 @@ class PriestController extends Controller
         $result = Priest::insert($payload);
 
         //declaring our return response
-        $response = [
-            'data' => $result,
-            'status' => 201, //CREATED
-        ];
+        $response = $this->customApiResponse($result, 201); //CREATED
 
         //return json response
         return response()->json($response);
@@ -72,11 +66,17 @@ class PriestController extends Controller
         //return specific row using id
         $result = Priest::find($id);
 
+        //if id is not found
+        if(!$result){
+            //declaring our return response
+            $response = $this->customApiResponse([], 404); //ID NOT FOUND
+
+            //return json response
+            return response()->json($response);
+        }
+
         //declaring our return response
-        $response = [
-            'data' => $result,
-            'status' => 200, //OK
-        ];
+        $response = $this->customApiResponse($result, 200); //OK
 
         //return json response
         return response()->json($response);
