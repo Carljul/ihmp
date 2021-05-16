@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Priest;
 use Illuminate\Http\Request;
+use App\Traits\GlobalFunction;
 
 class PriestController extends Controller
 {
+    use GlobalFunction;
     /**
      * Display a listing of the resource.
      *
@@ -37,14 +39,11 @@ class PriestController extends Controller
     {
         //creating our payload here...
         $payload = [
-            "user_id" => $request->user_id,
-            "latitude"=> $request->latitude,
-            "longitude"=> $request->longitude,
-            "status"=> $request->status,
-            "time_created"=> $this->customCurrentTime(),
-            'day_created' => $this->customCurrentDay(),
-            'month_created' => $this->customCurrentMonth(),
-            'year_created' => $this->customCurrentYear(),
+            "firstname" => $request->firstname,
+            "middlename"=> $request->middlename,
+            "lastname"=> $request->lastname,
+            "prefix"=> $request->prefix,
+            "is_deleted"=> $request->is_deleted,
             "created_at" => $this->customCurrentDate(),
             "updated_at" => $this->customCurrentDate()
         ];
@@ -90,25 +89,35 @@ class PriestController extends Controller
      * @param  \App\Priest  $priest
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Priest $id)
+    public function update(Request $request)
     {
         //creating our payload here...
         $payload = [
-            "user_id" => $request->user_id,
-            "latitude"=> $request->latitude,
-            "longitude"=> $request->longitude,
-            "status"=> $request->status,
+            "firstname" => $request->firstname,
+            "middlename"=> $request->middlename,
+            "lastname"=> $request->lastname,
+            "prefix"=> $request->prefix,
+            "is_deleted"=> $request->is_deleted,
+            "updated_at" => $this->customCurrentDate()
         ];
 
-        //inserting the new resource...
-        $result = Priest::find($id);
+        //update the resource...
+        $result = Priest::find($request->id);
+
+        //if there is no existsing data to update
+        if(!$result){
+            //declaring our return response
+            $response = $this->customApiResponse([], 404); //ID NOT FOUND
+
+            //return json response
+            return response()->json($response);
+        }
+
+        //then proceed with the update
         $result->update($payload);
 
         //declaring our return response
-        $response = [
-            'data' => $result,
-            'status' => 200, //OK
-        ];
+        $response = $this->customApiResponse($result, 200); //OK
 
         //return json response
         return response()->json($response);
@@ -117,11 +126,36 @@ class PriestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Priest  $priest
+     * @param  \App\Priest  $Priest
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Priest $priest)
+    public function destroy(Request $request)
     {
-        //
+        //creating our payload here...
+        $payload = [
+            "is_deleted"=> $request->is_deleted,
+            "updated_at" => $this->customCurrentDate()
+        ];
+
+        //soft delete...
+        $result = Priest::find($request->id);
+
+        //if there is no existsing data to soft delete
+        if(!$result){
+            //declaring our return response
+            $response = $this->customApiResponse([], 404); //ID NOT FOUND
+
+            //return json response
+            return response()->json($response);
+        }
+
+        //then proceed with soft delete
+        $result->update($payload);
+
+        //declaring our return response
+        $response = $this->customApiResponse($result, 200); //OK
+
+        //return json response
+        return response()->json($response);
     }
 }

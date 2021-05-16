@@ -27,4 +27,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// controller for Priest Model
 Route::resource('priest', 'PriestController');
+
+// controller for Template Model
+Route::resource('template', 'TemplateController');
