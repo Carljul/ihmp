@@ -36,54 +36,50 @@ class AccessTokenController extends Controller
     public function store(Request $request)
     {
 
-        //check if user_id exists...
-        $result = DB::table("access_tokens")->where('user_id', $request->user_id)->get();
-        // $result = AccessToken::where('user_id', $request->user_id)->get();
+        //count the existing user_id...
+        $result = AccessToken::where('user_id', $request->user_id)->get();
 
         //if there is no existsing user_id then insert
-        if($result){
-            return $result."exists";
-
-            // STUCKED OVER HERE..........................
-
-            // //creating our payload here...
-            // $payload = [
-            //     "user_id" => $request->user_id,
-            //     "token_key" => $request->token_key,
-            //     "token_status"=> $request->token_status,
-            //     "expiration"=> $request->expiration,
-            //     "created_at" => $this->customCurrentDate(),
-            //     "updated_at" => $this->customCurrentDate()
-            // ];
+        if(count($result) === 0){
+            //creating our payload here...
+            $payload = [
+                "user_id" => $request->user_id,
+                "token_key" => $request->token_key,
+                "token_status"=> $request->token_status,
+                "expiration"=> $request->expiration,
+                "created_at" => $this->customCurrentDate(),
+                "updated_at" => $this->customCurrentDate()
+            ];
             
-            // //inserting the new resource...
-            // $result = AccessToken::updateOrInsert($payload);
+            //inserting the new resource...
+            $result = AccessToken::updateOrInsert($payload);
 
-            // //declaring our return response
-            // $response = $this->customApiResponse($result, 201); //CREATED
+            //declaring our return response
+            $response = $this->customApiResponse($result, 201); //CREATED
 
-            // //return json response
-            // return response()->json($response);
+            //return json response
+            return response()->json($response);
         }else {
+            //creating our payload here...
+            $payload = [
+                "token_key" => $request->token_key,
+                "token_status"=> $request->token_status,
+                "expiration"=> $request->expiration,
+                "created_at" => $this->customCurrentDate(),
+                "updated_at" => $this->customCurrentDate()
+            ];
 
-            return $result."not exists";
-            // //creating our payload here...
-            // $payload = [
-            //     "token_key" => $request->token_key,
-            //     "token_status"=> $request->token_status,
-            //     "expiration"=> $request->expiration,
-            //     "created_at" => $this->customCurrentDate(),
-            //     "updated_at" => $this->customCurrentDate()
-            // ];
+            //find the user_id to be update
+            $resultResponse = AccessToken::where('user_id', $request->user_id);
 
-            // //update the resource...
-            // $result->update($payload);
+            //update the resource...
+            $resultResponse->update($payload);
 
-            // //declaring our return response
-            // $response = $this->customApiResponse($result, 200); //OK
+            //declaring our return response
+            $response = $this->customApiResponse($result, 200); //OK
 
-            // //return json response
-            // return response()->json($response);
+            //return json response
+            return response()->json($response);
         }
     }
 
