@@ -41,6 +41,15 @@ trait GlobalFunction {
         return Carbon::now("Asia/Kuala_Lumpur")->format('y');
     }
 
+    //create a function that will globally set 12 hours to expiration
+    public function customAddHours($hr){
+        $currentTime = Carbon::now("Asia/Kuala_Lumpur")->format('y-m-d H:i:s');
+        $currentTime = Carbon::parse($currentTime);
+        $currentTime->addHours($hr);
+
+        return $currentTime;
+    }
+
     //create a global function that will return the api response
     public function customApiResponse($data, $status){
         return [ 'data' => $data, 'status' => $status];
