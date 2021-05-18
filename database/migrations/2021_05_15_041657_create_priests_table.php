@@ -19,7 +19,7 @@ class CreatePriestsTable extends Migration
             $table->string('middlename');
             $table->string('lastname');
             $table->string('prefix');
-            $table->integer('is_deleted');
+            $table->boolean('is_deleted');
             $table->timestamps();
         });
     }

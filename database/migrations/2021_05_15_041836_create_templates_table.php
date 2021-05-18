@@ -18,7 +18,7 @@ class CreateTemplatesTable extends Migration
             $table->string('template_type');
             $table->longText('content');
             $table->integer('is_template');
-            $table->integer('is_deleted');
+            $table->boolean('is_deleted');
             $table->timestamps();
         });
     }
