@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 15, 2021 at 09:01 AM
+-- Generation Time: May 18, 2021 at 04:24 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -51,7 +51,7 @@ CREATE TABLE `certificates` (
   `certificate_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `priest_id` int(11) NOT NULL,
   `meta` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_deleted` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL,
   `created_by` int(11) NOT NULL,
   `created_date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -136,9 +136,9 @@ CREATE TABLE `data_types` (
 --
 
 INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `display_name_plural`, `icon`, `model_name`, `policy_name`, `controller`, `description`, `generate_permissions`, `server_side`, `details`, `created_at`, `updated_at`) VALUES
-(1, 'users', 'users', 'User', 'Users', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController', '', 1, 0, NULL, '2021-05-12 22:45:56', '2021-05-12 22:45:56'),
-(2, 'menus', 'menus', 'Menu', 'Menus', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', NULL, '', '', 1, 0, NULL, '2021-05-12 22:45:56', '2021-05-12 22:45:56'),
-(3, 'roles', 'roles', 'Role', 'Roles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', NULL, 'TCG\\Voyager\\Http\\Controllers\\VoyagerRoleController', '', 1, 0, NULL, '2021-05-12 22:45:56', '2021-05-12 22:45:56');
+(1, 'users', 'users', 'User', 'Users', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController', '', 1, 0, NULL, '2021-05-18 06:13:01', '2021-05-18 06:13:01'),
+(2, 'menus', 'menus', 'Menu', 'Menus', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', NULL, '', '', 1, 0, NULL, '2021-05-18 06:13:01', '2021-05-18 06:13:01'),
+(3, 'roles', 'roles', 'Role', 'Roles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', NULL, 'TCG\\Voyager\\Http\\Controllers\\VoyagerRoleController', '', 1, 0, NULL, '2021-05-18 06:13:01', '2021-05-18 06:13:01');
 
 -- --------------------------------------------------------
 
@@ -173,7 +173,7 @@ CREATE TABLE `menus` (
 --
 
 INSERT INTO `menus` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '2021-05-12 22:45:57', '2021-05-12 22:45:57');
+(1, 'admin', '2021-05-18 06:13:01', '2021-05-18 06:13:01');
 
 -- --------------------------------------------------------
 
@@ -202,17 +202,17 @@ CREATE TABLE `menu_items` (
 --
 
 INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class`, `color`, `parent_id`, `order`, `created_at`, `updated_at`, `route`, `parameters`) VALUES
-(1, 1, 'Dashboard', '', '_self', 'voyager-boat', NULL, NULL, 1, '2021-05-12 22:45:57', '2021-05-12 22:45:57', 'voyager.dashboard', NULL),
-(2, 1, 'Media', '', '_self', 'voyager-images', NULL, NULL, 5, '2021-05-12 22:45:57', '2021-05-12 22:45:57', 'voyager.media.index', NULL),
-(3, 1, 'Users', '', '_self', 'voyager-person', NULL, NULL, 3, '2021-05-12 22:45:57', '2021-05-12 22:45:57', 'voyager.users.index', NULL),
-(4, 1, 'Roles', '', '_self', 'voyager-lock', NULL, NULL, 2, '2021-05-12 22:45:57', '2021-05-12 22:45:57', 'voyager.roles.index', NULL),
-(5, 1, 'Tools', '', '_self', 'voyager-tools', NULL, NULL, 9, '2021-05-12 22:45:57', '2021-05-12 22:45:57', NULL, NULL),
-(6, 1, 'Menu Builder', '', '_self', 'voyager-list', NULL, 5, 10, '2021-05-12 22:45:57', '2021-05-12 22:45:57', 'voyager.menus.index', NULL),
-(7, 1, 'Database', '', '_self', 'voyager-data', NULL, 5, 11, '2021-05-12 22:45:57', '2021-05-12 22:45:57', 'voyager.database.index', NULL),
-(8, 1, 'Compass', '', '_self', 'voyager-compass', NULL, 5, 12, '2021-05-12 22:45:58', '2021-05-12 22:45:58', 'voyager.compass.index', NULL),
-(9, 1, 'BREAD', '', '_self', 'voyager-bread', NULL, 5, 13, '2021-05-12 22:45:58', '2021-05-12 22:45:58', 'voyager.bread.index', NULL),
-(10, 1, 'Settings', '', '_self', 'voyager-settings', NULL, NULL, 14, '2021-05-12 22:45:58', '2021-05-12 22:45:58', 'voyager.settings.index', NULL),
-(11, 1, 'Hooks', '', '_self', 'voyager-hook', NULL, 5, 13, '2021-05-12 22:46:00', '2021-05-12 22:46:00', 'voyager.hooks', NULL);
+(1, 1, 'Dashboard', '', '_self', 'voyager-boat', NULL, NULL, 1, '2021-05-18 06:13:01', '2021-05-18 06:13:01', 'voyager.dashboard', NULL),
+(2, 1, 'Media', '', '_self', 'voyager-images', NULL, NULL, 5, '2021-05-18 06:13:01', '2021-05-18 06:13:01', 'voyager.media.index', NULL),
+(3, 1, 'Users', '', '_self', 'voyager-person', NULL, NULL, 3, '2021-05-18 06:13:01', '2021-05-18 06:13:01', 'voyager.users.index', NULL),
+(4, 1, 'Roles', '', '_self', 'voyager-lock', NULL, NULL, 2, '2021-05-18 06:13:01', '2021-05-18 06:13:01', 'voyager.roles.index', NULL),
+(5, 1, 'Tools', '', '_self', 'voyager-tools', NULL, NULL, 9, '2021-05-18 06:13:01', '2021-05-18 06:13:01', NULL, NULL),
+(6, 1, 'Menu Builder', '', '_self', 'voyager-list', NULL, 5, 10, '2021-05-18 06:13:01', '2021-05-18 06:13:01', 'voyager.menus.index', NULL),
+(7, 1, 'Database', '', '_self', 'voyager-data', NULL, 5, 11, '2021-05-18 06:13:01', '2021-05-18 06:13:01', 'voyager.database.index', NULL),
+(8, 1, 'Compass', '', '_self', 'voyager-compass', NULL, 5, 12, '2021-05-18 06:13:01', '2021-05-18 06:13:01', 'voyager.compass.index', NULL),
+(9, 1, 'BREAD', '', '_self', 'voyager-bread', NULL, 5, 13, '2021-05-18 06:13:01', '2021-05-18 06:13:01', 'voyager.bread.index', NULL),
+(10, 1, 'Settings', '', '_self', 'voyager-settings', NULL, NULL, 14, '2021-05-18 06:13:02', '2021-05-18 06:13:02', 'voyager.settings.index', NULL),
+(11, 1, 'Hooks', '', '_self', 'voyager-hook', NULL, 5, 13, '2021-05-18 06:13:02', '2021-05-18 06:13:02', 'voyager.hooks', NULL);
 
 -- --------------------------------------------------------
 
@@ -254,10 +254,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (21, '2018_03_14_000000_add_details_to_data_types_table', 1),
 (22, '2018_03_16_000000_make_settings_value_nullable', 1),
 (23, '2019_08_19_000000_create_failed_jobs_table', 1),
-(24, '2021_05_15_041657_create_priests_table', 2),
-(25, '2021_05_15_041759_create_access_tokens_table', 2),
-(26, '2021_05_15_041822_create_certificates_table', 2),
-(27, '2021_05_15_041836_create_templates_table', 2);
+(24, '2021_05_15_041657_create_priests_table', 1),
+(25, '2021_05_15_041759_create_access_tokens_table', 1),
+(26, '2021_05_15_041822_create_certificates_table', 1),
+(27, '2021_05_15_041836_create_templates_table', 1);
 
 -- --------------------------------------------------------
 
@@ -290,32 +290,32 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`id`, `key`, `table_name`, `created_at`, `updated_at`) VALUES
-(1, 'browse_admin', NULL, '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(2, 'browse_bread', NULL, '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(3, 'browse_database', NULL, '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(4, 'browse_media', NULL, '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(5, 'browse_compass', NULL, '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(6, 'browse_menus', 'menus', '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(7, 'read_menus', 'menus', '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(8, 'edit_menus', 'menus', '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(9, 'add_menus', 'menus', '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(10, 'delete_menus', 'menus', '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(11, 'browse_roles', 'roles', '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(12, 'read_roles', 'roles', '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(13, 'edit_roles', 'roles', '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(14, 'add_roles', 'roles', '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(15, 'delete_roles', 'roles', '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(16, 'browse_users', 'users', '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(17, 'read_users', 'users', '2021-05-12 22:45:59', '2021-05-12 22:45:59'),
-(18, 'edit_users', 'users', '2021-05-12 22:45:59', '2021-05-12 22:45:59'),
-(19, 'add_users', 'users', '2021-05-12 22:45:59', '2021-05-12 22:45:59'),
-(20, 'delete_users', 'users', '2021-05-12 22:45:59', '2021-05-12 22:45:59'),
-(21, 'browse_settings', 'settings', '2021-05-12 22:45:59', '2021-05-12 22:45:59'),
-(22, 'read_settings', 'settings', '2021-05-12 22:45:59', '2021-05-12 22:45:59'),
-(23, 'edit_settings', 'settings', '2021-05-12 22:45:59', '2021-05-12 22:45:59'),
-(24, 'add_settings', 'settings', '2021-05-12 22:45:59', '2021-05-12 22:45:59'),
-(25, 'delete_settings', 'settings', '2021-05-12 22:45:59', '2021-05-12 22:45:59'),
-(26, 'browse_hooks', NULL, '2021-05-12 22:46:00', '2021-05-12 22:46:00');
+(1, 'browse_admin', NULL, '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(2, 'browse_bread', NULL, '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(3, 'browse_database', NULL, '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(4, 'browse_media', NULL, '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(5, 'browse_compass', NULL, '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(6, 'browse_menus', 'menus', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(7, 'read_menus', 'menus', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(8, 'edit_menus', 'menus', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(9, 'add_menus', 'menus', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(10, 'delete_menus', 'menus', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(11, 'browse_roles', 'roles', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(12, 'read_roles', 'roles', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(13, 'edit_roles', 'roles', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(14, 'add_roles', 'roles', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(15, 'delete_roles', 'roles', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(16, 'browse_users', 'users', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(17, 'read_users', 'users', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(18, 'edit_users', 'users', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(19, 'add_users', 'users', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(20, 'delete_users', 'users', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(21, 'browse_settings', 'settings', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(22, 'read_settings', 'settings', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(23, 'edit_settings', 'settings', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(24, 'add_settings', 'settings', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(25, 'delete_settings', 'settings', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(26, 'browse_hooks', NULL, '2021-05-18 06:13:02', '2021-05-18 06:13:02');
 
 -- --------------------------------------------------------
 
@@ -372,7 +372,7 @@ CREATE TABLE `priests` (
   `middlename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `prefix` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_deleted` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -396,8 +396,8 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `display_name`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'Administrator', '2021-05-12 22:45:58', '2021-05-12 22:45:58'),
-(2, 'user', 'Normal User', '2021-05-12 22:45:58', '2021-05-12 22:45:58');
+(1, 'admin', 'Administrator', '2021-05-18 06:13:02', '2021-05-18 06:13:02'),
+(2, 'user', 'Normal User', '2021-05-18 06:13:02', '2021-05-18 06:13:02');
 
 -- --------------------------------------------------------
 
@@ -424,13 +424,13 @@ INSERT INTO `settings` (`id`, `key`, `display_name`, `value`, `details`, `type`,
 (1, 'site.title', 'Site Title', 'Site Title', '', 'text', 1, 'Site'),
 (2, 'site.description', 'Site Description', 'Site Description', '', 'text', 2, 'Site'),
 (3, 'site.logo', 'Site Logo', '', '', 'image', 3, 'Site'),
-(4, 'site.google_analytics_tracking_id', 'Google Analytics Tracking ID', NULL, '', 'text', 4, 'Site'),
+(4, 'site.google_analytics_tracking_id', 'Google Analytics Tracking ID', '', '', 'text', 4, 'Site'),
 (5, 'admin.bg_image', 'Admin Background Image', '', '', 'image', 5, 'Admin'),
-(6, 'admin.title', 'Admin Title', 'SOR', '', 'text', 1, 'Admin'),
-(7, 'admin.description', 'Admin Description', 'Developers admin panel', '', 'text', 2, 'Admin'),
+(6, 'admin.title', 'Admin Title', 'Voyager', '', 'text', 1, 'Admin'),
+(7, 'admin.description', 'Admin Description', 'Welcome to Voyager. The Missing Admin for Laravel', '', 'text', 2, 'Admin'),
 (8, 'admin.loader', 'Admin Loader', '', '', 'image', 3, 'Admin'),
 (9, 'admin.icon_image', 'Admin Icon Image', '', '', 'image', 4, 'Admin'),
-(10, 'admin.google_analytics_client_id', 'Google Analytics Client ID (used for admin dashboard)', NULL, '', 'text', 1, 'Admin');
+(10, 'admin.google_analytics_client_id', 'Google Analytics Client ID (used for admin dashboard)', '', '', 'text', 1, 'Admin');
 
 -- --------------------------------------------------------
 
@@ -443,7 +443,7 @@ CREATE TABLE `templates` (
   `template_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_template` int(11) NOT NULL,
-  `is_deleted` int(11) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -479,9 +479,9 @@ CREATE TABLE `users` (
   `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'users/default.png',
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 0,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `settings` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_active` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -490,9 +490,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Julcarl Selma', 'carljulamles@gmail.com', 'users/default.png', NULL, '$2y$10$SmQn0Un1mJo9QWbRIm13k.Azd56eLd32ob.DudlDsliVmmQ7MwxoG', NULL, NULL, 0, '2021-05-12 22:47:11', '2021-05-12 22:47:11'),
-(2, 1, 'Dan', 'admin@ihmp.com', 'users/default.png', NULL, '$2y$10$ZeXscjmsScGLwz8Cr3WD3.NcCs5DJ2HSwEtA1wW1K33xQ8E5WStvu', NULL, '{\"locale\":\"en\"}', 0, '2021-05-14 23:00:59', '2021-05-14 23:00:59');
+INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `is_active`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Daniel Catindoy', 'admin@ihmp.com', 'users/default.png', NULL, '$2y$10$eDjxX0WZnPBA1k/osvvegef/mFai/yzPt6rUhGO6WaDS.iklya.E2', 0, NULL, NULL, '2021-05-18 06:13:45', '2021-05-18 06:13:45'),
+(2, 1, 'Jul Carl Selma', 'carljulamles@gmail.com', 'users/default.png', NULL, '$2y$10$w9/TMeXd21O2RyJLqcnW0.R5SFX.uFjpX3QEMS4KWuE/RJeyABiOe', 0, NULL, NULL, '2021-05-18 06:16:34', '2021-05-18 06:16:34');
 
 -- --------------------------------------------------------
 
@@ -504,13 +504,6 @@ CREATE TABLE `user_roles` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `role_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `user_roles`
---
-
-INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES
-(2, 1);
 
 --
 -- Indexes for dumped tables
