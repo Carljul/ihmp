@@ -18,10 +18,12 @@
     <!-- Styles -->
     <link href="{{ asset('css/materialize.css') }}" rel="stylesheet">
     <link href="{{ asset('css/ihmp.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/datatables.css') }}" rel="stylesheet">
 
     
     <!--JavaScript at end of body for optimized loading-->
     <script src="{{ asset('js/materialize.js') }}"></script>
+    <script src="{{ asset('js/datatables.js') }}"></script>
 </head>
 <body>
     <div id="app">
@@ -46,15 +48,16 @@
             </li>
         </ul>
         <nav>
-            <div class="nav-wrapper">
+            <div class="nav-wrapper blue darken-3">
                 <a href="#!" class="brand-logo">{{ setting('site.title') }}</a>
                 <ul class="right hide-on-med-and-down">
-                <li><a href="#">Manage Records</a></li>
+                    <li><a href="#">Manage Records</a></li>
+                    <li><a href="/priests">Manage Priest</a></li>
                 @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
                     <li><a href="/admin/users">Manage Users</a></li>
                 @endif
-                <!-- Dropdown Trigger -->
-                <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <!-- Dropdown Trigger -->
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
                 </ul>
             </div>
         </nav>
@@ -70,6 +73,22 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $('.parallax').parallax();
+            $('.modal').modal();
+            $('#certificates_table').dataTable({ 
+                "bLengthChange": false,
+                "bFilter": true,
+            });
+
+            /// adding class to #certificates_table_filter
+            $('#certificates_table_filter').addClass('col s12 m6');
+            $('#certificates_table_filter').removeClass('dataTables_filter');
+            /// adding date filter right next to search
+            $('#certificates_table_filter').after(
+                '<div class="col s12 m6"><label>Date Filter:<input type="text" class="datepicker" aria-controls="certificates_table"></label></div>'
+            );
+
+            $('.datepicker').pickadate();
+            $('.datepicker').on('mousedown',function(event){ event.preventDefault(); });
         });
     </script>
 </body>

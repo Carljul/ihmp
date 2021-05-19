@@ -15,8 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+/*
+    Jul: 05/19/2021
+    Register this for the soule purpose of uri setup. to avoid calling /api in calling endpoints
+*/
 Route::get('/', 'HomeController@index')->name('home');
-
+Route::get('/certificate', 'CertificateController@index')->name('certificate');
+Route::get('/priest', 'PriestController@index')->name('priest');
+Route::get('/template', 'TemplateController@index')->name('template');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

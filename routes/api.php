@@ -30,6 +30,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // controller for Priest Model
 Route::resource('priest', 'PriestController');
 
+// controller for Certificate Model
+Route::resource('certificate', 'CertificateController');
+
 // controller for Template Model
 Route::resource('template', 'TemplateController');
 

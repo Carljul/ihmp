@@ -87,3 +87,12 @@ body, html {
     mask-size:33.4% 150%;
     mask-repeat:no-repeat;
 }
+
+#certificates_table_filter{
+    float: left;
+    text-align: left;
+}
+
+#certificates_table_filter label input[type=search]{
+    height: 20px;
+}
