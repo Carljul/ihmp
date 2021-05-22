@@ -7,7 +7,7 @@
         <div class="col s12">
             <!-- Modal Trigger -->
             <a class="waves-effect waves-light btn modal-trigger right" href="#modal1">
-                <i class="material-icons left">import_export</i>Import
+                <i class="material-icons leftg">import_export</i>Import
             </a>
 
             <!-- Modal Structure -->

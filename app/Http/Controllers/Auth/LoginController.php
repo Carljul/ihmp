@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-// use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use App\Traits\AuthenticatesUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+// use App\Traits\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -37,5 +39,31 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $accessToken = '';
+        for ($i = 0; $i < 32; $i++) {
+            $accessToken .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        $user_id = $user->id;
+        $payload = (object) array(
+            "user_id"=>$user_id,
+            "token_key"=>$accessToken,
+        );
+        
+        app('App\Http\Controllers\AccessTokenController')->store($payload);
+        return view('pages.certificates.index');
     }
 }

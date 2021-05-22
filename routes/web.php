@@ -20,7 +20,7 @@ Auth::routes();
     Register this for the soule purpose of uri setup. to avoid calling /api in calling endpoints
 */
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/certificate', 'CertificateController@index')->name('certificate');
+Route::get('/certificate', 'CertificatesViewController@index')->name('certificate');
 Route::get('/priest', 'PriestController@index')->name('priest');
 Route::get('/template', 'TemplateController@index')->name('template');
 
