@@ -96,3 +96,10 @@ body, html {
 #certificates_table_filter label input[type=search]{
     height: 20px;
 }
+
+.avatar{
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px !important
+}

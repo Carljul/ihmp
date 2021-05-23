@@ -60,6 +60,15 @@
                                 <input type="password" class="form-control" id="password" name="password" value="" autocomplete="new-password">
                             </div>
 
+                            
+                            <div class="form-group">
+                                <label for="is_active">User Status</label>
+                                <select class="form-control select2" id="is_active" name="is_active">
+                                    <option value="1" {{ ($dataTypeContent->is_active == 1 ? 'selected':'') }}>Active</option>
+                                    <option value="0" {{ ($dataTypeContent->is_active == 0 ? 'selected':'') }}>Deactivated</option>
+                                </select>
+                            </div>
+
                             @can('editRoles', $dataTypeContent)
                                 <div class="form-group">
                                     <label for="default_role">{{ __('voyager::profile.role_default') }}</label>

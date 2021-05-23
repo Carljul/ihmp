@@ -24,6 +24,7 @@
     <!--JavaScript at end of body for optimized loading-->
     <script src="{{ asset('js/materialize.js') }}"></script>
     <script src="{{ asset('js/datatables.js') }}"></script>
+    <script src="{{ asset('js/constants.js') }}"></script>
 </head>
 <body>
     <div id="app">
@@ -32,7 +33,7 @@
         @else
         <!-- Dropdown Structure -->
         <ul id="dropdown1" class="dropdown-content">
-            <li><a href="#!">Profile</a></li>
+            <li><a href="/admin/profile">Profile</a></li>
             <li class="divider"></li>
             <li>
                 <a class="dropdown-item"
@@ -47,17 +48,23 @@
                 </form>
             </li>
         </ul>
-        <nav>
-            <div class="nav-wrapper blue darken-3">
+        <nav class="blue darken-3">
+            <div class="container nav-wrapper">
                 <a href="#!" class="brand-logo">{{ setting('site.title') }}</a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="#">Manage Records</a></li>
-                    <li><a href="/priests">Manage Priest</a></li>
+                    <li class="certificate"><a href="/certificate">Manage Records</a></li>
+                    <li class="priest"><a href="/priest">Manage Priest</a></li>
                 @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
                     <li><a href="/admin/users">Manage Users</a></li>
                 @endif
                     <!-- Dropdown Trigger -->
-                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li>
+                        <a class="dropdown-button" href="#!" data-activates="dropdown1">
+                            <img src="{{ asset('storage/') }}/{{ Auth::user()->avatar }}" alt="avatar" class="responsive-img circle avatar left">
+                            {{ Auth::user()->name }}
+                            <i class="material-icons right">arrow_drop_down</i>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>

@@ -51,4 +51,12 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function(){
+        $(".certificate").addClass('active');
+        $(".priest").removeClass('active');
+    });
+</script>
 @endsection
