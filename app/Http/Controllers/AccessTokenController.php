@@ -34,7 +34,7 @@ class AccessTokenController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($request) // removed Request type for the mean time until further notice
+    public function store($request) // removed Request type for the mean time until further notice (fixed issue)
     {
         //count the existing user_id...
         $result = AccessToken::where('user_id', $request->user_id)->get();

@@ -36,5 +36,10 @@ Route::resource('certificate', 'CertificateController');
 // controller for Template Model
 Route::resource('template', 'TemplateController');
 
-// controller for AccessToken Model
-Route::resource('accesstoken', 'AccessTokenController');
+// customized the controller for AccessToken Model
+Route::get('accesstoken', 'AccessTokenController@index')->name('accesstoken.index');
+Route::get('accesstoken/{token}', 'AccessTokenController@show')->name('accesstoken.show');
+Route::post('accesstoken/', function() {
+    //returning json response
+    return response()->json([ "data" => [], "status" => 404]);
+});
