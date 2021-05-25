@@ -41,11 +41,20 @@ trait GlobalFunction {
         return Carbon::now("Asia/Kuala_Lumpur")->format('y');
     }
 
-    //create a function that will globally set 12 hours to expiration
+    //create a function that will globally set x of hours to expiration
     public function customAddHours($hr){
         $currentTime = Carbon::now("Asia/Kuala_Lumpur")->format('y-m-d H:i:s');
         $currentTime = Carbon::parse($currentTime);
         $currentTime->addHours($hr);
+
+        return $currentTime;
+    }
+
+    //create a function that will globally set x of minutes to expiration
+    public function customAddMinutes($min){
+        $currentTime = Carbon::now("Asia/Kuala_Lumpur")->format('y-m-d H:i:s');
+        $currentTime = Carbon::parse($currentTime);
+        $currentTime->addMinutes($min);
 
         return $currentTime;
     }

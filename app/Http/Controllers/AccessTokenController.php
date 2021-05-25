@@ -34,7 +34,7 @@ class AccessTokenController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($request) // removed Request type for the mean time until further notice
+    public function store($request) // removed Request type for the mean time until further notice (fixed issue)
     {
         //count the existing user_id...
         $result = AccessToken::where('user_id', $request->user_id)->get();
@@ -46,6 +46,7 @@ class AccessTokenController extends Controller
                 "user_id" => $request->user_id,
                 "token_key" => $request->token_key,
                 "token_status"=> "valid", //valid by default
+                // "expiration"=> $this->customAddMinutes(1), //add one minute to test
                 "expiration"=> $this->customAddHours(12), //12 hours by default
                 "created_at" => $this->customCurrentDate(),
                 "updated_at" => $this->customCurrentDate()
@@ -140,8 +141,6 @@ class AccessTokenController extends Controller
                 //return json response
                 return response()->json($response);
             }
-            // return $currentExpiration." ".$currentDate;
-
 
         }
 
