@@ -19,11 +19,8 @@ class PriestController extends Controller
         //return all data for Priest table
         $result = Priest::all();
 
-        //declaring our return response
-        $response = $this->customApiResponse($result, 200); //OK
-
         //returning json response
-        return response()->json($response);
+        return response()->json($this->customApiResponse($result, 200)); //OK
     }
 
     /**
@@ -34,25 +31,37 @@ class PriestController extends Controller
      */
     public function store(Request $request)
     {
-        //creating our payload here...
-        $payload = [
-            "firstname" => $request->firstname,
-            "middlename"=> $request->middlename,
-            "lastname"=> $request->lastname,
-            "prefix"=> $request->prefix,
-            "is_deleted"=> $request->is_deleted,
-            "created_at" => $this->customCurrentDate(),
-            "updated_at" => $this->customCurrentDate()
-        ];
+        //return specific row using token
+        $checkDuplication = Priest::where('firstname', $request->firstname)
+                            ->where('middlename', $request->middlename)
+                            ->where('lastname', $request->lastname)
+                            ->where('prefix', $request->prefix)
+                            ->get();
 
-        //inserting the new resource...
-        $result = Priest::insert($payload);
+        //check if there is any duplication
+        if(count($checkDuplication) === 0){
+            //creating our payload here...
+            $payload = [
+                "firstname" => $request->firstname,
+                "middlename"=> $request->middlename,
+                "lastname"=> $request->lastname,
+                "prefix"=> $request->prefix,
+                "is_deleted"=> $request->is_deleted,
+                "created_at" => $this->customCurrentDate(),
+                "updated_at" => $this->customCurrentDate()
+            ];
 
-        //declaring our return response
-        $response = $this->customApiResponse($result, 201); //CREATED
+            //inserting the new resource...
+            $result = Priest::insertOrIgnore($payload);
 
-        //return json response
-        return response()->json($response);
+            //declaring our return response
+            $response = $this->customApiResponse($result, 201); //CREATED
+
+            //return json response
+            return response()->json($response);
+        }else{
+            return response()->json($this->customApiResponse([], 400)); //Duplicated
+        }
     }
 
     /**
@@ -68,18 +77,12 @@ class PriestController extends Controller
 
         //if id is not found
         if(!$result){
-            //declaring our return response
-            $response = $this->customApiResponse([], 404); //ID NOT FOUND
-
             //return json response
-            return response()->json($response);
+            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
         }
 
-        //declaring our return response
-        $response = $this->customApiResponse($result, 200); //OK
-
         //return json response
-        return response()->json($response);
+        return response()->json($this->customApiResponse($result, 200)); //OK
     }
 
     /**
@@ -106,21 +109,15 @@ class PriestController extends Controller
 
         //if there is no existsing data to update
         if(!$result){
-            //declaring our return response
-            $response = $this->customApiResponse([], 404); //ID NOT FOUND
-
             //return json response
-            return response()->json($response);
+            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
         }
 
         //then proceed with the update
         $result->update($payload);
 
-        //declaring our return response
-        $response = $this->customApiResponse($result, 200); //OK
-
         //return json response
-        return response()->json($response);
+        return response()->json($this->customApiResponse($result, 200)); //OK
     }
 
     /**
@@ -142,20 +139,14 @@ class PriestController extends Controller
 
         //if there is no existsing data to soft delete
         if(!$result){
-            //declaring our return response
-            $response = $this->customApiResponse([], 404); //ID NOT FOUND
-
             //return json response
-            return response()->json($response);
+            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
         }
 
         //then proceed with soft delete
         $result->update($payload);
-
-        //declaring our return response
-        $response = $this->customApiResponse($result, 200); //OK
-
+        
         //return json response
-        return response()->json($response);
+        return response()->json($this->customApiResponse($result, 202)); //DELETED
     }
 }

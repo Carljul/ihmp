@@ -34,24 +34,32 @@ class TemplateController extends Controller
      */
     public function store(Request $request)
     {
-        //creating our payload here...
-        $payload = [
-            "template_type" => $request->template_type,
-            "content"=> $request->content,
-            "is_template"=> $request->is_template,
-            "is_deleted"=> $request->is_deleted,
-            "created_at" => $this->customCurrentDate(),
-            "updated_at" => $this->customCurrentDate()
-        ];
+        //return specific row using token
+        $checkDuplication = Template::where('template_type', $request->template_type)
+                            ->where('content', $request->content)
+                            ->where('is_template', $request->is_template)
+                            ->get();
 
-        //inserting the new resource...
-        $result = Template::insert($payload);
+        //check if there is any duplication
+        if(count($checkDuplication) === 0){
+            //creating our payload here...
+            $payload = [
+                "template_type" => $request->template_type,
+                "content"=> $request->content,
+                "is_template"=> $request->is_template,
+                "is_deleted"=> $request->is_deleted,
+                "created_at" => $this->customCurrentDate(),
+                "updated_at" => $this->customCurrentDate()
+            ];
 
-        //declaring our return response
-        $response = $this->customApiResponse($result, 201); //CREATED
+            //inserting the new resource...
+            $result = Template::insert($payload);
 
-        //return json response
-        return response()->json($response);
+            //return json response
+            return response()->json($this->customApiResponse($result, 201)); //CREATED
+        }else{
+            return response()->json($this->customApiResponse([], 400)); //Duplicated
+        }
     }
 
     /**
@@ -67,18 +75,12 @@ class TemplateController extends Controller
 
         //if id is not found
         if(!$result){
-            //declaring our return response
-            $response = $this->customApiResponse([], 404); //ID NOT FOUND
-
             //return json response
-            return response()->json($response);
+            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
         }
 
-        //declaring our return response
-        $response = $this->customApiResponse($result, 200); //OK
-
         //return json response
-        return response()->json($response);
+        return response()->json($this->customApiResponse($result, 200)); //OK
     }
 
     /**
@@ -104,21 +106,15 @@ class TemplateController extends Controller
 
         //if there is no existsing data to update
         if(!$result){
-            //declaring our return response
-            $response = $this->customApiResponse([], 404); //ID NOT FOUND
-
             //return json response
-            return response()->json($response);
+            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
         }
 
         //then proceed with the update
         $result->update($payload);
 
-        //declaring our return response
-        $response = $this->customApiResponse($result, 200); //OK
-
         //return json response
-        return response()->json($response);
+        return response()->json($this->customApiResponse($result, 200)); //OK
     }
 
     /**
@@ -140,20 +136,14 @@ class TemplateController extends Controller
 
         //if there is no existsing data to soft delete
         if(!$result){
-            //declaring our return response
-            $response = $this->customApiResponse([], 404); //ID NOT FOUND
-
             //return json response
-            return response()->json($response);
+            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
         }
 
         //then proceed with soft delete
         $result->update($payload);
 
-        //declaring our return response
-        $response = $this->customApiResponse($result, 200); //OK
-
         //return json response
-        return response()->json($response);
+        return response()->json($this->customApiResponse($result, 202)); //DELETED
     }
 }

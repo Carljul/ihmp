@@ -19,11 +19,8 @@ class CertificateController extends Controller
         //return all data for Template table
         $result = Certificate::all();
 
-        //declaring our return response
-        $response = $this->customApiResponse($result, 200); //OK
-
         //returning json response
-        return response()->json($response);
+        return response()->json($this->customApiResponse($result, 200)); //OK
     }
 
     /**
@@ -63,11 +60,25 @@ class CertificateController extends Controller
 
             //then parse it to json string
             $metaContent = json_encode($metaContent);
+
+            //create a query for checking the validation
+            $checkDuplication = Certificate::where('meta', $metaContent)
+                    ->where('firstname', $request->firstname)
+                    ->where('middlename', $request->middlename)
+                    ->where('lastname', $request->lastname)
+                    ->where('certificate_type', $request->certificate_type)
+                    ->where('priest_id', $request->priest_id)
+                    ->get();
+
+            //check if there is any duplication
+            if(count($checkDuplication) !== 0){
+                return response()->json($this->customApiResponse([], 400)); //Duplicated
+            }
         }
 
         //meta content validations for baptism
         if($request->certificate_type == "baptism"){
-
+            
             //set our meta here...
             $metaContent = [
                 "born_on" => $content->{"born_on"},
@@ -89,6 +100,20 @@ class CertificateController extends Controller
 
             //then parse it to json string
             $metaContent = json_encode($metaContent);
+
+            //create a query for checking the validation
+            $checkDuplication = Certificate::where('meta', $metaContent)
+                    ->where('firstname', $request->firstname)
+                    ->where('middlename', $request->middlename)
+                    ->where('lastname', $request->lastname)
+                    ->where('certificate_type', $request->certificate_type)
+                    ->where('priest_id', $request->priest_id)
+                    ->get();
+
+            //check if there is any duplication
+            if(count($checkDuplication) !== 0){
+                return response()->json($this->customApiResponse([], 400)); //Duplicated
+            }
         }
 
         //meta content validations for marriage
@@ -135,6 +160,20 @@ class CertificateController extends Controller
 
             //then parse it to json string
             $metaContent = json_encode($metaContent);
+
+            //create a query for checking the validation
+            $checkDuplication = Certificate::where('meta', $metaContent)
+                    ->where('firstname', $request->firstname)
+                    ->where('middlename', $request->middlename)
+                    ->where('lastname', $request->lastname)
+                    ->where('certificate_type', $request->certificate_type)
+                    ->where('priest_id', $request->priest_id)
+                    ->get();
+
+            //check if there is any duplication
+            if(count($checkDuplication) !== 0){
+                return response()->json($this->customApiResponse([], 400)); //Duplicated
+            }
         }
 
         //creating our payload here...
@@ -155,11 +194,8 @@ class CertificateController extends Controller
         //inserting the new resource...
         $result = Certificate::insert($payload);
 
-        //declaring our return response
-        $response = $this->customApiResponse($result, 201); //CREATED
-
         //return json response
-        return response()->json($response);
+        return response()->json($this->customApiResponse($result, 201)); //CREATED
     }
 
     /**
@@ -175,18 +211,12 @@ class CertificateController extends Controller
 
         //if id is not found
         if(!$result){
-            //declaring our return response
-            $response = $this->customApiResponse([], 404); //ID NOT FOUND
-
             //return json response
-            return response()->json($response);
+            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
         }
 
-        //declaring our return response
-        $response = $this->customApiResponse($result, 200); //OK
-
         //return json response
-        return response()->json($response);
+        return response()->json($this->customApiResponse($result, 200)); //OK
     }
 
     /**
@@ -218,21 +248,15 @@ class CertificateController extends Controller
 
         //if there is no existsing data to update
         if(!$result){
-            //declaring our return response
-            $response = $this->customApiResponse([], 404); //ID NOT FOUND
-
             //return json response
-            return response()->json($response);
+            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
         }
 
         //then proceed with the update
         $result->update($payload);
 
-        //declaring our return response
-        $response = $this->customApiResponse($result, 200); //OK
-
         //return json response
-        return response()->json($response);
+        return response()->json($this->customApiResponse($result, 200)); //OK
     }
 
     /**
@@ -254,20 +278,14 @@ class CertificateController extends Controller
 
         //if there is no existsing data to soft delete
         if(!$result){
-            //declaring our return response
-            $response = $this->customApiResponse([], 404); //ID NOT FOUND
-
             //return json response
-            return response()->json($response);
+            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
         }
 
         //then proceed with soft delete
         $result->update($payload);
 
-        //declaring our return response
-        $response = $this->customApiResponse($result, 200); //OK
-
         //return json response
-        return response()->json($response);
+        return response()->json($this->customApiResponse($result, 202)); //DELETED
     }
 }

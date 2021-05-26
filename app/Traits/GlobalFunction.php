@@ -61,6 +61,25 @@ trait GlobalFunction {
 
     //create a global function that will return the api response
     public function customApiResponse($data, $status){
-        return [ 'data' => $data, 'status' => $status];
+
+        $message = "";
+        if($status == 200)
+            $message = "OK";
+        if($status == 201)
+            $message = "Created";
+        if($status == 202)
+            $message = "Deleted";
+        if($status == 204)
+            $message = "Expired Token";
+        if($status == 400)
+            $message = "Duplicated";
+        if($status == 401)
+            $message = "Unauthorized/Access Token mismatched";
+        if($status == 404)
+            $message = "Not Found";
+        if($status == 500)
+            $message = "Internal Server Error";
+
+        return [ 'data' => $data, 'status' => $status, 'message' => $message];
     }
 }
