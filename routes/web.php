@@ -19,9 +19,10 @@ Auth::routes();
     Jul: 05/19/2021
     Register this for the soule purpose of uri setup. to avoid calling /api in calling endpoints
 */
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'CertificatesViewController@index')->middleware('auth');
+
 Route::get('/certificate', 'CertificatesViewController@index')->name('certificate');
-Route::get('/priest', 'PriestController@index')->name('priest');
+Route::get('/priest', 'PriestViewController@index')->name('priest');
 Route::get('/template', 'TemplateController@index')->name('template');
 
 Route::group(['prefix' => 'admin'], function () {

@@ -47,3 +47,9 @@ Front End Scaffolding
 Front End Scaffold
 
 https://materializecss.com/getting-started.html
+
+
+
+/// Database Seeding for Voyager
+php artisan db:seed --class=DataTypesTableSeeder
+php artisan db:seed --class=DataRowsTableSeeder
