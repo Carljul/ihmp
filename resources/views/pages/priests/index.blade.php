@@ -9,55 +9,112 @@
         </div>
         <div class="row">
             <div class="col s12 m6">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>First Name</th>
-                            <th>Middle Name</th>
-                            <th>Last Name</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="appendPriestList">
+                <div class="card">
+                    <div class="card-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>First Name</th>
+                                    <th>Middle Name</th>
+                                    <th>Last Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appendPriestList">
 
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             
             <div class="col s12 m6">
-                <div class="row">
-                    <form class="col s12" id="priest_form">
+                <div class="card">
+                    <div class="card-content">
                         <div class="row">
-                            <div class="input-field col s12">
-                                <input type="hidden" value="0" id="is_deleted" name="is_deleted">
-                                <input id="prefix" type="text" class="validate" name="prefix">
-                                <label for="prefix">Clergy Title</label>
+                            <div class="col s12">
+                                <h5>Add Priest</h5>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
-                                <input id="firstname" type="text" class="validate" name="firstname">
-                                <label for="firstname">First Name</label>
-                            </div>
+                            <form class="col s12" id="priest_form" autocomplete="off">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input type="hidden" value="0" id="is_deleted" name="is_deleted">
+                                        <input type="hidden" value="0" id="is_update" name="is_update">
+                                        <input id="prefix" type="text" class="validate" name="prefix">
+                                        <label for="prefix">Clergy Title</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input id="firstname" type="text" class="validate" name="firstname">
+                                        <label for="firstname">First Name</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input id="middlename" type="text" class="validate" name="middlename">
+                                        <label for="middlename">Middle Name</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input id="lastname" type="text" class="validate" name="lastname">
+                                        <label for="lastname">Last Name</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <input class="btn btn-wave" id="btnSavePriest" type="submit" value="Save">
+                                </div>
+                            </form>
                         </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="middlename" type="text" class="validate" name="middlename">
-                                <label for="middlename">Middle Name</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="lastname" type="text" class="validate" name="lastname">
-                                <label for="lastname">Last Name</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <input class="btn btn-wave" id="btnSavePriest" type="submit" value="Save">
-                        </div>
-                    </form>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+
+     <!-- Modal Structure -->
+    <div id="modalSysError" class="modal small-modal">
+        <div class="modal-content center system-error-modal-height">
+            <div class="errorProgressIndicator hide">
+                <div class="system-error-loader">
+                    <div class="preloader-wrapper big active">
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="system-error-message">
+                    <h5>Preparing Screens</h5>
+                </div>
+            </div>
+            <div class="errMessage">
+                <i class="material-icons medium">bug_report</i>
+                <h5>Hmmm! Something is not right</h5>
+                <p>
+                    It seems we hit a snag.
+                    <br>
+                    Please click refresh and do the previous activity you did.
+                    <br>
+                    If issue persists, please contact your Software Developer
+                </p>
+                
+                <button class="waves-effect waves-green btn btn-block" id="btnRefresh">Refresh</button>
+            </div>
+            <div class="customMessage hide">
+
             </div>
         </div>
     </div>
@@ -67,34 +124,41 @@
             $(".certificate").removeClass('active');
             $(".priest").addClass('active');
             getPriestList();
+
+            $("#btnRefresh").on('click', function(e){
+                $(".errMessage").addClass('hide');
+                $(".errorProgressIndicator").removeClass('hide');
+                $(this).delay(3000).queue(function(){
+                    location.reload();
+                });
+            });
             
             /// Save
             $("#priest_form").on('submit', function(e){
                 e.preventDefault();
                 var fields = $("#priest_form").serialize();
+                console.log(fields['is_update']);
                 
-                $.ajax({
-                    type: "POST",
-                    url: priest_endpoint,
-                    data: fields,
-                    success: function(data){
-                        if(data.status == 200){
-                            getPriestList();
-                        }
-                    }, error: function(e){
-                        console.log('Something went wrong: '+e);
-                    }
-                });
+                // $.ajax({
+                //     type: "POST",
+                //     url: priest_endpoint,
+                //     data: fields,
+                //     success: function(data){
+                //         if(data.status == 200){
+                //             getPriestList();
+                //         }
+                //     }, error: function(e){
+                //         console.log('Something went wrong: '+e);
+                //     }
+                // });
             });
 
-           
-
+            // Will fetch all not deleted priest
             function getPriestList(){
                 $.ajax({
                     type: 'GET',
                     url: priest_endpoint,
                     success: function(response){
-                        console.log(response.data);
                         var html = "";
                         var priestObject = response.data;
                         for(var x = 0; x < priestObject.length; x++){
@@ -105,6 +169,7 @@
                             +"<td>"+priestObject[x]['lastname']+"</td>"
                             +"<td>"
                                 +"<button class='btn btn-wave btnDelete' id='btnDelete-"+priestObject[x]['id']+"'>Delete</button>"
+                                +" "
                                 +"<button class='btn btn-wave btnUpdate' id='btnUpdate-"+priestObject[x]['id']+"'>Update</button>"
                             +"</td>"
                             +"</tr>";
@@ -120,43 +185,79 @@
 
                         /// Update Priest
                         $(".btnUpdate").click(function(){
-                            console.log('priestId:: '+priestId);
-                            showToUpdatePriest(priestId);
+                            var priestId = $(this).attr("id").substr('btnUpdate-'.length);
+                            showToUpdatePriest(priestId, $(this).attr("id"));
                         });
                     },error: function(e){
+                        $('#modalSysError').modal('open');
                         console.log(e.message);
                     }
                 });
             }
-
+            
+            // Will delete a priest
             function deletePriest(priestId){
-                $.ajax({
-                    type: "DELETE",
-                    url: priest_endpoint+"/"+priestId,
-                    data: {"id": priestId, "is_deleted": 1},
-                    success: function(response){
-                        if(response == 200){
-                            getPriestList();
+                if(priestId == undefined || priestId == null){
+                    $('#modalSysError').modal('open');
+                }else{
+                    $.ajax({
+                        type: "DELETE",
+                        url: priest_endpoint+"/"+priestId,
+                        data: {"id": priestId, "is_deleted": 1},
+                        success: function(response){
+                            if(response == 200){
+                                getPriestList();
+                            }
+                        }, error: function(e){
+                            console.log(e.message);
                         }
-                    }, error: function(e){
-                        console.log(e.message);
-                    }
-                });
+                    });
+                }
+            }
+            
+            // Will pull a specific record to update
+            function showToUpdatePriest(priestId, btnId){
+                if(priestId == undefined || priestId == null){
+                    $('#modalSysError').modal('open');
+                }else{
+                    $.ajax({
+                        type: "GET",
+                        url: priest_endpoint+"/"+priestId,
+                        success: function(response){
+                            console.log(response);
+                            if(response.status == 200){
+                                $('#prefix').val(response.data.prefix);
+                                $("label[for='prefix']").addClass('active');
+                                $('#firstname').val(response.data.firstname);
+                                $("label[for='firstname']").addClass('active');
+                                $('#middlename').val(response.data.lastname);
+                                $("label[for='middlename']").addClass('active');
+                                $('#lastname').val(response.data.middlename);
+                                $("label[for='lastname']").addClass('active');
+                                $('#is_update').val(1);
+                            }else{
+                                var html = "";
+                                html += "<h5>Something went wrong!</h5>"
+                                +""+response.message+"";
+                                $('#modalSysError').modal('open');
+                                $(".errMessage").addClass('hide');
+                                $('.customMessage').html(html);
+                                $(".customMessage").removeClass('hide');
+                            }
+                        }, error: function(e){
+                            var html = "";
+                            html += "<h5>Something went wrong!</h5>"
+                            +""+e.message+"";
+                            $('#modalSysError').modal('open');
+                            $(".errMessage").addClass('hide');
+                            $('.customMessage').html(html);
+                            $(".customMessage").removeClass('hide');
+                        }
+                    });
+                }
             }
 
-            function showToUpdatePriest(priestId){
-                $.ajax({
-                    type: "GET",
-                    url: priest_endpoint+"/"+priestId,
-                    success: function(response){
-                        if(response.status == 200){
-                            console.log(response.data);
-                        }
-                    }, error: function(e){
-                        console.log(e.message);
-                    }
-                });
-            }
+
         });
     </script>
 @endsection

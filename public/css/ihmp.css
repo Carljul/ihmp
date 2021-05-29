@@ -103,3 +103,40 @@ body, html {
     width: 40px;
     height: 40px !important
 }
+
+.small-modal{
+    width: 25% !important;
+}
+
+.system-error-modal-height{
+    height: 350px;
+}
+
+.errorProgressIndicator{
+    height: 100%;
+}
+
+.system-error-loader{
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.system-error-message{
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: initial;
+}
+
+.m-all-10{
+    margin: 10px;
+}
+
+.customMessage{
+    height: 100%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
