@@ -42,7 +42,8 @@ Route::get('general', 'GeneralController@connectivity')->name('general.connectiv
 // customized the controller for AccessToken Model
 Route::get('accesstoken', 'AccessTokenController@index')->name('accesstoken.index');
 Route::get('accesstoken/{token}', 'AccessTokenController@show')->name('accesstoken.show');
+Route::put('accesstoken/{token}', 'AccessTokenController@logout')->name('accesstoken.logout');
 Route::post('accesstoken/', function() {
     //returning json response
-    return response()->json([ "data" => [], "status" => 404]);
+    return response()->json([ "data" => [], "status" => 401, "message" => "Unauthorized"]);
 });

@@ -21,11 +21,8 @@ class AccessTokenController extends Controller
         //return all data for AccessToken table
         $result = AccessToken::all();
 
-        //declaring our return response
-        $response = $this->customApiResponse($result, 200); //OK
-
         //returning json response
-        return response()->json($response);
+        return response()->json($this->customApiResponse($result, 200)); //OK
     }
 
     /**
@@ -55,11 +52,8 @@ class AccessTokenController extends Controller
             //inserting the new resource...
             $result = AccessToken::updateOrInsert($payload);
 
-            //declaring our return response
-            $response = $this->customApiResponse($result, 201); //CREATED
-
             //return json response
-            return response()->json($response);
+            return response()->json($this->customApiResponse($result, 201)); //CREATED
         }else {
             //creating our payload here...
             $payload = [
@@ -75,11 +69,8 @@ class AccessTokenController extends Controller
             //update the resource...
             $resultResponse->update($payload);
 
-            //declaring our return response
-            $response = $this->customApiResponse($result, 200); //OK
-
             //return json response
-            return response()->json($response);
+            return response()->json($this->customApiResponse($result, 200)); //OK
         }
     }
 
@@ -96,11 +87,8 @@ class AccessTokenController extends Controller
 
         //if token is not found
         if(count($result) === 0){
-            //declaring our return response
-            $response = $this->customApiResponse([], 404); //TOKEN NOT FOUND
-
             //return json response
-            return response()->json($response);
+            return response()->json($this->customApiResponse([], 404)); //TOKEN NOT FOUND
         }else {
 
             //check if expired
@@ -128,21 +116,49 @@ class AccessTokenController extends Controller
 
                 // then return the latest value
                 $latestData = AccessToken::where('token_key', $token)->get();
-
-                //declaring our return response
-                $expiredResponse = $this->customApiResponse($latestData, 204); //OK
         
                 //return json response
-                return response()->json($expiredResponse);
+                return response()->json($this->customApiResponse($latestData, 204)); //OK
             }else{
-                //declaring our return response
-                $response = $this->customApiResponse($result, 200); //OK
-        
                 //return json response
-                return response()->json($response);
+                return response()->json($this->customApiResponse($result, 200)); //OK
             }
 
         }
 
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\AccessToken  $AccessToken
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        //creating our payload here...
+        $payload = [
+            "token_status" => "expired",
+            "updated_at" => $this->customCurrentDate()
+        ];
+
+        //find the resource...
+        $result = AccessToken::where('user_id', $request->user_id)->where('token_key', $request->token_key)->get();
+
+        //if there is no existsing data to update
+        if(count($result) == 0){
+            //return json response
+            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
+        }
+
+        //update the resource
+        $updateResouce = AccessToken::where('user_id', $request->user_id)->where('token_key', $request->token_key);
+
+        //then proceed with the update
+        $updateResouce->update($payload);
+
+        //return json response
+        return response()->json($this->customApiResponse($updateResouce, 200)); //OK
     }
 }

@@ -239,7 +239,6 @@ class CertificateController extends Controller
             "is_deleted"=> $request->is_deleted == "" ? false : $request->is_deleted,
             "created_by"=> $request->created_by,
             "created_date"=> $request->created_date,
-            "created_at" => $this->customCurrentDate(),
             "updated_at" => $this->customCurrentDate()
         ];
 
