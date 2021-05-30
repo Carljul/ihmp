@@ -204,13 +204,20 @@ class CertificateController extends Controller
      * @param  \App\Certificate  $Certificate
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($search)
     {
-        //return specific row using id
-        $result = Certificate::find($id);
+        //return specific row using search
+        $result = Certificate::where('id', $search)
+                ->orWhere('firstname', $search)
+                ->orWhere('middlename', $search)
+                ->orWhere('lastname', $search)
+                ->orWhere('certificate_type', $search)
+                ->orWhere('priest_id', $search)
+                ->orWhere('meta', $search)
+                ->get();
 
-        //if id is not found
-        if(!$result){
+        //if search is not found
+        if(count($result) == 0){
             //return json response
             return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
         }

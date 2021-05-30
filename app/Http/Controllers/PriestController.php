@@ -70,15 +70,20 @@ class PriestController extends Controller
      * @param  \App\Priest  $priest
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($search)
     {
-        //return specific row using id
-        $result = Priest::find($id);
+        //return specific row using search
+        $result = Priest::where('id', $search)
+                ->orWhere('firstname', $search)
+                ->orWhere('middlename', $search)
+                ->orWhere('lastname', $search)
+                ->orWhere('prefix', $search)
+                ->get();
 
-        //if id is not found
-        if(!$result){
+        //if search is not found
+        if(count($result) == 0){
             //return json response
-            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
+            return response()->json($this->customApiResponse([], 404)); //DATA NOT FOUND
         }
 
         //return json response
