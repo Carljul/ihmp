@@ -43,6 +43,7 @@
                                     <div class="input-field col s12">
                                         <input type="hidden" value="0" id="is_deleted" name="is_deleted">
                                         <input type="hidden" value="0" id="is_update" name="is_update">
+                                        <input type="hidden" value="0" id="pid" name="pid">
                                         <input id="prefix" type="text" class="validate" name="prefix">
                                         <label for="prefix">Clergy Title</label>
                                     </div>
@@ -77,48 +78,6 @@
     </div>
 
 
-     <!-- Modal Structure -->
-    <div id="modalSysError" class="modal small-modal">
-        <div class="modal-content center system-error-modal-height">
-            <div class="errorProgressIndicator hide">
-                <div class="system-error-loader">
-                    <div class="preloader-wrapper big active">
-                        <div class="spinner-layer spinner-blue-only">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div>
-                            <div class="gap-patch">
-                                <div class="circle"></div>
-                            </div>
-                            <div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="system-error-message">
-                    <h5>Preparing Screens</h5>
-                </div>
-            </div>
-            <div class="errMessage">
-                <i class="material-icons medium">bug_report</i>
-                <h5>Hmmm! Something is not right</h5>
-                <p>
-                    It seems we hit a snag.
-                    <br>
-                    Please click refresh and do the previous activity you did.
-                    <br>
-                    If issue persists, please contact your Software Developer
-                </p>
-                
-                <button class="waves-effect waves-green btn btn-block" id="btnRefresh">Refresh</button>
-            </div>
-            <div class="customMessage hide">
-
-            </div>
-        </div>
-    </div>
-
     <script>
         $(document).ready(function(){
             $(".certificate").removeClass('active');
@@ -136,63 +95,124 @@
             /// Save
             $("#priest_form").on('submit', function(e){
                 e.preventDefault();
-                var fields = $("#priest_form").serialize();
-                console.log(fields['is_update']);
-                
-                // $.ajax({
-                //     type: "POST",
-                //     url: priest_endpoint,
-                //     data: fields,
-                //     success: function(data){
-                //         if(data.status == 200){
-                //             getPriestList();
-                //         }
-                //     }, error: function(e){
-                //         console.log('Something went wrong: '+e);
-                //     }
-                // });
+                if (localStorage.getItem("AT") === null) {
+                    forceLogout();
+                }else{
+                    var AT = localStorage.getItem("AT");
+                    checkTokenValidity(AT);
+                    var is_deleted = $('#is_deleted').val();
+                    var is_update = $('#is_update').val();
+                    var pid = $('#pid').val();
+                    var prefix = $('#prefix').val();
+                    var firstname = $('#firstname').val();
+                    var middlename = $('#middlename').val();
+                    var lastname = $('#lastname').val();
+                    var payload;
+
+                    /// It's either update or add
+                    if(is_update == 1){
+                        payload = {
+                            'id': pid,
+                            'is_deleted': is_deleted,
+                            'prefix':prefix,
+                            'firstname': firstname,
+                            'middlename': middlename,
+                            'lastname': lastname
+                        };
+                        $.ajax({
+                            type: "PUT",
+                            url: priest_endpoint+"/"+pid,
+                            data: payload,
+                            success: function(data){
+                                if(data.status == 200){
+                                    getPriestList();
+                                }else{
+                                    $('#modalSysError').modal('open');
+                                }
+                            }, error: function(e){
+                                console.log('Something went wrong: '+e);
+                            }
+                        });
+                    }else{
+                        payload = {
+                            'is_deleted': is_deleted,
+                            'prefix':prefix,
+                            'firstname': firstname,
+                            'middlename': middlename,
+                            'lastname': lastname
+                        };
+                        $.ajax({
+                            type: "POST",
+                            url: priest_endpoint,
+                            data: payload,
+                            success: function(data){
+                                if(data.status == 201){
+                                    getPriestList();
+                                }else{
+                                    $('#modalSysError').modal('open');
+                                }
+                            }, error: function(e){
+                                console.log('Something went wrong: '+e);
+                            }
+                        });
+                    }
+
+                    /// Clear Input fields
+                    $('#is_deleted').val(0);
+                    $('#is_update').val(0);
+                    $('#pid').val(0);
+                    $('#prefix').val('');
+                    $('#firstname').val('');
+                    $('#middlename').val('');
+                    $('#lastname').val('');
+                }
             });
 
             // Will fetch all not deleted priest
             function getPriestList(){
-                $.ajax({
-                    type: 'GET',
-                    url: priest_endpoint,
-                    success: function(response){
-                        var html = "";
-                        var priestObject = response.data;
-                        for(var x = 0; x < priestObject.length; x++){
-                            html += "<tr>"
-                            +"<td>"+priestObject[x]['prefix']+"</td>"
-                            +"<td>"+priestObject[x]['firstname']+"</td>"
-                            +"<td>"+priestObject[x]['middlename']+"</td>"
-                            +"<td>"+priestObject[x]['lastname']+"</td>"
-                            +"<td>"
-                                +"<button class='btn btn-wave btnDelete' id='btnDelete-"+priestObject[x]['id']+"'>Delete</button>"
-                                +" "
-                                +"<button class='btn btn-wave btnUpdate' id='btnUpdate-"+priestObject[x]['id']+"'>Update</button>"
-                            +"</td>"
-                            +"</tr>";
+                if (localStorage.getItem("AT") === null) {
+                    forceLogout();
+                }else{
+                    var AT = localStorage.getItem("AT");
+                    checkTokenValidity(AT);
+                    $.ajax({
+                        type: 'GET',
+                        url: priest_endpoint,
+                        success: function(response){
+                            var html = "";
+                            var priestObject = response.data;
+                            for(var x = 0; x < priestObject.length; x++){
+                                html += "<tr>"
+                                +"<td>"+priestObject[x]['prefix']+"</td>"
+                                +"<td>"+priestObject[x]['firstname']+"</td>"
+                                +"<td>"+priestObject[x]['middlename']+"</td>"
+                                +"<td>"+priestObject[x]['lastname']+"</td>"
+                                +"<td>"
+                                    +"<button class='btn btn-wave btnDelete' id='btnDelete-"+priestObject[x]['id']+"'>Delete</button>"
+                                    +" "
+                                    +"<button class='btn btn-wave btnUpdate' id='btnUpdate-"+priestObject[x]['id']+"'>Update</button>"
+                                +"</td>"
+                                +"</tr>";
+                            }
+                            
+                            $("#appendPriestList").html(html);
+
+                            /// Delete Priest
+                            $(".btnDelete").on("click",function(){
+                                var priestId = $(this).attr("id").substr('btnDelete-'.length);
+                                deletePriest(priestId);
+                            });
+
+                            /// Update Priest
+                            $(".btnUpdate").click(function(){
+                                var priestId = $(this).attr("id").substr('btnUpdate-'.length);
+                                showToUpdatePriest(priestId, $(this).attr("id"));
+                            });
+                        },error: function(e){
+                            $('#modalSysError').modal('open');
                         }
-                        
-                        $("#appendPriestList").html(html);
-
-                        /// Delete Priest
-                        $(".btnDelete").on("click",function(){
-                            var priestId = $(this).attr("id").substr('btnDelete-'.length);
-                            deletePriest(priestId);
-                        });
-
-                        /// Update Priest
-                        $(".btnUpdate").click(function(){
-                            var priestId = $(this).attr("id").substr('btnUpdate-'.length);
-                            showToUpdatePriest(priestId, $(this).attr("id"));
-                        });
-                    },error: function(e){
-                        $('#modalSysError').modal('open');
-                        console.log(e.message);
-                    }
-                });
+                    });
+                }
             }
             
             // Will delete a priest
@@ -224,17 +244,17 @@
                         type: "GET",
                         url: priest_endpoint+"/"+priestId,
                         success: function(response){
-                            console.log(response);
                             if(response.status == 200){
                                 $('#prefix').val(response.data.prefix);
                                 $("label[for='prefix']").addClass('active');
                                 $('#firstname').val(response.data.firstname);
                                 $("label[for='firstname']").addClass('active');
-                                $('#middlename').val(response.data.lastname);
+                                $('#middlename').val(response.data.middlename);
                                 $("label[for='middlename']").addClass('active');
-                                $('#lastname').val(response.data.middlename);
+                                $('#lastname').val(response.data.lastname);
                                 $("label[for='lastname']").addClass('active');
                                 $('#is_update').val(1);
+                                $('#pid').val(priestId);
                             }else{
                                 var html = "";
                                 html += "<h5>Something went wrong!</h5>"

@@ -21,9 +21,9 @@ Auth::routes();
 */
 Route::get('/', 'CertificatesViewController@index')->middleware('auth');
 
-Route::get('/certificate', 'CertificatesViewController@index')->name('certificate');
-Route::get('/priest', 'PriestViewController@index')->name('priest');
-Route::get('/template', 'TemplateController@index')->name('template');
+Route::get('/certificate', 'CertificatesViewController@index')->name('certificate')->middleware('auth');
+Route::get('/priest', 'PriestViewController@index')->name('priest')->middleware('auth');
+Route::get('/template', 'TemplateController@index')->name('template')->middleware('auth');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

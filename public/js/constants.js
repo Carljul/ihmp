@@ -1,18 +1,24 @@
  
     
 /// Development Environment
-var protocol = 'http://';
-var base_url = '127.0.0.1:8000';
-var api_server = protocol+''+base_url+/api/;
+const protocol = 'http://';
+const base_url = '127.0.0.1:8000';
+const api_server = protocol+''+base_url+/api/;
+
+/// Token Enums
+const at_expire = 'expired';
+const at_valid = 'valid';
 
 
 /// Endpoints
 
 /// ======================== Certificates
-var certificate_endpoint = api_server+'certificate';
+const certificate_endpoint = api_server+'certificate';
 /// ======================== Priests
-var priest_endpoint = api_server+'priest';
+const priest_endpoint = api_server+'priest';
 /// ======================== Templates
-var template_endpoint = api_server+'template';
+const template_endpoint = api_server+'template';
 /// ======================== Verifying Access Token
-var access_token_endpoint = api_server+'accesstoken';
+const access_token_endpoint = api_server+'accesstoken';
+/// ======================== General Controller
+const general_controller_endpoint = api_server+'general';

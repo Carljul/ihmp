@@ -23,6 +23,7 @@
     <!--JavaScript at end of body for optimized loading-->
     <script src="{{ asset('/js/constants.js') }}"></script>
     <script src="{{ asset('/js/materialize.js') }}"></script>
+    <script src="{{ asset('/js/general.js') }}"></script>
 </head>
 <body>
     <div id="app">
@@ -72,29 +73,30 @@
             @yield('content')
         </main>
     </div>
-
-
-
     
-    <script type="text/javascript">
+    @extends('modals.index')
+
+     <script type="text/javascript">
         $(document).ready(function(){
             $('.parallax').parallax();
             $('.modal').modal();
-            // $('#certificates_table').dataTable({ 
-            //     "bLengthChange": false,
-            //     "bFilter": true,
-            // });
-
-            // /// adding class to #certificates_table_filter
-            // $('#certificates_table_filter').addClass('col s12 m6');
-            // $('#certificates_table_filter').removeClass('dataTables_filter');
-            /// adding date filter right next to search
-            // $('#certificates_table_filter').after(
-            //     '<div class="col s12 m6"><label>Date Filter:<input type="text" class="datepicker" aria-controls="certificates_table"></label></div>'
-            // );
-
             $('.datepicker').pickadate();
             $('.datepicker').on('mousedown',function(event){ event.preventDefault(); });
+
+            checkConnection();
+            /// General functions
+            // Check Server Connectivity
+            function checkConnection(){
+                $.ajax({
+                    type: "GET",
+                    url: general_controller_endpoint,
+                    success: function(response){
+                        console.log(response);
+                    }, error: function(e){
+                        console.log(e);
+                    }
+                });
+            }
         });
     </script>
 </body>

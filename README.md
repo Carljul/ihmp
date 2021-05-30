@@ -53,3 +53,12 @@ https://materializecss.com/getting-started.html
 /// Database Seeding for Voyager
 php artisan db:seed --class=DataTypesTableSeeder
 php artisan db:seed --class=DataRowsTableSeeder
+
+
+<!-- Login Flow -->
+Here is an explanation on how login controller works
+It will still use the login method of laravel but with the additional features
+upon a successful login using laravel we will fetch generate a 32 bit
+random string that will act as an accessToken of the user
+and this token will be saved to database
+this token will be use to validate users authenticity of each api endpoint call

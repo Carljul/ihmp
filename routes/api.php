@@ -36,6 +36,9 @@ Route::resource('certificate', 'CertificateController');
 // controller for Template Model
 Route::resource('template', 'TemplateController');
 
+// controller for General Controller
+Route::get('general', 'GeneralController@connectivity')->name('general.connectivity');
+
 // customized the controller for AccessToken Model
 Route::get('accesstoken', 'AccessTokenController@index')->name('accesstoken.index');
 Route::get('accesstoken/{token}', 'AccessTokenController@show')->name('accesstoken.show');

@@ -85,6 +85,13 @@ class LoginController extends Controller
                     $this->username() => [trans('This is account is not yet activated')],
                 ]);
             }
+        }else{
+            // Increment the failed login attempts and redirect back to the
+            // login form with an error message.
+            $this->incrementLoginAttempts($request);
+            throw ValidationException::withMessages([
+                $this->username() => [trans('No matching records found')],
+            ]);
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -118,7 +125,25 @@ class LoginController extends Controller
             "token_key"=>$accessToken,
         );
         
-        app('App\Http\Controllers\AccessTokenController')->store($payload);
+        $result = app('App\Http\Controllers\AccessTokenController')->store($payload);
+        
+        if($result->getData()->status == 200){
+            echo "<script>"
+            ."localStorage.removeItem('AT');"
+            ."localStorage.setItem('AT','".$accessToken."');"
+            ."</script>";
+        }
+        
         return view('pages.certificates.index');
+    }
+    public function logout(Request $request)
+    {
+        /// TODO:: Update the accesstoken table and set the status to expire
+
+        $this->guard('web_buyer')->logout();
+        echo "<script>"
+        ."localStorage.removeItem('AT');"
+        ."window.location.replace('/login');"
+        ."</script>";
     }
 }
