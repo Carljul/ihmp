@@ -47,7 +47,7 @@ class TemplateController extends Controller
                 "template_type" => $request->template_type,
                 "content"=> $request->content,
                 "is_template"=> $request->is_template,
-                "is_deleted"=> $request->is_deleted,
+                "is_deleted"=> $request->is_deleted == "" ? false : $request->is_deleted,
                 "created_at" => $this->customCurrentDate(),
                 "updated_at" => $this->customCurrentDate()
             ];
@@ -97,7 +97,7 @@ class TemplateController extends Controller
             "template_type" => $request->template_type,
             "content"=> $request->content,
             "is_template"=> $request->is_template,
-            "is_deleted"=> $request->is_deleted,
+            "is_deleted"=> $request->is_deleted == "" ? false : $request->is_deleted,
             "updated_at" => $this->customCurrentDate()
         ];
 
@@ -127,7 +127,7 @@ class TemplateController extends Controller
     {
         //creating our payload here...
         $payload = [
-            "is_deleted"=> $request->is_deleted,
+            "is_deleted"=> $request->is_deleted == "" ? true : $request->is_deleted,
             "updated_at" => $this->customCurrentDate()
         ];
 

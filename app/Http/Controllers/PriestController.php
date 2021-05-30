@@ -46,7 +46,7 @@ class PriestController extends Controller
                 "middlename"=> $request->middlename,
                 "lastname"=> $request->lastname,
                 "prefix"=> $request->prefix,
-                "is_deleted"=> $request->is_deleted,
+                "is_deleted"=> $request->is_deleted == "" ? false : $request->is_deleted,
                 "created_at" => $this->customCurrentDate(),
                 "updated_at" => $this->customCurrentDate()
             ];
@@ -100,7 +100,7 @@ class PriestController extends Controller
             "middlename"=> $request->middlename,
             "lastname"=> $request->lastname,
             "prefix"=> $request->prefix,
-            "is_deleted"=> $request->is_deleted,
+            "is_deleted"=> $request->is_deleted == "" ? false : $request->is_deleted,
             "updated_at" => $this->customCurrentDate()
         ];
 
@@ -130,7 +130,7 @@ class PriestController extends Controller
     {
         //creating our payload here...
         $payload = [
-            "is_deleted"=> $request->is_deleted,
+            "is_deleted"=> $request->is_deleted == "" ? true : $request->is_deleted,
             "updated_at" => $this->customCurrentDate()
         ];
 

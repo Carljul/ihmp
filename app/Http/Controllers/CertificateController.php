@@ -16,7 +16,7 @@ class CertificateController extends Controller
      */
     public function index()
     {
-        //return all data for Template table
+        //return all data for Certificate table
         $result = Certificate::all();
 
         //returning json response
@@ -184,7 +184,7 @@ class CertificateController extends Controller
             "certificate_type" => $request->certificate_type,
             "priest_id" => $request->priest_id,
             "meta" => $metaContent,
-            "is_deleted"=> false, //by default to false
+            "is_deleted"=> $request->is_deleted == "" ? false : $request->is_deleted,
             "created_by"=> $request->created_by,
             "created_date"=> $this->customCurrentDate(),
             "created_at" => $this->customCurrentDate(),
@@ -201,7 +201,7 @@ class CertificateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Template  $Template
+     * @param  \App\Certificate  $Certificate
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -223,7 +223,7 @@ class CertificateController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Template  $Template
+     * @param  \App\Certificate  $Certificate
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
@@ -236,7 +236,7 @@ class CertificateController extends Controller
             "certificate_type" => $request->certificate_type,
             "priest_id" => $request->priest_id,
             "meta" => $request->meta,
-            "is_deleted"=> $request->is_deleted,
+            "is_deleted"=> $request->is_deleted == "" ? false : $request->is_deleted,
             "created_by"=> $request->created_by,
             "created_date"=> $request->created_date,
             "created_at" => $this->customCurrentDate(),
@@ -262,14 +262,14 @@ class CertificateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Template  $Template
+     * @param  \App\Certificate  $Certificate
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
         //creating our payload here...
         $payload = [
-            "is_deleted"=> $request->is_deleted,
+            "is_deleted"=> $request->is_deleted == "" ? true : $request->is_deleted,
             "updated_at" => $this->customCurrentDate()
         ];
 
