@@ -17,7 +17,7 @@ class CertificateController extends Controller
     public function index()
     {
         //return all data for Certificate table
-        $result = Certificate::all();
+        $result = Certificate::where('is_deleted', 0)->get();
 
         //returning json response
         return response()->json($this->customApiResponse($result, 200)); //OK
