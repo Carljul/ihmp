@@ -213,7 +213,7 @@ class CertificateController extends Controller
                 ->orWhere('lastname', $search)
                 ->orWhere('certificate_type', $search)
                 ->orWhere('priest_id', $search)
-                ->orWhere('meta', $search)
+                ->orWhere('meta', 'LIKE', '%'. $search . '%')
                 ->get();
 
         //if search is not found
