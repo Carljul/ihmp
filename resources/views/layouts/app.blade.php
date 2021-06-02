@@ -13,7 +13,7 @@
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
 
     <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{{ asset('css/icon.css') }}" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/materialize.css') }}" rel="stylesheet">

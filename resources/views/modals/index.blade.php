@@ -39,3 +39,13 @@
         </div>
     </div>
 </div>
+
+
+<div id="deleteConfirmationModal" class="modal small-modal">
+    <div class="modal-content center errorProgressIndicator">
+        <h4>Are you sure you want to delete <span id="recordToDelete"></span>?</h4>
+        <div id="buttonConfirmation">
+        
+        </div>
+    </div>
+</div>
