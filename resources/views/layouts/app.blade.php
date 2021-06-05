@@ -56,6 +56,9 @@
                 @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
                     <li><a href="/admin/users">Manage Users</a></li>
                 @endif
+                @if(Auth::user()->role_id == 3)
+                    <li><a href="/templates">Manage Templates</a></li>
+                @endif
                     <!-- Dropdown Trigger -->
                     <li>
                         <a class="dropdown-button" href="#!" data-activates="dropdown1">
@@ -79,6 +82,7 @@
      <script type="text/javascript">
         $(document).ready(function(){
             $('.parallax').parallax();
+            $('select').material_select();
             $('.modal').modal();
             $('.datepicker').pickadate();
             $('.datepicker').on('mousedown',function(event){ event.preventDefault(); });

@@ -118,6 +118,8 @@ class LoginController extends Controller
         for ($i = 0; $i < 32; $i++) {
             $accessToken .= $characters[rand(0, $charactersLength - 1)];
         }
+        $encryptedUsername = md5($user->email);
+        $accessToken .= "|".$user->id."|".$encryptedUsername;
 
         $user_id = $user->id;
         $payload = (object) array(
@@ -131,6 +133,7 @@ class LoginController extends Controller
             echo "<script>"
             ."localStorage.removeItem('AT');"
             ."localStorage.setItem('AT','".$accessToken."');"
+            ."localStorage.setItem('defaultForm','individual');"
             ."</script>";
         }
         
