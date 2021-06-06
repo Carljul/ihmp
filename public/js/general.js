@@ -16,13 +16,7 @@ function checkTokenValidity(token){
                 }
             }else{
                 /// Will show a popup if session expires or local storage is been deleted
-                var html = "";
-                html += "<h5>Session Expire!</h5>"
-                +"Please relogin";
-                $('#modalSysError').modal('open');
-                $(".errMessage").addClass('hide');
-                $('.customMessage').html(html);
-                $(".customMessage").removeClass('hide');
+                forceLogout();
             }
         }, error: function(e){
             return "DEBUG:: "+e;
@@ -47,4 +41,11 @@ function forceLogout(){
             $('#logout-form').submit();
         });
     });
+}
+
+
+function isTokenExist(){
+    if (localStorage.getItem("AT") === null) {
+        forceLogout();
+    }
 }

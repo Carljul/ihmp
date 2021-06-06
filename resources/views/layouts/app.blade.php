@@ -82,9 +82,13 @@
      <script type="text/javascript">
         $(document).ready(function(){
             $('.parallax').parallax();
-            $('select').material_select();
+            // $('select').material_select(); <--- Do not use this one or it will affect the parish priest dropdown
+            /// Register all dropdowns here do not use the general method of material select
+            $("#selectCertificate").material_select();
+            $("#selectForm").material_select();
             $('.modal').modal();
             $('.datepicker').pickadate();
+            
             $('.datepicker').on('mousedown',function(event){ event.preventDefault(); });
 
             checkConnection();
