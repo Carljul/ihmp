@@ -22,3 +22,8 @@ const template_endpoint = api_server+'template';
 const access_token_endpoint = api_server+'accesstoken';
 /// ======================== General Controller
 const general_controller_endpoint = api_server+'general';
+
+
+
+/// Message and labels constants
+

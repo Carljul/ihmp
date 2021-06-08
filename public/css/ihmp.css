@@ -159,7 +159,7 @@ body, html {
 }
 
 .confirmation_group_form{
-    width: 570%;
+    width: 615%;
     border-collapse: separate;
     border-spacing: 0 5px;
 }
@@ -202,4 +202,15 @@ tr.custom_card td:last-child {
 
 .btn-actions{
     padding: 0px 15px;
+}
+
+.preloader-wrapper.extra-small{
+    width: 20px;
+    height: 20px;
+}
+
+.spaces{
+    float: left;
+    margin-right: 6px;
+    margin-top: 2px;
 }
