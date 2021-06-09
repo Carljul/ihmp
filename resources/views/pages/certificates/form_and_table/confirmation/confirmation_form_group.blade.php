@@ -9,7 +9,7 @@
                     <div class="spaces">
                         @include('preloader.index')
                     </div>
-                    <h6 class="right green-text hide" id="labelValidRecord">Saving 1 of 4 valid records</h6><br>
+                    <h6 class="right green-text hide" id="labelValidRecord">Saving 10 valid records</h6><br>
                     <h6 class="right red-text hide" id="labelInvalidRecord">6 records invalid</h6>
                 </div>
             </div>
@@ -1519,6 +1519,9 @@
         var emptyRows = [];
         var rowsWithValue = [];
 
+        // will hold error records
+        var errorSavingRecords = [];
+
 
         /// will validate all fields
         function validateAllFieldsAndCreatePayload(
@@ -1629,14 +1632,63 @@
                     // Show the progress indicator
                     $("#labelValidRecord").removeClass('hide');
                     $("#extraSmallLoaderForSaving").removeClass('hide');
-                    $("#labelValidRecord").html('Saving 1 of '+convertedListOfTranscations.length+' valid records');
+                    $("#labelValidRecord").html('Saving '+convertedListOfTranscations.length+' valid records');
                     
                     // always get the first record
-                    var toSave = convertedListOfTranscations[0]['payload'];
+                    var toSavePayload = convertedListOfTranscations[0]['payload'];
+                    var currentRow = convertedListOfTranscations[0]['row'];
 
                     // create the condition to initiate a recursive command
+                    savingRecord(currentRow, toSavePayload, convertedListOfTranscations);
+                }else{
+                    $("#labelValidRecord").html('Batch saved done');
+                    $("#labelInvalidRecord").addClass('hide');
+                    setTimeout(function(){
+                        $("#extraSmallLoaderForSaving").addClass('hide');
+                        $("#labelValidRecord").addClass('hide');
+                    }, 3000);
                 }
             }
+        }
+
+        function savingRecord(row, payload, listOfTransactions){
+            $.ajax({
+                type: "POST",
+                url: certificate_endpoint,
+                data: JSON.stringify(payload),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response){
+                    if(response.status == 201){
+                        // removing the first object of the transaction list
+                        listOfTransactions.shift();
+                        // remove transactions in local Storage to replace new
+                        localStorage.removeItem('transactions');
+                        localStorage.setItem('transactions', JSON.stringify(listOfTransactions));
+                        // update the table
+                        confirmationList();
+                        // call again initiate worker to create a recursive effect
+                        initiateWorker();
+                    }else if(response.status == 400){
+                        errorSavingRecords.push({
+                            "row": row,
+                            "payload": payload,
+                            "message": "Duplicated"
+                        });
+                    }else{
+                        console.log('something is not right: '+response.status);
+                    }
+                }, error: function(e){
+                    console.log(e);
+                    errorSavingRecords.push({
+                        "row": row,
+                        "payload": payload,
+                        "message": e
+                    });
+                }
+            });
+
+            // TODO: log errorSavingRecords to localStorage
         }
 
         $('#saveConfirmationByGroup').on('click', function(){
@@ -1711,7 +1763,7 @@
                     if(localStorage.getItem('transactions') == "[]"){
                         localStorage.setItem('transactions',JSON.stringify(rowsWithValue));
                     }else{
-                        // TODO:: Fetch the transactions and update the number of records
+                        // TODO:: Fetch the new transactions and update the transactions in localStorage
                     }
                 }
 
