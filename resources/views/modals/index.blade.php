@@ -39,3 +39,48 @@
         </div>
     </div>
 </div>
+
+
+<div id="deleteConfirmationModal" class="modal small-modal">
+    <div class="modal-content center errorProgressIndicator">
+        <h4>Are you sure you want to delete <span id="recordToDelete"></span>?</h4>
+        <div id="buttonConfirmation">
+        
+        </div>
+    </div>
+</div>
+
+
+<!-- Import Export -->
+<div id="importExport" class="modal bottom-sheet">
+    <div class="modal-content">
+        <h4>Import Your CSV File Here</h4>
+        <p>Follow the Steps</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Import</a>
+    </div>
+</div>
+
+<!-- Filter -->
+<div id="filterTable" class="modal">
+    <div class="modal-content">
+        <h4>You can apply following filters</h4>
+        <p>Follow the Steps</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Create Filter</a>
+    </div>
+</div>
+
+
+<!-- Adding Priest -->
+<div id="addPriestModalForm" class="modal">
+    <div class="modal-content">
+        <h4>Add Parish Priest</h4>
+        <p>Follow the Steps</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Add Priest and Refresh Dropdown</a>
+    </div>
+</div>

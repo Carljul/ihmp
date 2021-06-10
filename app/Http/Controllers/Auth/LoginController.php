@@ -114,10 +114,13 @@ class LoginController extends Controller
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
+        $toTruncateLength = 32;
         $accessToken = '';
         for ($i = 0; $i < 32; $i++) {
             $accessToken .= $characters[rand(0, $charactersLength - 1)];
         }
+        $encryptedUsername = md5($user->email);
+        $accessToken .= "|".$user->id."|".$encryptedUsername;
 
         $user_id = $user->id;
         $payload = (object) array(
@@ -129,11 +132,13 @@ class LoginController extends Controller
         
         if($result->getData()->status == 200){
             echo "<script>"
-            ."localStorage.removeItem('AT');"
             ."localStorage.setItem('AT','".$accessToken."');"
+            ."localStorage.setItem('defaultForm','individual');"
+            ."localStorage.setItem('defaultTable','confirmation');"
+            ."localStorage.setItem('delegatedUser','".$toTruncateLength."');"
+            ."window.location.replace('/certificate');"
             ."</script>";
         }
-        
         return view('pages.certificates.index');
     }
     public function logout(Request $request)
@@ -143,6 +148,9 @@ class LoginController extends Controller
         $this->guard('web_buyer')->logout();
         echo "<script>"
         ."localStorage.removeItem('AT');"
+        ."localStorage.removeItem('defaultForm');"
+        ."localStorage.removeItem('defaultTable');"
+        ."localStorage.removeItem('delegatedUser');"
         ."window.location.replace('/login');"
         ."</script>";
     }

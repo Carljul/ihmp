@@ -140,3 +140,77 @@ body, html {
     justify-content: center;
     align-items: center;
 }
+
+.removeBottomMargin{
+    margin-bottom: 0px !important;
+}
+
+.fix_height_form{
+    height: 50vh;
+    overflow-y: scroll;
+}
+
+.fix_height_table{
+    height: 57vh;
+}
+
+.confirmation_group_table{
+    width: 315%;
+}
+
+.confirmation_group_form{
+    width: 615%;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+}
+
+
+
+tr.custom_card td{
+    background-color: white;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+
+tr.custom_card td:first-child {
+    background-color: white;
+    border-top: 1px solid grey;
+    border-left: 1px solid grey;
+    border-bottom: 1px solid grey;
+    border-top-left-radius: 10px;
+}
+tr.custom_card td:last-child {
+    border-top-right-radius: 10px;
+    border-top: 1px solid grey;
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+tr.custom_card td:first-child {
+    border-bottom-left-radius: 10px;
+}
+tr.custom_card td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+.custom_card td{
+    padding-top: 0px !important;
+}
+.custom_card .input-field input{
+    margin-bottom: 0px !important;
+}
+
+
+.btn-actions{
+    padding: 0px 15px;
+}
+
+.preloader-wrapper.extra-small{
+    width: 20px;
+    height: 20px;
+}
+
+.spaces{
+    float: left;
+    margin-right: 6px;
+    margin-top: 2px;
+}
