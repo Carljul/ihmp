@@ -17,7 +17,7 @@ class TemplateController extends Controller
     public function index()
     {
         //return all data for Template table
-        $result = Template::where('is_deleted', 0)->get();
+        $result = Template::where('is_deleted', 0)->orderByRaw('id DESC')->get();
 
         //declaring our return response
         $response = $this->customApiResponse($result, 200); //OK

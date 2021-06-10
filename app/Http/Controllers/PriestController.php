@@ -17,7 +17,7 @@ class PriestController extends Controller
     public function index()
     {
         //return all data for Priest table which is not deleted
-        $result = Priest::where('is_deleted', 0)->get();
+        $result = Priest::where('is_deleted', 0)->orderByRaw('id DESC')->get();
 
         //returning json response
         return response()->json($this->customApiResponse($result, 200)); //OK
