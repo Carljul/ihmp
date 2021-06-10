@@ -67,6 +67,7 @@ function confirmationList(){
             if(response.status == 200){
                 var html = "";
                 var confirmationObject = response.data;
+                console.log(response);
                 for(var x = 0; x < confirmationObject.length; x++){
                     var metaContent = JSON.parse(confirmationObject[x]['meta']);
                     html+='<tr>'
@@ -100,6 +101,7 @@ function confirmationList(){
                     +'<td><label style="font-size: 9px;">Registration Book</label><br>'+metaContent['registration_book']+'</td>'
                     +'<td><label style="font-size: 9px;">Book Page</label><br>'+metaContent['book_page']+'</td>'
                     +'<td><label style="font-size: 9px;">Book Number</label><br>'+metaContent['book_number']+'</td>'
+                    +'<td><label style="font-size: 9px;">Book Number</label><br>'+metaContent['priest_id']+'</td>'
                     +'</tr>';
                 }
 
