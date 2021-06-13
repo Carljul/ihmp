@@ -31,6 +31,7 @@
                             <th>Second Sponsor</th>
                             <th>Confirmation by</th>
                             <th colspan="3">Registration Book Detail</th>
+                            <th>Priest</th>
                         </tr>
                     </thead>
                     <tbody id="confirmationListTable">
@@ -45,6 +46,6 @@
 <script>
     $(document).ready(function(){
         // You can find this in general
-        confirmationList();
+        getConfirmationList();
     });
 </script>

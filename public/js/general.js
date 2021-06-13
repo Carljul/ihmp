@@ -51,10 +51,10 @@ function isTokenExist(){
 }
 
 
-// Certificates
-// Confirmation
+// ==================================== Certificates
 
-function confirmationList(){
+// Confirmation
+function getConfirmationList(){
     isTokenExist();
     var AT = localStorage.getItem("AT");
     checkTokenValidity(AT);
@@ -67,13 +67,14 @@ function confirmationList(){
             if(response.status == 200){
                 var html = "";
                 var confirmationObject = response.data;
+                console.log(response);
                 for(var x = 0; x < confirmationObject.length; x++){
                     var metaContent = JSON.parse(confirmationObject[x]['meta']);
                     html+='<tr>'
                     +'<!-- Actions -->'
-                    +'<td><button class="btn waves-effect btn-actions blue tooltipped" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
-                    +'<td><button class="btn waves-effect btn-actions green tooltipped" data-position="bottom" data-delay="50" data-tooltip="Update Record"><i class="material-icons">edit</i></button></td>'
-                    +'<td><button class="btn waves-effect btn-actions red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
+                    +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintCCertificate" id="btnPrintCCertificate-'+confirmationObject[x]['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
+                    +'<td><button class="btn waves-effect btn-actions green tooltipped btnUpdateCCertificate" id="btnUpdateCCertificate-'+confirmationObject[x]['id']+'" data-position="bottom" data-delay="50" data-tooltip="Update Record"><i class="material-icons">edit</i></button></td>'
+                    +'<td><button class="btn waves-effect btn-actions red tooltipped btnDeleteCCertificate" id="btnDeleteCCertificate-'+confirmationObject[x]['id']+'" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
                     +'<!-- Confirmation Date -->'
                     +'<td>'+metaContent['confirmation_month']+'/'+metaContent['confirmation_day']+'/'+metaContent['confirmation_year']+'</td>'
                     +'<!-- Date Issued -->'
@@ -100,11 +101,30 @@ function confirmationList(){
                     +'<td><label style="font-size: 9px;">Registration Book</label><br>'+metaContent['registration_book']+'</td>'
                     +'<td><label style="font-size: 9px;">Book Page</label><br>'+metaContent['book_page']+'</td>'
                     +'<td><label style="font-size: 9px;">Book Number</label><br>'+metaContent['book_number']+'</td>'
+                    +'<td><label style="font-size: 9px;">Book Number</label><br>'+metaContent['priest_id']+'</td>'
                     +'</tr>';
                 }
 
                 $("#confirmationListTable").html(html);
                 $('.tooltipped').tooltip({delay: 50});
+
+                /// Print Confirmation Certificate
+                $(".btnPrintCCertificate").on('click', function(){
+                    var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
+                    printConfirmationCertificate(certificateId, $(this).attr("id"));
+                });
+
+                /// Update Confirmation Certificate
+                $(".btnUpdateCCertificate").on('click', function(){
+                    var certificateId = $(this).attr("id").substr('btnUpdateCCertificate-'.length);
+                    showToUpdateConfirmationCertificate(certificateId, $(this).attr("id"));
+                });
+
+                /// Delete Confirmation Certificate
+                $(".btnDeleteCCertificate").on("click",function(){
+                    var certificateId = $(this).attr("id").substr('btnDeleteCCertificate-'.length);
+                    deleteConfirmationCertificate(certificateId);
+                });
             }else{
                 console.log('Something is not right:: '+response.status);
             }
@@ -112,4 +132,309 @@ function confirmationList(){
             console.log('Something is not right:: '+e);
         }
     });
+
+
+    function printConfirmationCertificate(certificateId){
+        isTokenExist();
+        var AT = localStorage.getItem("AT");
+        checkTokenValidity(AT);
+
+        if(certificateId == undefined || certificateId == null){
+            $('#modalSysError').modal('open');
+        }else{
+        }
+
+    }
+
+    function showToUpdateConfirmationCertificate(certificateId){
+        isTokenExist();
+        var AT = localStorage.getItem("AT");
+        checkTokenValidity(AT);
+
+        if(certificateId == undefined || certificateId == null){
+            $('#modalSysError').modal('open');
+        }else{
+            // TODO:: Show Individual form
+            localStorage.setItem('defaultForm','individual');
+            setFormSelection();
+            // update Form Title
+            $(".headerConfirmation").html('Update Confirmation');
+            // Show Cancel Button
+            $(".btnCancelConfirmationUpdate").removeClass('hide');
+            // Display Information to Form
+            $.ajax({
+                type: "GET",
+                url: certificate_endpoint+"/"+certificateId,
+                success: function(response){
+                    console.log(response);
+                    if(response.status == 200){    
+                        var metaContent = JSON.parse(response.data[0].meta);
+                        console.log(metaContent);                    
+                        
+                        $('#single_confirmation_firstname').val(response.data[0].firstname);
+                        $('#single_confirmation_firstname').addClass('active');
+                        $('#single_confirmation_middlename').val(response.data[0].middlename);
+                        $('#single_confirmation_middlename').addClass('active');
+                        $('#single_confirmation_lastname').val(response.data[0].lastname);
+                        $('#single_confirmation_lastname').addClass('active');
+                        $('#single_confirmation_father_firstname').val(metaContent.father_firstname);
+                        $('#single_confirmation_father_firstname').addClass('active');
+                        $('#single_confirmation_father_middlename').val(metaContent.father_middlename);
+                        $('#single_confirmation_father_middlename').addClass('active');
+                        $('#single_confirmation_father_lastname').val(metaContent.father_lastname);
+                        $('#single_confirmation_father_lastname').addClass('active');
+                        $('#single_confirmation_mother_firstname').val(metaContent.mother_firstname);
+                        $('#single_confirmation_mother_firstname').addClass('active');
+                        $('#single_confirmation_mother_middlename').val(metaContent.mother_firstname);
+                        $('#single_confirmation_mother_middlename').addClass('active');
+                        $('#single_confirmation_mother_lastname').val(metaContent.mother_firstname);
+                        $('#single_confirmation_mother_lastname').addClass('active');
+                        // $('#single_confirmation_date').val(metaContent.father_firstname);
+                        // $('#single_conrfirmation_date_issued').val(metaContent.father_firstname);
+                        $('#single_confirmation_by').val(metaContent.confirmation_by);
+                        // $('#single_confirmation_fsponsor_firstname').val(metaContent.father_firstname);
+                        // $('#single_confirmation_fsponsor_middlename').val(metaContent.father_firstname);
+                        // $('#single_confirmation_fsponsor_lastname').val(metaContent.father_firstname);
+                        // $('#single_confirmation_ssponsor_firstname').val(metaContent.father_firstname);
+                        // $('#single_confirmation_ssponsor_middlename').val(metaContent.father_firstname);
+                        // $('#single_confirmation_ssponsor_lastname').val(metaContent.father_firstname);
+                        $('#single_confirmation_register_book').val(metaContent.registration_book);
+                        $('#single_confirmation_register_book').addClass('active');
+                        $('#single_confirmation_book_page').val(metaContent.book_page);
+                        $('#single_confirmation_book_page').addClass('active');
+                        $('#single_confirmation_book_number').val(metaContent.book_number);
+                        $('#single_confirmation_book_number').addClass('active');
+                        $('#single_confirmation_parish_priest').val(response.data[0].priest_id);
+                        $('#single_confirmation_parish_priest').addClass('active');
+
+
+                        
+                        // $('#single_confirmation_date').addClass('active');
+                        $('#single_conrfirmation_date_issued').addClass('active');
+                        $('#single_confirmation_by').addClass('active');
+                        // $('#single_confirmation_fsponsor_firstname').addClass('active');
+                        // $('#single_confirmation_fsponsor_middlename').addClass('active');
+                        // $('#single_confirmation_fsponsor_lastname').addClass('active');
+                        // $('#single_confirmation_ssponsor_firstname').addClass('active');
+                        // $('#single_confirmation_ssponsor_middlename').addClass('active');
+                        // $('#single_confirmation_ssponsor_lastname').addClass('active');
+                        $('#cis_update').val(1);
+                        $('#cid').val(certificateId);
+                    }else{
+                        var html = "";
+                        html += "<h5>Something went wrong!</h5>"
+                        +""+response.message+"";
+                        $('#modalSysError').modal('open');
+                        $(".errMessage").addClass('hide');
+                        $('.customMessage').html(html);
+                        $(".customMessage").removeClass('hide');
+                    }
+                }, error: function(e){
+                    var html = "";
+                    html += "<h5>Something went wrong!</h5>"
+                    +""+e.message+"";
+                    $('#modalSysError').modal('open');
+                    $(".errMessage").addClass('hide');
+                    $('.customMessage').html(html);
+                    $(".customMessage").removeClass('hide');
+                }
+            });
+        }
+    }
+
+    function deleteConfirmationCertificate(certificateId){
+        isTokenExist();
+        var AT = localStorage.getItem("AT");
+        checkTokenValidity(AT);
+
+        if(certificateId == undefined || certificateId == null){
+            $('#modalSysError').modal('open');
+        }else{
+            /// Pull out record first
+            $.ajax({
+                type: "GET",
+                url: certificate_endpoint+"/"+certificateId,
+                success: function(response){
+                    if(response.status == 200){
+                        /// Prepare Delete Confirmation Modal
+                        $("#recordToDelete").html(response.data[0]['firstname']);
+                        var buttonConfirmation = "<button class='btn btnConfirmedDelete' id='"+certificateId+"'>Delete</button> <button class='btn' id='closeConrimation'>Cancel</button>";
+                        $('#buttonConfirmation').html(buttonConfirmation);
+                        
+                        /// Open the modal
+                        $('#deleteConfirmationModal').modal('open');
+
+                        /// if confirmed Delete
+                        $(".btnConfirmedDelete").click(function(){
+                            var fetchCertificateId = $(this).attr('id');
+                            $.ajax({
+                                type: "DELETE",
+                                url: certificate_endpoint+"/"+fetchCertificateId,
+                                data: {"id": certificateId, "is_deleted": 1},
+                                success: function(response){
+                                    if(response.status == 202){
+                                        getConfirmationList();
+                                        $('#deleteConfirmationModal').modal('close');
+                                    }else{
+                                        console.log('Invalid Code status');
+                                    }
+                                }, error: function(e){
+                                    console.log(e.message);
+                                }
+                            });
+                        });
+
+                        /// else close modal
+                        $("#closeConrimation").click(function(){
+                            $('#deleteConfirmationModal').modal('close');
+                        });
+
+                    }else{
+                        console.log('Invalid Code Status');
+                    }
+                }, error: function(e){
+                    console.log(e.message);
+                }
+            });
+        }
+    }
+}
+
+// reset Class
+function resetClass(){
+    /// Removing hide class to all tables
+    $('#confirmationTable').removeClass('hide');
+    $('#marriageTable').removeClass('hide');
+    $('#birthTable').removeClass('hide');
+    $('#deathTable').removeClass('hide');
+    /// Adding hide class to all tables
+    $('#confirmationTable').addClass('hide');
+    $('#marriageTable').addClass('hide');
+    $('#birthTable').addClass('hide');
+    $('#deathTable').addClass('hide');
+
+    /// Removing hide class to all forms
+    $('#deathForm').removeClass('hide');
+    $('#birthForm').removeClass('hide');
+    $('#marriageForm').removeClass('hide');
+    $('#confirmationForm').removeClass('hide');
+    /// Adding hide class to all forms
+    $('#deathForm').addClass('hide');
+    $('#birthForm').addClass('hide');
+    $('#marriageForm').addClass('hide');
+    $('#confirmationForm').addClass('hide');
+
+
+    ///Removing hide class to all individual and by group
+    $('.singleConfirmation').removeClass('hide');
+    $('.groupConfirmation').removeClass('hide');
+    $('.singleMarriage').removeClass('hide');
+    $('.groupMarriage').removeClass('hide');
+    $('.singleBirth').removeClass('hide');
+    $('.groupBirth').removeClass('hide');
+    $('.singleDeath').removeClass('hide');
+    $('.groupDeath').removeClass('hide');
+    ///Adding hide class to all individual and by group
+    $('.singleConfirmation').addClass('hide');
+    $('.groupConfirmation').addClass('hide');
+    $('.singleMarriage').addClass('hide');
+    $('.groupMarriage').addClass('hide');
+    $('.singleBirth').addClass('hide');
+    $('.groupBirth').addClass('hide');
+    $('.singleDeath').addClass('hide');
+    $('.groupDeath').addClass('hide');
+}
+
+/// Setting Dropdown Values
+function setFormSelection(){            
+    resetClass();
+    var selectionFormVal = localStorage.getItem('defaultForm');
+    var selectionTableVal = localStorage.getItem('defaultTable');
+
+    if(selectionTableVal == "confirmation"){
+        /// Fixing table display
+        $('#confirmationTable').removeClass('hide');
+
+        /// Fixing dropdown selction for records
+        $("#selectCertificate option:selected").removeAttr('selected');
+        $("#selectCertificate option[value='confirmation']").prop('selected', true);
+
+        /// Fixing form display by filter of records
+        $('#confirmationForm').removeClass('hide');
+
+        /// Fixing form display by filter of option to add 
+        if(selectionFormVal == 'individual'){
+            $("#selectForm option:selected").removeAttr('selected');
+            $('#selectForm').prop('selectedIndex',1);
+            $(".singleConfirmation").removeClass('hide');
+        }else{
+            $("#selectForm option:selected").removeAttr('selected');
+            $('#selectForm').prop('selectedIndex',0);
+            $(".groupConfirmation").removeClass('hide');
+        }
+        $('#selectForm').material_select();
+    }else if(selectionTableVal == "mariage"){
+        /// Fixing table display
+        $('#marriageTable').removeClass('hide');
+
+        /// Fixing dropdown selction for records
+        $("#selectCertificate option:selected").removeAttr('selected');
+        $("#selectCertificate option[value='mariage']").prop('selected', true);
+
+        /// Fixing form display by filter of records
+        $('#marriageForm').removeClass('hide');
+
+        /// Fixing form display by filter of option to add 
+        if(selectionFormVal == 'individual'){
+            $("#selectForm option:selected").removeAttr('selected');
+            $("#selectForm option[value='individual']").prop('selected', true);
+            $(".singleMarriage").removeClass('hide');
+        }else{
+            $("#selectForm option:selected").removeAttr('selected');
+            $("#selectForm option[value='group']").prop('selected', true);
+            $(".groupMarriage").removeClass('hide');
+        }
+    }else if(selectionTableVal == "birth"){
+        /// Fixing table display
+        $('#birthTable').removeClass('hide');
+
+        /// Fixing dropdown selction for records
+        $("#selectCertificate option:selected").removeAttr('selected');
+        $("#selectCertificate option[value='birth']").prop('selected', true);
+
+        /// Fixing form display by filter of records
+        $('#birthForm').removeClass('hide');
+
+        /// Fixing form display by filter of option to add 
+        if(selectionFormVal == 'individual'){
+            $("#selectForm option:selected").removeAttr('selected');
+            $("#selectForm option[value='individual']").prop('selected', true);
+            $(".singleBirth").removeClass('hide');
+        }else{
+            $("#selectForm option:selected").removeAttr('selected');
+            $("#selectForm option[value='group']").prop('selected', true);
+            $(".groupBirth").removeClass('hide');
+        }
+    }else if(selectionTableVal == "death"){
+        /// Fixing table display
+        $('#deathTable').removeClass('hide');
+
+        /// Fixing dropdown selction for records
+        $("#selectCertificate option:selected").removeAttr('selected');
+        $("#selectCertificate option[value='death']").prop('selected', true);
+
+        /// Fixing form display by filter of records
+        $('#deathForm').removeClass('hide');
+
+        /// Fixing form display by filter of option to add 
+        if(selectionFormVal == 'individual'){
+            $("#selectForm option:selected").removeAttr('selected');
+            $("#selectForm option[value='individual']").prop('selected', true);
+            $(".singleDeath").removeClass('hide');
+        }else{
+            $("#selectForm option:selected").removeAttr('selected');
+            $("#selectForm option[value='group']").prop('selected', true);
+            $(".groupDeath").removeClass('hide');
+        }
+    }
 }
