@@ -17,7 +17,8 @@ class PriestController extends Controller
     public function index()
     {
         //return all data for Priest table which is not deleted
-        $result = Priest::where('is_deleted', 0)->orderByRaw('id DESC')->offset(0)->limit(10)->get();
+        // $result = Priest::where('is_deleted', 0)->orderByRaw('id DESC')->offset(0)->limit(10)->get();
+        $result = Priest::where('is_deleted', 0)->orderByRaw('id DESC')->paginate(5);
         
         //get all records from priest
         $resultAllCount = Priest::all();

@@ -8,39 +8,50 @@
             </div>
         </div>
         <div class="row">
-            <div class="col s12 m6">
+            <div class="col s12 m8">
                 <div class="row">
-                    <div class="col s12 m6">
+                    <!-- <div class="col s12 m6">
                         <input type="search" class="" placeholder="Search . . .">
                     </div>
                     <div class="col s12 m6">
                         
-                    </div>
+                    </div> -->
                     
                     <div class="col s12">
                         <div class="card">
                             <div class="card-content">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Middle Name</th>
-                                            <th>Last Name</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="appendPriestList">
+                                <div class="row">
+                                    <div class="col s6">
+                                        
+                                    </div>
+                                    <div class="col s6">
+                                        <div id="paginationDiv"></div>
+                                    </div>
+                                    <div class="col s12">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>First Name</th>
+                                                    <th>Middle Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="appendPriestList">
 
-                                    </tbody>
-                                </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="col s12 m6">
+            <div class="col s12 m4">
                 <div class="card">
                     <div class="card-content">
                         <div class="row">
@@ -94,7 +105,9 @@
             $(".certificate").removeClass('active');
             $(".priest").addClass('active');
             isTokenExist();
-            getPriestList();
+            getPriestList("NA");
+
+            // -------------------------------- EVENTS ----------------------------------- //
 
             $("#btnRefresh").on('click', function(e){
                 $(".errMessage").addClass('hide');
@@ -136,7 +149,7 @@
                         data: payload,
                         success: function(data){
                             if(data.status == 200){
-                                getPriestList();
+                                getPriestList("NA");
                             }else{
                                 $('#modalSysError').modal('open');
                             }
@@ -158,7 +171,7 @@
                         data: payload,
                         success: function(data){
                             if(data.status == 201){
-                                getPriestList();
+                                getPriestList("NA");
                             }else{
                                 $('#modalSysError').modal('open');
                             }
@@ -178,19 +191,40 @@
                 $('#lastname').val('');
             });
 
+            // DT: pagination button here...
+            $(document).on('click', '.btnPagination', function(){
+                let url = $(this).attr("url");
+                let status = $(this).attr("class").split(" ")[1];
+                if(status != "disabled"){
+                    getPriestList(url);
+                }
+            })
+
+
+            // ------------------------------------------ FUNCITONS ------------------------------------------ //
             // Will fetch all not deleted priest
-            function getPriestList(){
+            function getPriestList(url){
                 isTokenExist();
                 var AT = localStorage.getItem("AT");
                 checkTokenValidity(AT);
 
                 $.ajax({
                     type: 'GET',
-                    url: priest_endpoint,
+                    url: url == "NA" ? priest_endpoint : url,
+                    // url: priest_endpoint,
                     success: function(response){
                         var html = "";
-                        var priestObject = response.data;
-                        console.log(priestObject);
+                        var priestObject = response.data.data;
+                        var prevPageURL = response.data.prev_page_url;
+                        var nextPageURL = response.data.next_page_url;
+                        var path = response.data.path;
+                        var currentPage = response.data.current_page;
+                        var lastPage = response.data.last_page;
+                        var pageHtml = `<ul class="pagination">
+                                        <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPagination ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}"><i class="material-icons">chevron_left</i></a></li>`;
+                        
+                        console.log("getPriestList", response);
+
                         for(var x = 0; x < priestObject.length; x++){
                             html += "<tr>"
                             +"<td>"+priestObject[x]['prefix']+"</td>"
@@ -204,7 +238,22 @@
                             +"</td>"
                             +"</tr>";
                         }
+
+                        for(let i = 0 ; i < lastPage ; i++){
+                            if(currentPage == parseInt(i+1)){
+                                pageHtml += `<li class="active"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}">${i+1}</a></li>`;
+                            }else{
+                                pageHtml += `<li class="waves-effect"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}">${i+1}</a></li>`;
+                            }
+                        }
+                        pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPagination ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}"><i class="material-icons">chevron_right</i></a></li>
+                                    </ul>`;
+
                         
+                        //display the pagination
+                        $("#paginationDiv").html(pageHtml);
+
+                        //display the data to table
                         $("#appendPriestList").html(html);
 
                         /// Delete Priest
@@ -218,12 +267,13 @@
                             var priestId = $(this).attr("id").substr('btnUpdate-'.length);
                             showToUpdatePriest(priestId, $(this).attr("id"));
                         });
+
                     },error: function(e){
                         $('#modalSysError').modal('open');
                     }
                 });
             }
-            
+
             // Will delete a priest
             function deletePriest(priestId){
                 isTokenExist();
@@ -256,7 +306,7 @@
                                         data: {"id": priestId, "is_deleted": 1},
                                         success: function(response){
                                             if(response.status == 202){
-                                                getPriestList();
+                                                getPriestList("NA");
                                                 $('#deleteConfirmationModal').modal('close');
                                             }else{
                                                 console.log('Invalid Code status');
