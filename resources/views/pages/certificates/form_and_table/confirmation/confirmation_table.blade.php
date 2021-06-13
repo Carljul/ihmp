@@ -46,6 +46,6 @@
 <script>
     $(document).ready(function(){
         // You can find this in general
-        confirmationList();
+        getConfirmationList();
     });
 </script>

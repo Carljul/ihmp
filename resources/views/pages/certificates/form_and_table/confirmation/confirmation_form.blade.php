@@ -2,7 +2,7 @@
     <div class="card-content">
         <div class="row">
             <div class="col s12">
-                <h5>Add Confirmation</h5>
+                <h5 class="headerConfirmation">Add Confirmation</h5>
             </div>
         </div>
         <div class="row">
@@ -166,7 +166,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <input class="btn btn-wave" id="btnSavePriest" type="submit" value="Save">
+                    <input class="btn waves-effect" id="btnSaveConfirmationForm" type="submit" value="Save">
+                    <button class="btn waves-effect btnCancelConfirmationUpdate hide">Cancel</button>
                 </div>
             </form>
         </div>
@@ -274,6 +275,15 @@
 
                 }
             }
+        });
+
+        // CancelC Confirmation Update
+        $(".btnCancelConfirmationUpdate").on('click', function(){
+            clearConfirmationInputFields();
+            $(this).addClass('hide');
+            
+            // update Form Title
+            $(".headerConfirmation").html('Add Confirmation');
         });
 
         // clear field
