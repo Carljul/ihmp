@@ -3,11 +3,6 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12">
-                <h5>{{$title}}</h5>
-            </div>
-        </div>
-        <div class="row">
             <div class="col s12 m8">
                 <div class="row">
                     <!-- <div class="col s12 m6">
@@ -22,10 +17,10 @@
                             <div class="card-content">
                                 <div class="row">
                                     <div class="col s6">
-                                        
+                                        <h5>{{$title}}</h5>
                                     </div>
                                     <div class="col s6">
-                                        <div id="paginationDiv"></div>
+                                        <div id="paginationDiv" class="right"></div>
                                     </div>
                                     <div class="col s12">
                                         <table>
@@ -56,7 +51,7 @@
                     <div class="card-content">
                         <div class="row">
                             <div class="col s12">
-                                <h5>Add Priest</h5>
+                                <h5 id="priestFormHeader">Add Priest</h5>
                             </div>
                         </div>
                         <div class="row">
@@ -89,7 +84,8 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <input class="btn btn-wave" id="btnSavePriest" type="submit" value="Save">
+                                    <input class="btn waves-effect" id="btnSavePriest" type="submit" value="Save">
+                                    <button class="btn waves-effect hide" id="cancelPriestUpdate">Cancel</button>
                                 </div>
                             </form>
                         </div>
@@ -172,6 +168,7 @@
                         success: function(data){
                             if(data.status == 201){
                                 getPriestList("NA");
+                                clearForm();
                             }else{
                                 $('#modalSysError').modal('open');
                             }
@@ -198,7 +195,13 @@
                 if(status != "disabled"){
                     getPriestList(url);
                 }
-            })
+            });
+
+            $('#cancelPriestUpdate').on('click', function(){
+                clearForm();
+                $(this).addClass('hide');
+                $('#priestFormHeader').html('Add Priest');
+            });
 
 
             // ------------------------------------------ FUNCITONS ------------------------------------------ //
@@ -357,6 +360,8 @@
                                 $("label[for='lastname']").addClass('active');
                                 $('#is_update').val(1);
                                 $('#pid').val(priestId);
+                                $('#priestFormHeader').html('Update Priest');
+                                $('#cancelPriestUpdate').removeClass('hide');
                             }else{
                                 var html = "";
                                 html += "<h5>Something went wrong!</h5>"
@@ -379,6 +384,17 @@
                 }
             }
 
+            // Will clear form
+            function clearForm(){
+                $('#priest_form').find('input:text, input:password, select')
+                .each(function () {
+                    $(this).val('');
+                });
+                $('#priest_form').find("label[for='prefix'], label[for='firstname'], label[for='middlename'], label[for='lastname']")
+                .each(function () {
+                    $(this).removeClass('active');
+                });
+            }
 
         });
     </script>
