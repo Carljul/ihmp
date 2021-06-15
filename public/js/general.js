@@ -54,7 +54,8 @@ function isTokenExist(){
 // ==================================== Certificates
 
 // Confirmation
-function getConfirmationList(){
+function getConfirmationList(url){
+    console.log(url);
     isTokenExist();
     var AT = localStorage.getItem("AT");
     checkTokenValidity(AT);
@@ -62,15 +63,19 @@ function getConfirmationList(){
     
     $.ajax({
         type: "GET",
-        url: certificate_endpoint,
-        data: {"certificate_type": "confirmation"},
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
+        url: url == "NA" ? certificate_endpoint+"?certificate_type=confirmation" : url,
         success: function(response){
             if(response.status == 200){
                 var html = "";
                 var confirmationObject = response.data.data;
                 console.log(response);
+                var prevPageURL = response.data.prev_page_url;
+                var nextPageURL = response.data.next_page_url;
+                var path = response.data.path;
+                var currentPage = response.data.current_page;
+                var lastPage = response.data.last_page;
+                var pageHtml = `<ul class="pagination">
+                                <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPagination ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=confirmation"><i class="material-icons">chevron_left</i></a></li>`;
                 for(var x = 0; x < confirmationObject.length; x++){
                     var metaContent = JSON.parse(confirmationObject[x]['meta']);
                     html+='<tr>'
@@ -108,6 +113,8 @@ function getConfirmationList(){
                     +'</tr>';
                 }
 
+                generatePagination(lastPage, currentPage, pageHtml, path, nextPageURL, 'confirmation');
+
                 $("#confirmationListTable").html(html);
                 $('.tooltipped').tooltip({delay: 50});
 
@@ -129,7 +136,7 @@ function getConfirmationList(){
                     deleteConfirmationCertificate(certificateId);
                 });
             }else{
-                console.log('Something is not right:: ',response.status);
+                console.log('Something is not right:: ',response);
             }
         }, error: function(e){
             console.log('Something is not right:: ',e);
@@ -283,8 +290,30 @@ function getConfirmationList(){
         }
     }
 
-    function generatePagination(){
+    function generatePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificate){
+        for(let i = 0 ; i < lastPage ; i++){
+            if(currentPage == parseInt(i+1)){
+                pageHtml += `<li class="active"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+            }else{
+                pageHtml += `<li class="waves-effect"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+            }
+        }
+        pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPagination ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}&certificate_type=${certificate}"><i class="material-icons">chevron_right</i></a></li>
+                    </ul>`;
+
         
+        //display the pagination
+        $("#paginationCertificate").html(pageHtml);
+
+        // DT: pagination button here...
+        $(document).on('click', '.btnPagination', function(){
+            let url = $(this).attr("url");
+            let status = $(this).attr("class").split(" ")[1];
+            if(status != "disabled"){
+                getConfirmationList(url);
+            }
+        });
+
     }
 }
 
