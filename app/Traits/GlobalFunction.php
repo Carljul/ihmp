@@ -82,4 +82,9 @@ trait GlobalFunction {
 
         return [ 'data' => $data, 'status' => $status, 'message' => $message];
     }
+
+    //added a function here for returning the pagination value
+    public function getPaginationLimit(){
+        return 5; //by default, setting our pagination limit to 5
+    }
 }

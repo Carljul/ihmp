@@ -17,7 +17,7 @@ class CertificateController extends Controller
     public function index(Request $request)
     {
         //return all data for Certificate table
-        $result = Certificate::where('is_deleted', 0)->where('certificate_type', $request->certificate_type)->orderByRaw('id DESC')->paginate(5);
+        $result = Certificate::where('is_deleted', 0)->where('certificate_type', $request->certificate_type)->orderByRaw('id DESC')->paginate($this->getPaginationLimit());
 
         //returning json response
         return response()->json($this->customApiResponse($result, 200)); //OK
