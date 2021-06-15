@@ -105,7 +105,7 @@ class PriestController extends Controller
                     ->orWhere('middlename', $search)
                     ->orWhere('lastname', $search)
                     ->orWhere('prefix', $search)
-                    ->get();
+                    ->paginate($this->getPaginationLimit());
 
             //if search is not found
             if(count($result) == 0){
