@@ -292,6 +292,10 @@
             .each(function () {
                 $(this).val('');
             });
+            $('#single_confirmation_form').find('label')
+            .each(function () {
+                $(this).removeClass('active');
+            });
         }
     });
 </script>

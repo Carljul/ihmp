@@ -14,10 +14,10 @@ class CertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //return all data for Certificate table
-        $result = Certificate::where('is_deleted', 0)->orderByRaw('id DESC')->get();
+        $result = Certificate::where('is_deleted', 0)->where('certificate_type', $request->certificate_type)->orderByRaw('id DESC')->paginate(5);
 
         //returning json response
         return response()->json($this->customApiResponse($result, 200)); //OK

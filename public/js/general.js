@@ -63,10 +63,13 @@ function getConfirmationList(){
     $.ajax({
         type: "GET",
         url: certificate_endpoint,
+        data: {"certificate_type": "confirmation"},
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
         success: function(response){
             if(response.status == 200){
                 var html = "";
-                var confirmationObject = response.data;
+                var confirmationObject = response.data.data;
                 console.log(response);
                 for(var x = 0; x < confirmationObject.length; x++){
                     var metaContent = JSON.parse(confirmationObject[x]['meta']);
@@ -126,10 +129,10 @@ function getConfirmationList(){
                     deleteConfirmationCertificate(certificateId);
                 });
             }else{
-                console.log('Something is not right:: '+response.status);
+                console.log('Something is not right:: ',response.status);
             }
         }, error: function(e){
-            console.log('Something is not right:: '+e);
+            console.log('Something is not right:: ',e);
         }
     });
 
@@ -172,23 +175,14 @@ function getConfirmationList(){
                         console.log(metaContent);                    
                         
                         $('#single_confirmation_firstname').val(response.data[0].firstname);
-                        $('#single_confirmation_firstname').addClass('active');
                         $('#single_confirmation_middlename').val(response.data[0].middlename);
-                        $('#single_confirmation_middlename').addClass('active');
                         $('#single_confirmation_lastname').val(response.data[0].lastname);
-                        $('#single_confirmation_lastname').addClass('active');
                         $('#single_confirmation_father_firstname').val(metaContent.father_firstname);
-                        $('#single_confirmation_father_firstname').addClass('active');
                         $('#single_confirmation_father_middlename').val(metaContent.father_middlename);
-                        $('#single_confirmation_father_middlename').addClass('active');
                         $('#single_confirmation_father_lastname').val(metaContent.father_lastname);
-                        $('#single_confirmation_father_lastname').addClass('active');
                         $('#single_confirmation_mother_firstname').val(metaContent.mother_firstname);
-                        $('#single_confirmation_mother_firstname').addClass('active');
                         $('#single_confirmation_mother_middlename').val(metaContent.mother_firstname);
-                        $('#single_confirmation_mother_middlename').addClass('active');
                         $('#single_confirmation_mother_lastname').val(metaContent.mother_firstname);
-                        $('#single_confirmation_mother_lastname').addClass('active');
                         // $('#single_confirmation_date').val(metaContent.father_firstname);
                         // $('#single_conrfirmation_date_issued').val(metaContent.father_firstname);
                         $('#single_confirmation_by').val(metaContent.confirmation_by);
@@ -199,25 +193,15 @@ function getConfirmationList(){
                         // $('#single_confirmation_ssponsor_middlename').val(metaContent.father_firstname);
                         // $('#single_confirmation_ssponsor_lastname').val(metaContent.father_firstname);
                         $('#single_confirmation_register_book').val(metaContent.registration_book);
-                        $('#single_confirmation_register_book').addClass('active');
                         $('#single_confirmation_book_page').val(metaContent.book_page);
-                        $('#single_confirmation_book_page').addClass('active');
                         $('#single_confirmation_book_number').val(metaContent.book_number);
-                        $('#single_confirmation_book_number').addClass('active');
                         $('#single_confirmation_parish_priest').val(response.data[0].priest_id);
-                        $('#single_confirmation_parish_priest').addClass('active');
-
-
                         
-                        // $('#single_confirmation_date').addClass('active');
-                        $('#single_conrfirmation_date_issued').addClass('active');
-                        $('#single_confirmation_by').addClass('active');
-                        // $('#single_confirmation_fsponsor_firstname').addClass('active');
-                        // $('#single_confirmation_fsponsor_middlename').addClass('active');
-                        // $('#single_confirmation_fsponsor_lastname').addClass('active');
-                        // $('#single_confirmation_ssponsor_firstname').addClass('active');
-                        // $('#single_confirmation_ssponsor_middlename').addClass('active');
-                        // $('#single_confirmation_ssponsor_lastname').addClass('active');
+                        
+                        $('#single_confirmation_form').find('label')
+                        .each(function () {
+                            $(this).addClass('active');
+                        });
                         $('#cis_update').val(1);
                         $('#cid').val(certificateId);
                     }else{
@@ -297,6 +281,10 @@ function getConfirmationList(){
                 }
             });
         }
+    }
+
+    function generatePagination(){
+        
     }
 }
 
