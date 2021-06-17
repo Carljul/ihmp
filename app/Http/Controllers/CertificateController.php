@@ -91,7 +91,7 @@ class CertificateController extends Controller
                 "mother_lastname" => $content->{"mother_lastname"},
                 "resident_of" => $content->{"resident_of"},
                 "baptism_date" => $content->{"baptism_date"},
-                "baptism_minister" => [],
+                "baptism_minister" => $content->{"baptism_minister"},
                 "baptismal_register" => $content->{"baptismal_register"},
                 "volume" => $content->{"volume"},
                 "page" => $content->{"page"},

@@ -1,8 +1,12 @@
 <div class="card">
     <div class="card-content">
         <div class="row">
-            <div class="col s12">
-                <h5>Mariage Record</h5>
+            <div class="col s12 m6">
+                <h5>Marriage Record</h5>
+            </div>
+            <div class="col s12 m6">
+                <ul class="pagination right removeBottomMargin" id="paginationMarriage">
+                </ul>
             </div>
         </div>
         <div class="row">

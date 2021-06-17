@@ -114,38 +114,14 @@
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_fsponsor_first_name_1" type="text" class="validate" name="confirmation_fsponsor_first_name_1">
-                                    <label for="confirmation_fsponsor_first_name_1">1st Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_middle_name_1" type="text" class="validate" name="confirmation_fsponsor_middle_name_1">
-                                    <label for="confirmation_fsponsor_middle_name_1">1st Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_last_name_1" type="text" class="validate" name="confirmation_fsponsor_last_name_1">
-                                    <label for="confirmation_fsponsor_last_name_1">1st Sponsor Last Name</label>
+                                    <label for="confirmation_fsponsor_first_name_1">1st Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Second Sponsor -->
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_ssponsor_first_name_1" type="text" class="validate" name="confirmation_ssponsor_first_name_1">
-                                    <label for="confirmation_ssponsor_first_name_1">2nd Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_middle_name_1" type="text" class="validate" name="confirmation_ssponsor_middle_name_1">
-                                    <label for="confirmation_ssponsor_middle_name_1">2nd Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_last_name_1" type="text" class="validate" name="confirmation_ssponsor_last_name_1">
-                                    <label for="confirmation_ssponsor_last_name_1">2nd Sponsor Last Name</label>
+                                    <label for="confirmation_ssponsor_first_name_1">2nd Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Registration Book Detail -->
@@ -261,38 +237,14 @@
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_fsponsor_first_name_2" type="text" class="validate" name="confirmation_fsponsor_first_name_2">
-                                    <label for="confirmation_fsponsor_first_name_2">1st Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_middle_name_2" type="text" class="validate" name="confirmation_fsponsor_middle_name_2">
-                                    <label for="confirmation_fsponsor_middle_name_2">1st Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_last_name_2" type="text" class="validate" name="confirmation_fsponsor_last_name_2">
-                                    <label for="confirmation_fsponsor_last_name_2">1st Sponsor Last Name</label>
+                                    <label for="confirmation_fsponsor_first_name_2">1st Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Second Sponsor -->
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_ssponsor_first_name_2" type="text" class="validate" name="confirmation_ssponsor_first_name_2">
-                                    <label for="confirmation_ssponsor_first_name_2">2nd Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_middle_name_2" type="text" class="validate" name="confirmation_ssponsor_middle_name_2">
-                                    <label for="confirmation_ssponsor_middle_name_2">2nd Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_last_name_2" type="text" class="validate" name="confirmation_ssponsor_last_name_2">
-                                    <label for="confirmation_ssponsor_last_name_2">2nd Sponsor Last Name</label>
+                                    <label for="confirmation_ssponsor_first_name_2">2nd Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Registration Book Detail -->
@@ -408,38 +360,14 @@
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_fsponsor_first_name_3" type="text" class="validate" name="confirmation_fsponsor_first_name_3">
-                                    <label for="confirmation_fsponsor_first_name_3">1st Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_middle_name_3" type="text" class="validate" name="confirmation_fsponsor_middle_name_3">
-                                    <label for="confirmation_fsponsor_middle_name_3">1st Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_last_name_3" type="text" class="validate" name="confirmation_fsponsor_last_name_3">
-                                    <label for="confirmation_fsponsor_last_name_3">1st Sponsor Last Name</label>
+                                    <label for="confirmation_fsponsor_first_name_3">1st Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Second Sponsor -->
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_ssponsor_first_name_3" type="text" class="validate" name="confirmation_ssponsor_first_name_3">
-                                    <label for="confirmation_ssponsor_first_name_3">2nd Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_middle_name_3" type="text" class="validate" name="confirmation_ssponsor_middle_name_3">
-                                    <label for="confirmation_ssponsor_middle_name_3">2nd Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_last_name_3" type="text" class="validate" name="confirmation_ssponsor_last_name_3">
-                                    <label for="confirmation_ssponsor_last_name_3">2nd Sponsor Last Name</label>
+                                    <label for="confirmation_ssponsor_first_name_3">2nd Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Registration Book Detail -->
@@ -555,38 +483,14 @@
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_fsponsor_first_name_4" type="text" class="validate" name="confirmation_fsponsor_first_name_4">
-                                    <label for="confirmation_fsponsor_first_name_4">1st Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_middle_name_4" type="text" class="validate" name="confirmation_fsponsor_middle_name_4">
-                                    <label for="confirmation_fsponsor_middle_name_4">1st Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_last_name_4" type="text" class="validate" name="confirmation_fsponsor_last_name_4">
-                                    <label for="confirmation_fsponsor_last_name_4">1st Sponsor Last Name</label>
+                                    <label for="confirmation_fsponsor_first_name_4">1st Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Second Sponsor -->
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_ssponsor_first_name_4" type="text" class="validate" name="confirmation_ssponsor_first_name_4">
-                                    <label for="confirmation_ssponsor_first_name_4">2nd Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_middle_name_4" type="text" class="validate" name="confirmation_ssponsor_middle_name_4">
-                                    <label for="confirmation_ssponsor_middle_name_4">2nd Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_last_name_4" type="text" class="validate" name="confirmation_ssponsor_last_name_4">
-                                    <label for="confirmation_ssponsor_last_name_4">2nd Sponsor Last Name</label>
+                                    <label for="confirmation_ssponsor_first_name_4">2nd Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Registration Book Detail -->
@@ -702,19 +606,7 @@
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_fsponsor_first_name_5" type="text" class="validate" name="confirmation_fsponsor_first_name_5">
-                                    <label for="confirmation_fsponsor_first_name_5">1st Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_middle_name_5" type="text" class="validate" name="confirmation_fsponsor_middle_name_5">
-                                    <label for="confirmation_fsponsor_middle_name_5">1st Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_last_name_5" type="text" class="validate" name="confirmation_fsponsor_last_name_5">
-                                    <label for="confirmation_fsponsor_last_name_5">1st Sponsor Last Name</label>
+                                    <label for="confirmation_fsponsor_first_name_5">1st Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Second Sponsor -->
@@ -722,18 +614,6 @@
                                 <div class="input-field">
                                     <input id="confirmation_ssponsor_first_name_5" type="text" class="validate" name="confirmation_ssponsor_first_name_5">
                                     <label for="confirmation_ssponsor_first_name_5">2nd Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_middle_name_5" type="text" class="validate" name="confirmation_ssponsor_middle_name_5">
-                                    <label for="confirmation_ssponsor_middle_name_5">2nd Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_last_name_5" type="text" class="validate" name="confirmation_ssponsor_last_name_5">
-                                    <label for="confirmation_ssponsor_last_name_5">2nd Sponsor Last Name</label>
                                 </div>
                             </td>
                             <!-- Registration Book Detail -->
@@ -849,38 +729,14 @@
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_fsponsor_first_name_6" type="text" class="validate" name="confirmation_fsponsor_first_name_6">
-                                    <label for="confirmation_fsponsor_first_name_6">1st Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_middle_name_6" type="text" class="validate" name="confirmation_fsponsor_middle_name_6">
-                                    <label for="confirmation_fsponsor_middle_name_6">1st Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_last_name_6" type="text" class="validate" name="confirmation_fsponsor_last_name_6">
-                                    <label for="confirmation_fsponsor_last_name_6">1st Sponsor Last Name</label>
+                                    <label for="confirmation_fsponsor_first_name_6">1st Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Second Sponsor -->
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_ssponsor_first_name_6" type="text" class="validate" name="confirmation_ssponsor_first_name_6">
-                                    <label for="confirmation_ssponsor_first_name_6">2nd Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_middle_name_6" type="text" class="validate" name="confirmation_ssponsor_middle_name_6">
-                                    <label for="confirmation_ssponsor_middle_name_6">2nd Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_last_name_6" type="text" class="validate" name="confirmation_ssponsor_last_name_6">
-                                    <label for="confirmation_ssponsor_last_name_6">2nd Sponsor Last Name</label>
+                                    <label for="confirmation_ssponsor_first_name_6">2nd Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Registration Book Detail -->
@@ -918,71 +774,71 @@
                             <!-- Record of -->
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_first_name_1" type="text" class="validate" name="confirmation_first_name_1">
-                                    <label for="confirmation_first_name_1">First Name</label>
+                                    <input id="confirmation_first_name_7" type="text" class="validate" name="confirmation_first_name_7">
+                                    <label for="confirmation_first_name_7">First Name</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_middle_name_5" type="text" class="validate" name="confirmation_middle_name_5">
-                                    <label for="confirmation_middle_name_5">Middle Name</label>
+                                    <input id="confirmation_middle_name_7" type="text" class="validate" name="confirmation_middle_name_7">
+                                    <label for="confirmation_middle_name_7">Middle Name</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_last_name_1" type="text" class="validate" name="confirmation_last_name_1">
-                                    <label for="confirmation_last_name_1">Last Name</label>
+                                    <input id="confirmation_last_name_7" type="text" class="validate" name="confirmation_last_name_7">
+                                    <label for="confirmation_last_name_7">Last Name</label>
                                 </div>
                             </td>
                             <!-- Fathers Name -->
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_father_first_name_1" type="text" class="validate" name="confirmation_father_first_name_1">
-                                    <label for="confirmation_father_first_name_1">Fathers First Name</label>
+                                    <input id="confirmation_father_first_name_7" type="text" class="validate" name="confirmation_father_first_name_7">
+                                    <label for="confirmation_father_first_name_7">Fathers First Name</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_father_middle_name_1" type="text" class="validate" name="confirmation_father_middle_name_1">
-                                    <label for="confirmation_father_middle_name_1">Fathers Middle Name</label>
+                                    <input id="confirmation_father_middle_name_7" type="text" class="validate" name="confirmation_father_middle_name_7">
+                                    <label for="confirmation_father_middle_name_7">Fathers Middle Name</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_father_last_name_1" type="text" class="validate" name="confirmation_father_last_name_1">
-                                    <label for="confirmation_father_last_name_1">Fathers Last Name</label>
+                                    <input id="confirmation_father_last_name_7" type="text" class="validate" name="confirmation_father_last_name_7">
+                                    <label for="confirmation_father_last_name_7">Fathers Last Name</label>
                                 </div>
                             </td>
                             <!-- Mothers Name -->
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_mother_first_name_1" type="text" class="validate" name="confirmation_mother_first_name_1">
-                                    <label for="confirmation_mother_first_name_1">Mothers First Name</label>
+                                    <input id="confirmation_mother_first_name_7" type="text" class="validate" name="confirmation_mother_first_name_7">
+                                    <label for="confirmation_mother_first_name_7">Mothers First Name</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_mother_middle_name_1" type="text" class="validate" name="confirmation_mother_middle_name_1">
-                                    <label for="confirmation_mother_middle_name_1">Mothers Middle Name</label>
+                                    <input id="confirmation_mother_middle_name_7" type="text" class="validate" name="confirmation_mother_middle_name_7">
+                                    <label for="confirmation_mother_middle_name_7">Mothers Middle Name</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_mother_last_name_1" type="text" class="validate" name="confirmation_mother_last_name_1">
-                                    <label for="confirmation_mother_last_name_1">Mothers Last Name</label>
+                                    <input id="confirmation_mother_last_name_7" type="text" class="validate" name="confirmation_mother_last_name_7">
+                                    <label for="confirmation_mother_last_name_7">Mothers Last Name</label>
                                 </div>
                             </td>
                             <!-- Confirmation Dates -->
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_confirmation_date_1" type="text" class="datepicker" name="confirmation_confirmation_date_1">
-                                    <label for="confirmation_confirmation_date_1">Confirmation Date</label>
+                                    <input id="confirmation_confirmation_date_7" type="text" class="datepicker" name="confirmation_confirmation_date_7">
+                                    <label for="confirmation_confirmation_date_7">Confirmation Date</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_date_issued_1" type="text" class="datepicker" name="confirmation_date_issued_1">
-                                    <label for="confirmation_date_issued_1">Date Issued</label>
+                                    <input id="confirmation_date_issued_7" type="text" class="datepicker" name="confirmation_date_issued_7">
+                                    <label for="confirmation_date_issued_7">Date Issued</label>
                                 </div>
                             </td>
                             <!-- Confirmation By -->
@@ -995,58 +851,34 @@
                             <!-- 1st Sponsor -->
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_fsponsor_first_name_1" type="text" class="validate" name="confirmation_fsponsor_first_name_1">
-                                    <label for="confirmation_fsponsor_first_name_1">1st Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_middle_name_1" type="text" class="validate" name="confirmation_fsponsor_middle_name_1">
-                                    <label for="confirmation_fsponsor_middle_name_1">1st Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_last_name_1" type="text" class="validate" name="confirmation_fsponsor_last_name_1">
-                                    <label for="confirmation_fsponsor_last_name_1">1st Sponsor Last Name</label>
+                                    <input id="confirmation_fsponsor_first_name_7" type="text" class="validate" name="confirmation_fsponsor_first_name_7">
+                                    <label for="confirmation_fsponsor_first_name_7">1st Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Second Sponsor -->
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_ssponsor_first_name_1" type="text" class="validate" name="confirmation_ssponsor_first_name_1">
-                                    <label for="confirmation_ssponsor_first_name_1">2nd Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_middle_name_1" type="text" class="validate" name="confirmation_ssponsor_middle_name_1">
-                                    <label for="confirmation_ssponsor_middle_name_1">2nd Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_last_name_1" type="text" class="validate" name="confirmation_ssponsor_last_name_1">
-                                    <label for="confirmation_ssponsor_last_name_1">2nd Sponsor Last Name</label>
+                                    <input id="confirmation_ssponsor_first_name_7" type="text" class="validate" name="confirmation_ssponsor_first_name_7">
+                                    <label for="confirmation_ssponsor_first_name_7">2nd Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Registration Book Detail -->
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_register_book_1" type="text" class="validate" name="confirmation_register_book_1">
-                                    <label for="confirmation_register_book_1">Register Book</label>
+                                    <input id="confirmation_register_book_7" type="text" class="validate" name="confirmation_register_book_7">
+                                    <label for="confirmation_register_book_7">Register Book</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_book_page_1" type="text" class="validate" name="confirmation_book_page_1">
-                                    <label for="confirmation_book_page_1">Book Page</label>
+                                    <input id="confirmation_book_page_7" type="text" class="validate" name="confirmation_book_page_7">
+                                    <label for="confirmation_book_page_7">Book Page</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_book_number_1" type="text" class="validate" name="confirmation_book_number_1">
-                                    <label for="confirmation_book_number_1">Number</label>
+                                    <input id="confirmation_book_number_7" type="text" class="validate" name="confirmation_book_number_7">
+                                    <label for="confirmation_book_number_7">Number</label>
                                 </div>
                             </td>
                             <td>
@@ -1065,71 +897,71 @@
                             <!-- Record of -->
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_first_name_1" type="text" class="validate" name="confirmation_first_name_1">
-                                    <label for="confirmation_first_name_1">First Name</label>
+                                    <input id="confirmation_first_name_8" type="text" class="validate" name="confirmation_first_name_8">
+                                    <label for="confirmation_first_name_8">First Name</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_middle_name_5" type="text" class="validate" name="confirmation_middle_name_5">
-                                    <label for="confirmation_middle_name_5">Middle Name</label>
+                                    <input id="confirmation_middle_name_8" type="text" class="validate" name="confirmation_middle_name_8">
+                                    <label for="confirmation_middle_name_8">Middle Name</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_last_name_1" type="text" class="validate" name="confirmation_last_name_1">
-                                    <label for="confirmation_last_name_1">Last Name</label>
+                                    <input id="confirmation_last_name_8" type="text" class="validate" name="confirmation_last_name_8">
+                                    <label for="confirmation_last_name_8">Last Name</label>
                                 </div>
                             </td>
                             <!-- Fathers Name -->
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_father_first_name_1" type="text" class="validate" name="confirmation_father_first_name_1">
-                                    <label for="confirmation_father_first_name_1">Fathers First Name</label>
+                                    <input id="confirmation_father_first_name_8" type="text" class="validate" name="confirmation_father_first_name_8">
+                                    <label for="confirmation_father_first_name_8">Fathers First Name</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_father_middle_name_1" type="text" class="validate" name="confirmation_father_middle_name_1">
-                                    <label for="confirmation_father_middle_name_1">Fathers Middle Name</label>
+                                    <input id="confirmation_father_middle_name_8" type="text" class="validate" name="confirmation_father_middle_name_8">
+                                    <label for="confirmation_father_middle_name_8">Fathers Middle Name</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_father_last_name_1" type="text" class="validate" name="confirmation_father_last_name_1">
-                                    <label for="confirmation_father_last_name_1">Fathers Last Name</label>
+                                    <input id="confirmation_father_last_name_8" type="text" class="validate" name="confirmation_father_last_name_8">
+                                    <label for="confirmation_father_last_name_8">Fathers Last Name</label>
                                 </div>
                             </td>
                             <!-- Mothers Name -->
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_mother_first_name_1" type="text" class="validate" name="confirmation_mother_first_name_1">
-                                    <label for="confirmation_mother_first_name_1">Mothers First Name</label>
+                                    <input id="confirmation_mother_first_name_8" type="text" class="validate" name="confirmation_mother_first_name_8">
+                                    <label for="confirmation_mother_first_name_8">Mothers First Name</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_mother_middle_name_1" type="text" class="validate" name="confirmation_mother_middle_name_1">
-                                    <label for="confirmation_mother_middle_name_1">Mothers Middle Name</label>
+                                    <input id="confirmation_mother_middle_name_8" type="text" class="validate" name="confirmation_mother_middle_name_8">
+                                    <label for="confirmation_mother_middle_name_8">Mothers Middle Name</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_mother_last_name_1" type="text" class="validate" name="confirmation_mother_last_name_1">
-                                    <label for="confirmation_mother_last_name_1">Mothers Last Name</label>
+                                    <input id="confirmation_mother_last_name_8" type="text" class="validate" name="confirmation_mother_last_name_8">
+                                    <label for="confirmation_mother_last_name_8">Mothers Last Name</label>
                                 </div>
                             </td>
                             <!-- Confirmation Dates -->
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_confirmation_date_1" type="text" class="datepicker" name="confirmation_confirmation_date_1">
-                                    <label for="confirmation_confirmation_date_1">Confirmation Date</label>
+                                    <input id="confirmation_confirmation_date_8" type="text" class="datepicker" name="confirmation_confirmation_date_8">
+                                    <label for="confirmation_confirmation_date_8">Confirmation Date</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_date_issued_1" type="text" class="datepicker" name="confirmation_date_issued_1">
-                                    <label for="confirmation_date_issued_1">Date Issued</label>
+                                    <input id="confirmation_date_issued_8" type="text" class="datepicker" name="confirmation_date_issued_8">
+                                    <label for="confirmation_date_issued_8">Date Issued</label>
                                 </div>
                             </td>
                             <!-- Confirmation By -->
@@ -1142,58 +974,34 @@
                             <!-- 1st Sponsor -->
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_fsponsor_first_name_1" type="text" class="validate" name="confirmation_fsponsor_first_name_1">
-                                    <label for="confirmation_fsponsor_first_name_1">1st Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_middle_name_1" type="text" class="validate" name="confirmation_fsponsor_middle_name_1">
-                                    <label for="confirmation_fsponsor_middle_name_1">1st Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_last_name_1" type="text" class="validate" name="confirmation_fsponsor_last_name_1">
-                                    <label for="confirmation_fsponsor_last_name_1">1st Sponsor Last Name</label>
+                                    <input id="confirmation_fsponsor_first_name_8" type="text" class="validate" name="confirmation_fsponsor_first_name_8">
+                                    <label for="confirmation_fsponsor_first_name_8">1st Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Second Sponsor -->
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_ssponsor_first_name_1" type="text" class="validate" name="confirmation_ssponsor_first_name_1">
-                                    <label for="confirmation_ssponsor_first_name_1">2nd Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_middle_name_1" type="text" class="validate" name="confirmation_ssponsor_middle_name_1">
-                                    <label for="confirmation_ssponsor_middle_name_1">2nd Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_last_name_1" type="text" class="validate" name="confirmation_ssponsor_last_name_1">
-                                    <label for="confirmation_ssponsor_last_name_1">2nd Sponsor Last Name</label>
+                                    <input id="confirmation_ssponsor_first_name_8" type="text" class="validate" name="confirmation_ssponsor_first_name_8">
+                                    <label for="confirmation_ssponsor_first_name_8">2nd Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Registration Book Detail -->
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_register_book_1" type="text" class="validate" name="confirmation_register_book_1">
-                                    <label for="confirmation_register_book_1">Register Book</label>
+                                    <input id="confirmation_register_book_8" type="text" class="validate" name="confirmation_register_book_8">
+                                    <label for="confirmation_register_book_8">Register Book</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_book_page_1" type="text" class="validate" name="confirmation_book_page_1">
-                                    <label for="confirmation_book_page_1">Book Page</label>
+                                    <input id="confirmation_book_page_8" type="text" class="validate" name="confirmation_book_page_8">
+                                    <label for="confirmation_book_page_8">Book Page</label>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_book_number_1" type="text" class="validate" name="confirmation_book_number_1">
-                                    <label for="confirmation_book_number_1">Number</label>
+                                    <input id="confirmation_book_number_8" type="text" class="validate" name="confirmation_book_number_8">
+                                    <label for="confirmation_book_number_8">Number</label>
                                 </div>
                             </td>
                             <td>
@@ -1218,8 +1026,8 @@
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input id="confirmation_middle_name_5" type="text" class="validate" name="confirmation_middle_name_5">
-                                    <label for="confirmation_middle_name_5">Middle Name</label>
+                                    <input id="confirmation_middle_name_9" type="text" class="validate" name="confirmation_middle_name_9">
+                                    <label for="confirmation_middle_name_9">Middle Name</label>
                                 </div>
                             </td>
                             <td>
@@ -1290,38 +1098,14 @@
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_fsponsor_first_name_9" type="text" class="validate" name="confirmation_fsponsor_first_name_9">
-                                    <label for="confirmation_fsponsor_first_name_9">1st Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_middle_name_9" type="text" class="validate" name="confirmation_fsponsor_middle_name_9">
-                                    <label for="confirmation_fsponsor_middle_name_9">1st Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_last_name_9" type="text" class="validate" name="confirmation_fsponsor_last_name_9">
-                                    <label for="confirmation_fsponsor_last_name_9">1st Sponsor Last Name</label>
+                                    <label for="confirmation_fsponsor_first_name_9">1st Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Second Sponsor -->
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_ssponsor_first_name_9" type="text" class="validate" name="confirmation_ssponsor_first_name_9">
-                                    <label for="confirmation_ssponsor_first_name_9">2nd Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_middle_name_9" type="text" class="validate" name="confirmation_ssponsor_middle_name_9">
-                                    <label for="confirmation_ssponsor_middle_name_9">2nd Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_last_name_9" type="text" class="validate" name="confirmation_ssponsor_last_name_9">
-                                    <label for="confirmation_ssponsor_last_name_9">2nd Sponsor Last Name</label>
+                                    <label for="confirmation_ssponsor_first_name_9">2nd Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Registration Book Detail -->
@@ -1437,38 +1221,14 @@
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_fsponsor_first_name_10" type="text" class="validate" name="confirmation_fsponsor_first_name_10">
-                                    <label for="confirmation_fsponsor_first_name_10">1st Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_middle_name_10" type="text" class="validate" name="confirmation_fsponsor_middle_name_10">
-                                    <label for="confirmation_fsponsor_middle_name_10">1st Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_fsponsor_last_name_10" type="text" class="validate" name="confirmation_fsponsor_last_name_10">
-                                    <label for="confirmation_fsponsor_last_name_10">1st Sponsor Last Name</label>
+                                    <label for="confirmation_fsponsor_first_name_10">1st Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Second Sponsor -->
                             <td>
                                 <div class="input-field">
                                     <input id="confirmation_ssponsor_first_name_10" type="text" class="validate" name="confirmation_ssponsor_first_name_10">
-                                    <label for="confirmation_ssponsor_first_name_10">2nd Sponsor First Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_middle_name_10" type="text" class="validate" name="confirmation_ssponsor_middle_name_10">
-                                    <label for="confirmation_ssponsor_middle_name_10">2nd Sponsor Middle Name</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-field">
-                                    <input id="confirmation_ssponsor_last_name_10" type="text" class="validate" name="confirmation_ssponsor_last_name_10">
-                                    <label for="confirmation_ssponsor_last_name_10">2nd Sponsor Last Name</label>
+                                    <label for="confirmation_ssponsor_first_name_10">2nd Sponsor Name</label>
                                 </div>
                             </td>
                             <!-- Registration Book Detail -->
@@ -1539,11 +1299,7 @@
             date_issued,
             confirmation_by,
             fsponsor_firstname,
-            fsponsor_middlename,
-            fsponsor_lastname,
             ssponsor_firstname,
-            ssponsor_middlename,
-            ssponsor_lastname,
             register_book,
             book_page,
             book_number,
@@ -1565,12 +1321,7 @@
                 date_issued == null || date_issued == undefined || date_issued == "" &&
                 confirmation_by == null || confirmation_by == undefined || confirmation_by == "" &&
                 fsponsor_firstname == null || fsponsor_firstname == undefined || fsponsor_firstname == "" &&
-                fsponsor_firstname == null || fsponsor_firstname == undefined || fsponsor_firstname == "" &&
-                fsponsor_middlename == null || fsponsor_middlename == undefined || fsponsor_middlename == "" &&
-                fsponsor_lastname == null || fsponsor_lastname == undefined || fsponsor_lastname == "" &&
                 ssponsor_firstname == null || ssponsor_firstname == undefined || ssponsor_firstname == "" &&
-                ssponsor_middlename == null || ssponsor_middlename == undefined || ssponsor_middlename == "" &&
-                ssponsor_lastname == null || ssponsor_lastname == undefined || ssponsor_lastname == "" &&
                 register_book == null || register_book == undefined || register_book == "" &&
                 book_page == null || book_page == undefined || book_page == "" &&
                 book_number == null || book_number == undefined || book_number == "" &&
@@ -1595,8 +1346,8 @@
                     "confirmation_month":single_confirmation_converted_month,
                     "confirmation_year":single_confirmation_converted_year,
                     "confirmation_by":confirmation_by,
-                    "first_sponsor":fsponsor_firstname+" "+fsponsor_middlename+" "+fsponsor_lastname,
-                    "second_sponsor":ssponsor_firstname+" "+ssponsor_middlename+" "+ssponsor_lastname,
+                    "first_sponsor":fsponsor_firstname,
+                    "second_sponsor":ssponsor_firstname,
                     "registration_book":register_book,
                     "book_page":book_page,
                     "book_number":book_number,
@@ -1666,7 +1417,7 @@
                         localStorage.removeItem('transactions');
                         localStorage.setItem('transactions', JSON.stringify(listOfTransactions));
                         // update the table
-                        confirmationList();
+                        getConfirmationList('NA');
                         // call again initiate worker to create a recursive effect
                         initiateWorker();
                     }else if(response.status == 400){
@@ -1714,11 +1465,7 @@
                 var confirmation_date_issued = $('#confirmation_date_issued_'+x).val();
                 var confirmation_by = $('#confirmation_by_'+x).val();
                 var confirmation_fsponsor_first_name = $('#confirmation_fsponsor_first_name_'+x).val();
-                var confirmation_fsponsor_middle_name = $('#confirmation_fsponsor_middle_name_'+x).val();
-                var confirmation_fsponsor_last_name = $('#confirmation_fsponsor_last_name_'+x).val();
                 var confirmation_ssponsor_first_name = $('#confirmation_ssponsor_first_name_'+x).val();
-                var confirmation_ssponsor_middle_name = $('#confirmation_ssponsor_middle_name_'+x).val();
-                var confirmation_ssponsor_last_name = $('#confirmation_ssponsor_last_name_'+x).val();
                 var confirmation_register_book = $('#confirmation_register_book_'+x).val();
                 var confirmation_book_page = $('#confirmation_book_page_'+x).val();
                 var confirmation_book_number = $('#confirmation_book_number_'+x).val();
@@ -1738,11 +1485,7 @@
                     confirmation_date_issued,
                     confirmation_by,
                     confirmation_fsponsor_first_name,
-                    confirmation_fsponsor_middle_name,
-                    confirmation_fsponsor_last_name,
                     confirmation_ssponsor_first_name,
-                    confirmation_ssponsor_middle_name,
-                    confirmation_ssponsor_last_name,
                     confirmation_register_book,
                     confirmation_book_page,
                     confirmation_book_number,

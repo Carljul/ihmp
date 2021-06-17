@@ -16,6 +16,7 @@ const at_valid = 'valid';
 const certificate_endpoint = api_server+'certificate';
 /// ======================== Priests
 const priest_endpoint = api_server+'priest';
+const all_priest_endpoint = api_server+'allPriest';
 /// ======================== Templates
 const template_endpoint = api_server+'template';
 /// ======================== Verifying Access Token

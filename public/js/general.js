@@ -75,7 +75,7 @@ function getConfirmationList(url){
                 var currentPage = response.data.current_page;
                 var lastPage = response.data.last_page;
                 var pageHtml = `<ul class="pagination">
-                                <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPagination ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
+                                <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginateConfirmation ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
                 for(var x = 0; x < confirmationObject.length; x++){
                     var metaContent = JSON.parse(confirmationObject[x]['meta']);
                     html+='<tr>'
@@ -293,12 +293,12 @@ function getConfirmationList(url){
     function generatePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificate){
         for(let i = 0 ; i < lastPage ; i++){
             if(currentPage == parseInt(i+1)){
-                pageHtml += `<li class="active"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+                pageHtml += `<li class="active"><a class="btnPaginateConfirmation" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
             }else{
-                pageHtml += `<li class="waves-effect"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+                pageHtml += `<li class="waves-effect"><a class="btnPaginateConfirmation" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
             }
         }
-        pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPagination ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}&certificate_type=${certificate}"><i class="material-icons">chevron_right</i></a></li>
+        pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPaginateConfirmation ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}&certificate_type=${certificate}"><i class="material-icons">chevron_right</i></a></li>
                     </ul>`;
 
         
@@ -306,22 +306,23 @@ function getConfirmationList(url){
         $("#paginationCertificate").html(pageHtml);
 
     }
-
-    
-
-    // DT: pagination button here...
-    $(document).on('click', '.btnPagination', function(){
-        let url = $(this).attr("url");
-        let parentClass = $(this).parent().prop('className');
-        if(parentClass != "active"){
-            let status = $(this).attr("class").split(" ")[1];
-            if(status != "disabled"){
-                getConfirmationList(url);
-            }
-        }
-    });
 }
 
+// DT: pagination button here...
+// Pagination For Confirmation
+$(document).on('click', '.btnPaginateConfirmation', function(){
+    let url = $(this).attr("url");
+    let parentClass = $(this).parent().prop('className');
+    if(parentClass != "active"){
+        let status = $(this).attr("class").split(" ")[1];
+        if(status != "disabled"){
+            getConfirmationList(url);
+        }
+    }
+});
+
+
+// Birth
 function getBirthList(url){
     isTokenExist();
     var AT = localStorage.getItem("AT");
@@ -342,7 +343,7 @@ function getBirthList(url){
                 var currentPage = response.data.current_page;
                 var lastPage = response.data.last_page;
                 var pageHtml = `<ul class="pagination">
-                                <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPagination ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
+                                <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginationForBirth ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
                 for(var x = 0; x < birthObject.length; x++){
                     var metaContent = JSON.parse(birthObject[x]['meta']);
                     html+= '<tr>'
@@ -560,30 +561,556 @@ function getBirthList(url){
     function generateBirthPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificate){
         for(let i = 0 ; i < lastPage ; i++){
             if(currentPage == parseInt(i+1)){
-                pageHtml += `<li class="active"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+                pageHtml += `<li class="active"><a class="btnPaginationForBirth" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
             }else{
-                pageHtml += `<li class="waves-effect"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+                pageHtml += `<li class="waves-effect"><a class="btnPaginationForBirth" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
             }
         }
-        pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPagination ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}&certificate_type=${certificate}"><i class="material-icons">chevron_right</i></a></li>
+        pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPaginationForBirth ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}&certificate_type=${certificate}"><i class="material-icons">chevron_right</i></a></li>
                     </ul>`;
 
         
         //display the pagination
         $("#paginationBirth").html(pageHtml);
 
-        // // DT: pagination button here...
-        // $(document).on('click', '.btnPagination', function(){
-        //     let url = $(this).attr("url");
-        //     let status = $(this).attr("class").split(" ")[1];
-        //     if(status != "disabled"){
-        //         getConfirmationList(url);
-        //     }
-        // });
+    }
+}
+// DT: pagination button here...
+// Pagination For Birth
+$(document).on('click', '.btnPaginationForBirth', function(){
+    let url = $(this).attr("url");
+    let status = $(this).attr("class").split(" ")[1];
+    if(status != "disabled"){
+        getBirthList(url);
+    }
+});
+
+// Mariage
+function getMarriageList(url){
+    isTokenExist();
+    var AT = localStorage.getItem("AT");
+    checkTokenValidity(AT);
+
+    
+    $.ajax({
+        type: "GET",
+        url: url == "NA" ? certificate_endpoint+"?certificate_type=marriage" : url,
+        success: function(response){
+            var certificateType = 'marriage';
+            if(response.status == 200){
+                var html = "";
+                var marriageObject = response.data.data;
+                var prevPageURL = response.data.prev_page_url;
+                var nextPageURL = response.data.next_page_url;
+                var path = response.data.path;
+                var currentPage = response.data.current_page;
+                var lastPage = response.data.last_page;
+                var pageHtml = `<ul class="pagination">
+                                <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginationForMarriage ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
+                for(var x = 0; x < marriageObject.length; x++){
+                    var metaContent = JSON.parse(marriageObject[x]['meta']);
+                    html+= '<tr>'
+                        +'<!-- Actions -->'
+                        +'<td><button class="btn btn-wave btn-actions blue"><i class="material-icons">print</i></button></td>'
+                        +'<td><button class="btn btn-wave btn-actions green"><i class="material-icons">edit</i></button></td>'
+                        +'<td><button class="btn btn-wave btn-actions red"><i class="material-icons">delete</i></button></td>'
+                        +'<!-- Born On -->'
+                        +'<td>First Name</td>'
+                        +'<!-- Record of -->'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<!-- Born In -->'
+                        +'<td>First Name</td>'
+                        +'<!-- Fathers Name -->'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<!-- Mothers Name -->'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<!-- Residents of -->'
+                        +'<td>First Name</td>'
+                        +'<!-- Godparents -->'
+                        +'<td>First Name</td>'
+                        +'<!-- Other Details -->'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<!-- Parish Priest -->'
+                        +'<td>First Name</td>'
+                    +'</tr>';
+                }
+
+                generateMariagePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+
+                $("#marriageListTable").html(html);
+                $('.tooltipped').tooltip({delay: 50});
+
+                /// Print Confirmation Certificate
+                $(".btnPrintCCertificate").on('click', function(){
+                    var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
+                    printMarriageCertificate(certificateId, $(this).attr("id"));
+                });
+
+                /// Update Confirmation Certificate
+                $(".btnUpdateCCertificate").on('click', function(){
+                    var certificateId = $(this).attr("id").substr('btnUpdateCCertificate-'.length);
+                    showToUpdateMarriageCertificate(certificateId, $(this).attr("id"));
+                });
+
+                /// Delete Confirmation Certificate
+                $(".btnDeleteCCertificate").on("click",function(){
+                    var certificateId = $(this).attr("id").substr('btnDeleteCCertificate-'.length);
+                    deleteMarriageCertificate(certificateId);
+                });
+            }else{
+                console.log('Something is not right:: ',response);
+            }
+        }, error: function(e){
+            console.log('Something is not right:: ',e);
+        }
+    });
+
+
+    function printMarriageCertificate(certificateId){
+        isTokenExist();
+        var AT = localStorage.getItem("AT");
+        checkTokenValidity(AT);
+
+        if(certificateId == undefined || certificateId == null){
+            $('#modalSysError').modal('open');
+        }else{
+        }
+
+    }
+
+    function showToUpdateMarriageCertificate(certificateId){
+        isTokenExist();
+        var AT = localStorage.getItem("AT");
+        checkTokenValidity(AT);
+
+        if(certificateId == undefined || certificateId == null){
+            $('#modalSysError').modal('open');
+        }else{
+            // TODO:: Show Individual form
+            localStorage.setItem('defaultForm','individual');
+            setFormSelection();
+            // update Form Title
+            $(".headerConfirmation").html('Update Confirmation');
+            // Show Cancel Button
+            $(".btnCancelConfirmationUpdate").removeClass('hide');
+            // Display Information to Form
+            $.ajax({
+                type: "GET",
+                url: certificate_endpoint+"/"+certificateId,
+                success: function(response){
+                    console.log(response);
+                    if(response.status == 200){    
+                        var metaContent = JSON.parse(response.data[0].meta);
+                        console.log(metaContent);                    
+                        
+                        $('#single_confirmation_firstname').val(response.data[0].firstname);
+                        $('#single_confirmation_middlename').val(response.data[0].middlename);
+                        $('#single_confirmation_lastname').val(response.data[0].lastname);
+                        $('#single_confirmation_father_firstname').val(metaContent.father_firstname);
+                        $('#single_confirmation_father_middlename').val(metaContent.father_middlename);
+                        $('#single_confirmation_father_lastname').val(metaContent.father_lastname);
+                        $('#single_confirmation_mother_firstname').val(metaContent.mother_firstname);
+                        $('#single_confirmation_mother_middlename').val(metaContent.mother_firstname);
+                        $('#single_confirmation_mother_lastname').val(metaContent.mother_firstname);
+                        // $('#single_confirmation_date').val(metaContent.father_firstname);
+                        // $('#single_conrfirmation_date_issued').val(metaContent.father_firstname);
+                        $('#single_confirmation_by').val(metaContent.confirmation_by);
+                        // $('#single_confirmation_fsponsor_firstname').val(metaContent.father_firstname);
+                        // $('#single_confirmation_fsponsor_middlename').val(metaContent.father_firstname);
+                        // $('#single_confirmation_fsponsor_lastname').val(metaContent.father_firstname);
+                        // $('#single_confirmation_ssponsor_firstname').val(metaContent.father_firstname);
+                        // $('#single_confirmation_ssponsor_middlename').val(metaContent.father_firstname);
+                        // $('#single_confirmation_ssponsor_lastname').val(metaContent.father_firstname);
+                        $('#single_confirmation_register_book').val(metaContent.registration_book);
+                        $('#single_confirmation_book_page').val(metaContent.book_page);
+                        $('#single_confirmation_book_number').val(metaContent.book_number);
+                        $('#single_confirmation_parish_priest').val(response.data[0].priest_id);
+                        
+                        
+                        $('#single_confirmation_form').find('label')
+                        .each(function () {
+                            $(this).addClass('active');
+                        });
+                        $('#cis_update').val(1);
+                        $('#cid').val(certificateId);
+                    }else{
+                        var html = "";
+                        html += "<h5>Something went wrong!</h5>"
+                        +""+response.message+"";
+                        $('#modalSysError').modal('open');
+                        $(".errMessage").addClass('hide');
+                        $('.customMessage').html(html);
+                        $(".customMessage").removeClass('hide');
+                    }
+                }, error: function(e){
+                    var html = "";
+                    html += "<h5>Something went wrong!</h5>"
+                    +""+e.message+"";
+                    $('#modalSysError').modal('open');
+                    $(".errMessage").addClass('hide');
+                    $('.customMessage').html(html);
+                    $(".customMessage").removeClass('hide');
+                }
+            });
+        }
+    }
+
+    function deleteMarriageCertificate(certificateId){
+        isTokenExist();
+        var AT = localStorage.getItem("AT");
+        checkTokenValidity(AT);
+
+        if(certificateId == undefined || certificateId == null){
+            $('#modalSysError').modal('open');
+        }else{
+            /// Pull out record first
+            $.ajax({
+                type: "GET",
+                url: certificate_endpoint+"/"+certificateId,
+                success: function(response){
+                    if(response.status == 200){
+                        /// Prepare Delete Confirmation Modal
+                        $("#recordToDelete").html(response.data[0]['firstname']);
+                        var buttonConfirmation = "<button class='btn btnConfirmedDelete' id='"+certificateId+"'>Delete</button> <button class='btn' id='closeConrimation'>Cancel</button>";
+                        $('#buttonConfirmation').html(buttonConfirmation);
+                        
+                        /// Open the modal
+                        $('#deleteConfirmationModal').modal('open');
+
+                        /// if confirmed Delete
+                        $(".btnConfirmedDelete").click(function(){
+                            var fetchCertificateId = $(this).attr('id');
+                            $.ajax({
+                                type: "DELETE",
+                                url: certificate_endpoint+"/"+fetchCertificateId,
+                                data: {"id": certificateId, "is_deleted": 1},
+                                success: function(response){
+                                    if(response.status == 202){
+                                        getConfirmationList();
+                                        $('#deleteConfirmationModal').modal('close');
+                                    }else{
+                                        console.log('Invalid Code status');
+                                    }
+                                }, error: function(e){
+                                    console.log(e.message);
+                                }
+                            });
+                        });
+
+                        /// else close modal
+                        $("#closeConrimation").click(function(){
+                            $('#deleteConfirmationModal').modal('close');
+                        });
+
+                    }else{
+                        console.log('Invalid Code Status');
+                    }
+                }, error: function(e){
+                    console.log(e.message);
+                }
+            });
+        }
+    }
+
+    function generateMariagePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificate){
+        for(let i = 0 ; i < lastPage ; i++){
+            if(currentPage == parseInt(i+1)){
+                pageHtml += `<li class="active"><a class="btnPaginationForMarriage" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+            }else{
+                pageHtml += `<li class="waves-effect"><a class="btnPaginationForMarriage" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+            }
+        }
+        pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPaginationForMarriage ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}&certificate_type=${certificate}"><i class="material-icons">chevron_right</i></a></li>
+                    </ul>`;
+
+        
+        //display the pagination
+        $("#paginationMarriage").html(pageHtml);
 
     }
 }
+// DT: pagination button here...
+// Pagination For Marriage
+$(document).on('click', '.btnPaginationForMarriage', function(){
+    let url = $(this).attr("url");
+    let status = $(this).attr("class").split(" ")[1];
+    if(status != "disabled"){
+        getMarriageList(url);
+    }
+});
 
+
+// Death
+function getDeathList(url){
+    isTokenExist();
+    var AT = localStorage.getItem("AT");
+    checkTokenValidity(AT);
+
+    
+    $.ajax({
+        type: "GET",
+        url: url == "NA" ? certificate_endpoint+"?certificate_type=death" : url,
+        success: function(response){
+            var certificateType = 'death';
+            if(response.status == 200){
+                var html = "";
+                var deathObject = response.data.data;
+                var prevPageURL = response.data.prev_page_url;
+                var nextPageURL = response.data.next_page_url;
+                var path = response.data.path;
+                var currentPage = response.data.current_page;
+                var lastPage = response.data.last_page;
+                var pageHtml = `<ul class="pagination">
+                                <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginationForDeath ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
+                for(var x = 0; x < deathObject.length; x++){
+                    var metaContent = JSON.parse(deathObject[x]['meta']);
+                    html+= '<tr>'
+                        +'<!-- Actions -->'
+                        +'<td><button class="btn btn-wave btn-actions blue"><i class="material-icons">print</i></button></td>'
+                        +'<td><button class="btn btn-wave btn-actions green"><i class="material-icons">edit</i></button></td>'
+                        +'<td><button class="btn btn-wave btn-actions red"><i class="material-icons">delete</i></button></td>'
+                        +'<!-- Born On -->'
+                        +'<td>First Name</td>'
+                        +'<!-- Record of -->'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<!-- Born In -->'
+                        +'<td>First Name</td>'
+                        +'<!-- Fathers Name -->'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<!-- Mothers Name -->'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<!-- Residents of -->'
+                        +'<td>First Name</td>'
+                        +'<!-- Godparents -->'
+                        +'<td>First Name</td>'
+                        +'<!-- Other Details -->'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<td>First Name</td>'
+                        +'<!-- Parish Priest -->'
+                        +'<td>First Name</td>'
+                    +'</tr>';
+                }
+
+                generateMariagePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+
+                $("#marriageListTable").html(html);
+                $('.tooltipped').tooltip({delay: 50});
+
+                /// Print Confirmation Certificate
+                $(".btnPrintCCertificate").on('click', function(){
+                    var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
+                    printMarriageCertificate(certificateId, $(this).attr("id"));
+                });
+
+                /// Update Confirmation Certificate
+                $(".btnUpdateCCertificate").on('click', function(){
+                    var certificateId = $(this).attr("id").substr('btnUpdateCCertificate-'.length);
+                    showToUpdateMarriageCertificate(certificateId, $(this).attr("id"));
+                });
+
+                /// Delete Confirmation Certificate
+                $(".btnDeleteCCertificate").on("click",function(){
+                    var certificateId = $(this).attr("id").substr('btnDeleteCCertificate-'.length);
+                    deleteMarriageCertificate(certificateId);
+                });
+            }else{
+                console.log('Something is not right:: ',response);
+            }
+        }, error: function(e){
+            console.log('Something is not right:: ',e);
+        }
+    });
+
+
+    function printMarriageCertificate(certificateId){
+        isTokenExist();
+        var AT = localStorage.getItem("AT");
+        checkTokenValidity(AT);
+
+        if(certificateId == undefined || certificateId == null){
+            $('#modalSysError').modal('open');
+        }else{
+        }
+
+    }
+
+    function showToUpdateMarriageCertificate(certificateId){
+        isTokenExist();
+        var AT = localStorage.getItem("AT");
+        checkTokenValidity(AT);
+
+        if(certificateId == undefined || certificateId == null){
+            $('#modalSysError').modal('open');
+        }else{
+            // TODO:: Show Individual form
+            localStorage.setItem('defaultForm','individual');
+            setFormSelection();
+            // update Form Title
+            $(".headerConfirmation").html('Update Confirmation');
+            // Show Cancel Button
+            $(".btnCancelConfirmationUpdate").removeClass('hide');
+            // Display Information to Form
+            $.ajax({
+                type: "GET",
+                url: certificate_endpoint+"/"+certificateId,
+                success: function(response){
+                    console.log(response);
+                    if(response.status == 200){    
+                        var metaContent = JSON.parse(response.data[0].meta);
+                        console.log(metaContent);                    
+                        
+                        $('#single_confirmation_firstname').val(response.data[0].firstname);
+                        $('#single_confirmation_middlename').val(response.data[0].middlename);
+                        $('#single_confirmation_lastname').val(response.data[0].lastname);
+                        $('#single_confirmation_father_firstname').val(metaContent.father_firstname);
+                        $('#single_confirmation_father_middlename').val(metaContent.father_middlename);
+                        $('#single_confirmation_father_lastname').val(metaContent.father_lastname);
+                        $('#single_confirmation_mother_firstname').val(metaContent.mother_firstname);
+                        $('#single_confirmation_mother_middlename').val(metaContent.mother_firstname);
+                        $('#single_confirmation_mother_lastname').val(metaContent.mother_firstname);
+                        // $('#single_confirmation_date').val(metaContent.father_firstname);
+                        // $('#single_conrfirmation_date_issued').val(metaContent.father_firstname);
+                        $('#single_confirmation_by').val(metaContent.confirmation_by);
+                        // $('#single_confirmation_fsponsor_firstname').val(metaContent.father_firstname);
+                        // $('#single_confirmation_fsponsor_middlename').val(metaContent.father_firstname);
+                        // $('#single_confirmation_fsponsor_lastname').val(metaContent.father_firstname);
+                        // $('#single_confirmation_ssponsor_firstname').val(metaContent.father_firstname);
+                        // $('#single_confirmation_ssponsor_middlename').val(metaContent.father_firstname);
+                        // $('#single_confirmation_ssponsor_lastname').val(metaContent.father_firstname);
+                        $('#single_confirmation_register_book').val(metaContent.registration_book);
+                        $('#single_confirmation_book_page').val(metaContent.book_page);
+                        $('#single_confirmation_book_number').val(metaContent.book_number);
+                        $('#single_confirmation_parish_priest').val(response.data[0].priest_id);
+                        
+                        
+                        $('#single_confirmation_form').find('label')
+                        .each(function () {
+                            $(this).addClass('active');
+                        });
+                        $('#cis_update').val(1);
+                        $('#cid').val(certificateId);
+                    }else{
+                        var html = "";
+                        html += "<h5>Something went wrong!</h5>"
+                        +""+response.message+"";
+                        $('#modalSysError').modal('open');
+                        $(".errMessage").addClass('hide');
+                        $('.customMessage').html(html);
+                        $(".customMessage").removeClass('hide');
+                    }
+                }, error: function(e){
+                    var html = "";
+                    html += "<h5>Something went wrong!</h5>"
+                    +""+e.message+"";
+                    $('#modalSysError').modal('open');
+                    $(".errMessage").addClass('hide');
+                    $('.customMessage').html(html);
+                    $(".customMessage").removeClass('hide');
+                }
+            });
+        }
+    }
+
+    function deleteMarriageCertificate(certificateId){
+        isTokenExist();
+        var AT = localStorage.getItem("AT");
+        checkTokenValidity(AT);
+
+        if(certificateId == undefined || certificateId == null){
+            $('#modalSysError').modal('open');
+        }else{
+            /// Pull out record first
+            $.ajax({
+                type: "GET",
+                url: certificate_endpoint+"/"+certificateId,
+                success: function(response){
+                    if(response.status == 200){
+                        /// Prepare Delete Confirmation Modal
+                        $("#recordToDelete").html(response.data[0]['firstname']);
+                        var buttonConfirmation = "<button class='btn btnConfirmedDelete' id='"+certificateId+"'>Delete</button> <button class='btn' id='closeConrimation'>Cancel</button>";
+                        $('#buttonConfirmation').html(buttonConfirmation);
+                        
+                        /// Open the modal
+                        $('#deleteConfirmationModal').modal('open');
+
+                        /// if confirmed Delete
+                        $(".btnConfirmedDelete").click(function(){
+                            var fetchCertificateId = $(this).attr('id');
+                            $.ajax({
+                                type: "DELETE",
+                                url: certificate_endpoint+"/"+fetchCertificateId,
+                                data: {"id": certificateId, "is_deleted": 1},
+                                success: function(response){
+                                    if(response.status == 202){
+                                        getConfirmationList();
+                                        $('#deleteConfirmationModal').modal('close');
+                                    }else{
+                                        console.log('Invalid Code status');
+                                    }
+                                }, error: function(e){
+                                    console.log(e.message);
+                                }
+                            });
+                        });
+
+                        /// else close modal
+                        $("#closeConrimation").click(function(){
+                            $('#deleteConfirmationModal').modal('close');
+                        });
+
+                    }else{
+                        console.log('Invalid Code Status');
+                    }
+                }, error: function(e){
+                    console.log(e.message);
+                }
+            });
+        }
+    }
+
+    function generateMariagePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificate){
+        for(let i = 0 ; i < lastPage ; i++){
+            if(currentPage == parseInt(i+1)){
+                pageHtml += `<li class="active"><a class="btnPaginationForDeath" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+            }else{
+                pageHtml += `<li class="waves-effect"><a class="btnPaginationForDeath" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+            }
+        }
+        pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPaginationForDeath ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}&certificate_type=${certificate}"><i class="material-icons">chevron_right</i></a></li>
+                    </ul>`;
+
+        
+        //display the pagination
+        $("#paginationDeath").html(pageHtml);
+    }
+}
+
+// DT: pagination button here...
+// Pagination For Death
+$(document).on('click', '.btnPaginationForDeath', function(){
+    let url = $(this).attr("url");
+    let status = $(this).attr("class").split(" ")[1];
+    if(status != "disabled"){
+        getDeathList(url);
+    }
+});
 
 
 

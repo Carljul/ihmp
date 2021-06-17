@@ -124,7 +124,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: priest_endpoint,
+                url: all_priest_endpoint,
                 success: function(response){
                     var html = "";
                     var priestObject = response.data;

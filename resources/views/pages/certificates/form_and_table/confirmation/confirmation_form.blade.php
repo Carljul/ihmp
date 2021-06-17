@@ -101,30 +101,14 @@
                             <div class="row removeBottomMargin">
                                 <div class="input-field col s12 m4">
                                     <input id="single_confirmation_fsponsor_firstname" type="text" class="validate" name="single_confirmation_fsponsor_firstname">
-                                    <label for="single_confirmation_fsponsor_firstname">First Name</label>
-                                </div>
-                                <div class="input-field col s12 m4">
-                                    <input id="single_confirmation_fsponsor_middlename" type="text" class="validate" name="single_confirmation_fsponsor_middlename">
-                                    <label for="single_confirmation_fsponsor_middlename">Middle Name</label>
-                                </div>
-                                <div class="input-field col s12 m4">
-                                    <input id="single_confirmation_fsponsor_lastname" type="text" class="validate" name="single_confirmation_fsponsor_lastname">
-                                    <label for="single_confirmation_fsponsor_lastname">Last Name</label>
+                                    <label for="single_confirmation_fsponsor_firstname">Name</label>
                                 </div>
                             </div>
                             <b>Second Sponsor</b>
                             <div class="row removeBottomMargin">
                                 <div class="input-field col s12 m4">
                                     <input id="single_confirmation_ssponsor_firstname" type="text" class="validate" name="single_confirmation_ssponsor_firstname">
-                                    <label for="single_confirmation_ssponsor_firstname">First Name</label>
-                                </div>
-                                <div class="input-field col s12 m4">
-                                    <input id="single_confirmation_ssponsor_middlename" type="text" class="validate" name="single_confirmation_ssponsor_middlename">
-                                    <label for="single_confirmation_ssponsor_middlename">Middle Name</label>
-                                </div>
-                                <div class="input-field col s12 m4">
-                                    <input id="single_confirmation_ssponsor_lastname" type="text" class="validate" name="single_confirmation_ssponsor_lastname">
-                                    <label for="single_confirmation_ssponsor_lastname">Last Name</label>
+                                    <label for="single_confirmation_ssponsor_firstname">Name</label>
                                 </div>
                             </div>
                         </div>
@@ -209,12 +193,8 @@
                 var single_conrfirmation_date_issued = new Date($('#single_conrfirmation_date_issued').val());
 
                 var single_confirmation_fsponsor_firstname = $('#single_confirmation_fsponsor_firstname').val();
-                var single_confirmation_fsponsor_middlename = $('#single_confirmation_fsponsor_middlename').val();
-                var single_confirmation_fsponsor_lastname = $('#single_confirmation_fsponsor_lastname').val();
 
                 var single_confirmation_ssponsor_firstname = $("#single_confirmation_ssponsor_firstname").val();
-                var single_confirmation_ssponsor_middlename = $('#single_confirmation_ssponsor_middlename').val();
-                var single_confirmation_ssponsor_lastname = $('#single_confirmation_ssponsor_lastname').val();
 
                 var single_confirmation_register_book = $('#single_confirmation_register_book').val();
                 var single_confirmation_book_page = $('#single_confirmation_book_page').val();
@@ -237,8 +217,8 @@
                         "confirmation_month":single_confirmation_converted_month,
                         "confirmation_year":single_confirmation_converted_year,
                         "confirmation_by":single_confirmation_by,
-                        "first_sponsor":single_confirmation_fsponsor_firstname+" "+single_confirmation_fsponsor_middlename+" "+single_confirmation_fsponsor_lastname,
-                        "second_sponsor":single_confirmation_ssponsor_firstname+" "+single_confirmation_ssponsor_middlename+" "+single_confirmation_ssponsor_lastname,
+                        "first_sponsor":single_confirmation_fsponsor_firstname,
+                        "second_sponsor":single_confirmation_ssponsor_firstname,
                         "registration_book":single_confirmation_register_book,
                         "book_page":single_confirmation_book_page,
                         "book_number":single_confirmation_book_number,
@@ -262,8 +242,8 @@
                         dataType: "json",
                         success: function(response){
                             if(response.status == 201){
+                                getConfirmationList('NA');
                                 clearConfirmationInputFields();
-                                confirmationList();
                             }else{
                                 console.log('something is not right: '+response.status);
                             }
