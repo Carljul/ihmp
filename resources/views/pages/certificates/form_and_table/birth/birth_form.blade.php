@@ -34,7 +34,7 @@
                             <b>Born Detail</b>
                             <div class="row removeBottomMargin">
                                 <div class="input-field col s12 m3">
-                                    <input id="birth_date" type="text" class="datepicker" name="birth_date">
+                                    <input id="birth_date" type="text" class="" name="birth_date">
                                     <label for="birth_date">Born On</label>
                                 </div>
                                 <div class="input-field col s12 m9">
@@ -161,6 +161,12 @@
 
 <script>
     $(document).ready(function(){
+        $("#birth_date").pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 30, 
+            max: new Date()
+        });
+        $('#birth_date').on('mousedown',function(event){ event.preventDefault(); });
         $("#single_birth_form").on('submit', function(e){
             e.preventDefault();
             isTokenExist();

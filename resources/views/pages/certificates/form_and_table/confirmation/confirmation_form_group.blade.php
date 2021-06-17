@@ -24,8 +24,8 @@
                             <th colspan="3">Mothers' Name</th>
                             <th colspan="2">Confirmation Dates</th>
                             <th>Confirmation By</th>
-                            <th colspan="3">First Sponsor</th>
-                            <th colspan="3">Second Sponsor</th>
+                            <th>First Sponsor</th>
+                            <th>Second Sponsor</th>
                             <th colspan="3">Registration Book Detail</th>
                             <th>Parish Priest</th>
                         </tr>

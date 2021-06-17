@@ -97,18 +97,15 @@
                     </div>
                     <div class="row">
                         <div class="col s12">
-                            <b>First Sponsor</b>
+                            <b>Sponsors</b>
                             <div class="row removeBottomMargin">
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m6">
                                     <input id="single_confirmation_fsponsor_firstname" type="text" class="validate" name="single_confirmation_fsponsor_firstname">
-                                    <label for="single_confirmation_fsponsor_firstname">Name</label>
+                                    <label for="single_confirmation_fsponsor_firstname">First Sponsor Name</label>
                                 </div>
-                            </div>
-                            <b>Second Sponsor</b>
-                            <div class="row removeBottomMargin">
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m6">
                                     <input id="single_confirmation_ssponsor_firstname" type="text" class="validate" name="single_confirmation_ssponsor_firstname">
-                                    <label for="single_confirmation_ssponsor_firstname">Name</label>
+                                    <label for="single_confirmation_ssponsor_firstname">Second Sponsor Name</label>
                                 </div>
                             </div>
                         </div>

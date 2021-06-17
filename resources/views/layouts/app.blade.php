@@ -87,8 +87,7 @@
             $("#selectCertificate").material_select();
             $("#selectForm").material_select();
             $('.modal').modal();
-            $('.datepicker').pickadate();
-            
+            $('.datepicker').pickadate();            
             $('.datepicker').on('mousedown',function(event){ event.preventDefault(); });
 
             checkConnection();

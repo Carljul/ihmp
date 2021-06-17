@@ -190,15 +190,11 @@ function getConfirmationList(url){
                         $('#single_confirmation_mother_firstname').val(metaContent.mother_firstname);
                         $('#single_confirmation_mother_middlename').val(metaContent.mother_firstname);
                         $('#single_confirmation_mother_lastname').val(metaContent.mother_firstname);
-                        // $('#single_confirmation_date').val(metaContent.father_firstname);
-                        // $('#single_conrfirmation_date_issued').val(metaContent.father_firstname);
+                        $('#single_confirmation_date').val(metaContent.date_issued); /// not yet fixed
+                        $('#single_conrfirmation_date_issued').val(metaContent.date_issued); /// not yet fixed
                         $('#single_confirmation_by').val(metaContent.confirmation_by);
-                        // $('#single_confirmation_fsponsor_firstname').val(metaContent.father_firstname);
-                        // $('#single_confirmation_fsponsor_middlename').val(metaContent.father_firstname);
-                        // $('#single_confirmation_fsponsor_lastname').val(metaContent.father_firstname);
-                        // $('#single_confirmation_ssponsor_firstname').val(metaContent.father_firstname);
-                        // $('#single_confirmation_ssponsor_middlename').val(metaContent.father_firstname);
-                        // $('#single_confirmation_ssponsor_lastname').val(metaContent.father_firstname);
+                        $('#single_confirmation_fsponsor_firstname').val(metaContent.first_sponsor);
+                        $('#single_confirmation_ssponsor_firstname').val(metaContent.second_sponsor);
                         $('#single_confirmation_register_book').val(metaContent.registration_book);
                         $('#single_confirmation_book_page').val(metaContent.book_page);
                         $('#single_confirmation_book_number').val(metaContent.book_number);
