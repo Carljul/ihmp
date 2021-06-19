@@ -29,6 +29,9 @@
                     </thead>
                     <tbody id="confirmationListTable">
                         <!-- Keep it empty -->
+                        <tr>
+                            <td colspan="21">No Records Yet</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

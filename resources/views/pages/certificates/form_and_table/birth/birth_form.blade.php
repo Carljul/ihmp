@@ -2,7 +2,7 @@
     <div class="card-content">
         <div class="row">
             <div class="col s12">
-                <h5>Add Birth</h5>
+                <h5 class="headerBirth">Add Birth</h5>
             </div>
         </div>
         <div class="row">
@@ -152,7 +152,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <input class="btn btn-wave" id="btnSavePriest" type="submit" value="Save">
+                    <button class="btn waves-effect" id="btnSaveBirthForm" type="submit">Save</button>
+                    <button class="btn waves-effect btnCancelBirthUpdate hide">Cancel</button>
                 </div>
             </form>
         </div>

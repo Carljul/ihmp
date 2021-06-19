@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Certificate;
 use Illuminate\Http\Request;
 use App\Traits\GlobalFunction;
+use Illuminate\Support\Facades\DB;
 
 class CertificateController extends Controller
 {
@@ -17,7 +18,13 @@ class CertificateController extends Controller
     public function index(Request $request)
     {
         //return all data for Certificate table
-        $result = Certificate::where('is_deleted', 0)->where('certificate_type', $request->certificate_type)->orderByRaw('id DESC')->paginate($this->getPaginationLimit());
+        $result = DB::table('certificates')
+        ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
+        ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
+        ->where('certificates.is_deleted', 0)
+        ->where('certificates.certificate_type', $request->certificate_type)
+        ->orderByRaw('certificates.id DESC')
+        ->paginate($this->getPaginationLimit());
 
         //returning json response
         return response()->json($this->customApiResponse($result, 200)); //OK
@@ -93,6 +100,7 @@ class CertificateController extends Controller
                 "baptism_date" => $content->{"baptism_date"},
                 "baptism_minister" => $content->{"baptism_minister"},
                 "baptismal_register" => $content->{"baptismal_register"},
+                "godparents" => $content->{"godparents"},
                 "volume" => $content->{"volume"},
                 "page" => $content->{"page"},
                 "date_issued" => $content->{"date_issued"}
@@ -204,17 +212,33 @@ class CertificateController extends Controller
      * @param  \App\Certificate  $Certificate
      * @return \Illuminate\Http\Response
      */
-    public function show($search)
+    public function show($search, Request $request)
     {
+        // dd($search);
+        
         //return specific row using search
-        $result = Certificate::where('id', $search)
-                ->orWhere('firstname', $search)
-                ->orWhere('middlename', $search)
-                ->orWhere('lastname', $search)
-                ->orWhere('certificate_type', $search)
-                ->orWhere('priest_id', $search)
-                ->orWhere('meta', 'LIKE', '%'. $search . '%')
-                ->get();
+        // $result = Certificate::where('id', $search)
+        //         ->orWhere('firstname', $search)
+        //         ->orWhere('middlename', $search)
+        //         ->orWhere('lastname', $search)
+        //         ->orWhere('certificate_type', $search)
+        //         ->orWhere('priest_id', $search)
+        //         ->orWhere('meta', 'LIKE', '%'. $search . '%')
+        //         ->get();
+
+        $result = DB::table('certificates')
+        ->join('priests', 'priests.id','=','certificates.priest_id')
+        ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
+        ->where('certificates.is_deleted', 0)
+        ->where('certificates.certificate_type', $request->certificate_type)
+        ->where('certificates.id', $search)
+        ->orWhere('certificates.firstname', $search)
+        ->orWhere('certificates.middlename', $search)
+        ->orWhere('certificates.lastname', $search)
+        ->orWhere('certificates.certificate_type', $search)
+        ->orWhere('certificates.priest_id', $search)
+        ->orWhere('certificates.meta', 'LIKE', '%'. $search . '%')
+        ->get();
 
         //if search is not found
         if(count($result) == 0){
@@ -294,4 +318,26 @@ class CertificateController extends Controller
         //return json response
         return response()->json($this->customApiResponse($result, 202)); //DELETED
     }
+
+    // Pull Single Record
+    public function showOneRecord($search, Request $request)
+    {
+        $result = DB::table('certificates')
+        ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
+        ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
+        ->where('certificates.is_deleted', 0)
+        ->where('certificates.certificate_type', $request->certificate_type)
+        ->where('certificates.id', $search)
+        ->get();
+
+        //if search is not found
+        if(count($result) == 0){
+            //return json response
+            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
+        }
+
+        //return json response
+        return response()->json($this->customApiResponse($result, 200)); //OK
+    }
+
 }

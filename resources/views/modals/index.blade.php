@@ -40,7 +40,7 @@
     </div>
 </div>
 
-
+<!-- Delete Confirmation ModalW -->
 <div id="deleteConfirmationModal" class="modal small-modal">
     <div class="modal-content center errorProgressIndicator">
         <h4>Are you sure you want to delete <span id="recordToDelete"></span>?</h4>
@@ -98,6 +98,17 @@
 
 <!-- Filter -->
 <div id="filterTable" class="modal">
+    <div class="modal-content">
+        <h4>You can apply following filters</h4>
+        <p>Follow the Steps</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Create Filter</a>
+    </div>
+</div>
+
+<!-- Rendered Filter -->
+<div id="renderedFilter" class="modal">
     <div class="modal-content">
         <h4>You can apply following filters</h4>
         <p>Follow the Steps</p>

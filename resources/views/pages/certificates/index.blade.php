@@ -22,7 +22,7 @@
                     <label>Search a record</label>
                 </div>
                 <div class="col s12 m1">
-                    <a class="tooltipped modal-trigger" data-position="bottom" data-delay="50" data-tooltip="Show more filter" href="#importExport">
+                    <a class="tooltipped modal-trigger" data-position="bottom" data-delay="50" data-tooltip="Show more filter" href="#filterTable">
                         <i class="material-icons" id="showFilter" style="margin-top: 25px;">filter_list</i>
                     </a>
                 </div>

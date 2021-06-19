@@ -144,13 +144,15 @@
                         url: priest_endpoint+"/"+pid,
                         data: payload,
                         success: function(data){
-                            if(data.status == 200){
+                            if(data.status >= 200 && response.status < 400){
                                 getPriestList("NA");
                             }else{
-                                $('#modalSysError').modal('open');
+                                Materialize.toast('Something Went Wrong:: '+JSON.stringify(response.message), 5000, 'red rounded');
+                                console.log('["Confirmation Status"]: '+response.status);
                             }
                         }, error: function(e){
-                            console.log('Something went wrong: '+e);
+                            Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
+                            console.log('["Confirmation Error"]: '+e.responseJSON.message);
                         }
                     });
                 }else{
@@ -305,14 +307,14 @@
                             if(response.status == 200){
                                 /// Prepare Delete Confirmation Modal
                                 $("#recordToDelete").html(response.data[0]['firstname']);
-                                var buttonConfirmation = "<button class='btn btnConfirmedDelete' id='"+priestId+"'>Delete</button> <button class='btn' id='closeConrimation'>Cancel</button>";
+                                var buttonConfirmation = "<button class='btn btnPriestDelete' id='"+priestId+"'>Delete</button> <button class='btn' id='closeConrimation'>Cancel</button>";
                                 $('#buttonConfirmation').html(buttonConfirmation);
                                 
                                 /// Open the modal
                                 $('#deleteConfirmationModal').modal('open');
 
                                 /// if confirmed Delete
-                                $(".btnConfirmedDelete").click(function(){
+                                $(".btnPriestDelete").click(function(){
                                     var fetchPriestId = $(this).attr('id');
                                     $.ajax({
                                         type: "DELETE",
@@ -359,15 +361,15 @@
                         type: "GET",
                         url: priest_endpoint+"/"+priestId,
                         success: function(response){
-                            console.log(response);
+                            var data = response.data.data;
                             if(response.status == 200){
-                                $('#prefix').val(response.data[0].prefix);
+                                $('#prefix').val(data[0].prefix);
                                 $("label[for='prefix']").addClass('active');
-                                $('#firstname').val(response.data[0].firstname);
+                                $('#firstname').val(data[0].firstname);
                                 $("label[for='firstname']").addClass('active');
-                                $('#middlename').val(response.data[0].middlename);
+                                $('#middlename').val(data[0].middlename);
                                 $("label[for='middlename']").addClass('active');
-                                $('#lastname').val(response.data[0].lastname);
+                                $('#lastname').val(data[0].lastname);
                                 $("label[for='lastname']").addClass('active');
                                 $('#is_update').val(1);
                                 $('#pid').val(priestId);

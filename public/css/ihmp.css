@@ -214,3 +214,7 @@ tr.custom_card td:last-child {
     margin-right: 6px;
     margin-top: 2px;
 }
+
+.birth_group_table{
+    width: 315%;
+}
