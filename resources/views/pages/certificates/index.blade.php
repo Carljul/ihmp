@@ -124,10 +124,10 @@
 
             $.ajax({
                 type: 'GET',
-                url: all_priest_endpoint,
+                url: priest_endpoint,
                 success: function(response){
                     var html = "";
-                    var priestObject = response.data;
+                    var priestObject = response.data.data;
                     $(".priest_select_dropdown").html('');
                     html += "<option value='' disabled selected>Select Parish Priest</option>";
                     for(var x = 0; x < priestObject.length; x++){

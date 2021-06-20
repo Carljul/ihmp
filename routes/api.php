@@ -29,7 +29,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // controller for Priest Model
 Route::resource('priest', 'PriestController');
-Route::get('allPriest', 'PriestController@getAllPriest')->name('allPriest.getAllPriest');
 
 // controller for Certificate Model
 Route::resource('certificate', 'CertificateController');

@@ -227,7 +227,7 @@ class CertificateController extends Controller
         //         ->get();
 
         $result = DB::table('certificates')
-        ->join('priests', 'priests.id','=','certificates.priest_id')
+        ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
         ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
         ->where('certificates.is_deleted', 0)
         ->where('certificates.certificate_type', $request->certificate_type)

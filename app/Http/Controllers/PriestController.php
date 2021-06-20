@@ -182,10 +182,4 @@ class PriestController extends Controller
         //return json response
         return response()->json($this->customApiResponse($result, 202)); //DELETED
     }
-
-    public function getAllPriest(){
-        $result = Priest::all();
-        //return json response
-        return response()->json($this->customApiResponse($result, 200));
-    }
 }

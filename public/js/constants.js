@@ -17,7 +17,6 @@ const certificate_endpoint = api_server+'certificate';
 const one_record_endpoint = api_server+'oneRecord';
 /// ======================== Priests
 const priest_endpoint = api_server+'priest';
-const all_priest_endpoint = api_server+'allPriest';
 /// ======================== Templates
 const template_endpoint = api_server+'template';
 /// ======================== Verifying Access Token
