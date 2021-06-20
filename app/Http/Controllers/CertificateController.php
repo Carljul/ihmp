@@ -67,20 +67,6 @@ class CertificateController extends Controller
 
             //then parse it to json string
             $metaContent = json_encode($metaContent);
-
-            //create a query for checking the validation
-            $checkDuplication = Certificate::where('meta', $metaContent)
-                    ->where('firstname', $request->firstname)
-                    ->where('middlename', $request->middlename)
-                    ->where('lastname', $request->lastname)
-                    ->where('certificate_type', $request->certificate_type)
-                    ->where('priest_id', $request->priest_id)
-                    ->get();
-
-            //check if there is any duplication
-            if(count($checkDuplication) !== 0){
-                return response()->json($this->customApiResponse([], 400)); //Duplicated
-            }
         }
 
         //meta content validations for baptism
@@ -108,20 +94,6 @@ class CertificateController extends Controller
 
             //then parse it to json string
             $metaContent = json_encode($metaContent);
-
-            //create a query for checking the validation
-            $checkDuplication = Certificate::where('meta', $metaContent)
-                    ->where('firstname', $request->firstname)
-                    ->where('middlename', $request->middlename)
-                    ->where('lastname', $request->lastname)
-                    ->where('certificate_type', $request->certificate_type)
-                    ->where('priest_id', $request->priest_id)
-                    ->get();
-
-            //check if there is any duplication
-            if(count($checkDuplication) !== 0){
-                return response()->json($this->customApiResponse([], 400)); //Duplicated
-            }
         }
 
         //meta content validations for marriage
@@ -168,20 +140,43 @@ class CertificateController extends Controller
 
             //then parse it to json string
             $metaContent = json_encode($metaContent);
+        }
 
-            //create a query for checking the validation
-            $checkDuplication = Certificate::where('meta', $metaContent)
-                    ->where('firstname', $request->firstname)
-                    ->where('middlename', $request->middlename)
-                    ->where('lastname', $request->lastname)
-                    ->where('certificate_type', $request->certificate_type)
-                    ->where('priest_id', $request->priest_id)
-                    ->get();
+        //meta content validations for marriage
+        if($request->certificate_type == "death"){
 
-            //check if there is any duplication
-            if(count($checkDuplication) !== 0){
-                return response()->json($this->customApiResponse([], 400)); //Duplicated
-            }
+            
+            //set our meta here...
+            $metaContent = [
+                "deceased_name" => $content->{"deceased_name"},
+                "age" => $content->{"age"},
+                "residence" => $content->{"residence"},
+                "date_of_death" => $content->{"date_of_death"},
+                "place_of_burial" => $content->{"place_of_burial"},
+                "date_of_burial" => $content->{"date_of_burial"},
+                "informant_or_relatives" => $content->{"informant_or_relatives"},
+                "book_number" => $content->{"book_number"},
+                "page_number" => $content->{"page_number"},
+                "registry_number" => $content->{"registry_number"}, 
+                "date_issued" => $content->{"date_issued"}
+            ];
+
+            //then parse it to json string
+            $metaContent = json_encode($metaContent);
+        }
+
+        //create a query for checking the validation
+        $checkDuplication = Certificate::where('meta', $metaContent)
+                ->where('firstname', $request->firstname)
+                ->where('middlename', $request->middlename)
+                ->where('lastname', $request->lastname)
+                ->where('certificate_type', $request->certificate_type)
+                ->where('priest_id', $request->priest_id)
+                ->get();
+
+        //check if there is any duplication
+        if(count($checkDuplication) !== 0){
+            return response()->json($this->customApiResponse([], 400)); //Duplicated
         }
 
         //creating our payload here...
