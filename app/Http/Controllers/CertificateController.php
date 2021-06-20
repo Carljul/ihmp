@@ -214,40 +214,49 @@ class CertificateController extends Controller
      */
     public function show($search, Request $request)
     {
-        // dd($search);
-        
-        //return specific row using search
-        // $result = Certificate::where('id', $search)
-        //         ->orWhere('firstname', $search)
-        //         ->orWhere('middlename', $search)
-        //         ->orWhere('lastname', $search)
-        //         ->orWhere('certificate_type', $search)
-        //         ->orWhere('priest_id', $search)
-        //         ->orWhere('meta', 'LIKE', '%'. $search . '%')
-        //         ->get();
+        if($request->isIdSearch && $request->isIdSearch == "true" && $request->isIdSearch == true){
+            $result = DB::table('certificates')
+            ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
+            ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
+            ->where('certificates.is_deleted', 0)
+            ->where('certificates.certificate_type', $request->certificate_type)
+            ->where('certificates.id', $search)
+            ->get();
 
-        $result = DB::table('certificates')
-        ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
-        ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
-        ->where('certificates.is_deleted', 0)
-        ->where('certificates.certificate_type', $request->certificate_type)
-        ->where('certificates.id', $search)
-        ->orWhere('certificates.firstname', $search)
-        ->orWhere('certificates.middlename', $search)
-        ->orWhere('certificates.lastname', $search)
-        ->orWhere('certificates.certificate_type', $search)
-        ->orWhere('certificates.priest_id', $search)
-        ->orWhere('certificates.meta', 'LIKE', '%'. $search . '%')
-        ->get();
+            //if search is not found
+            if(count($result) == 0){
+                //return json response
+                return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
+            }
 
-        //if search is not found
-        if(count($result) == 0){
             //return json response
-            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
-        }
+            return response()->json($this->customApiResponse($result, 200)); //OK
+        }else{
 
-        //return json response
-        return response()->json($this->customApiResponse($result, 200)); //OK
+            // return specific row using search
+            $result = DB::table('certificates')
+            ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
+            ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
+            ->where('certificates.is_deleted', 0)
+            ->where('certificates.certificate_type', $request->certificate_type)
+            ->where('certificates.id', $search)
+            ->orWhere('certificates.firstname', $search)
+            ->orWhere('certificates.middlename', $search)
+            ->orWhere('certificates.lastname', $search)
+            ->orWhere('certificates.certificate_type', $search)
+            ->orWhere('certificates.priest_id', $search)
+            ->orWhere('certificates.meta', 'LIKE', '%'. $search . '%')
+            ->get();
+
+            //if search is not found
+            if(count($result) == 0){
+                //return json response
+                return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
+            }
+
+            //return json response
+            return response()->json($this->customApiResponse($result, 200)); //OK
+        }
     }
 
     /**
@@ -317,27 +326,6 @@ class CertificateController extends Controller
 
         //return json response
         return response()->json($this->customApiResponse($result, 202)); //DELETED
-    }
-
-    // Pull Single Record
-    public function showOneRecord($search, Request $request)
-    {
-        $result = DB::table('certificates')
-        ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
-        ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
-        ->where('certificates.is_deleted', 0)
-        ->where('certificates.certificate_type', $request->certificate_type)
-        ->where('certificates.id', $search)
-        ->get();
-
-        //if search is not found
-        if(count($result) == 0){
-            //return json response
-            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
-        }
-
-        //return json response
-        return response()->json($this->customApiResponse($result, 200)); //OK
     }
 
 }

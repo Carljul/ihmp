@@ -32,7 +32,6 @@ Route::resource('priest', 'PriestController');
 
 // controller for Certificate Model
 Route::resource('certificate', 'CertificateController');
-Route::get('oneRecord/{id}', 'CertificateController@showOneRecord')->name('oneRecord.showOneRecord');
 
 // controller for Template Model
 Route::resource('template', 'TemplateController');

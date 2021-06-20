@@ -74,31 +74,25 @@ class PriestController extends Controller
      * @param  \App\Priest  $priest
      * @return \Illuminate\Http\Response
      */
-    public function show($search)
+    public function show($search, Request $request)
     {
-        //check if the pagination keyword exists
-        if(preg_match("/p-/i", $search)){
+        if($request->isIdSearch && $request->isIdSearch == "true" && $request->isIdSearch == true){
 
-            //if exists then get the offset number
-            $offset = explode("-", $search)[1] == "" ? 0 : explode("-", $search)[1];
+            //return specific row using search
+            $result = Priest::where('id', $search)
+                    ->paginate($this->getPaginationLimit());
 
-            //then multiply it to 10, since we're getting 10 rows for each page
-            $offset = $offset * 10;
+            //if search is not found
+            if(count($result) == 0){
+                //return json response
+                return response()->json($this->customApiResponse([], 404)); //DATA NOT FOUND
+            }
 
-            //set a default number of pages to display
-            $pageLimit = 10;
-
-            //return all data for Priest table which is not deleted
-            $result = Priest::where('is_deleted', 0)->orderByRaw('id DESC')->offset($offset)->limit($pageLimit)->get();
-        
-            //get all records from priest
-            $resultAllCount = Priest::all();
-    
-            //returning json response
-            return response()->json(['data' => $result, 'dataCount' => count($resultAllCount), 'status' => 200]); //OK
+            //return json response
+            return response()->json($this->customApiResponse($result, 200)); //OK
 
         }else{
-            
+
             //return specific row using search
             $result = Priest::where('id', $search)
                     ->orWhere('firstname', $search)
@@ -116,6 +110,7 @@ class PriestController extends Controller
             //return json response
             return response()->json($this->customApiResponse($result, 200)); //OK
         }
+        
     }
 
     /**

@@ -227,6 +227,7 @@
                 $.ajax({
                     type: 'GET',
                     url: url == "NA" ? priest_endpoint : url,
+                    data: {'isIdSearch':false},
                     // url: priest_endpoint,
                     success: function(response){
                         var html = "";
@@ -360,6 +361,7 @@
                     $.ajax({
                         type: "GET",
                         url: priest_endpoint+"/"+priestId,
+                        data: {'isIdSearch':true},
                         success: function(response){
                             var data = response.data.data;
                             if(response.status == 200){

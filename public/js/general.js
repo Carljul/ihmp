@@ -222,8 +222,8 @@ function getConfirmationList(url){
             // Display Information to Form
             $.ajax({
                 type: "GET",
-                url: one_record_endpoint+"/"+certificateId,
-                data: {'certificate_type':'confirmation'},
+                url: certificate_endpoint+"/"+certificateId,
+                data: {'certificate_type':'confirmation', 'isIdSearch':'true'},
                 success: function(response){
                     if(response.status >= 200 && response.status < 400){    
                         var metaContent = JSON.parse(response.data[0].meta);              
@@ -301,8 +301,8 @@ function getConfirmationList(url){
             /// Pull out record first
             $.ajax({
                 type: "GET",
-                url: one_record_endpoint+"/"+certificateId,
-                data: {'certificate_type':'confirmation'},
+                url: certificate_endpoint+"/"+certificateId,
+                data: {'certificate_type':'confirmation', 'isIdSearch':'true'},
                 success: function(response){
                     if(response.status >= 200 && response.status < 400){
                         /// Prepare Delete Confirmation Modal
@@ -538,8 +538,8 @@ function getBirthList(url){
             // Display Information to Form
             $.ajax({
                 type: "GET",
-                url: one_record_endpoint+"/"+certificateId,
-                data: {'certificate_type':'baptism'},
+                url: certificate_endpoint+"/"+certificateId,
+                data: {'certificate_type':'baptism', 'isIdSearch':'true'},
                 success: function(response){
                     if(response.status >= 200 && response.status < 400){    
                         var metaContent = JSON.parse(response.data[0].meta);              
@@ -579,8 +579,8 @@ function getBirthList(url){
             /// Pull out record first
             $.ajax({
                 type: "GET",
-                url: one_record_endpoint+"/"+certificateId,
-                data: {'certificate_type':'baptism'},
+                url: certificate_endpoint+"/"+certificateId,
+                data: {'certificate_type':'baptism', 'isIdSearch':'true'},
                 success: function(response){
                     if(response.status >= 200 && response.status < 400){
                         /// Prepare Delete Confirmation Modal
