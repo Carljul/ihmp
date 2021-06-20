@@ -242,18 +242,24 @@
                         
                         console.log("getPriestList", response);
 
-                        for(var x = 0; x < priestObject.length; x++){
+                        if(response.data.length !== 0){
+                            for(var x = 0; x < priestObject.length; x++){
+                                html += "<tr>"
+                                +"<td>"+priestObject[x]['prefix']+"</td>"
+                                +"<td>"+priestObject[x]['firstname']+"</td>"
+                                +"<td>"+priestObject[x]['middlename']+"</td>"
+                                +"<td>"+priestObject[x]['lastname']+"</td>"
+                                +"<td>"
+                                    +"<button class='btn btn-wave btnDelete' id='btnDelete-"+priestObject[x]['id']+"'><i class='material-icons'>delete</i></button>"
+                                    +" "
+                                    +"<button class='btn btn-wave btnUpdate' id='btnUpdate-"+priestObject[x]['id']+"'><i class='material-icons'>edit</i></button>"
+                                +"</td>"
+                                +"</tr>";
+                            }
+                        }else{
                             html += "<tr>"
-                            +"<td>"+priestObject[x]['prefix']+"</td>"
-                            +"<td>"+priestObject[x]['firstname']+"</td>"
-                            +"<td>"+priestObject[x]['middlename']+"</td>"
-                            +"<td>"+priestObject[x]['lastname']+"</td>"
-                            +"<td>"
-                                +"<button class='btn btn-wave btnDelete' id='btnDelete-"+priestObject[x]['id']+"'><i class='material-icons'>delete</i></button>"
-                                +" "
-                                +"<button class='btn btn-wave btnUpdate' id='btnUpdate-"+priestObject[x]['id']+"'><i class='material-icons'>edit</i></button>"
-                            +"</td>"
-                            +"</tr>";
+                                        +"<td colspan='5' class='center'> No records found</td>"
+                                    +"</tr>";
                         }
 
                         for(let i = 0 ; i < lastPage ; i++){
