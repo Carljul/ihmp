@@ -57,7 +57,7 @@
                     <li><a href="/admin/users">Manage Users</a></li>
                 @endif
                 @if(Auth::user()->role_id == 3)
-                    <li><a href="/templates">Manage Templates</a></li>
+                    <li><a href="/template">Manage Templates</a></li>
                 @endif
                     <!-- Dropdown Trigger -->
                     <li>
