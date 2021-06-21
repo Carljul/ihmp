@@ -241,7 +241,8 @@ class CertificateController extends Controller
             ->orWhere('certificates.certificate_type', $search)
             ->orWhere('certificates.priest_id', $search)
             ->orWhere('certificates.meta', 'LIKE', '%'. $search . '%')
-            ->get();
+            ->orderByRaw('certificates.id DESC')
+            ->paginate($this->getPaginationLimit());
 
             //if search is not found
             if(count($result) == 0){

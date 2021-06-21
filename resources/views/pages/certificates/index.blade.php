@@ -18,7 +18,7 @@
                     <label>Choose Record</label>
                 </div>
                 <div class="input-field col s12 m4">
-                    <input type="search">
+                    <input type="search" type="search" class="validate" id="searchARecord" style="background-color: transparent;">
                     <label>Search a record</label>
                 </div>
                 <div class="col s12 m1">
@@ -115,8 +115,6 @@
         setFormSelection();
         setPriestDropdown();
 
-
-
         function setPriestDropdown(){
             isTokenExist();
             var AT = localStorage.getItem("AT");
@@ -151,6 +149,9 @@
         });
         $("#selectCertificate").on('change', function(){
             var selectedOption = $(this).val();
+            // Clear Search Input first
+            $("#searchARecord").val('');
+
             localStorage.setItem('defaultTable',selectedOption);
             setFormSelection();
         });

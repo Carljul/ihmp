@@ -49,7 +49,42 @@ function isTokenExist(){
         forceLogout();
     }
 }
+/// =================================== Search
+//added search handler
+$(document).on('blur', '#searchARecord', function(){
+    let val = $("#searchARecord").val();
 
+    
+
+    // Check If Default Table is selected
+    if(localStorage.getItem('defaultTable') === null){
+
+    }else{
+        var selectedTable = localStorage.getItem('defaultTable');
+        if(selectedTable == "confirmation"){
+            //set the url to be returned
+            let url = certificate_endpoint+"/"+val+"?certificate_type=confirmation";
+            //then recall the function for calling the api
+            getConfirmationList(url);
+        }else if(selectedTable == "mariage"){
+            //set the url to be returned
+            let url = certificate_endpoint+"/"+val+"?certificate_type=marriage";
+            //then recall the function for calling the api
+            getBirthList(url);
+        }else if(selectedTable == "birth"){
+            //set the url to be returned
+            let url = certificate_endpoint+"/"+val+"?certificate_type=baptism";
+            //then recall the function for calling the api
+            getMarriageList(url);
+        }else if(selectedTable == "death"){
+            //set the url to be returned
+            let url = certificate_endpoint+"/"+val+"?certificate_type=death";
+            //then recall the function for calling the api
+            getDeathList(url);
+        }
+    }
+    
+});
 
 // ==================================== Certificates
 
