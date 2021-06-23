@@ -80,6 +80,7 @@ class PriestController extends Controller
 
             //return specific row using search
             $result = Priest::where('id', $search)
+                    ->orderByRaw('id DESC')
                     ->paginate($this->getPaginationLimit());
 
             //if search is not found
@@ -99,6 +100,7 @@ class PriestController extends Controller
                     ->orWhere('middlename', $search)
                     ->orWhere('lastname', $search)
                     ->orWhere('prefix', $search)
+                    ->orderByRaw('id DESC')
                     ->paginate($this->getPaginationLimit());
 
             //if search is not found

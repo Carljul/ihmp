@@ -17,7 +17,7 @@ class TemplateController extends Controller
     public function index()
     {
         //return all data for Template table
-        $result = Template::where('is_deleted', 0)->orderByRaw('id DESC')->get();
+        $result = Template::where('is_deleted', 0)->orderByRaw('id DESC')->paginate($this->getPaginationLimit());
 
         //declaring our return response
         $response = $this->customApiResponse($result, 200); //OK
@@ -38,7 +38,7 @@ class TemplateController extends Controller
         $checkDuplication = Template::where('template_type', $request->template_type)
                             ->where('content', $request->content)
                             ->where('is_template', $request->is_template)
-                            ->get();
+                            ->paginate($this->getPaginationLimit());
 
         //check if there is any duplication
         if(count($checkDuplication) === 0){
@@ -68,19 +68,42 @@ class TemplateController extends Controller
      * @param  \App\Template  $Template
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        //return specific row using id
-        $result = Template::find($id);
+        if($request->isIdSearch && $request->isIdSearch == "true" && $request->isIdSearch == true){
 
-        //if id is not found
-        if(!$result){
+
+            //return specific row using id
+            $result = Template::where('id', $id)->orderByRaw('id DESC')->paginate($this->getPaginationLimit());
+
+            //if id is not found
+            if(!$result){
+                //return json response
+                return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
+            }
+
             //return json response
-            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
-        }
+            return response()->json($this->customApiResponse($result, 200)); //OK
 
-        //return json response
-        return response()->json($this->customApiResponse($result, 200)); //OK
+        }else{
+
+            //return specific row using id
+            $result = Template::where('id', $id)
+                    ->orWhere('template_type', $id)
+                    ->orWhere('content', 'LIKE', '%'.$id.'%')
+                    ->orderByRaw('id DESC')
+                    ->paginate($this->getPaginationLimit());
+
+            //if id is not found
+            if(!$result){
+                //return json response
+                return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
+            }
+
+            //return json response
+            return response()->json($this->customApiResponse($result, 200)); //OK
+        }
+        
     }
 
     /**
