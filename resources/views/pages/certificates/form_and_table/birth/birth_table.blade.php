@@ -18,6 +18,8 @@
                             <th>Born On</th>
                             <th colspan="3">Record of</th>
                             <th>Born In</th>
+                            <th>Baptism Date</th>
+                            <th>Minister</th>
                             <th colspan="3">Fathers Name</th>
                             <th colspan="3">Mothers Name</th>
                             <th>Residents of</th>

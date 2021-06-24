@@ -94,7 +94,16 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s12">
+                        <div class="col s12 m6">
+                            <b>Baptism Date</b>
+                            <div class="row removeBottomMargin">
+                                <div class="input-field col s12">
+                                    <input id="birth_baptism_date" type="text" class="validate datepicker" name="birth_baptism_date">
+                                    <label for="birth_baptism_date">Baptism Date</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col s12 m6">
                             <b>Minister</b>
                             <div class="row removeBottomMargin">
                                 <div class="input-field col s12">
@@ -182,7 +191,7 @@
                 var birth_firstname = $('#birth_firstname').val();
                 var birth_middlename = $('#birth_middlename').val();
                 var birth_lastname = $('#birth_lastname').val();
-                var birth_date = $('#birth_date').val();
+                var birth_date = new Date($('#birth_date').val());
                 var birth_location = $('#birth_location').val();
                 var birth_father_firstname = $('#birth_father_firstname').val();
                 var birth_father_middlename = $('#birth_father_middlename').val();
@@ -196,17 +205,18 @@
                 var birth_baptismal_register = $('#birth_baptismal_register').val();
                 var birth_volume = $('#birth_volume').val();
                 var birth_page = $('#birth_page').val();
-                var birth_date_issue = $('#birth_date_issue').val();
+                var birth_date_issue = new Date($('#birth_date_issue').val());
                 var birth_parish_priest = $("#birth_parish_priest").val();
                 var payload, metaContent;
                 var delagatedId = parseInt(localStorage.getItem('delegatedUser'));
                 var delegated_user = AT.charAt(delagatedId+1);
+                var birth_baptism_date = new Date($("#birth_baptism_date").val());
                 // 0 for add
                 // 1 for update
                 if(bis_update == 0){
                     metaContent = {
-                        "born_on": birth_location,
-                        "born_in": birth_date,
+                        "born_on": birth_date.getMonth()+"/"+birth_date.getDate()+"/"+birth_date.getFullYear(),
+                        "born_in": birth_location,
                         "father_firstname": birth_father_firstname,
                         "father_middlename": birth_father_middlename,
                         "father_lastname": birth_father_lastname,
@@ -214,13 +224,13 @@
                         "mother_middlename": birth_mother_middlename,
                         "mother_lastname": birth_mother_lastname,
                         "resident_of": birth_address,
-                        "baptism_date": birth_date_issue,
+                        "baptism_date": birth_baptism_date.getMonth()+"/"+birth_baptism_date.getDate()+"/"+birth_baptism_date.getFullYear(),
                         "baptism_minister": birth_minister,
                         "godparents": birth_godparents,
                         "baptismal_register": birth_baptismal_register,
                         "volume": birth_volume,
                         "page": birth_page,
-                        "date_issued": birth_date_issue,
+                        "date_issued": birth_date_issue.getMonth()+"/"+birth_date_issue.getDate()+"/"+birth_date_issue.getFullYear(),
                     };
 
                     payload = {
@@ -228,7 +238,7 @@
                         "middlename": birth_middlename,
                         "lastname": birth_lastname,
                         "certificate_type": "baptism",
-                        "priest_id": birth_parish_priest,
+                        "priest_id": birth_parish_priest == null ? 0:birth_parish_priest,
                         "meta": JSON.stringify(metaContent),
                         "created_by": delegated_user,
                     };

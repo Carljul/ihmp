@@ -1311,21 +1311,7 @@
                 firstname == null || firstname == undefined || firstname == "" &&
                 middlename == null || middlename == undefined || middlename == "" &&
                 lastname == null || lastname == undefined || lastname == "" &&
-                father_firstname == null || father_firstname == undefined || father_firstname == "" &&
-                father_middlename == null || father_middlename == undefined || father_middlename == "" &&
-                father_lastname == null || father_lastname == undefined || father_lastname == "" &&
-                mother_firstname == null || mother_firstname == undefined || mother_firstname == "" &&
-                mother_middlename == null || mother_middlename == undefined || mother_middlename == "" &&
-                mother_lastname == null || mother_lastname == undefined || mother_lastname == "" &&
-                confirmation_date == null || confirmation_date == undefined || confirmation_date == "" &&
-                date_issued == null || date_issued == undefined || date_issued == "" &&
-                confirmation_by == null || confirmation_by == undefined || confirmation_by == "" &&
-                fsponsor_firstname == null || fsponsor_firstname == undefined || fsponsor_firstname == "" &&
-                ssponsor_firstname == null || ssponsor_firstname == undefined || ssponsor_firstname == "" &&
-                register_book == null || register_book == undefined || register_book == "" &&
-                book_page == null || book_page == undefined || book_page == "" &&
-                book_number == null || book_number == undefined || book_number == "" &&
-                priest_id == null || priest_id == undefined || priest_id == ""
+                confirmation_date == null || confirmation_date == undefined || confirmation_date == ""
             ){
                 emptyRows.push(row);
             }else{
