@@ -85,6 +85,8 @@
             // $('select').material_select(); <--- Do not use this one or it will affect the parish priest dropdown
             /// Register all dropdowns here do not use the general method of material select
             $("#selectCertificate").material_select();
+            $("#selectTemplateType").material_select(); //DC: added here the dropdown for template type
+            $("#selectIsTemplate").material_select(); //DC: added here the dropdown for is template
             $("#selectForm").material_select();
             $('.modal').modal();
             $('.datepicker').pickadate();            
