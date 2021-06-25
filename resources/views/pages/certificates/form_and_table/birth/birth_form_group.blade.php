@@ -1405,6 +1405,7 @@
 <script>
     $(document).ready(function(){
         initiateWorkerForBirth();
+        setupBirthDatePicker();
         // will hold the values
         var emptyRowsByBirth = [];
         var rowsWithValueByBirth = [];
@@ -1412,6 +1413,18 @@
         // will hold error records
         var errorSavingRecordsByBirth = [];
 
+
+        // initiate Birth Date Picker
+        function setupBirthDatePicker(){
+            for(var x = 1; x <= 10; x++){
+                $("#birth_born_on_"+x).pickadate({
+                    selectMonths: true, // Creates a dropdown to control month
+                    selectYears: 30, 
+                    max: new Date()
+                });
+                $("#birth_born_on_"+x).on('mousedown',function(event){ event.preventDefault(); });
+            }
+        }
 
         /// will validate all fields
         function validateAllFieldsAndCreatePayloadForBirth(
@@ -1436,6 +1449,7 @@
             birth_parish_priest,
             birth_baptism_date,
             birth_minister,
+            delegated_user,
         ){
             /// Validate for all empty rows
             if(
@@ -1450,6 +1464,8 @@
             }else{
                 var payloadToCreate;
                 birth_date_issued = new Date(birth_date_issued);
+                birth_born_on = new Date(birth_born_on);
+                birth_baptism_date = new Date(birth_baptism_date);
                 var metaContent = {                    
                     "born_on":birth_born_on.getMonth()+"/"+birth_born_on.getDate()+"/"+birth_born_on.getFullYear(),
                     "born_in":birth_born_in,
@@ -1466,7 +1482,7 @@
                     "baptismal_register":birth_baptismal_register,
                     "volume":birth_volume,
                     "page":birth_page,
-                    "date_issued":birth_date_issue.getMonth()+"/"+birth_date_issue.getDate()+"/"+birth_date_issue.getFullYear(),
+                    "date_issued":birth_date_issued.getMonth()+"/"+birth_date_issued.getDate()+"/"+birth_date_issued.getFullYear(),
                 };
                 payloadToCreate = {
                     "firstname": birth_first_name,
@@ -1610,6 +1626,7 @@
                     birth_parish_priest,
                     birth_baptism_date,
                     birth_minister,
+                    delegated_user,
                 );
             }
             console.log('emptyRows:: ', emptyRowsByBirth);
