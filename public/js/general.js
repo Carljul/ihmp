@@ -581,11 +581,66 @@ function getBirthList(url){
                 success: function(response){
                     if(response.status >= 200 && response.status < 400){    
                         var metaContent = JSON.parse(response.data[0].meta);              
+                        var responseContent = response.data[0];
+                        $('#birth_firstname').val(responseContent.firstname);
+                        $('#birth_middlename').val(responseContent.middlename);
+                        $('#birth_lastname').val(responseContent.lastname);
+
+
+                        if(metaContent.born_on != null){
+                            // Born On
+                            var convertedBornOn = new Date(metaContent.born_on);
+                            $('#birth_date').val(convertedBornOn.getDate() + " " +monthNames[convertedBornOn.getMonth()] +", "+convertedBornOn.getFullYear());
+                            var $birth_date_on = $('#birth_date').pickadate();
+
+                            // Use the picker object directly.
+                            var birthDatePicker = $birth_date_on.pickadate('picker');
+                            birthDatePicker.set('select', [convertedBornOn.getFullYear(), convertedBornOn.getMonth(), convertedBornOn.getDate()]);
+                        }
+
+                        $('#birth_location').val(metaContent.born_in);
                         
-                        $('#birth_firstname').val(response.data[0].firstname);
-                        $('#birth_middlename').val(response.data[0].middlename);
-                        $('#birth_lastname').val(response.data[0].lastname);
+                        $('#birth_father_firstname').val(metaContent.father_firstname);
+                        $('#birth_father_middlename').val(metaContent.father_middlename);
+                        $('#birth_father_lastname').val(metaContent.father_lastname);
+                        $('#birth_mother_firstname').val(metaContent.mother_firstname);
+                        $('#birth_mother_middlename').val(metaContent.mother_middlename);
+                        $('#birth_mother_lastname').val(metaContent.mother_lastname);
+                        $('#birth_address').val(metaContent.resident_of);
+
+                        if(metaContent.baptism_date != 'NaN/NaN/NaN' || metaContent.baptism_date != null){
+                            // Baptism Date
+                            var convertDateIssued = new Date(metaContent.baptism_date);
+                            $('#birth_baptism_date').val(convertDateIssued.getDate() + " " +monthNames[convertDateIssued.getMonth()] +", "+convertDateIssued.getFullYear());
+                            var $input = $('#birth_baptism_date').pickadate();
+    
+                            // Use the picker object directly.
+                            var picker = $input.pickadate('picker');
+                            picker.set('select', [convertDateIssued.getFullYear(), convertDateIssued.getMonth(), convertDateIssued.getDate()]);
+                        }
+
+                        $('#birth_minister').val(metaContent.baptism_minister);
+                        $('#birth_baptismal_register').val(metaContent.baptismal_register);
+                        $('#birth_godparents').val(metaContent.godparents);
+                        $('#birth_volume').val(metaContent.volume);
+                        $('#birth_page').val(metaContent.page);
                         
+
+                        if(metaContent.date_issued != 'NaN/NaN/NaN'){
+                            // Date Issued
+                            var convertDateIssued = new Date(metaContent.date_issued);
+                            $('#birth_date_issue').val(convertDateIssued.getDate() + " " +monthNames[convertDateIssued.getMonth()] +", "+convertDateIssued.getFullYear());
+                            var $input = $('#birth_date_issue').pickadate();
+    
+                            // Use the picker object directly.
+                            var picker = $input.pickadate('picker');
+                            picker.set('select', [convertDateIssued.getFullYear(), convertDateIssued.getMonth(), convertDateIssued.getDate()]);
+                        }
+                        
+                        $('#birth_parish_priest').val(responseContent.priest_id);
+                        // re-initialize material-select
+                        $('#birth_parish_priest').material_select();
+
                         $('#single_birth_form').find('label')
                         .each(function () {
                             if($(this).html() != "Select Parish Priest"){

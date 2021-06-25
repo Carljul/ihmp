@@ -98,7 +98,7 @@
                             <b>Baptism Date</b>
                             <div class="row removeBottomMargin">
                                 <div class="input-field col s12">
-                                    <input id="birth_baptism_date" type="text" class="validate datepicker" name="birth_baptism_date">
+                                    <input id="birth_baptism_date" type="text" class="datepicker" name="birth_baptism_date">
                                     <label for="birth_baptism_date">Baptism Date</label>
                                 </div>
                             </div>
@@ -211,28 +211,29 @@
                 var delagatedId = parseInt(localStorage.getItem('delegatedUser'));
                 var delegated_user = AT.charAt(delagatedId+1);
                 var birth_baptism_date = new Date($("#birth_baptism_date").val());
+
+                
+                metaContent = {
+                    "born_on": (birth_date.getMonth()+1)+"/"+birth_date.getDate()+"/"+birth_date.getFullYear(),
+                    "born_in": birth_location,
+                    "father_firstname": birth_father_firstname,
+                    "father_middlename": birth_father_middlename,
+                    "father_lastname": birth_father_lastname,
+                    "mother_firstname": birth_mother_firstname,
+                    "mother_middlename": birth_mother_middlename,
+                    "mother_lastname": birth_mother_lastname,
+                    "resident_of": birth_address,
+                    "baptism_date": (birth_baptism_date.getMonth()+1)+"/"+birth_baptism_date.getDate()+"/"+birth_baptism_date.getFullYear(),
+                    "baptism_minister": birth_minister,
+                    "godparents": birth_godparents,
+                    "baptismal_register": birth_baptismal_register,
+                    "volume": birth_volume,
+                    "page": birth_page,
+                    "date_issued": (birth_date_issue.getMonth()+1)+"/"+birth_date_issue.getDate()+"/"+birth_date_issue.getFullYear(),
+                };
                 // 0 for add
                 // 1 for update
                 if(bis_update == 0){
-                    metaContent = {
-                        "born_on": birth_date.getMonth()+"/"+birth_date.getDate()+"/"+birth_date.getFullYear(),
-                        "born_in": birth_location,
-                        "father_firstname": birth_father_firstname,
-                        "father_middlename": birth_father_middlename,
-                        "father_lastname": birth_father_lastname,
-                        "mother_firstname": birth_mother_firstname,
-                        "mother_middlename": birth_mother_middlename,
-                        "mother_lastname": birth_mother_lastname,
-                        "resident_of": birth_address,
-                        "baptism_date": birth_baptism_date.getMonth()+"/"+birth_baptism_date.getDate()+"/"+birth_baptism_date.getFullYear(),
-                        "baptism_minister": birth_minister,
-                        "godparents": birth_godparents,
-                        "baptismal_register": birth_baptismal_register,
-                        "volume": birth_volume,
-                        "page": birth_page,
-                        "date_issued": birth_date_issue.getMonth()+"/"+birth_date_issue.getDate()+"/"+birth_date_issue.getFullYear(),
-                    };
-
                     payload = {
                         "firstname": birth_firstname,
                         "middlename": birth_middlename,
@@ -261,27 +262,65 @@
                         }
                     });
                 }else{
-                    metaContent = {
-
-                    };
-
                     payload = {
-
+                        "id": bid,
+                        "firstname": birth_firstname,
+                        "middlename": birth_middlename,
+                        "lastname": birth_lastname,
+                        "certificate_type": "baptism",
+                        "priest_id": birth_parish_priest == null ? 0:birth_parish_priest,
+                        "meta": JSON.stringify(metaContent),
+                        "created_by": delegated_user,
                     };
+
+                    $.ajax({
+                        type: "PUT",
+                        url: certificate_endpoint+"/"+bid,
+                        data: JSON.stringify(payload),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response){
+                            if(response.status == 200){
+                                getBirthList('NA');
+                                clearBirthInputFields();
+                            }else{
+                                console.log('something is not right: '+response.status);
+                                getBirthList('NA');
+                                clearBirthInputFields();
+                            }
+                        }, error: function(e){
+                            console.log('something is not right: '+e);
+                        }
+                    });
                 }
             }
         });
 
+        $(".btnCancelBirthUpdate").on('click', function(e){
+            e.preventDefault();
+            clearBirthInputFields();
+        });
+
         // clear field
         function clearBirthInputFields(){
+            $(".btnCancelBirthUpdate").addClass('hide');
+            
+            // update Form Title
+            $(".headerBirth").html('Add Birth');
+
             $('#single_birth_form').find('input:text, input:password, select')
             .each(function () {
                 $(this).val('');
+            });
+            $('#single_birth_form').find('input:hidden')
+            .each(function () {
+                $(this).val(0);
             });
             $('#single_birth_form').find('label')
             .each(function () {
                 $(this).removeClass('active');
             });
+            $('#birth_parish_priest').material_select();
         }
     });
 </script>
