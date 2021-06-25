@@ -11,25 +11,45 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>First Name</th>
-                            <th>First Name</th>
-                            <th>First Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>First Name</td>
-                            <td>First Name</td>
-                            <td>First Name</td>
-                            <td>First Name</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="col s12 fix_height_table" style="overflow-x: scroll;">
+                    <table class="death_group_table striped">
+                        <thead>
+                            <tr>
+                                <th>Actions</th>
+                                <th colspan="3">Decease Name</th>
+                                <th colspan="11">Other Info</th>
+                                <th>Priest Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                                <td>First Name</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        getDeathList('NA');
+    });
+</script>

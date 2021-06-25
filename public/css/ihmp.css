@@ -155,7 +155,7 @@ body, html {
 }
 
 .confirmation_group_table{
-    width: 315%;
+    width: 390%;
 }
 
 .confirmation_group_form{
@@ -216,5 +216,8 @@ tr.custom_card td:last-child {
 }
 
 .birth_group_table{
+    width: 390%;
+}
+.death_group_table{
     width: 390%;
 }
