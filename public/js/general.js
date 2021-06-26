@@ -13,6 +13,8 @@ function checkTokenValidity(token){
                     return response['data'][0]['token_status'];
                 }else if(response.status == 204){
                     forceLogout();
+                }else{
+                    forceLogout();
                 }
             }else{
                 /// Will show a popup if session expires or local storage is been deleted

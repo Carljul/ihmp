@@ -17,7 +17,7 @@
                         @csrf
                         <div class="input-field col s12">
                             <input id="email" type="email" class="validate form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="off">
-                            <label for="email" class="center">Email/Username</label>
+                            <label for="email" class="center">Email</label>
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

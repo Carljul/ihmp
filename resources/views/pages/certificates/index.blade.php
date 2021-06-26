@@ -11,7 +11,7 @@
                     <select id="selectCertificate">
                         <option value="" disabled>Choose Record</option>
                         <option value="confirmation" selected>Confirmation Record</option>
-                        <option value="mariage">Mariage Record</option>
+                        <option value="mariage">Marriage Record</option>
                         <option value="birth">Birth Record</option>
                         <option value="death">Death Record</option>
                     </select>
@@ -112,8 +112,16 @@
         $(".certificate").addClass('active');
         $(".priest").removeClass('active');
         isTokenExist();
+        tokenValid();
         setFormSelection();
         setPriestDropdown();
+
+        function tokenValid(){
+            if(localStorage.getItem('AT') != null){
+                var atVal = localStorage.getItem('AT');
+                checkTokenValidity(atVal);
+            }
+        }
 
         function setPriestDropdown(){
             isTokenExist();

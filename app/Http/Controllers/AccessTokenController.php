@@ -118,10 +118,14 @@ class AccessTokenController extends Controller
                 $latestData = AccessToken::where('token_key', $token)->get();
         
                 //return json response
-                return response()->json($this->customApiResponse($latestData, 204)); //OK
+                return response()->json($this->customApiResponse($latestData, 204)); //EXPIRED TOKEN
             }else{
-                //return json response
-                return response()->json($this->customApiResponse($result, 200)); //OK
+                // return json response
+                if($result[0]['token_status'] == 'expired'){
+                    return response()->json($this->customApiResponse($result, 204)); //EXPIRED TOKEN
+                }else{
+                    return response()->json($this->customApiResponse($result, 200)); //OK
+                }
             }
 
         }

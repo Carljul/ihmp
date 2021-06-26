@@ -4,6 +4,7 @@
 const protocol = 'http://';
 const base_url = '127.0.0.1:8000';
 const api_server = protocol+''+base_url+/api/;
+const system_url = protocol+''+base_url+'/';
 
 /// Token Enums
 const at_expire = 'expired';

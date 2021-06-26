@@ -119,17 +119,18 @@ class LoginController extends Controller
         for ($i = 0; $i < 32; $i++) {
             $accessToken .= $characters[rand(0, $charactersLength - 1)];
         }
-        $encryptedUsername = md5($user->email);
-        $accessToken .= "|".$user->id."|".$encryptedUsername;
+        // $encryptedUsername = md5($user->email);
+        $accessToken .= "|".$user->id;
 
         $user_id = $user->id;
         $payload = (object) array(
             "user_id"=>$user_id,
             "token_key"=>$accessToken,
         );
-        
+        // Store new accessToken
         $result = app('App\Http\Controllers\AccessTokenController')->store($payload);
         
+        // Verify if Token is set successfully
         if($result->getData()->status == 200){
             echo "<script>"
             ."localStorage.setItem('AT','".$accessToken."');"
@@ -143,8 +144,10 @@ class LoginController extends Controller
     }
     public function logout(Request $request)
     {
-        /// TODO:: Update the accesstoken table and set the status to expire
-
+        // Updates the Token to expire
+        $result = app('App\Http\Controllers\AccessTokenController')->logout($request);
+        
+        // Logouts the user
         $this->guard('web_buyer')->logout();
         echo "<script>"
         ."localStorage.removeItem('AT');"
