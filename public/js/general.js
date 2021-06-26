@@ -1004,64 +1004,98 @@ function getDeathList(url){
             if(response.status == 200){
                 var html = "";
                 var deathObject = response.data.data;
-                var prevPageURL = response.data.prev_page_url;
-                var nextPageURL = response.data.next_page_url;
-                var path = response.data.path;
-                var currentPage = response.data.current_page;
-                var lastPage = response.data.last_page;
-                var pageHtml = `<ul class="pagination">
-                                <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginationForDeath ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
-                for(var x = 0; x < deathObject.length; x++){
-                    var metaContent = JSON.parse(deathObject[x]['meta']);
-                    html+= '<tr>'
-                        +'<!-- Actions -->'
-                        +'<td><button class="btn btn-wave btn-actions blue"><i class="material-icons">print</i></button></td>'
-                        +'<td><button class="btn btn-wave btn-actions green"><i class="material-icons">edit</i></button></td>'
-                        +'<td><button class="btn btn-wave btn-actions red"><i class="material-icons">delete</i></button></td>'
-                        +'<!-- Born On -->'
-                        +'<td>First Name</td>'
-                        +'<!-- Record of -->'
-                        +'<td>First Name</td>'
-                        +'<td>First Name</td>'
-                        +'<td>First Name</td>'
-                        +'<!-- Born In -->'
-                        +'<td>First Name</td>'
-                        +'<!-- Fathers Name -->'
-                        +'<td>First Name</td>'
-                        +'<td>First Name</td>'
-                        +'<td>First Name</td>'
-                        +'<!-- Mothers Name -->'
-                        +'<td>First Name</td>'
-                        +'<td>First Name</td>'
-                        +'<td>First Name</td>'
-                        +'<!-- Residents of -->'
-                        +'<td>First Name</td>'
-                        +'<!-- Godparents -->'
-                        +'<td>First Name</td>'
-                        +'<!-- Other Details -->'
-                        +'<td>First Name</td>'
-                        +'<td>First Name</td>'
-                        +'<td>First Name</td>'
-                        +'<td>First Name</td>'
-                        +'<!-- Parish Priest -->'
-                        +'<td>First Name</td>'
-                    +'</tr>';
+                if(deathObject.length == 0){
+                    html+= "<tr>"
+                    +"<td colspan='18'>No Records Yet</td>"
+                    +"</tr>";
+                    $("#deathListTable").html(html);
+                }else{
+                    var prevPageURL = response.data.prev_page_url;
+                    var nextPageURL = response.data.next_page_url;
+                    var path = response.data.path;
+                    var currentPage = response.data.current_page;
+                    var lastPage = response.data.last_page;
+                    var pageHtml = `<ul class="pagination">
+                                    <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginationForDeath ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
+                    for(var x = 0; x < deathObject.length; x++){
+                        var metaContent = JSON.parse(deathObject[x]['meta']);
+                        var responseContent = deathObject[x];
+                        html+= '<tr>'
+                                +'<!-- Actions -->'
+                                +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintDCertificate" id="btnPrintBCertificate-'+responseContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
+                                +'<td><button class="btn waves-effect btn-actions green tooltipped btnUpdateDCertificate" id="btnUpdateBCertificate-'+responseContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Update Record"><i class="material-icons">edit</i></button></td>'
+                                +'<td><button class="btn waves-effect btn-actions red tooltipped btnDeleteDCertificate" id="btnDeleteBCertificate-'+responseContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
+                                +'<!-- Decease Name -->'
+                                +'<td><label style="font-size: 9px;">First Name</label><br>'+responseContent['firstname']+'</td>'
+                                +'<td><label style="font-size: 9px;">Middle Name</label><br>'+responseContent['middlename']+'</td>'
+                                +'<td><label style="font-size: 9px;">Last Name</label><br>'+responseContent['lastname']+'</td>'
+                                +'<!-- Other Info -->'
+                                +'<td><label style="font-size: 9px;">Age</label><br>'+metaContent['age']+'</td>'
+                                +'<td><label style="font-size: 9px;">Residence of</label><br>'+metaContent['residence']+'</td>'
+                                +'<td><label style="font-size: 9px;">Date of Death</label><br>'+metaContent['date_of_death']+'</td>'
+                                +'<td><label style="font-size: 9px;">Place of Burial</label><br>'+metaContent['place_of_burial']+'</td>'
+                                +'<td><label style="font-size: 9px;">Date of Burial</label><br>'+metaContent['date_of_burial']+'</td>'
+                                +'<td><label style="font-size: 9px;">Informant or Relatives</label><br>'+metaContent['informant_or_relatives']+'</td>'
+                                +'<td><label style="font-size: 9px;">Book Number</label><br>'+metaContent['book_number']+'</td>'
+                                +'<td><label style="font-size: 9px;">Page Number</label><br>'+metaContent['page_number']+'</td>'
+                                +'<td><label style="font-size: 9px;">Registry Number</label><br>'+metaContent['registry_number']+'</td>'
+                                +'<td><label style="font-size: 9px;">Date Issued</label><br>'+metaContent['date_issued']+'</td>'
+                                +'<!-- Priest Name -->';
+                                var pname = responseContent['priest_fname'];
+                                if(pname == null || pname == undefined || pname == NaN){
+                                    html+='<td><label style="font-size: 9px;">Name</label><br>Not Set</td>';
+                                }else{
+                                    html+='<td><label style="font-size: 9px;">Name</label><br>'+responseContent['priest_fname']+' '+responseContent['priest_mname']+' '+responseContent['priest_lname']+'</td>';
+                                }
+                        +'</tr>';
+                    }
+
+                    generateDeathPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+
+                    $("#deathListTable").html(html);
+                    $('.tooltipped').tooltip({delay: 50});
+
+                    /// Print Confirmation Certificate
+                    $(".btnPrintDCertificate").on('click', function(){
+                        var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
+                        printMarriageCertificate(certificateId, $(this).attr("id"));
+                    });
+                
+                    /// Update Confirmation Certificate
+                    $(".btnUpdateDCertificate").on('click', function(e){
+                        e.preventDefault();
+                        var certificateId = $(this).attr("id").substr('btnUpdateDCertificate-'.length);
+                        showToUpdateDeathCertificate(certificateId, $(this).attr("id"));
+                    });
+
+                    
+                    /// Delete Birth Certificate
+                    $(".btnDeleteDCertificate").on("click",function(){
+                        var certificateId = $(this).attr("id").substr('btnDeleteDCertificate-'.length);
+                        
+                        $(".btnCancelDeathUpdate").addClass('hide');
+                        
+                        // update Form Title
+                        $(".headerDeath").html('Add Birth');
+
+                        $('#single_death_form').find('input:text, input:password, select')
+                        .each(function () {
+                            $(this).val('');
+                        });
+                        $('#single_death_form').find('input:hidden')
+                        .each(function () {
+                            $(this).val(0);
+                        });
+                        $('#single_death_form').find('label')
+                        .each(function () {
+                            $(this).removeClass('active');
+                        });
+                        $("#death_age").val('');
+                        $('#death_parish_priest').material_select();
+
+                        deleteDeathCertificate(certificateId);
+                    });
                 }
-
-                generateMariagePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
-
-                $("#marriageListTable").html(html);
-                $('.tooltipped').tooltip({delay: 50});
-
-                /// Print Confirmation Certificate
-                $(".btnPrintCCertificate").on('click', function(){
-                    var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
-                    printMarriageCertificate(certificateId, $(this).attr("id"));
-                });
-
-                /// Update Confirmation Certificate
-
-                /// Delete Confirmation Certificate
             }else{
                 console.log('Something is not right:: ',response);
             }
@@ -1071,7 +1105,7 @@ function getDeathList(url){
     });
 
 
-    function printMarriageCertificate(certificateId){
+    function printDeathCertificate(certificateId){
         isTokenExist();
         var AT = localStorage.getItem("AT");
         checkTokenValidity(AT);
@@ -1083,7 +1117,7 @@ function getDeathList(url){
 
     }
 
-    function showToUpdateMarriageCertificate(certificateId){
+    function showToUpdateDeathCertificate(certificateId){
         isTokenExist();
         var AT = localStorage.getItem("AT");
         checkTokenValidity(AT);
@@ -1095,72 +1129,91 @@ function getDeathList(url){
             localStorage.setItem('defaultForm','individual');
             setFormSelection();
             // update Form Title
-            $(".headerConfirmation").html('Update Confirmation');
+            $(".headerDeath").html('Update Death');
             // Show Cancel Button
-            $(".btnCancelConfirmationUpdate").removeClass('hide');
+            $(".btnCancelDeathUpdate").removeClass('hide');
             // Display Information to Form
             $.ajax({
                 type: "GET",
                 url: certificate_endpoint+"/"+certificateId,
+                data: {'certificate_type':'death', 'isIdSearch':'true'},
                 success: function(response){
                     console.log(response);
-                    if(response.status == 200){    
+                    if(response.status >= 200 && response.status < 400){    
                         var metaContent = JSON.parse(response.data[0].meta);
-                        console.log(metaContent);                    
+                        var rootContent = response.data[0];
+
+                        $("#dis_update").val(1);
+                        $("#did").val(certificateId);
+                        $("#death_firstname").val(rootContent['firstname']);
+                        $("#death_middlename").val(rootContent['middlename']);
+                        $("#death_lastname").val(rootContent['lastname']);
+                        $("#death_age").val(metaContent.age);
+                        $("#death_residence").val(metaContent.residence);
                         
-                        $('#single_confirmation_firstname').val(response.data[0].firstname);
-                        $('#single_confirmation_middlename').val(response.data[0].middlename);
-                        $('#single_confirmation_lastname').val(response.data[0].lastname);
-                        $('#single_confirmation_father_firstname').val(metaContent.father_firstname);
-                        $('#single_confirmation_father_middlename').val(metaContent.father_middlename);
-                        $('#single_confirmation_father_lastname').val(metaContent.father_lastname);
-                        $('#single_confirmation_mother_firstname').val(metaContent.mother_firstname);
-                        $('#single_confirmation_mother_middlename').val(metaContent.mother_firstname);
-                        $('#single_confirmation_mother_lastname').val(metaContent.mother_firstname);
-                        // $('#single_confirmation_date').val(metaContent.father_firstname);
-                        // $('#single_conrfirmation_date_issued').val(metaContent.father_firstname);
-                        $('#single_confirmation_by').val(metaContent.confirmation_by);
-                        // $('#single_confirmation_fsponsor_firstname').val(metaContent.father_firstname);
-                        // $('#single_confirmation_fsponsor_middlename').val(metaContent.father_firstname);
-                        // $('#single_confirmation_fsponsor_lastname').val(metaContent.father_firstname);
-                        // $('#single_confirmation_ssponsor_firstname').val(metaContent.father_firstname);
-                        // $('#single_confirmation_ssponsor_middlename').val(metaContent.father_firstname);
-                        // $('#single_confirmation_ssponsor_lastname').val(metaContent.father_firstname);
-                        $('#single_confirmation_register_book').val(metaContent.registration_book);
-                        $('#single_confirmation_book_page').val(metaContent.book_page);
-                        $('#single_confirmation_book_number').val(metaContent.book_number);
-                        $('#single_confirmation_parish_priest').val(response.data[0].priest_id);
+                        $("#death_place_of_burial").val(metaContent.place_of_burial);
                         
+                        $("#death_informant").val(metaContent.informant_or_relatives);
+                        $("#death_book_number").val(metaContent.book_number);
+                        $("#death_page_number").val(metaContent.page_number);
+                        $("#death_registry_number").val(metaContent.registry_number);
                         
-                        // $('#single_confirmation_form').find('label')
-                        // .each(function () {
-                        //     $(this).addClass('active');
-                        // });
-                        // $('#cis_update').val(1);
-                        // $('#cid').val(certificateId);
+                        $("#death_parish_priest").val(rootContent['priest_id']);
+                        $("#death_parish_priest").material_select();
+
+
+                        if(metaContent.date_of_death != null){
+                            // Confirmation Date
+                            var convertDeathDate = new Date(metaContent.date_of_death);
+                            $('#death_date_of_death').val(convertDeathDate.getDate() + " " +monthNames[convertDeathDate.getMonth()] +", "+convertDeathDate.getFullYear());
+                            var $confirmationDateInput = $('#death_date_of_death').pickadate();
+
+                            // Use the picker object directly.
+                            var deathDatePicker = $confirmationDateInput.pickadate('picker');
+                            deathDatePicker.set('select', [convertDeathDate.getFullYear(), convertDeathDate.getMonth(), convertDeathDate.getDate()]);
+                        }
+                        if(metaContent.date_of_burial != null){
+                            // Confirmation Date
+                            var convertDeathDateBurial = new Date(metaContent.date_of_burial);
+                            $('#death_date_of_burial').val(convertDeathDateBurial.getDate() + " " +monthNames[convertDeathDateBurial.getMonth()] +", "+convertDeathDateBurial.getFullYear());
+                            var $deathDateInput = $('#death_date_of_burial').pickadate();
+
+                            // Use the picker object directly.
+                            var deathDatePicker = $deathDateInput.pickadate('picker');
+                            deathDatePicker.set('select', [convertDeathDateBurial.getFullYear(), convertDeathDateBurial.getMonth(), convertDeathDateBurial.getDate()]);
+                        }
+                        if(metaContent.date_issued != 'NaN/NaN/NaN'){
+                            // Date Issued
+                            var convertDateIssued = new Date(metaContent.date_issued);
+                            $('#death_date_issued').val(convertDateIssued.getDate() + " " +monthNames[convertDateIssued.getMonth()] +", "+convertDateIssued.getFullYear());
+                            var $input = $('#death_date_issued').pickadate();
+    
+                            // Use the picker object directly.
+                            var picker = $input.pickadate('picker');
+                            picker.set('select', [convertDateIssued.getFullYear(), convertDateIssued.getMonth(), convertDateIssued.getDate()]);
+                        }
                     }else{
-                        var html = "";
-                        html += "<h5>Something went wrong!</h5>"
-                        +""+response.message+"";
-                        $('#modalSysError').modal('open');
-                        $(".errMessage").addClass('hide');
-                        $('.customMessage').html(html);
-                        $(".customMessage").removeClass('hide');
+                        if(response.status == 404){
+                            Materialize.toast('Something Went Wrong (404):: No Record Found', 5000, 'red rounded');
+                        }else{
+                            Materialize.toast('Something Went Wrong', 5000, 'red rounded');
+                        }
                     }
+                    $('#single_death_form').find('label')
+                    .each(function () {
+                        if($(this).html() != "Select Parish Priest"){
+                            $(this).addClass('active');
+                        }
+                    });
                 }, error: function(e){
-                    var html = "";
-                    html += "<h5>Something went wrong!</h5>"
-                    +""+e.message+"";
-                    $('#modalSysError').modal('open');
-                    $(".errMessage").addClass('hide');
-                    $('.customMessage').html(html);
-                    $(".customMessage").removeClass('hide');
+                    Materialize.toast('Something Went Wrong (406):: '+e.responseJSON.message, 5000, 'red rounded');
+                    console.log('["Confirmation Error"]: '+e.responseJSON.message);
                 }
             });
         }
     }
 
-    function deleteMarriageCertificate(certificateId){
+    function deleteDeathCertificate(certificateId){
         isTokenExist();
         var AT = localStorage.getItem("AT");
         checkTokenValidity(AT);
@@ -1172,10 +1225,12 @@ function getDeathList(url){
             $.ajax({
                 type: "GET",
                 url: certificate_endpoint+"/"+certificateId,
+                data: {'certificate_type':'death', 'isIdSearch':'true'},
                 success: function(response){
-                    if(response.status == 200){
+
+                    if(response.status >= 200 && response.status < 400){
                         /// Prepare Delete Confirmation Modal
-                        $("#recordToDelete").html(response.data[0]['firstname']);
+                        $("#recordToDelete").html(response.data['firstname']);
                         var buttonConfirmation = "<button class='btn btnConfirmedDelete' id='"+certificateId+"'>Delete</button> <button class='btn' id='closeConrimation'>Cancel</button>";
                         $('#buttonConfirmation').html(buttonConfirmation);
                         
@@ -1183,7 +1238,27 @@ function getDeathList(url){
                         $('#deleteConfirmationModal').modal('open');
 
                         /// if confirmed Delete
-                        
+                        $(".btnConfirmedDelete").on('click',function(){
+                            var fetchCertificateId = $(this).attr('id');
+                            $.ajax({
+                                type: "DELETE",
+                                url: certificate_endpoint+"/"+fetchCertificateId,
+                                data: {"id": certificateId, "is_deleted": 1},
+                                success: function(response){
+                                    if(response.status >= 200 && response.status < 400){
+                                        getDeathList("NA");
+                                        $('#deleteConfirmationModal').modal('close');
+                                    }else{
+                                        Materialize.toast('Something Went Wrong (405):: '+JSON.stringify(response.message), 5000, 'red rounded');
+                                        console.log('["Confirmation Status"]: '+response.status);
+                                    }
+                                }, error: function(e){
+                                    Materialize.toast('Something Went Wrong (406):: '+e.responseJSON.message, 5000, 'red rounded');
+                                    console.log('["Confirmation Error"]: '+e.responseJSON.message);
+                                }
+                            });
+                        });
+
 
                         /// else close modal
                         $("#closeConrimation").click(function(){
@@ -1191,16 +1266,21 @@ function getDeathList(url){
                         });
 
                     }else{
-                        console.log('Invalid Code Status');
+                        if(response.status == 404){
+                            Materialize.toast('Something Went Wrong (404):: No Record Found', 5000, 'red rounded');
+                        }else{
+                            Materialize.toast('Something Went Wrong', 5000, 'red rounded');
+                        }
                     }
                 }, error: function(e){
-                    console.log(e.message);
+                    Materialize.toast('Something Went Wrong (406):: '+e.responseJSON.message, 5000, 'red rounded');
+                    console.log('["Confirmation Error"]: '+e.responseJSON.message);
                 }
             });
         }
     }
 
-    function generateMariagePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificate){
+    function generateDeathPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificate){
         for(let i = 0 ; i < lastPage ; i++){
             if(currentPage == parseInt(i+1)){
                 pageHtml += `<li class="active"><a class="btnPaginationForDeath" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;

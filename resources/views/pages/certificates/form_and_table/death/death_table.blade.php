@@ -15,30 +15,16 @@
                     <table class="death_group_table striped">
                         <thead>
                             <tr>
-                                <th>Actions</th>
+                                <th colspan="3">Actions</th>
                                 <th colspan="3">Decease Name</th>
-                                <th colspan="11">Other Info</th>
+                                <th colspan="10">Other Info</th>
                                 <th>Priest Name</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="deathListTable">
+                            <!-- Keep it empty -->
                             <tr>
-                                <td>First Name</td>
-                                <td>First Name</td>
-                                <td>First Name</td>
-                                <td>First Name</td>
-                                <td>First Name</td>
-                                <td>First Name</td>
-                                <td>First Name</td>
-                                <td>First Name</td>
-                                <td>First Name</td>
-                                <td>First Name</td>
-                                <td>First Name</td>
-                                <td>First Name</td>
-                                <td>First Name</td>
-                                <td>First Name</td>
-                                <td>First Name</td>
-                                <td>First Name</td>
+                                <td colspan="18">No Records Yet</td>
                             </tr>
                         </tbody>
                     </table>

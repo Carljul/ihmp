@@ -176,6 +176,7 @@
             selectYears: 30, 
             max: new Date()
         });
+        // This will prevent the date picker from closing automatically
         $('#birth_date').on('mousedown',function(event){ event.preventDefault(); });
         $("#single_birth_form").on('submit', function(e){
             e.preventDefault();
