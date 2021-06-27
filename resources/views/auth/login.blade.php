@@ -38,6 +38,8 @@
                             <button type="submit" class="loginBtn btn col s12 border-radius-100px">
                                 {{ __('Login') }}
                             </button>
+                            <br><br><br>
+                            No account yet? <a href="" id="registerAccountLink">Click to create your account</a>
                         </div>
                     </form>
                 </div>
@@ -46,4 +48,9 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $("#registerAccountLink").attr("href",system_url+"register");
+    })
+</script>
 @endsection

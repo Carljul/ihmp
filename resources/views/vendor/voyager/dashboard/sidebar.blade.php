@@ -1,3 +1,4 @@
+@if(Auth::user()->role_id == 3)
 <div class="side-menu sidebar-inverse">
     <nav class="navbar navbar-default" role="navigation">
         <div class="side-menu-container">
@@ -30,13 +31,8 @@
 
         </div>
         <div id="adminmenu">
-            @if(Auth::user()->role_id == 1)
-                <admin-menu :items="{{ menu('admin', '_json') }}"></admin-menu>
-            @elseif(Auth::user()->role_id == 2)
-                <admin-menu :items="{{ menu('staff', '_json') }}"></admin-menu>
-            @elseif(Auth::user()->role_id == 3)
-                <admin-menu :items="{{ menu('super_admin', '_json') }}"></admin-menu>
-            @endif
+            <admin-menu :items="{{ menu('super_admin', '_json') }}"></admin-menu>
         </div>
     </nav>
 </div>
+@endif

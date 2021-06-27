@@ -30,6 +30,13 @@ body, html {
     box-shadow: 1px 1px 4px 4px rgba(3,151,242,0.31);
 }
 
+.logo2{
+    width: 10vw;
+    height: 15vh;
+    -webkit-box-shadow: 1px 1px 4px 4px rgba(3,151,242,0.31); 
+    box-shadow: 1px 1px 4px 4px rgba(3,151,242,0.31);
+}
+
 
 .parallax-container {
     height: 100%;
