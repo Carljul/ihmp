@@ -29,6 +29,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
 
+const age_limit = 18;
 
 /// Message and labels constants
-
+messageValidator = (Name) => "Are you sure you want to delete "+Name+" ?";

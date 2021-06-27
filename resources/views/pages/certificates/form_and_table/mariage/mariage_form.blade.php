@@ -30,7 +30,7 @@
                                     <select id="husband_civil_status" class="">
                                         <option value="" disabled selected>Select Civil Status</option>
                                         <option value="Single">Single</option>
-                                        <option value="Married">Married</option>
+                                        <!-- <option value="Married">Married</option> -->
                                         <option value="Divorced">Divorced</option>
                                         <option value="Widowed">Widowed</option>
                                     </select>
@@ -39,6 +39,10 @@
                                 <div class="input-field col s12">
                                     <input id="husband_birth_date" type="text" class="datepicker" name="husband_birth_date">
                                     <label for="husband_birth_date">Birth Date</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input id="husband_baptism_date" type="text" class="datepicker" name="husband_baptism_date">
+                                    <label for="husband_baptism_date">Baptism Date</label>
                                 </div>
                                 <div class="input-field col s12">
                                     <input id="husband_birth_place" type="text" class="validate" name="husband_birth_place">
@@ -85,7 +89,7 @@
                                     <select id="wife_civil_status" class="">
                                         <option value="" disabled selected>Select Civil Status</option>
                                         <option value="Single">Single</option>
-                                        <option value="Married">Married</option>
+                                        <!-- <option value="Married">Married</option> -->
                                         <option value="Divorced">Divorced</option>
                                         <option value="Widowed">Widowed</option>
                                     </select>
@@ -94,6 +98,10 @@
                                 <div class="input-field col s12">
                                     <input id="wife_birth_date" type="text" class="datepicker" name="wife_birth_date">
                                     <label for="wife_birth_date">Birth Date</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input id="wife_baptism_date" type="text" class="datepicker" name="wife_baptism_date">
+                                    <label for="wife_baptism_date">Baptism Date</label>
                                 </div>
                                 <div class="input-field col s12">
                                     <input id="wife_birth_place" type="text" class="validate" name="wife_birth_place">
@@ -218,9 +226,58 @@
         // This will prevent the date picker from closing automatically
         $('#wife_birth_date').on('mousedown',function(event){ event.preventDefault(); });
 
+        
+        $("#husband_baptism_date").pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 30, 
+            max: new Date()
+        });
+        // This will prevent the date picker from closing automatically
+        $('#husband_baptism_date').on('mousedown',function(event){ event.preventDefault(); });
+
+        $("#wife_baptism_date").pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 30, 
+            max: new Date()
+        });
+        
+        // This will prevent the date picker from closing automatically
+        $('#wife_baptism_date').on('mousedown',function(event){ event.preventDefault(); });
+
+        $("#marriage_date").pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 30,
+        });
+        
+        // This will prevent the date picker from closing automatically
+        $('#marriage_date').on('mousedown',function(event){ event.preventDefault(); });
+
+        $("#marriage_date_issued").pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 30, 
+            max: new Date()
+        });
+        
+        // This will prevent the date picker from closing automatically
+        $('#marriage_date_issued').on('mousedown',function(event){ event.preventDefault(); });
+
+
         // Set Dropdown
         $("#husband_civil_status").material_select();
         $("#wife_civil_status").material_select();
+
+        function getAge(birthdate){
+            var translatedDate = (birthdate.getMonth()+1)+"/"+birthdate.getDate()+"/"+birthdate.getFullYear();
+            var today = new Date();
+            var birthDate = new Date(translatedDate);
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
 
         // Saving Death Certificate
         $("#single_marriage_form").on('submit', function(e){
@@ -237,9 +294,10 @@
                 var husband_firstname = $("#husband_firstname").val();
                 var husband_middlename = $("#husband_middlename").val();
                 var husband_lastname = $("#husband_lastname").val();
-                var husband_age = 35;// TODO:: COMPUTE AGE VIA BIRTHDATE
                 var husband_civil_status = $("#husband_civil_status").val();
                 var husband_birth_date = new Date($("#husband_birth_date").val());
+                var husband_age = getAge(husband_birth_date);
+                var husband_baptism_date = new Date($("#husband_baptism_date").val());
                 var husband_birth_place = $("#husband_birth_place").val();
                 var husband_residence = $("#husband_residence").val();
                 var husband_fathers_name = $("#husband_fathers_name").val();
@@ -250,9 +308,10 @@
                 var wife_firstname = $("#wife_firstname").val();
                 var wife_middlename = $("#wife_middlename").val();
                 var wife_lastname = $("#wife_lastname").val();
-                var wife_age = 35; // TODO:: COMPUTE AGE VIA BIRTHDATE
                 var wife_civil_status = $("#wife_civil_status").val();
                 var wife_birth_date = new Date($("#wife_birth_date").val());
+                var wife_age = getAge(wife_birth_date);
+                var wife_baptism_date = new Date($("#wife_baptism_date").val());
                 var wife_birth_place = $("#wife_birth_place").val();
                 var wife_residence = $("#wife_residence").val();
                 var wife_fathers_name = $("#wife_fathers_name").val();
@@ -275,108 +334,113 @@
                 var delagatedId = parseInt(localStorage.getItem('delegatedUser'));
                 var delegated_user = AT.substring(delagatedId+1, AT.length);
 
-                // TODO: ADD BAPTISM DATE
-
-                metaContent = {
-                    "husband_firstname":husband_firstname,
-                    "husband_middlename":husband_middlename,
-                    "husband_lastname":husband_lastname,
-                    "husband_age":husband_age,
-                    "husband_civil_status":husband_civil_status,
-                    "husband_birthdate":(husband_birth_date.getMonth()+1)+"/"+husband_birth_date.getDate()+"/"+husband_birth_date.getFullYear(),
-                    "husband_birthplace":husband_birth_place,
-                    "husband_residence":husband_residence,
-                    "husband_baptismdate":husband_birth_date,
-                    "husband_fathersname":husband_fathers_name,
-                    "husband_mothersname":husband_mothers_name,
-                    "husband_firstwitness":husband_first_witness,
-                    "husband_secondwitness":husband_second_witness,
-                    "wife_firstname":wife_firstname,
-                    "wife_middlename":wife_middlename,
-                    "wife_lastname":wife_lastname,
-                    "wife_age":wife_age,
-                    "wife_civil_status":wife_civil_status,
-                    "wife_birthdate":(wife_birth_date.getMonth()+1)+"/"+wife_birth_date.getDate()+"/"+wife_birth_date.getFullYear(),
-                    "wife_birthplace":wife_birth_place,
-                    "wife_residence":wife_residence,
-                    "wife_baptismdate":wife_birth_date,
-                    "wife_fathersname":wife_fathers_name,
-                    "wife_mothersname":wife_mothers_name,
-                    "wife_firstwitness":wife_first_witness,
-                    "wife_secondwitness":wife_second_witness,
-                    "marriage_place":marraige_place,
-                    "marriage_date":marriage_date,
-                    "solemnized_by":marraige_solemnized_by,
-                    "marriage_number":marriage_no,
-                    "marriage_page":marriage_page,
-                    "marriage_line":marriage_line,
-                    "marriage_day":marriage_date.getDate(),
-                    "marriage_month":marriage_date.getMonth()+1,
-                    "marriage_year":marriage_date.getFullYear(),
-                };
-                
-                // 0 for add
-                // 1 for update
-                if(mis_update == 0){
-                    payload={
-                        "firstname": husband_firstname,
-                        "middlename": husband_middlename,
-                        "lastname": husband_lastname,
-                        "certificate_type": "marriage",
-                        "priest_id": marriage_parish_priest == null ? 0:marriage_parish_priest,
-                        "meta": JSON.stringify(metaContent),
-                        "created_by": delegated_user,
+                if(husband_age < age_limit){
+                    Materialize.toast('Can\'t Save Record: Husband\'s age is too young', 5000, 'red rounded');
+                } else if(wife_age < age_limit){
+                    Materialize.toast('Can\'t Save Record: Wife\'s age is too young', 5000, 'red rounded');
+                } else {
+                    metaContent = {
+                        "husband_firstname":husband_firstname,
+                        "husband_middlename":husband_middlename,
+                        "husband_lastname":husband_lastname,
+                        "husband_age":husband_age,
+                        "husband_civil_status":husband_civil_status,
+                        "husband_birthdate":(husband_birth_date.getMonth()+1)+"/"+husband_birth_date.getDate()+"/"+husband_birth_date.getFullYear(),
+                        "husband_birthplace":husband_birth_place,
+                        "husband_residence":husband_residence,
+                        "husband_baptismdate":(husband_baptism_date.getMonth()+1)+"/"+husband_baptism_date.getDate()+"/"+husband_baptism_date.getFullYear(),
+                        "husband_fathersname":husband_fathers_name,
+                        "husband_mothersname":husband_mothers_name,
+                        "husband_firstwitness":husband_first_witness,
+                        "husband_secondwitness":husband_second_witness,
+                        "wife_firstname":wife_firstname,
+                        "wife_middlename":wife_middlename,
+                        "wife_lastname":wife_lastname,
+                        "wife_age":wife_age,
+                        "wife_civil_status":wife_civil_status,
+                        "wife_birthdate":(wife_birth_date.getMonth()+1)+"/"+wife_birth_date.getDate()+"/"+wife_birth_date.getFullYear(),
+                        "wife_birthplace":wife_birth_place,
+                        "wife_residence":wife_residence,
+                        "wife_baptismdate":(wife_baptism_date.getMonth()+1)+"/"+wife_baptism_date.getDate()+"/"+wife_baptism_date.getFullYear(),
+                        "wife_fathersname":wife_fathers_name,
+                        "wife_mothersname":wife_mothers_name,
+                        "wife_firstwitness":wife_first_witness,
+                        "wife_secondwitness":wife_second_witness,
+                        "marriage_place":marraige_place,
+                        "wife_baptismdate":(wife_baptism_date.getMonth()+1)+"/"+wife_baptism_date.getDate()+"/"+wife_baptism_date.getFullYear(),
+                        "marriage_date":(marriage_date.getMonth()+1)+"/"+marriage_date.getDate()+"/"+marriage_date.getFullYear(),
+                        "solemnized_by":marraige_solemnized_by,
+                        "marriage_number":marriage_no,
+                        "marriage_page":marriage_page,
+                        "marriage_line":marriage_line,
+                        "marriage_day":marriage_date_issued.getDate(),
+                        "marriage_month":marriage_date_issued.getMonth()+1,
+                        "marriage_year":marriage_date_issued.getFullYear(),
                     };
-                    $.ajax({
-                        type: "POST",
-                        url: certificate_endpoint,
-                        data: JSON.stringify(payload),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function(response){
-                            if(response.status == 201){
-                                getMarriageList('NA');
-                                clearMarriageInputFields();
-                            }else{
-                                console.log('something is not right: '+response.status);
-                                getMarriageList('NA');
-                                clearMarriageInputFields();
+                    
+                    // 0 for add
+                    // 1 for update
+                    if(mis_update == 0){
+                        payload={
+                            "firstname": husband_firstname,
+                            "middlename": husband_middlename,
+                            "lastname": husband_lastname,
+                            "certificate_type": "marriage",
+                            "priest_id": marriage_parish_priest == null ? 0:marriage_parish_priest,
+                            "meta": JSON.stringify(metaContent),
+                            "created_by": delegated_user,
+                        };
+                        $.ajax({
+                            type: "POST",
+                            url: certificate_endpoint,
+                            data: JSON.stringify(payload),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(response){
+                                if(response.status == 201){
+                                    getMarriageList('NA');
+                                    clearMarriageInputFields();
+                                }else{
+                                    console.log('something is not right: '+response.status);
+                                    getMarriageList('NA');
+                                    clearMarriageInputFields();
+                                }
+                            }, error: function(e){
+                                console.log('something is not right: '+e);
                             }
-                        }, error: function(e){
-                            console.log('something is not right: '+e);
-                        }
-                    });
-                }else{
-                    payload = {
-                        "id": mid,
-                        "firstname": husband_firstname,
-                        "middlename": husband_middlename,
-                        "lastname": husband_lastname,
-                        "certificate_type": "marriage",
-                        "priest_id": marriage_parish_priest == null ? 0:marriage_parish_priest,
-                        "meta": JSON.stringify(metaContent),
-                        "created_by": delegated_user,
-                    };
+                        });
+                    }else{
+                        payload = {
+                            "id": mid,
+                            "firstname": husband_firstname,
+                            "middlename": husband_middlename,
+                            "lastname": husband_lastname,
+                            "certificate_type": "marriage",
+                            "priest_id": marriage_parish_priest == null ? 0:marriage_parish_priest,
+                            "meta": JSON.stringify(metaContent),
+                            "created_by": delegated_user,
+                        };
 
-                    $.ajax({
-                        type: "PUT",
-                        url: certificate_endpoint+"/"+did,
-                        data: JSON.stringify(payload),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function(response){
-                            if(response.status == 200){
-                                getMarriageList('NA');
-                                clearMarriageInputFields();
-                            }else{
-                                console.log('something is not right: '+response.status);
-                                getMarriageList('NA');
-                                clearMarriageInputFields();
+                        $.ajax({
+                            type: "PUT",
+                            url: certificate_endpoint+"/"+did,
+                            data: JSON.stringify(payload),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(response){
+                                if(response.status == 200){
+                                    getMarriageList('NA');
+                                    clearMarriageInputFields();
+                                }else{
+                                    console.log('something is not right: '+response.status);
+                                    getMarriageList('NA');
+                                    clearMarriageInputFields();
+                                }
+                            }, error: function(e){
+                                console.log('something is not right: '+e);
                             }
-                        }, error: function(e){
-                            console.log('something is not right: '+e);
-                        }
-                    });
+                        });
+                    }
                 }
             }
         });
