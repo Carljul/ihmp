@@ -1434,7 +1434,7 @@
             checkTokenValidity(AT);
 
             var delagatedId = parseInt(localStorage.getItem('delegatedUser'));
-            var delegated_user = AT.charAt(delagatedId+1);
+            var delegated_user = AT.substring(delagatedId+1, AT.length);
             
             // Validate each row of data
             for(var x = 1; x <= 10; x++){

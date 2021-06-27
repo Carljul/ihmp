@@ -200,7 +200,7 @@
                 var single_confirmation_parish_priest = $('#single_confirmation_parish_priest').val();
                 var payload, metaContent;
                 var delagatedId = parseInt(localStorage.getItem('delegatedUser'));
-                var delegated_user = AT.charAt(delagatedId+1);
+                var delegated_user = AT.substring(delagatedId+1, AT.length);
 
                 metaContent = {
                     "father_firstname": single_confirmation_father_firstname,

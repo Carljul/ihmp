@@ -210,7 +210,7 @@
                 var birth_parish_priest = $("#birth_parish_priest").val();
                 var payload, metaContent;
                 var delagatedId = parseInt(localStorage.getItem('delegatedUser'));
-                var delegated_user = AT.charAt(delagatedId+1);
+                var delegated_user = AT.substring(delagatedId+1, AT.length);
                 var birth_baptism_date = new Date($("#birth_baptism_date").val());
 
                 

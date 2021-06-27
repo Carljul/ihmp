@@ -144,7 +144,7 @@
                 var death_parish_priest = $("#death_parish_priest").val();
                 var payload, metaContent;
                 var delagatedId = parseInt(localStorage.getItem('delegatedUser'));
-                var delegated_user = AT.charAt(delagatedId+1);
+                var delegated_user = AT.substring(delagatedId+1, AT.length);
 
                 metaContent = {
                     "deceased_name":death_firstname+" "+death_middlename+" "+death_lastname,
