@@ -11,8 +11,9 @@
         <i class="{{ $dataType->icon }}"></i>
         {{ __('voyager::generic.'.(isset($dataTypeContent->id) ? 'edit' : 'add')).' '.$dataType->getTranslatedAttribute('display_name_singular') }}
     </h1>
-    
-    <a href="/" class="btn btn-primary">Go back </a>
+    @if(Auth::user()->role_id != 3)
+        <a href="/" class="btn btn-primary">Go back </a>
+    @endif
 @stop
 
 @section('content')

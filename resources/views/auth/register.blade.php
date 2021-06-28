@@ -37,6 +37,15 @@
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
                     <h5>{{ __('Register') }}</h5>
+
+                    @if($successMessage = Session::get('successMessage'))
+                        <div class="card">
+                            <div class="card-content green white-text">
+                                {{$successMessage}} 
+                                <a href="/" class="white-text">Go to login</a>
+                            </div>
+                        </div>
+                    @endif
                     <div class="form-group row">
                         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 

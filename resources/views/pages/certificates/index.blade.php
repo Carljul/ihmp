@@ -30,12 +30,12 @@
         </div>
         <div class="col s12 m6">
             <div class="input-field col s4">
-                <select id="selectForm">
+                <!-- <select id="selectForm">
                     <option value="" disabled>Choose your option to Add</option>
                     <option value="individual" selected>Add individually</option>
                     <option value="group">Add per batch</option>
                 </select>
-                <label>Choose your option to Add</label>
+                <label>Choose your option to Add</label> -->
             </div>
             <!-- Modal Trigger -->
             <a class="waves-effect waves-light btn modal-trigger right" href="#importExport">

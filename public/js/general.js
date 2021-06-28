@@ -188,8 +188,9 @@ function getConfirmationList(url){
                         }
                         html+='</tr>';
                     }
-    
-                    generatePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                    if(lastPage > 1){
+                        generatePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                    }
                 }
 
                 $("#confirmationListTable").html(html);
@@ -510,8 +511,9 @@ function getBirthList(url){
                             }
                             html+='</tr>';
                     }
-
-                    generateBirthPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                    if(lastPage > 1){
+                        generateBirthPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                    }
                 }
     
                 $("#birthListTable").html(html);
@@ -851,8 +853,9 @@ function getMarriageList(url){
                             }
                             html+='</tr>';
                     }
-    
-                    generateMariagePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                    if(lastPage > 1){
+                        generateMariagePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                    }
     
                     $("#marriageListTable").html(html);
                     $('.tooltipped').tooltip({delay: 50});
@@ -1226,8 +1229,9 @@ function getDeathList(url){
                                 }
                         +'</tr>';
                     }
-
-                    generateDeathPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                    if(lastPage > 1){
+                        generateDeathPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                    }
 
                     $("#deathListTable").html(html);
                     $('.tooltipped').tooltip({delay: 50});

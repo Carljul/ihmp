@@ -95,19 +95,22 @@
                                         +"</tr>";
                             }
 
-                            for(let i = 0 ; i < lastPage ; i++){
-                                if(currentPage == parseInt(i+1)){
-                                    pageHtml += `<li class="active"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}">${i+1}</a></li>`;
-                                }else{
-                                    pageHtml += `<li class="waves-effect"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}">${i+1}</a></li>`;
+                            if(lastPage > 1){
+                                for(let i = 0 ; i < lastPage ; i++){
+                                    if(currentPage == parseInt(i+1)){
+                                        pageHtml += `<li class="active"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}">${i+1}</a></li>`;
+                                    }else{
+                                        pageHtml += `<li class="waves-effect"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}">${i+1}</a></li>`;
+                                    }
                                 }
-                            }
-                            pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPagination ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}"><i class="material-icons">chevron_right</i></a></li>
-                                        </ul>`;
+                                pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPagination ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}"><i class="material-icons">chevron_right</i></a></li>
+                                            </ul>`;
 
-                            
-                            //display the pagination
-                            $("#paginationDiv").html(pageHtml);
+                                
+                                //display the pagination
+                                $("#paginationDiv").html(pageHtml);
+                            }
+
 
                             //display the data to table
                             $("#appendUserList").html(html);

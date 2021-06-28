@@ -31,6 +31,10 @@
 
         </div>
         <div id="adminmenu">
+        <!-- {{ menu('super_admin', '_json') }} -->
+        @foreach (menu('super_admin', '_json') as $menus)
+            <div>{{$menus->id = 5}}</div>
+        @endforeach
             <admin-menu :items="{{ menu('super_admin', '_json') }}"></admin-menu>
         </div>
     </nav>
