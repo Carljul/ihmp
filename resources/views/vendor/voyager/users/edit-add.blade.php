@@ -11,6 +11,8 @@
         <i class="{{ $dataType->icon }}"></i>
         {{ __('voyager::generic.'.(isset($dataTypeContent->id) ? 'edit' : 'add')).' '.$dataType->getTranslatedAttribute('display_name_singular') }}
     </h1>
+    
+    <a href="/" class="btn btn-primary">Go back </a>
 @stop
 
 @section('content')
@@ -61,13 +63,13 @@
                             </div>
 
                             
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="is_active">User Status</label>
                                 <select class="form-control select2" id="is_active" name="is_active">
                                     <option value="1" {{ ($dataTypeContent->is_active == 1 ? 'selected':'') }}>Active</option>
                                     <option value="0" {{ ($dataTypeContent->is_active == 0 ? 'selected':'') }}>Deactivated</option>
                                 </select>
-                            </div>
+                            </div> -->
 
                             @can('editRoles', $dataTypeContent)
                                 <div class="form-group">
@@ -97,7 +99,7 @@
                             }
 
                             @endphp
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="locale">{{ __('voyager::generic.locale') }}</label>
                                 <select class="form-control select2" id="locale" name="locale">
                                     @foreach (Voyager::getLocales() as $locale)
@@ -105,7 +107,7 @@
                                     {{ ($locale == $selected_locale ? 'selected' : '') }}>{{ $locale }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

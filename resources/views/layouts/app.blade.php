@@ -32,7 +32,7 @@
         @else
         <!-- Dropdown Structure -->
         <ul id="dropdown1" class="dropdown-content">
-            <li><a href="/admin/profile">Profile</a></li>
+            <li><a href="/admin/users/{{Auth::user()->id}}/edit">Profile</a></li>
             <li class="divider"></li>
             <li>
                 <a id="logout_out_link" class="dropdown-item"
@@ -54,7 +54,7 @@
                     <li class="certificate"><a href="/certificate">Manage Records</a></li>
                     <li class="priest"><a href="/priest">Manage Priest</a></li>
                 @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
-                    <li><a href="/admin/users">Manage Users</a></li>
+                    <li><a href="/user">Manage Users</a></li>
                 @endif
                 @if(Auth::user()->role_id == 3)
                     <li><a href="/template">Manage Templates</a></li>

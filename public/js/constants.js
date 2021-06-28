@@ -19,6 +19,8 @@ const certificate_endpoint = api_server+'certificate';
 const priest_endpoint = api_server+'priest';
 /// ======================== Templates
 const template_endpoint = api_server+'template';
+/// ======================== Users
+const user_endpoint = api_server+'user';
 /// ======================== Verifying Access Token
 const access_token_endpoint = api_server+'accesstoken';
 /// ======================== General Controller
@@ -29,6 +31,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
 
+const age_limit = 18;
 
 /// Message and labels constants
-
+messageValidator = (Name) => "Are you sure you want to delete "+Name+" ?";

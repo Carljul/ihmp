@@ -858,14 +858,42 @@ function getMarriageList(url){
                     $('.tooltipped').tooltip({delay: 50});
     
                     /// Print Confirmation Certificate
-                    $(".btnPrintCCertificate").on('click', function(){
+                    $(".btnPrintMCertificate").on('click', function(){
                         var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
                         printMarriageCertificate(certificateId, $(this).attr("id"));
                     });
-    
                     /// Update Confirmation Certificate
-    
-                    /// Delete Confirmation Certificate
+                    $(".btnUpdateMCertificate").on('click', function(e){
+                        e.preventDefault();
+                        var certificateId = $(this).attr("id").substr('btnUpdateBCertificate-'.length);
+                        showToUpdateMarriageCertificate(certificateId, $(this).attr("id"));
+                    });
+
+                    
+                    /// Delete Birth Certificate
+                    $(".btnDeleteMCertificate").on("click",function(){
+                        var certificateId = $(this).attr("id").substr('btnDeleteMCertificate-'.length);
+                        
+                        $('#single_marriage_form').find('input:text, input:password, select')
+                        .each(function () {
+                            $(this).val('');
+                        });
+                        $('#single_marriage_form').find('input:hidden')
+                        .each(function () {
+                            $(this).val(0);
+                        });
+                        $('#single_marriage_form').find('label')
+                        .each(function () {
+                            $(this).removeClass('active');
+                        });
+                        $('#marriage_parish_priest').material_select();
+                        $(".btnCancelMarriageUpdate").addClass('hide');
+                        
+                        // update Form Title
+                        $(".headerMarriage").html('Add Marriage');
+
+                        deleteMarriageCertificate(certificateId);
+                    });
                 }
             }else{
                 console.log('Something is not right:: ',response);
@@ -900,66 +928,148 @@ function getMarriageList(url){
             localStorage.setItem('defaultForm','individual');
             setFormSelection();
             // update Form Title
-            $(".headerConfirmation").html('Update Confirmation');
+            $(".headerMarriage").html('Update Marriage');
             // Show Cancel Button
-            $(".btnCancelConfirmationUpdate").removeClass('hide');
+            $(".btnCancelMarriageUpdate").removeClass('hide');
             // Display Information to Form
             $.ajax({
                 type: "GET",
                 url: certificate_endpoint+"/"+certificateId,
+                data: {'certificate_type':'marriage', 'isIdSearch':'true'},
                 success: function(response){
                     console.log(response);
-                    if(response.status == 200){    
+                    if(response.status >= 200 && response.status < 400){    
                         var metaContent = JSON.parse(response.data[0].meta);
-                        console.log(metaContent);                    
+                        var rootContent = response.data[0];
+                        $("#mis_update").val(1);
+                        $("#mid").val(rootContent['id']);
+                        $("#husband_firstname").val(metaContent.husband_firstname);
+                        $("#husband_middlename").val(metaContent.husband_middlename);
+                        $("#husband_lastname").val(metaContent.husband_lastname);
                         
-                        $('#single_confirmation_firstname').val(response.data[0].firstname);
-                        $('#single_confirmation_middlename').val(response.data[0].middlename);
-                        $('#single_confirmation_lastname').val(response.data[0].lastname);
-                        $('#single_confirmation_father_firstname').val(metaContent.father_firstname);
-                        $('#single_confirmation_father_middlename').val(metaContent.father_middlename);
-                        $('#single_confirmation_father_lastname').val(metaContent.father_lastname);
-                        $('#single_confirmation_mother_firstname').val(metaContent.mother_firstname);
-                        $('#single_confirmation_mother_middlename').val(metaContent.mother_firstname);
-                        $('#single_confirmation_mother_lastname').val(metaContent.mother_firstname);
-                        // $('#single_confirmation_date').val(metaContent.father_firstname);
-                        // $('#single_conrfirmation_date_issued').val(metaContent.father_firstname);
-                        $('#single_confirmation_by').val(metaContent.confirmation_by);
-                        // $('#single_confirmation_fsponsor_firstname').val(metaContent.father_firstname);
-                        // $('#single_confirmation_fsponsor_middlename').val(metaContent.father_firstname);
-                        // $('#single_confirmation_fsponsor_lastname').val(metaContent.father_firstname);
-                        // $('#single_confirmation_ssponsor_firstname').val(metaContent.father_firstname);
-                        // $('#single_confirmation_ssponsor_middlename').val(metaContent.father_firstname);
-                        // $('#single_confirmation_ssponsor_lastname').val(metaContent.father_firstname);
-                        $('#single_confirmation_register_book').val(metaContent.registration_book);
-                        $('#single_confirmation_book_page').val(metaContent.book_page);
-                        $('#single_confirmation_book_number').val(metaContent.book_number);
-                        $('#single_confirmation_parish_priest').val(response.data[0].priest_id);
+                        alert(metaContent.wife_civil_status);
+                        $("#husband_civil_status").val(metaContent.wife_civil_status);
+                        $("#husband_civil_status").material_select();
+
+                        // Husbands birth Date
+                        if(metaContent.husband_birthdate != null){
+                            // Confirmation Date
+                            var convertMarriageDate = new Date(metaContent.husband_birthdate);
+                            $('#husband_birth_date').val(convertMarriageDate.getDate() + " " +monthNames[convertMarriageDate.getMonth()] +", "+convertMarriageDate.getFullYear());
+                            var $confirmationDateInput = $('#husband_birth_date').pickadate();
+
+                            // Use the picker object directly.
+                            var marriageDatePicker = $confirmationDateInput.pickadate('picker');
+                            marriageDatePicker.set('select', [convertMarriageDate.getFullYear(), convertMarriageDate.getMonth(), convertMarriageDate.getDate()]);
+                        }
+
+                        // Husbands Baptism Date
+                        if(metaContent.husband_baptismdate != null){
+                            // Confirmation Date
+                            var convertMarriageDate = new Date(metaContent.husband_baptismdate);
+                            $('#husband_baptism_date').val(convertMarriageDate.getDate() + " " +monthNames[convertMarriageDate.getMonth()] +", "+convertMarriageDate.getFullYear());
+                            var $confirmationDateInput = $('#husband_baptism_date').pickadate();
+
+                            // Use the picker object directly.
+                            var marriageDatePicker = $confirmationDateInput.pickadate('picker');
+                            marriageDatePicker.set('select', [convertMarriageDate.getFullYear(), convertMarriageDate.getMonth(), convertMarriageDate.getDate()]);
+                        }
+
+
+                        $("#husband_birth_place").val(metaContent.husband_birthplace);
+                        $("#husband_residence").val(metaContent.husband_residence);
+                        $("#husband_fathers_name").val(metaContent.husband_fathersname);
+                        $("#husband_mothers_name").val(metaContent.husband_mothersname);
+                        $("#husband_first_witness").val(metaContent.husband_firstwitness);
+                        $("#husband_second_witness").val(metaContent.husband_secondwitness);
+        
+                        $("#wife_firstname").val(metaContent.wife_firstname);
+                        $("#wife_middlename").val(metaContent.wife_middlename);
+                        $("#wife_lastname").val(metaContent.wife_lastname);
+
+
+                        $("#wife_civil_status").val(metaContent.wife_civil_status);
+                        $("#wife_civil_status").material_select();
                         
+                        // Wifes birthdate
+                        if(metaContent.wife_birthdate != null){
+                            // Confirmation Date
+                            var convertMarriageDate = new Date(metaContent.wife_birthdate);
+                            $('#wife_birth_date').val(convertMarriageDate.getDate() + " " +monthNames[convertMarriageDate.getMonth()] +", "+convertMarriageDate.getFullYear());
+                            var $confirmationDateInput = $('#wife_birth_date').pickadate();
+
+                            // Use the picker object directly.
+                            var marriageDatePicker = $confirmationDateInput.pickadate('picker');
+                            marriageDatePicker.set('select', [convertMarriageDate.getFullYear(), convertMarriageDate.getMonth(), convertMarriageDate.getDate()]);
+                        }
+
                         
-                        // $('#single_confirmation_form').find('label')
-                        // .each(function () {
-                        //     $(this).addClass('active');
-                        // });
-                        // $('#cis_update').val(1);
-                        // $('#cid').val(certificateId);
-                    }else{
-                        var html = "";
-                        html += "<h5>Something went wrong!</h5>"
-                        +""+response.message+"";
-                        $('#modalSysError').modal('open');
-                        $(".errMessage").addClass('hide');
-                        $('.customMessage').html(html);
-                        $(".customMessage").removeClass('hide');
+                        // Wifes Baptism Date
+                        if(metaContent.wife_baptismdate != null){
+                            // Confirmation Date
+                            var convertMarriageDate = new Date(metaContent.wife_baptismdate);
+                            $('#wife_baptism_date').val(convertMarriageDate.getDate() + " " +monthNames[convertMarriageDate.getMonth()] +", "+convertMarriageDate.getFullYear());
+                            var $confirmationDateInput = $('#wife_baptism_date').pickadate();
+
+                            // Use the picker object directly.
+                            var marriageDatePicker = $confirmationDateInput.pickadate('picker');
+                            marriageDatePicker.set('select', [convertMarriageDate.getFullYear(), convertMarriageDate.getMonth(), convertMarriageDate.getDate()]);
+                        }
+
+                        $("#wife_birth_place").val(metaContent.wife_birthplace);
+                        $("#wife_residence").val(metaContent.wife_residence);
+                        $("#wife_fathers_name").val(metaContent.wife_fathersname);
+                        $("#wife_mothers_name").val(metaContent.wife_mothersname);
+                        $("#wife_first_witness").val(metaContent.wife_firstwitness);
+                        $("#wife_second_witness").val(metaContent.wife_secondwitness);
+        
+                        $("#marraige_place").val(metaContent.marriage_place);
+                        $("#marriage_no").val(metaContent.marriage_number);
+                        $("#marriage_page").val(metaContent.marriage_page);
+                        $("#marriage_line").val(metaContent.marriage_line);
+                        
+
+                        // Wifes Baptism Date
+                        if(metaContent.marriage_date != null){
+                            // Confirmation Date
+                            var convertMarriageDate = new Date(metaContent.marriage_date);
+                            $('#marriage_date').val(convertMarriageDate.getDate() + " " +monthNames[convertMarriageDate.getMonth()] +", "+convertMarriageDate.getFullYear());
+                            var $confirmationDateInput = $('#marriage_date').pickadate();
+
+                            // Use the picker object directly.
+                            var marriageDatePicker = $confirmationDateInput.pickadate('picker');
+                            marriageDatePicker.set('select', [convertMarriageDate.getFullYear(), convertMarriageDate.getMonth(), convertMarriageDate.getDate()]);
+                        }
+
+                        $("#marriage_line").val(metaContent.marriage_line);
+                        $("#marraige_solemnized_by").val(metaContent.solemnized_by);
+        
+        
+                        
+                        // Marriage Marriage Date Issued
+                        if(metaContent.marriage_month != null){
+                            // Confirmation Date
+                            var convertMarriageDate = new Date(metaContent.marriage_month+"/"+metaContent.marriage_day+"/"+metaContent.marriage_year);
+                            $('#marriage_date_issued').val(convertMarriageDate.getDate() + " " +monthNames[convertMarriageDate.getMonth()] +", "+convertMarriageDate.getFullYear());
+                            var $confirmationDateInput = $('#marriage_date').pickadate();
+
+                            // Use the picker object directly.
+                            var marriageDatePicker = $confirmationDateInput.pickadate('picker');
+                            marriageDatePicker.set('select', [convertMarriageDate.getFullYear(), convertMarriageDate.getMonth(), convertMarriageDate.getDate()]);
+                        }
+
+                        $("#marriage_parish_priest").val(rootContent['priest_id']);
+                        $("#marriage_parish_priest").material_select();
+                        $('#single_marriage_form').find('label')
+                        .each(function () {
+                            if($(this).html() != "Select Parish Priest" && $(this).html() != "Civil Status"){
+                                $(this).addClass('active');
+                            }
+                        });
                     }
                 }, error: function(e){
-                    var html = "";
-                    html += "<h5>Something went wrong!</h5>"
-                    +""+e.message+"";
-                    $('#modalSysError').modal('open');
-                    $(".errMessage").addClass('hide');
-                    $('.customMessage').html(html);
-                    $(".customMessage").removeClass('hide');
+                    Materialize.toast('Something Went Wrong (406):: '+e.responseJSON.message, 5000, 'red rounded');
+                    console.log('["Confirmation Error"]: '+e.responseJSON.message);
                 }
             });
         }
@@ -977,10 +1087,12 @@ function getMarriageList(url){
             $.ajax({
                 type: "GET",
                 url: certificate_endpoint+"/"+certificateId,
+                data: {'certificate_type':'marriage', 'isIdSearch':'true'},
                 success: function(response){
-                    if(response.status == 200){
+                    if(response.status >= 200 && response.status < 400){
+                        var metaContent = JSON.parse(response.data[0]['meta']);
                         /// Prepare Delete Confirmation Modal
-                        $("#recordToDelete").html(response.data[0]['firstname']);
+                        $("#recordToDelete").html("the record of "+metaContent['husband_firstname']+" and "+metaContent['wife_firstname']+" marriage record");
                         var buttonConfirmation = "<button class='btn btnConfirmedDelete' id='"+certificateId+"'>Delete</button> <button class='btn' id='closeConrimation'>Cancel</button>";
                         $('#buttonConfirmation').html(buttonConfirmation);
                         
@@ -988,18 +1100,39 @@ function getMarriageList(url){
                         $('#deleteConfirmationModal').modal('open');
 
                         /// if confirmed Delete
-                        
+                        $(".btnConfirmedDelete").on('click',function(){
+                            var fetchCertificateId = $(this).attr('id');
+                            $.ajax({
+                                type: "DELETE",
+                                url: certificate_endpoint+"/"+fetchCertificateId,
+                                data: {"id": certificateId, "is_deleted": 1},
+                                success: function(response){
+                                    if(response.status >= 200 && response.status < 400){
+                                        getMarriageList("NA");
+                                        $('#deleteConfirmationModal').modal('close');
+                                    }else{
+                                        Materialize.toast('Something Went Wrong (405):: '+JSON.stringify(response.message), 5000, 'red rounded');
+                                        console.log('["Confirmation Status"]: '+response.status);
+                                    }
+                                }, error: function(e){
+                                    Materialize.toast('Something Went Wrong (406):: '+e.responseJSON.message, 5000, 'red rounded');
+                                    console.log('["Confirmation Error"]: '+e.responseJSON.message);
+                                }
+                            });
+                        });
 
                         /// else close modal
-                        $("#closeConrimation").click(function(){
+                        $("#closeConrimation").on('click',function(){
                             $('#deleteConfirmationModal').modal('close');
                         });
 
                     }else{
-                        console.log('Invalid Code Status');
+                        Materialize.toast('Something went wrong (405):: '+JSON.stringify(response.message), 5000, 'red rounded');
+                        console.log('["Confirmation Status"]: '+response.status);
                     }
                 }, error: function(e){
-                    console.log(e.message);
+                    Materialize.toast('Something Went Wrong (406):: '+e.responseJSON.message, 5000, 'red rounded');
+                    console.log('["Confirmation Error"]: '+e.responseJSON.message);
                 }
             });
         }
@@ -1169,7 +1302,6 @@ function getDeathList(url){
         if(certificateId == undefined || certificateId == null){
             $('#modalSysError').modal('open');
         }else{
-            // TODO:: Show Individual form
             localStorage.setItem('defaultForm','individual');
             setFormSelection();
             // update Form Title

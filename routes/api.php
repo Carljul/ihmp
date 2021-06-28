@@ -36,6 +36,9 @@ Route::resource('certificate', 'CertificateController');
 // controller for Template Model
 Route::resource('template', 'TemplateController');
 
+// controller for Users Model
+Route::resource('user', 'UserController');
+
 // controller for General Controller
 Route::get('general', 'GeneralController@connectivity')->name('general.connectivity');
 

@@ -6,7 +6,7 @@
     <div class="row" style="margin-bottom: 0px !important;">
         <div class="col s12 m6">
             <div class="row" style="margin-bottom: 0px !important;">
-                <h5 class="col s12 m3 left">Transactions</h5>
+                <h5 class="col s12 m3 left">Records</h5>
                 <div class="input-field col s12 m4">
                     <select id="selectCertificate">
                         <option value="" disabled>Choose Record</option>
