@@ -51,41 +51,43 @@ function isTokenExist(){
         forceLogout();
     }
 }
-/// =================================== Search
+
 //added search handler
-$(document).on('blur', '#searchARecord', function(){
+$(document).on('keydown', '#searchARecord', function(e){
     let val = $("#searchARecord").val();
 
-    
+    //once enter or tab is clicked
+    if(e.keyCode == 13 || e.keyCode == 9){
 
-    // Check If Default Table is selected
-    if(localStorage.getItem('defaultTable') === null){
+        // Check If Default Table is selected
+        if(localStorage.getItem('defaultTable') === null){
 
-    }else{
-        var selectedTable = localStorage.getItem('defaultTable');
-        if(selectedTable == "confirmation"){
-            //set the url to be returned
-            let url = certificate_endpoint+"/"+val+"?certificate_type=confirmation";
-            //then recall the function for calling the api
-            getConfirmationList(url);
-        }else if(selectedTable == "mariage"){
-            //set the url to be returned
-            let url = certificate_endpoint+"/"+val+"?certificate_type=marriage";
-            //then recall the function for calling the api
-            getBirthList(url);
-        }else if(selectedTable == "birth"){
-            //set the url to be returned
-            let url = certificate_endpoint+"/"+val+"?certificate_type=baptism";
-            //then recall the function for calling the api
-            getMarriageList(url);
-        }else if(selectedTable == "death"){
-            //set the url to be returned
-            let url = certificate_endpoint+"/"+val+"?certificate_type=death";
-            //then recall the function for calling the api
-            getDeathList(url);
+        }else{
+            var selectedTable = localStorage.getItem('defaultTable');
+            if(selectedTable == "confirmation"){
+                //set the url to be returned
+                let url = certificate_endpoint+"/"+val+"?certificate_type=confirmation";
+                //then recall the function for calling the api
+                getConfirmationList(url);
+            }else if(selectedTable == "mariage"){
+                //set the url to be returned
+                let url = certificate_endpoint+"/"+val+"?certificate_type=marriage";
+                //then recall the function for calling the api
+                getBirthList(url);
+            }else if(selectedTable == "birth"){
+                //set the url to be returned
+                let url = certificate_endpoint+"/"+val+"?certificate_type=baptism";
+                //then recall the function for calling the api
+                getMarriageList(url);
+            }else if(selectedTable == "death"){
+                //set the url to be returned
+                let url = certificate_endpoint+"/"+val+"?certificate_type=death";
+                //then recall the function for calling the api
+                getDeathList(url);
+            }
         }
     }
-    
+
 });
 
 function ordinal_suffix_of(i) {
@@ -109,8 +111,7 @@ function ordinal_suffix_of(i) {
 function getConfirmationList(url){
     isTokenExist();
     var AT = localStorage.getItem("AT");
-    checkTokenValidity(AT);
-
+    checkTokenValidity(AT);  
     
     $.ajax({
         type: "GET",

@@ -214,7 +214,6 @@ class CertificateController extends Controller
             ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
             ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
             ->where('certificates.is_deleted', 0)
-            ->where('certificates.certificate_type', $request->certificate_type)
             ->where('certificates.id', $search)
             ->get();
 
@@ -234,16 +233,18 @@ class CertificateController extends Controller
             ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
             ->where('certificates.is_deleted', 0)
             ->where('certificates.certificate_type', $request->certificate_type)
-            ->where('certificates.id', $search)
-            ->orWhere('certificates.firstname', $search)
-            ->orWhere('certificates.middlename', $search)
-            ->orWhere('certificates.lastname', $search)
-            ->orWhere('certificates.certificate_type', $search)
-            ->orWhere('certificates.priest_id', $search)
-            ->orWhere('certificates.meta', 'LIKE', '%'. $search . '%')
+            ->where(function($query) use ($search){
+                $query->where('certificates.firstname', 'LIKE', '%'. $search . '%')
+                        ->orWhere('certificates.middlename', 'LIKE', '%'. $search . '%')
+                        ->orWhere('certificates.lastname', 'LIKE', '%'. $search . '%')
+                        ->orWhere('certificates.meta', 'LIKE', '%'. $search . '%')
+                        ->orWhere('priests.firstname', 'LIKE', '%'. $search . '%')
+                        ->orWhere('priests.middlename', 'LIKE', '%'. $search . '%')
+                        ->orWhere('priests.lastname', 'LIKE', '%'. $search . '%');
+            })
             ->orderByRaw('certificates.id DESC')
             ->paginate($this->getPaginationLimit());
-
+            
             //if search is not found
             if(count($result) == 0){
                 //return json response
