@@ -52,15 +52,15 @@
 
 
 <!-- Import Export -->
-<div id="importExport" class="modal bottom-sheet">
+<div id="importExport" class="modal modal-fixed-footer" style="width: 80%;">
     <div class="modal-content">
         <h4>Import Your CSV File Here</h4>
         <p>Follow the Steps</p>
-        <b>1. </b>Select the type of certificate<br>
         <div class="row">
-            <div class="col s3">                
-                <div class="input-field">
-                    <select class="templateDownloadDropdown">
+            <div class="col s12">              
+                <div class="input-field col s3">
+                    <b>1. </b>Select the type of certificate<br>  
+                    <select class="templateDownloadDropdown" id="templateDownloadDropdown">
                         <option value="" disabled selected>Select template</option>
                         <option value="mariage">Marriage</option>
                         <option value="confirmation">Confirmation</option>
@@ -69,30 +69,45 @@
                     </select>
                     <label>Select Parish Priest</label>
                 </div>
+                <div class="col s3">
+                    <b>2. </b>Download your template. (You can skip this step if you already downloaded this file before)
+                    <a href="!#" class="btn waves-effect disabled" id="btnDownload" download>Download</a>
+                </div>
+                <div class="col s3">
+                    <b>3. </b>Select your template and upload
+                    <form enctype='multipart/form-data' method='post'>
+                    
+                        <label>Upload CSV file Here</label>
+
+                        <div class="file-field input-field">
+                            <div class="btn disabled" id="uploadFile">
+                                <span>Upload CSV</span>
+                                <input size='50' type='file' name='filename' id="importCSV">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" style="visibility: hidden;">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col s3">
+                    <b>4. </b>Final Step, Click Import button to start import sequence
+                    <button class="waves-effect waves-green btn disabled" id="btnStartImportSequence">Import</button>
+                </div>
             </div>
         </div>
-        <b>2. </b>Download your template. (You can skip this step if you already downloaded this file before)
-        <div class="row">
-            <div class="col s3">
-                <button class="btn waves-effect">Download</button>
+        <div class="row removeBottomMargin">
+            <div class="col s12 center">
+                <smal id="countRecord">Data To Import Will Show Below</small>
             </div>
+            <hr>
         </div>
-        <b>3. </b>Select your template and upload
-        <div class="row">
-            <form enctype='multipart/form-data' method='post'>
-            
-                <label>Upload Product CSV file Here</label>
-
-                <input size='50' type='file' name='filename' id="importCSV">
-                </br>
-                <input type='submit' name='submit' value='Upload Products' id="uploadCSV">
-
-            </form>
+        <div class="row center" id="showDataToImport" style="overflow-x: scroll;">
         </div>
 
     </div>
     <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Import</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
     </div>
 </div>
 
@@ -134,22 +149,48 @@
     $(document).ready(function(){
         $('.templateDownloadDropdown').material_select();
 
-        $("#uploadCSV").on('click', function(e){
-            e.preventDefault();
-            var value = $("#importCSV").val();
-            console.log('value');
-            console.log(value);
+        $("#templateDownloadDropdown").on('change', function(){
+            var getVal = $(this).val();
 
-            var input = document.getElementById("importCSV");
-            var fReader = new FileReader();
-            fReader.readAsDataURL(input.files[0]);
-            fReader.onloadend = function(event){
-                console.log(response);
-                console.log(event.target);
+            if(getVal == ""){
+                $("#btnDownload").addClass('disabled');
+                $("#uploadFile").addClass('disabled');
+                $("#btnStartImportSequence").addClass('disabled');
+            }else{
+                $("#btnDownload").removeClass('disabled');
+                $("#uploadFile").removeClass('disabled');
+                $("#btnStartImportSequence").removeClass('disabled');
+
+
+                // Create a link file to download
+                $("#btnDownload").prop('href','download/Confirmation_Template.csv');
             }
         });
 
+        // will return unique values of array
+        function getUnique(array){
+            var uniqueArray = [];
+            
+            // Loop through array values
+            for(i=0; i < array.length; i++){
+                if(array[i] != ""){
+                    if(uniqueArray.indexOf(array[i]) === -1) {
+                        uniqueArray.push(array[i]);
+                    }
+                }
+            }
+            return uniqueArray;
+        }
+
+        // Uploading Data to Html
         $("#importCSV").change(function(e) {
+            e.preventDefault();
+
+            // Show In Progress
+            var html = "Fetching Data";
+            $("#showDataToImport").html(html);
+
+
             var ext = $("#importCSV").val().split(".").pop().toLowerCase();
             if($.inArray(ext, ["csv"]) == -1) {
                 alert('Upload CSV');
@@ -159,12 +200,74 @@
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     var lines = e.target.result.split('\r\n');
-                    console.log('lines');
-                    console.log(lines[0]);
-                    // for (i = 0; i < lines.length; ++i)
-                    // {
-                    //     $('div').append('<br>' + lines[i]);
-                    // }
+                    var firstLine = lines[0];
+                    var headersLength = 0;
+                    var newSetArray = [];
+
+                    // Will hold a list of array,
+                    // Values of array are the data to import in db
+                    var arrayToImport = [];
+
+                    html = "";
+
+                    html+="<table class='striped' style='width: 340%;'>"
+                    +"<thead>";
+                    if(firstLine.toLowerCase().includes('confirmation')){
+                        var getHeaders = lines[6].split(",");
+                        console.log(getHeaders.length);
+                        // Create Headers First
+                        for(var x = 0; x < getHeaders.length; x++){
+                            html+="<th>"+getHeaders[x]+"</th>";
+                        }
+                        // Remove the headers
+                        lines.splice(0,7);
+                        newSetArray = lines;
+                    }else if(firstLine.toLowerCase().includes('birth')){
+                        
+                    }else if(firstLine.toLowerCase().includes('marriage')){
+                        
+                    }else if(firstLine.toLowerCase().includes('death')){
+                        
+                    }else{
+                        // CSV File is been edited.
+                        Materialize.toast('It seems that the header of the uploaded file i edited\nPlease download again the file', 5000, 'red rounded');
+                        return false;
+                    }
+                    html+="</thead>"
+                    +"<tbody>";
+
+                    // Remove Duplicate Values
+                    newSetArray = getUnique(newSetArray);
+
+                    // Display the total number of records
+                    $("#countRecord").html(newSetArray.length+" "+(newSetArray.length > 1 ? "Records":"Record")+" Found and ready to import!");
+
+                    // Display Fields to table
+                    for (i = 0; i < newSetArray.length; ++i)
+                    {
+                        // Convert String to array
+                        var record = newSetArray[i].split(",");
+
+                        // Save Record to use in insert
+                        arrayToImport.push(record);
+
+                        // Generate Records
+                        html+="<tr>";
+                        for(var y = 0; y < record.length; y++){
+                            html+="<td>"+record[y]+"</td>";
+                        }
+                        html+="</tr>";
+                    }
+                    
+                    html+="</tbody>"
+                    +"</table>";
+                    $("#showDataToImport").html(html);
+
+
+
+                    // TODO:: Generate Import Sequence
+                    console.log(arrayToImport);
+
                 };
                 reader.readAsText(e.target.files.item(0));
             }
