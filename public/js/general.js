@@ -69,7 +69,7 @@ $(document).on('keydown', '#searchARecord', function(e){
                 let url = certificate_endpoint+"/"+val+"?certificate_type=confirmation";
                 //then recall the function for calling the api
                 getConfirmationList(url);
-            }else if(selectedTable == "mariage"){
+            }else if(selectedTable == "marriage"){
                 //set the url to be returned
                 let url = certificate_endpoint+"/"+val+"?certificate_type=marriage";
                 //then recall the function for calling the api
@@ -1565,13 +1565,13 @@ function setFormSelection(){
             $(".groupConfirmation").removeClass('hide');
         }
         $('#selectForm').material_select();
-    }else if(selectionTableVal == "mariage"){
+    }else if(selectionTableVal == "marriage"){
         /// Fixing table display
         $('#marriageTable').removeClass('hide');
 
         /// Fixing dropdown selction for records
         $("#selectCertificate option:selected").removeAttr('selected');
-        $("#selectCertificate option[value='mariage']").prop('selected', true);
+        $("#selectCertificate option[value='marriage']").prop('selected', true);
 
         /// Fixing form display by filter of records
         $('#marriageForm').removeClass('hide');

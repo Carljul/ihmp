@@ -24,6 +24,7 @@
     <script src="{{ asset('/js/constants.js') }}"></script>
     <script src="{{ asset('/js/materialize.js') }}"></script>
     <script src="{{ asset('/js/general.js') }}"></script>
+    <script src="{{ asset('/js/moment.js') }}"></script>
 </head>
 <body>
     <div id="app">
@@ -88,6 +89,7 @@
             $("#selectCertificate").material_select();
             $("#selectTemplateType").material_select(); //DC: added here the dropdown for template type
             $("#selectIsTemplate").material_select(); //DC: added here the dropdown for is template
+            $("#selectFilterCertificateType").material_select(); //DC: added here the dropdown for filter certificate type
             $("#selectForm").material_select();
             $('.modal').modal();
             $('.datepicker').pickadate();            
