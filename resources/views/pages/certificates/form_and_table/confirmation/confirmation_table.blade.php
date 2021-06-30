@@ -15,9 +15,9 @@
                     <thead>
                         <tr>
                             <th colspan="3">Actions</th>
+                            <th colspan="3">Record of</th>
                             <th>Confirmation Date</th>
                             <th>Date Issued</th>
-                            <th colspan="3">Record of</th>
                             <th colspan="3">Fathers' Name</th>
                             <th colspan="3">Mothers' Name</th>
                             <th>First Sponsor</th>

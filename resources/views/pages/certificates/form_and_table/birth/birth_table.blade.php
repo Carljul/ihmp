@@ -15,8 +15,8 @@
                     <thead>
                         <tr>
                             <th colspan="3">Actions</th>
-                            <th>Born On</th>
                             <th colspan="3">Record of</th>
+                            <th>Born On</th>
                             <th>Born In</th>
                             <th>Baptism Date</th>
                             <th>Minister</th>

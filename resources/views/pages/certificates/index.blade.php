@@ -38,7 +38,7 @@
                 <label>Choose your option to Add</label> -->
             </div>
             <!-- Modal Trigger -->
-            <a class="waves-effect waves-light btn modal-trigger right" href="#importExport" id="importExportButton">
+            <a class="waves-effect waves-light btn modal-trigger right" href="!#" id="importExportButton">
                 <i class="material-icons left">cloud_upload</i>Import
             </a>
         </div>
@@ -179,6 +179,11 @@
 
 
         // ------------------------- Confirmation Import
+        $("#importExportButton").on('click', function(e){
+            e.preventDefault();
+            $("#importExport").modal('open');
+            // Clear Fields
+        });
         // Will hold a list of array,
         // Values of array are the data to import in db
         var arrayToImport = [];
@@ -282,7 +287,7 @@
                         
                     }else{
                         // CSV File is been edited.
-                        Materialize.toast('It seems that the header of the uploaded file i edited\nPlease download again the file', 5000, 'red rounded');
+                        Materialize.toast('It seems that the header of the uploaded file i edited\nPlease download the file again', 5000, 'red rounded');
                         return false;
                     }
                     html+="</thead>"
@@ -378,6 +383,19 @@
             rowsWithValueImportConfirmation = [];
             emptyRowsImportConfirmation = [];
 
+            // Close and Disable modal button
+            $("#importExportButton").addClass('disabled');
+            // Clear modal form before closes
+            $("#showDataToImport").html('');
+            $("#countRecord").html('Data To Import Will Show Below');
+            $("#templateDownloadDropdown").val('');
+            $("#templateDownloadDropdown").material_select();
+            $("#btnDownload").addClass('disabled');
+            $("#uploadFile").addClass('disabled');
+            $("#btnStartImportSequence").addClass('disabled');
+            $("#importExport").modal('close');
+            
+
             // Initiate Worker
             initiateConfirmationWorker();
         });
@@ -462,9 +480,6 @@
             if(localStorage.getItem('transactionsImportConfirmation') != null){
                 if(localStorage.getItem('transactionsImportConfirmation') != "[]"){
                     console.log('Starting saving sequence');
-                    // Close and Disable modal button
-                    $("#importExportButton").addClass('disable');
-                    $("#importExport").modal('close');
 
                     // TODO:: FETCH Transactions from localStorage
                     var listOfTransactions = localStorage.getItem('transactionsImportConfirmation');
@@ -484,6 +499,7 @@
                     savingConfirmationRecord(currentRow, toSavePayload, convertedListOfTranscations);
                 }else{
                     $("#importInProgressMessage").html('Records Imported');
+                    $("#importExportButton").removeClass('disabled');
                     setTimeout(function(){
                         $("#importProgress").addClass('hide');
                     }, 3000);
@@ -507,8 +523,10 @@
                         localStorage.setItem('transactionsImportConfirmation', JSON.stringify(listOfTransactions));
                         // update the table
                         getConfirmationList('NA');
-                        // call again initiate worker to create a recursive effect
-                        initiateConfirmationWorker();
+                        // call again initiate worker after 3 seconds to create a recursive effect
+                        setTimeout(function(){
+                            initiateConfirmationWorker();
+                        }, 1500);
                     }else if(response.status == 400){
                         errorSavingRecords.push({
                             "row": row,

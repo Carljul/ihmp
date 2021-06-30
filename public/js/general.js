@@ -144,6 +144,12 @@ function getConfirmationList(url){
                         +'<td><button class="btn waves-effect btn-actions green tooltipped btnUpdateCCertificate" id="btnUpdateCCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Update Record"><i class="material-icons">edit</i></button></td>'
                         +'<td><button class="btn waves-effect btn-actions red tooltipped btnDeleteCCertificate" id="btnDeleteCCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
                         +'<!-- Confirmation Date -->';
+                        
+                        html+='<!-- Record of -->'
+                        +'<td><label style="font-size: 9px;">First Name</label><br>'+rootContent['firstname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Middle Name</label><br>'+rootContent['middlename']+'</td>'
+                        +'<td><label style="font-size: 9px;">Last Name</label><br>'+rootContent['lastname']+'</td>'
+                        +'<!-- Fathers Name -->';
                         var cmonth = metaContent['confirmation_month'];
                         if(cmonth == null || cmonth == undefined || cmonth == NaN){
                             html+='<td>Not Set</td>';
@@ -157,12 +163,7 @@ function getConfirmationList(url){
                         }else{
                             html+='<td>'+metaContent['date_issued']+'</td>';
                         }
-                        html+='<!-- Record of -->'
-                        +'<td><label style="font-size: 9px;">First Name</label><br>'+rootContent['firstname']+'</td>'
-                        +'<td><label style="font-size: 9px;">Middle Name</label><br>'+rootContent['middlename']+'</td>'
-                        +'<td><label style="font-size: 9px;">Last Name</label><br>'+rootContent['lastname']+'</td>'
-                        +'<!-- Fathers Name -->'
-                        +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['father_firstname']+'</td>'
+                        html+='<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['father_firstname']+'</td>'
                         +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['father_middlename']+'</td>'
                         +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['father_lastname']+'</td>'
                         +'<!-- Mothers Name -->'
@@ -487,12 +488,12 @@ function getBirthList(url){
                             +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintBCertificate" id="btnPrintBCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
                             +'<td><button class="btn waves-effect btn-actions green tooltipped btnUpdateBCertificate" id="btnUpdateBCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Update Record"><i class="material-icons">edit</i></button></td>'
                             +'<td><button class="btn waves-effect btn-actions red tooltipped btnDeleteBCertificate" id="btnDeleteBCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
-                            +'<!-- Born On -->'
-                            +'<td>'+metaContent['born_on']+'</td>'
                             +'<!-- Record of -->'
                             +'<td><label style="font-size: 9px;">First Name</label><br>'+rootContent['firstname']+'</td>'
                             +'<td><label style="font-size: 9px;">Middle Name</label><br>'+rootContent['middlename']+'</td>'
                             +'<td><label style="font-size: 9px;">Last Name</label><br>'+rootContent['lastname']+'</td>'
+                            +'<!-- Born On -->'
+                            +'<td>'+metaContent['born_on']+'</td>'
                             +'<!-- Born In -->'
                             +'<td><label style="font-size: 9px;">Born In</label><br>'+metaContent['born_in']+'</td>'
                             +'<!-- Born In -->'

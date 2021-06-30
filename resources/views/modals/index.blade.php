@@ -147,7 +147,7 @@
 
 <!-- Floating Import Progress Indicator -->
 <div id="importProgress" class="hide">
-    <div class="card grey">
+    <div class="card purple">
         <div class="card-content white-text" id="importInProgressMessage">
             Import in progress (99 Records left)
         </div>
