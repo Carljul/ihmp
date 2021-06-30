@@ -407,13 +407,26 @@ function getConfirmationList(url){
     }
 
     function generatePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificate){
-        for(let i = 0 ; i < lastPage ; i++){
-            if(currentPage == parseInt(i+1)){
-                pageHtml += `<li class="active"><a class="btnPaginateConfirmation" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+        if(currentPage > 2){
+            pageHtml += `<li class="waves-effect"><a class="btnPaginateConfirmation" url="${path + "?page=" + 1}&certificate_type=${certificate}">${1}...</a></li>`;
+        }
+        for(let i = currentPage - 1; i < (currentPage - 1 )+3; i++){
+            if(currentPage != lastPage){
+                if(currentPage == parseInt(i+1)){
+                    pageHtml += `<li class="active"><a class="btnPaginateConfirmation" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${currentPage}</a></li>`;
+                }else{
+                    if(parseInt(i+1) >= lastPage){
+
+                    }else{
+                        pageHtml += `<li class="waves-effect"><a class="btnPaginateConfirmation" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+                    }
+                }
             }else{
-                pageHtml += `<li class="waves-effect"><a class="btnPaginateConfirmation" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+                pageHtml += `<li class="waves-effect"><a class="btnPaginateConfirmation" url="${path + "?page=" + i}&certificate_type=${certificate}">${i}</a></li>`;
+                break;
             }
         }
+        pageHtml += `<li class="waves-effect ${lastPage == currentPage ? "active":""}"><a class="btnPaginateConfirmation" url="${path + "?page=" + lastPage}&certificate_type=${certificate}">... up to ${lastPage}</a></li>`;
         pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPaginateConfirmation ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}&certificate_type=${certificate}"><i class="material-icons">chevron_right</i></a></li>
                     </ul>`;
 
@@ -744,17 +757,28 @@ function getBirthList(url){
     }
 
     function generateBirthPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificate){
-        for(let i = 0 ; i < lastPage ; i++){
-            if(currentPage == parseInt(i+1)){
-                pageHtml += `<li class="active"><a class="btnPaginationForBirth" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+        if(currentPage > 2){
+            pageHtml += `<li class="waves-effect"><a class="btnPaginationForBirth" url="${path + "?page=" + 1}&certificate_type=${certificate}">${1}...</a></li>`;
+        }
+        for(let i = currentPage - 1; i < (currentPage - 1 )+3; i++){
+            if(currentPage != lastPage){
+                if(currentPage == parseInt(i+1)){
+                    pageHtml += `<li class="active"><a class="btnPaginationForBirth" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${currentPage}</a></li>`;
+                }else{
+                    if(parseInt(i+1) >= lastPage){
+
+                    }else{
+                        pageHtml += `<li class="waves-effect"><a class="btnPaginationForBirth" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+                    }
+                }
             }else{
-                pageHtml += `<li class="waves-effect"><a class="btnPaginationForBirth" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+                pageHtml += `<li class="waves-effect"><a class="btnPaginationForBirth" url="${path + "?page=" + i}&certificate_type=${certificate}">${i}</a></li>`;
+                break;
             }
         }
+        pageHtml += `<li class="waves-effect ${lastPage == currentPage ? "active":""}"><a class="btnPaginationForBirth" url="${path + "?page=" + lastPage}&certificate_type=${certificate}">... up to ${lastPage}</a></li>`;
         pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPaginationForBirth ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}&certificate_type=${certificate}"><i class="material-icons">chevron_right</i></a></li>
                     </ul>`;
-
-        
         //display the pagination
         $("#paginationBirth").html(pageHtml);
 
@@ -1142,16 +1166,28 @@ function getMarriageList(url){
     }
 
     function generateMariagePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificate){
-        for(let i = 0 ; i < lastPage ; i++){
-            if(currentPage == parseInt(i+1)){
-                pageHtml += `<li class="active"><a class="btnPaginationForMarriage" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+        if(currentPage > 2){
+            pageHtml += `<li class="waves-effect"><a class="btnPaginationForMarriage" url="${path + "?page=" + 1}&certificate_type=${certificate}">${1}...</a></li>`;
+        }
+        for(let i = currentPage - 1; i < (currentPage - 1 )+3; i++){
+            if(currentPage != lastPage){
+                if(currentPage == parseInt(i+1)){
+                    pageHtml += `<li class="active"><a class="btnPaginationForMarriage" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${currentPage}</a></li>`;
+                }else{
+                    if(parseInt(i+1) >= lastPage){
+
+                    }else{
+                        pageHtml += `<li class="waves-effect"><a class="btnPaginationForMarriage" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+                    }
+                }
             }else{
-                pageHtml += `<li class="waves-effect"><a class="btnPaginationForMarriage" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+                pageHtml += `<li class="waves-effect"><a class="btnPaginationForMarriage" url="${path + "?page=" + i}&certificate_type=${certificate}">${i}</a></li>`;
+                break;
             }
         }
+        pageHtml += `<li class="waves-effect ${lastPage == currentPage ? "active":""}"><a class="btnPaginationForMarriage" url="${path + "?page=" + lastPage}&certificate_type=${certificate}">... up to ${lastPage}</a></li>`;
         pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPaginationForMarriage ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}&certificate_type=${certificate}"><i class="material-icons">chevron_right</i></a></li>
                     </ul>`;
-
         
         //display the pagination
         $("#paginationMarriage").html(pageHtml);
@@ -1461,16 +1497,28 @@ function getDeathList(url){
     }
 
     function generateDeathPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificate){
-        for(let i = 0 ; i < lastPage ; i++){
-            if(currentPage == parseInt(i+1)){
-                pageHtml += `<li class="active"><a class="btnPaginationForDeath" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+        if(currentPage > 2){
+            pageHtml += `<li class="waves-effect"><a class="btnPaginationForDeath" url="${path + "?page=" + 1}&certificate_type=${certificate}">${1}...</a></li>`;
+        }
+        for(let i = currentPage - 1; i < (currentPage - 1 )+3; i++){
+            if(currentPage != lastPage){
+                if(currentPage == parseInt(i+1)){
+                    pageHtml += `<li class="active"><a class="btnPaginationForDeath" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${currentPage}</a></li>`;
+                }else{
+                    if(parseInt(i+1) >= lastPage){
+
+                    }else{
+                        pageHtml += `<li class="waves-effect"><a class="btnPaginationForDeath" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+                    }
+                }
             }else{
-                pageHtml += `<li class="waves-effect"><a class="btnPaginationForDeath" url="${path + "?page=" + parseInt(i+1)}&certificate_type=${certificate}">${i+1}</a></li>`;
+                pageHtml += `<li class="waves-effect"><a class="btnPaginationForDeath" url="${path + "?page=" + i}&certificate_type=${certificate}">${i}</a></li>`;
+                break;
             }
         }
+        pageHtml += `<li class="waves-effect ${lastPage == currentPage ? "active":""}"><a class="btnPaginationForDeath" url="${path + "?page=" + lastPage}&certificate_type=${certificate}">... up to ${lastPage}</a></li>`;
         pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPaginationForDeath ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}&certificate_type=${certificate}"><i class="material-icons">chevron_right</i></a></li>
                     </ul>`;
-
         
         //display the pagination
         $("#paginationDeath").html(pageHtml);
