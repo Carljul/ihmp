@@ -145,133 +145,18 @@
     </div>
 </div>
 
+<!-- Floating Import Progress Indicator -->
+<div id="importProgress" class="hide">
+    <div class="card grey">
+        <div class="card-content white-text" id="importInProgressMessage">
+            Import in progress (99 Records left)
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function(){
+        $('#importExport').modal()[0].M_Modal.options.dismissible = false;
         $('.templateDownloadDropdown').material_select();
-
-        $("#templateDownloadDropdown").on('change', function(){
-            var getVal = $(this).val();
-
-            if(getVal == ""){
-                $("#btnDownload").addClass('disabled');
-                $("#uploadFile").addClass('disabled');
-                $("#btnStartImportSequence").addClass('disabled');
-            }else{
-                $("#btnDownload").removeClass('disabled');
-                $("#uploadFile").removeClass('disabled');
-                $("#btnStartImportSequence").removeClass('disabled');
-
-
-                // Create a link file to download
-                $("#btnDownload").prop('href','download/Confirmation_Template.csv');
-            }
-        });
-
-        // will return unique values of array
-        function getUnique(array){
-            var uniqueArray = [];
-            
-            // Loop through array values
-            for(i=0; i < array.length; i++){
-                if(array[i] != ""){
-                    if(uniqueArray.indexOf(array[i]) === -1) {
-                        uniqueArray.push(array[i]);
-                    }
-                }
-            }
-            return uniqueArray;
-        }
-
-        // Uploading Data to Html
-        $("#importCSV").change(function(e) {
-            e.preventDefault();
-
-            // Show In Progress
-            var html = "Fetching Data";
-            $("#showDataToImport").html(html);
-
-
-            var ext = $("#importCSV").val().split(".").pop().toLowerCase();
-            if($.inArray(ext, ["csv"]) == -1) {
-                alert('Upload CSV');
-                return false;
-            } 
-            if (e.target.files != undefined) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var lines = e.target.result.split('\r\n');
-                    var firstLine = lines[0];
-                    var headersLength = 0;
-                    var newSetArray = [];
-
-                    // Will hold a list of array,
-                    // Values of array are the data to import in db
-                    var arrayToImport = [];
-
-                    html = "";
-
-                    html+="<table class='striped' style='width: 340%;'>"
-                    +"<thead>";
-                    if(firstLine.toLowerCase().includes('confirmation')){
-                        var getHeaders = lines[6].split(",");
-                        console.log(getHeaders.length);
-                        // Create Headers First
-                        for(var x = 0; x < getHeaders.length; x++){
-                            html+="<th>"+getHeaders[x]+"</th>";
-                        }
-                        // Remove the headers
-                        lines.splice(0,7);
-                        newSetArray = lines;
-                    }else if(firstLine.toLowerCase().includes('birth')){
-                        
-                    }else if(firstLine.toLowerCase().includes('marriage')){
-                        
-                    }else if(firstLine.toLowerCase().includes('death')){
-                        
-                    }else{
-                        // CSV File is been edited.
-                        Materialize.toast('It seems that the header of the uploaded file i edited\nPlease download again the file', 5000, 'red rounded');
-                        return false;
-                    }
-                    html+="</thead>"
-                    +"<tbody>";
-
-                    // Remove Duplicate Values
-                    newSetArray = getUnique(newSetArray);
-
-                    // Display the total number of records
-                    $("#countRecord").html(newSetArray.length+" "+(newSetArray.length > 1 ? "Records":"Record")+" Found and ready to import!");
-
-                    // Display Fields to table
-                    for (i = 0; i < newSetArray.length; ++i)
-                    {
-                        // Convert String to array
-                        var record = newSetArray[i].split(",");
-
-                        // Save Record to use in insert
-                        arrayToImport.push(record);
-
-                        // Generate Records
-                        html+="<tr>";
-                        for(var y = 0; y < record.length; y++){
-                            html+="<td>"+record[y]+"</td>";
-                        }
-                        html+="</tr>";
-                    }
-                    
-                    html+="</tbody>"
-                    +"</table>";
-                    $("#showDataToImport").html(html);
-
-
-
-                    // TODO:: Generate Import Sequence
-                    console.log(arrayToImport);
-
-                };
-                reader.readAsText(e.target.files.item(0));
-            }
-            return false;
-        });
     });
 </script>

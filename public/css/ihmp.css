@@ -231,3 +231,10 @@ tr.custom_card td:last-child {
 .marriage_group_table{
     width: 625%;
 }
+
+#importProgress{
+    float: right;
+    position: absolute;
+    bottom: 5px;
+    right: 40px;
+}
