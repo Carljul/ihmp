@@ -249,3 +249,10 @@ a#btnCertificateFilter {
     width: 100%;
     text-align: center;
 }
+
+#importProgress{
+    float: right;
+    position: absolute;
+    bottom: 5px;
+    right: 40px;
+}

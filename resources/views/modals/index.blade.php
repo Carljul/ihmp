@@ -275,8 +275,18 @@
     </div>
 </div>
 
+<!-- Floating Import Progress Indicator -->
+<div id="importProgress" class="hide">
+    <div class="card purple">
+        <div class="card-content white-text" id="importInProgressMessage">
+            Import in progress (99 Records left)
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function(){
+        $('#importExport').modal()[0].M_Modal.options.dismissible = false;
         $('.templateDownloadDropdown').material_select();
 
         $("#templateDownloadDropdown").on('change', function(){
@@ -674,9 +684,7 @@
                     console.log('["Confirmation Error"]: '+e.responseJSON.message);
                 }
             });
-
-
-            console.log({certificate_type, dateFrom, dateTo})
+            
         })
     });
 </script>
