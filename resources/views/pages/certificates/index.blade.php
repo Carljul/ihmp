@@ -419,8 +419,6 @@
             rowsWithValueImportConfirmation = [];
             emptyRowsImportConfirmation = [];
 
-            // Close and Disable modal button
-            $("#importExportButton").addClass('disabled');
             // Clear modal form before closes
             $("#showDataToImport").html('');
             $("#countRecord").html('Data To Import Will Show Below');
@@ -513,6 +511,10 @@
         }
         // worker will do the saving of the transaction
         function initiateConfirmationWorker(){
+            // Close and Disable modal button
+            $("#importExportButton").addClass('disabled');
+
+            // Worker Main Transaction
             if(localStorage.getItem('transactionsImportConfirmation') != null){
                 if(localStorage.getItem('transactionsImportConfirmation') != "[]"){
                     console.log('Starting saving sequence');
@@ -534,11 +536,15 @@
                     // create the condition to initiate a recursive command
                     savingConfirmationRecord(currentRow, toSavePayload, convertedListOfTranscations);
                 }else{
+                    $("#errorImports").css('right', '5%');
                     $("#importInProgressMessage").html('Records Imported');
                     $("#importExportButton").removeClass('disabled');
                     setTimeout(function(){
                         $("#importProgress").addClass('hide');
                     }, 3000);
+                    setTimeout(() => {
+                        $("#errorImports").addClass('hide');
+                    }, 8000);
                 }
             }
         }
@@ -551,27 +557,29 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(response){
-                    if(response.status == 201){
-                        // removing the first object of the transaction list
-                        listOfTransactions.shift();
-                        // remove transactions in local Storage to replace new
-                        localStorage.removeItem('transactionsImportConfirmation');
-                        localStorage.setItem('transactionsImportConfirmation', JSON.stringify(listOfTransactions));
+                    // removing the first object of the transaction list
+                    listOfTransactions.shift();
+                    // remove transactions in local Storage to replace new
+                    localStorage.removeItem('transactionsImportConfirmation');
+                    localStorage.setItem('transactionsImportConfirmation', JSON.stringify(listOfTransactions));
+                    if(response.status >= 200 && response.status < 400){
                         // update the table
                         getConfirmationList('NA');
-                        // call again initiate worker after 3 seconds to create a recursive effect
-                        setTimeout(function(){
-                            initiateConfirmationWorker();
-                        }, 1500);
-                    }else if(response.status == 400){
+                    }else if(response.status >= 400){
                         errorSavingRecords.push({
                             "row": row,
                             "payload": payload,
                             "message": "Duplicated"
                         });
-                    }else{
-                        console.log('something is not right: '+response.status);
+                        $("#errorImports").css('right', '24%');
+                        $("#errorImports").removeClass("hide");
+                        $("#errorImportMessage").html("Some record already exists ("+errorSavingRecords.length+")");
                     }
+                    
+                    // call again initiate worker after 3 seconds to create a recursive effect
+                    setTimeout(function(){
+                        initiateConfirmationWorker();
+                    }, 1500);
                 }, error: function(e){
                     console.log(e);
                     errorSavingRecords.push({

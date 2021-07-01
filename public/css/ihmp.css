@@ -254,5 +254,12 @@ a#btnCertificateFilter {
     float: right;
     position: absolute;
     bottom: 5px;
-    right: 40px;
+    right: 5%;
+}
+
+#errorImports{
+    float: right;
+    position: absolute;
+    bottom: 5px;
+    right: 24%;
 }
