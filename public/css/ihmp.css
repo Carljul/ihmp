@@ -232,6 +232,24 @@ tr.custom_card td:last-child {
     width: 625%;
 }
 
+.modal_large{
+    width: 90% !important ; 
+    height: 90% !important ;
+}
+
+.modal > .modal-content > .row > .s3 > .select-wrapper {
+    padding-top: 14.5px;
+}
+
+a#btnCertificateFilter {
+    margin-top: 20px;
+}
+
+.full_width_button{
+    width: 100%;
+    text-align: center;
+}
+
 #importProgress{
     float: right;
     position: absolute;

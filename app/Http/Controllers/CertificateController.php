@@ -6,6 +6,7 @@ use App\Certificate;
 use Illuminate\Http\Request;
 use App\Traits\GlobalFunction;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class CertificateController extends Controller
 {
@@ -210,6 +211,7 @@ class CertificateController extends Controller
     public function show($search, Request $request)
     {
         if($request->isIdSearch && $request->isIdSearch == "true" && $request->isIdSearch == true){
+
             $result = DB::table('certificates')
             ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
             ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
@@ -225,6 +227,30 @@ class CertificateController extends Controller
 
             //return json response
             return response()->json($this->customApiResponse($result, 200)); //OK
+
+        }else if($request->dateFrom && $request->dateTo){
+
+            //converted the dates to Carbon, and removed the minutes, seconds and milliseconds
+            $dateFrom = substr(new Carbon($request->dateFrom), 0, 10);
+            $dateTo = substr(new Carbon($request->dateTo), 0, 10);
+
+            $result = DB::table('certificates')
+            ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
+            ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
+            ->where('certificates.is_deleted', 0)
+            ->where('certificates.certificate_type', $request->certificate_type)
+            ->whereBetween('certificates.created_at', [$dateFrom, $dateTo])
+            ->get();
+
+            //if search is not found
+            if(count($result) == 0){
+                //return json response
+                return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
+            }
+
+            //return json response
+            return response()->json($this->customApiResponse($result, 200)); //OK
+
         }else{
 
             // return specific row using search
