@@ -164,7 +164,7 @@
                                         <th>Second Sponsor</th> -->
                                         <th>Confirmation by</th>
                                         <th colspan="3">Registration Book Detail</th>
-                                        <th>Priest</th>
+                                        <!-- <th>Priest</th> -->
                                     </tr>
                                 </thead>
                                 <tbody id="confirmationListFilterTable">
@@ -181,11 +181,11 @@
                             <table class="marriage_group_table striped">
                                 <thead>
                                     <tr>
-                                        <th colspan="13">Husbands Info</th>
-                                        <th colspan="13">Wifes Info</th>
+                                        <th colspan="8">Husbands Info</th>
+                                        <th colspan="8">Wifes Info</th>
                                         <th colspan="3">Marriage Details</th>
                                         <th colspan="4">Other Details</th>
-                                        <th>Priest</th>
+                                        <!-- <th>Priest</th> -->
                                     </tr>
                                 </thead>
                                 <tbody id="marriageListFilterTable">
@@ -212,7 +212,7 @@
                                         <th>Residents of</th>
                                         <th>Godparents</th>
                                         <th colspan="4">Other Details</th>
-                                        <th>Parish Priest</th>
+                                        <!-- <th>Parish Priest</th> -->
                                     </tr>
                                 </thead>
                                 <tbody id="birthListFilterTable">
@@ -231,7 +231,7 @@
                                     <tr>
                                         <th colspan="3">Decease Name</th>
                                         <th colspan="10">Other Info</th>
-                                        <th>Priest Name</th>
+                                        <!-- <th>Priest Name</th> -->
                                     </tr>
                                 </thead>
                                 <tbody id="deathListFilterTable">
@@ -311,6 +311,7 @@
             a.document.close();
             setTimeout(() => {
                 a.print();
+                window.close();
             }, 1000)
         })
 
@@ -337,8 +338,8 @@
             if(dateFrom == "")return Materialize.toast('Please provide Date From!', 3000, 'red')
             if(dateTo == "")return Materialize.toast('Please provide Date To!', 3000, 'red')
             //format the date into moment js
-            dateFrom = moment(dateFrom).format("L");
-            dateTo = moment(dateTo).format("L");
+            dateFrom = moment(dateFrom).subtract(1, 'days').format("L");
+            dateTo = moment(dateTo).add(1, 'days').format("L");
             //ajax call for calling the certificates data
             $.ajax({
                 type: "GET",
@@ -391,12 +392,6 @@
                                 +'<td><label style="font-size: 9px;">Book Page</label><br>'+metaContent['book_page']+'</td>'
                                 +'<td><label style="font-size: 9px;">Book Number</label><br>'+metaContent['book_number']+'</td>'
                                 
-                                var pname = rootContent['priest_fname'];
-                                if(pname == null || pname == undefined || pname == NaN){
-                                    html+='<td>Not Set</td>';
-                                }else{
-                                    html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+rootContent['priest_mname']+' '+rootContent['priest_lname']+'</td>';
-                                }
                                 html+='</tr>';
                             }
                         }
@@ -421,11 +416,6 @@
                                     +'<td><label style="font-size: 9px;">Birth Date</label><br>'+metaContent['husband_birthdate']+'</td>'
                                     +'<td><label style="font-size: 9px;">Birth Place</label><br>'+metaContent['husband_birthplace']+'</td>'
                                     +'<td><label style="font-size: 9px;">Baptism Date</label><br>'+metaContent['husband_baptismdate']+'</td>'
-                                    +'<td><label style="font-size: 9px;">Residence Of</label><br>'+metaContent['husband_residence']+'</td>'
-                                    +'<td><label style="font-size: 9px;">Fathers Name</label><br>'+metaContent['husband_fathersname']+'</td>'
-                                    +'<td><label style="font-size: 9px;">Mothers Name</label><br>'+metaContent['husband_mothersname']+'</td>'
-                                    +'<td><label style="font-size: 9px;">First Witness</label><br>'+metaContent['husband_firstwitness']+'</td>'
-                                    +'<td><label style="font-size: 9px;">Second Witness</label><br>'+metaContent['husband_secondwitness']+'</td>'
                                     +'<!-- Wifes Info -->'
                                     +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['wife_firstname']+'</td>'
                                     +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['wife_middlename']+'</td>'
@@ -435,11 +425,6 @@
                                     +'<td><label style="font-size: 9px;">Birth Date</label><br>'+metaContent['wife_birthdate']+'</td>'
                                     +'<td><label style="font-size: 9px;">Birth Place</label><br>'+metaContent['wife_birthplace']+'</td>'
                                     +'<td><label style="font-size: 9px;">Baptism Date</label><br>'+metaContent['wife_baptismdate']+'</td>'
-                                    +'<td><label style="font-size: 9px;">Residence Of</label><br>'+metaContent['wife_residence']+'</td>'
-                                    +'<td><label style="font-size: 9px;">Fathers Name</label><br>'+metaContent['wife_fathersname']+'</td>'
-                                    +'<td><label style="font-size: 9px;">Mothers Name</label><br>'+metaContent['wife_mothersname']+'</td>'
-                                    +'<td><label style="font-size: 9px;">First Witness</label><br>'+metaContent['wife_firstwitness']+'</td>'
-                                    +'<td><label style="font-size: 9px;">Second Witness</label><br>'+metaContent['wife_secondwitness']+'</td>'
                                     +'<!-- Marriage Details -->'
                                     +'<td><label style="font-size: 9px;">Place of Marriage</label><br>'+metaContent['marriage_place']+'</td>'
                                     +'<td><label style="font-size: 9px;">Date of Marriage</label><br>'+metaContent['marriage_date']+'</td>'
@@ -450,12 +435,6 @@
                                     +'<td><label style="font-size: 9px;">Line</label><br>'+metaContent['marriage_line']+'</td>'
                                     +'<td><label style="font-size: 9px;">Date Issued</label><br>'+metaContent['marriage_day']+'</td>'
                                     +'<!-- Priest Name -->';
-                                    var pname = rootContent['priest_fname'];
-                                    if(pname == null || pname == undefined || pname == NaN){
-                                        html+='<td><label style="font-size: 9px;">Name</label><br>Not Set</td>';
-                                    }else{
-                                        html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+rootContent['priest_mname']+' '+rootContent['priest_lname']+'</td>';
-                                    }
                                     html+='</tr>';
                             }
                         }
@@ -500,12 +479,6 @@
                                     +'<td><label style="font-size: 9px;">Page Number</label><br>'+metaContent['page']+'</td>'
                                     +'<td><label style="font-size: 9px;">Date Issued</label><br>'+metaContent['date_issued']+'</td>'
                                     +'<!-- Parish Priest -->';
-                                    var pname = rootContent['priest_fname'];
-                                    if(pname == null || pname == undefined || pname == NaN){
-                                        html+='<td><label style="font-size: 9px;">Name</label><br>Not Set</td>';
-                                    }else{
-                                        html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+rootContent['priest_mname']+' '+rootContent['priest_lname']+'</td>';
-                                    }
                                     html+='</tr>';
                             }
                         }
@@ -531,18 +504,11 @@
                                         +'<td><label style="font-size: 9px;">Date of Death</label><br>'+metaContent['date_of_death']+'</td>'
                                         +'<td><label style="font-size: 9px;">Place of Burial</label><br>'+metaContent['place_of_burial']+'</td>'
                                         +'<td><label style="font-size: 9px;">Date of Burial</label><br>'+metaContent['date_of_burial']+'</td>'
-                                        +'<td><label style="font-size: 9px;">Informant or Relatives</label><br>'+metaContent['informant_or_relatives']+'</td>'
                                         +'<td><label style="font-size: 9px;">Book Number</label><br>'+metaContent['book_number']+'</td>'
                                         +'<td><label style="font-size: 9px;">Page Number</label><br>'+metaContent['page_number']+'</td>'
                                         +'<td><label style="font-size: 9px;">Registry Number</label><br>'+metaContent['registry_number']+'</td>'
                                         +'<td><label style="font-size: 9px;">Date Issued</label><br>'+metaContent['date_issued']+'</td>'
                                         +'<!-- Priest Name -->';
-                                        var pname = responseContent['priest_fname'];
-                                        if(pname == null || pname == undefined || pname == NaN){
-                                            html+='<td><label style="font-size: 9px;">Name</label><br>Not Set</td>';
-                                        }else{
-                                            html+='<td><label style="font-size: 9px;">Name</label><br>'+responseContent['priest_fname']+' '+responseContent['priest_mname']+' '+responseContent['priest_lname']+'</td>';
-                                        }
                                 +'</tr>';
                             }
                         }
