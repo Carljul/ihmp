@@ -284,6 +284,15 @@
     </div>
 </div>
 
+<!-- Error Imports -->
+<div id="errorImports" class="hide">
+    <div class="card red">
+        <div class="card-content white-text" id="errorImportMessage">
+            Error Imports (99 Records)
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function(){
         $('#importExport').modal()[0].M_Modal.options.dismissible = false;
