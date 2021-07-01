@@ -236,10 +236,10 @@
         // will validate the uploaded file if it match to the selected template
         function isFileToUploadValid(file){
             var getDropdownValue = $("#templateDownloadDropdown").val();
-            if(file == getDropdownValue){
+            if(file.toLowerCase().includes(getDropdownValue.toLowerCase())){
                 return true;
             }else{
-
+                return false;
             }
         }
 
@@ -247,14 +247,9 @@
         $("#importCSV").change(function(e) {
             e.preventDefault();
 
-            // Show In Progress
-            var html = "Fetching Data";
-            $("#showDataToImport").html(html);
-
-
             var ext = $("#importCSV").val().split(".").pop().toLowerCase();
             if($.inArray(ext, ["csv"]) == -1) {
-                alert('Upload CSV');
+                Materialize.toast('Uploaded file is not csv file', 5000, 'red rounded');
                 return false;
             } 
             if (e.target.files != undefined) {
@@ -265,98 +260,107 @@
                     var headersLength = 0;
                     var newSetArray = [];
                     // Validate Template to upload
+                    var isTrue = isFileToUploadValid(firstLine);
+                    if(isTrue){
+                        html = "";
+                        // Used a condition to test whether what type of certificate is uploaded
+                        // this will help also to categorize the certificates wether the template
+                        // has more header message than the other templates
+                        if(firstLine.toLowerCase().includes('confirmation')){
+                            html+="<table class='striped' style='width: 340%;'>"
+                            +"<thead>";
+                            var getHeaders = lines[6].split(",");
+                            console.log(getHeaders.length);
+                            // Create Headers First
+                            for(var x = 0; x < getHeaders.length; x++){
+                                html+="<th>"+getHeaders[x]+"</th>";
+                            }
+                            // Remove the headers
+                            lines.splice(0,7);
+                            newSetArray = lines;
+                        }else if(firstLine.toLowerCase().includes('birth')){
+                            html+="<table class='striped' style='width: 340%;'>"
+                            +"<thead>";
+                            var getHeaders = lines[6].split(",");
+                            headersLength = getHeaders.length;
+                            // Create Headers First
+                            for(var x = 0; x < getHeaders.length; x++){
+                                html+="<th>"+getHeaders[x]+"</th>";
+                            }
+                            // Remove the headers
+                            lines.splice(0,7);
+                            newSetArray = lines;
+                        }else if(firstLine.toLowerCase().includes('marriage')){
+                            html+="<table class='striped' style='width: 520%;'>"
+                            +"<thead>";
+                            var getHeaders = lines[6].split(",");
+                            headersLength = getHeaders.length;
+                            // Create Headers First
+                            for(var x = 0; x < getHeaders.length; x++){
+                                html+="<th>"+getHeaders[x]+"</th>";
+                            }
+                            // Remove the headers
+                            lines.splice(0,7);
+                            newSetArray = lines;
+                        }else if(firstLine.toLowerCase().includes('death')){
+                            html+="<table class='striped' style='width: 340%;'>"
+                            +"<thead>";
+                            var getHeaders = lines[6].split(",");
+                            headersLength = getHeaders.length;
+                            // Create Headers First
+                            for(var x = 0; x < getHeaders.length; x++){
+                                html+="<th>"+getHeaders[x]+"</th>";
+                            }
+                            // Remove the headers
+                            lines.splice(0,7);
+                            newSetArray = lines;
+                        }else{
+                            // CSV File is been edited.
+                            Materialize.toast('It seems that the header of the uploaded file i edited\nPlease download the file again', 5000, 'red rounded');
+                            return false;
+                        }
+                        html+="</thead>"
+                        +"<tbody>";
 
-                    html = "";
+                        // Remove Duplicate Values
+                        newSetArray = getUnique(newSetArray);
 
-                    html+="<table class='striped' style='width: 340%;'>"
-                    +"<thead>";
-                    // Used a condition to test whether what type of certificate is uploaded
-                    // this will help also to categorize the certificates wether the template
-                    // has more header message than the other templates
-                    if(firstLine.toLowerCase().includes('confirmation')){
-                        var getHeaders = lines[6].split(",");
-                        console.log(getHeaders.length);
-                        // Create Headers First
-                        for(var x = 0; x < getHeaders.length; x++){
-                            html+="<th>"+getHeaders[x]+"</th>";
+                        // Display the total number of records
+                        newSetArray.length > 0 ? 
+                        $("#countRecord").html(newSetArray.length+" "+(newSetArray.length > 1 ? "Records":"Record")+" found and ready to import!"):
+                        $("#countRecord").html('It seems you uploaded an empty file');
+
+                        if(newSetArray.length > 1){
+                            // Display Fields to table
+                            for (i = 0; i < newSetArray.length; ++i)
+                            {
+                                // Convert String to array
+                                var record = newSetArray[i].split(",");
+
+                                // Save Record to use in insert
+                                arrayToImport.push(record);
+
+                                // Generate Records
+                                html+="<tr>";
+                                for(var y = 0; y < record.length; y++){
+                                    html+="<td>"+record[y]+"</td>";
+                                }
+                                html+="</tr>";
+                            }
+                        }else{
+                            html+="<tr><td colspan='"+headersLength+"'>No Record Found</td></tr>"
                         }
-                        // Remove the headers
-                        lines.splice(0,7);
-                        newSetArray = lines;
-                    }else if(firstLine.toLowerCase().includes('birth')){
-                        var getHeaders = lines[6].split(",");
-                        headersLength = getHeaders.length;
-                        // Create Headers First
-                        for(var x = 0; x < getHeaders.length; x++){
-                            html+="<th>"+getHeaders[x]+"</th>";
-                        }
-                        // Remove the headers
-                        lines.splice(0,7);
-                        newSetArray = lines;
-                    }else if(firstLine.toLowerCase().includes('marriage')){
-                        var getHeaders = lines[6].split(",");
-                        headersLength = getHeaders.length;
-                        // Create Headers First
-                        for(var x = 0; x < getHeaders.length; x++){
-                            html+="<th>"+getHeaders[x]+"</th>";
-                        }
-                        // Remove the headers
-                        lines.splice(0,7);
-                        newSetArray = lines;
-                    }else if(firstLine.toLowerCase().includes('death')){
-                        var getHeaders = lines[6].split(",");
-                        headersLength = getHeaders.length;
-                        // Create Headers First
-                        for(var x = 0; x < getHeaders.length; x++){
-                            html+="<th>"+getHeaders[x]+"</th>";
-                        }
-                        // Remove the headers
-                        lines.splice(0,7);
-                        newSetArray = lines;
+
+                        html+="</tbody>"
+                        +"</table>";
+                        $("#showDataToImport").html(html);
+
+                        // TODO:: Generate Import Sequence
+                        console.log(arrayToImport);
                     }else{
-                        // CSV File is been edited.
-                        Materialize.toast('It seems that the header of the uploaded file i edited\nPlease download the file again', 5000, 'red rounded');
+                        Materialize.toast('Uploaded file is different from the one selected', 5000, 'red rounded');
                         return false;
                     }
-                    html+="</thead>"
-                    +"<tbody>";
-
-                    // Remove Duplicate Values
-                    newSetArray = getUnique(newSetArray);
-
-                    // Display the total number of records
-                    $("#countRecord").html(newSetArray.length+" "+(newSetArray.length > 1 ? "Records":"Record")+" Found and ready to import!");
-                    
-                    if(newSetArray.length > 1){
-                        // Display Fields to table
-                        for (i = 0; i < newSetArray.length; ++i)
-                        {
-                            // Convert String to array
-                            var record = newSetArray[i].split(",");
-
-                            // Save Record to use in insert
-                            arrayToImport.push(record);
-
-                            // Generate Records
-                            html+="<tr>";
-                            for(var y = 0; y < record.length; y++){
-                                html+="<td>"+record[y]+"</td>";
-                            }
-                            html+="</tr>";
-                        }
-                    }else{
-                        html+="<tr><td colspan='"+headersLength+"'>No Record Found</td></tr>"
-                    }
-                    
-                    html+="</tbody>"
-                    +"</table>";
-                    $("#showDataToImport").html(html);
-
-
-
-                    // TODO:: Generate Import Sequence
-                    console.log(arrayToImport);
-
                 };
                 reader.readAsText(e.target.files.item(0));
             }
