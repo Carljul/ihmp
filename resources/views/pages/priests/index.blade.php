@@ -206,14 +206,17 @@
             });
 
             //added search handler
-            $(document).on('blur', '.btnSearch', function(){
-                let val = $(".btnSearch").val();
+            $(document).on('keydown', '.btnSearch', function(e){
+                if(e.keyCode == 13 || e.keyCode == 9){
 
-                //set the url to be returned
-                let url = `http://127.0.0.1:8000/api/priest/${val}`;
-                
-                //then recall the function for calling the api
-                getPriestList(url);
+                    let val = $(".btnSearch").val();
+
+                    //set the url to be returned
+                    let url = `${api_server}priest/${val}`;
+                    
+                    //then recall the function for calling the api
+                    getPriestList(url);
+                }
             })
 
 

@@ -206,14 +206,16 @@
             });
 
             //added search handler
-            $(document).on('blur', '.btnSearch', function(){
-                let val = $(".btnSearch").val();
+            $(document).on('keydown', '.btnSearch', function(e){
+                if(e.keyCode == 13 || e.keyCode == 9){
+                    let val = $(".btnSearch").val();
 
-                //set the url to be returned
-                let url = `http://127.0.0.1:8000/api/template/${val}`;
-                
-                //then recall the function for calling the api
-                getTemplateList(url);
+                    //set the url to be returned
+                    let url = `${api_server}template/${val}`;
+                    
+                    //then recall the function for calling the api
+                    getTemplateList(url);
+                }
             })
 
 

@@ -77,23 +77,21 @@ class UserController extends Controller
 
         }else{
 
-            //return specific row using search
-            // $result = User::where('id', $search)
-            //         ->orWhere('firstname', $search)
-            //         ->orWhere('middlename', $search)
-            //         ->orWhere('lastname', $search)
-            //         ->orWhere('prefix', $search)
-            //         ->orderByRaw('id DESC')
-            //         ->paginate($this->getPaginationLimit());
+            // return specific row using search
+            $result = User::where('role_id', '!=', "3")
+                    ->where('name', 'LIKE', '%'.$search.'%')
+                    ->orWhere('email', 'LIKE', '%'.$search.'%')
+                    ->orderByRaw('id DESC')
+                    ->paginate($this->getPaginationLimit());
 
-            //if search is not found
-            // if(count($result) == 0){
-            //     //return json response
-            //     return response()->json($this->customApiResponse([], 404)); //DATA NOT FOUND
-            // }
+            // if search is not found
+            if(count($result) == 0){
+                //return json response
+                return response()->json($this->customApiResponse([], 404)); //DATA NOT FOUND
+            }
 
-            // //return json response
-            // return response()->json($this->customApiResponse($result, 200)); //OK
+            //return json response
+            return response()->json($this->customApiResponse($result, 200)); //OK
         }
     }
 
