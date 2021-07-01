@@ -192,6 +192,8 @@
         var rowsWithValueImportConfirmation = [];
 
         $("#templateDownloadDropdown").on('change', function(){
+            $("#showDataToImport").html('');
+            $("#countRecord").html('Data To Import Will Show Below');
             var getVal = $(this).val();
 
             if(getVal == ""){
@@ -206,24 +208,12 @@
                 // Create a link file to download
                 if(getVal == "confirmation"){
                     $("#btnDownload").prop('href','download/Confirmation_Template.csv');
-                }else if(getVal == "mariage"){
-                    // $("#btnDownload").prop('href','download/Confirmation_Template.csv');
-                    $("#btnDownload").addClass('disabled');
-                    $("#uploadFile").addClass('disabled');
-                    $("#btnStartImportSequence").addClass('disabled');
-                    Materialize.toast('Sorry! File is not ready yet', 5000, 'red rounded');
+                }else if(getVal == "marriage"){
+                    $("#btnDownload").prop('href','download/Marriage_Template.csv');
                 }else if(getVal == "birth"){
-                    // $("#btnDownload").prop('href','download/Confirmation_Template.csv');
-                    $("#btnDownload").addClass('disabled');
-                    $("#uploadFile").addClass('disabled');
-                    $("#btnStartImportSequence").addClass('disabled');
-                    Materialize.toast('Sorry! File is not ready yet', 5000, 'red rounded');
+                    $("#btnDownload").prop('href','download/Birth_Template.csv');
                 }else if(getVal == "death"){
-                    // $("#btnDownload").prop('href','download/Confirmation_Template.csv');
-                    $("#btnDownload").addClass('disabled');
-                    $("#uploadFile").addClass('disabled');
-                    $("#btnStartImportSequence").addClass('disabled');
-                    Materialize.toast('Sorry! File is not ready yet', 5000, 'red rounded');
+                    $("#btnDownload").prop('href','download/Death_Template.csv');
                 }
             }
         });
@@ -241,6 +231,16 @@
                 }
             }
             return uniqueArray;
+        }
+
+        // will validate the uploaded file if it match to the selected template
+        function isFileToUploadValid(file){
+            var getDropdownValue = $("#templateDownloadDropdown").val();
+            if(file == getDropdownValue){
+                return true;
+            }else{
+
+            }
         }
 
         // Uploading Data to Html
@@ -264,11 +264,15 @@
                     var firstLine = lines[0];
                     var headersLength = 0;
                     var newSetArray = [];
+                    // Validate Template to upload
 
                     html = "";
 
                     html+="<table class='striped' style='width: 340%;'>"
                     +"<thead>";
+                    // Used a condition to test whether what type of certificate is uploaded
+                    // this will help also to categorize the certificates wether the template
+                    // has more header message than the other templates
                     if(firstLine.toLowerCase().includes('confirmation')){
                         var getHeaders = lines[6].split(",");
                         console.log(getHeaders.length);
@@ -280,11 +284,35 @@
                         lines.splice(0,7);
                         newSetArray = lines;
                     }else if(firstLine.toLowerCase().includes('birth')){
-                        
+                        var getHeaders = lines[6].split(",");
+                        headersLength = getHeaders.length;
+                        // Create Headers First
+                        for(var x = 0; x < getHeaders.length; x++){
+                            html+="<th>"+getHeaders[x]+"</th>";
+                        }
+                        // Remove the headers
+                        lines.splice(0,7);
+                        newSetArray = lines;
                     }else if(firstLine.toLowerCase().includes('marriage')){
-                        
+                        var getHeaders = lines[6].split(",");
+                        headersLength = getHeaders.length;
+                        // Create Headers First
+                        for(var x = 0; x < getHeaders.length; x++){
+                            html+="<th>"+getHeaders[x]+"</th>";
+                        }
+                        // Remove the headers
+                        lines.splice(0,7);
+                        newSetArray = lines;
                     }else if(firstLine.toLowerCase().includes('death')){
-                        
+                        var getHeaders = lines[6].split(",");
+                        headersLength = getHeaders.length;
+                        // Create Headers First
+                        for(var x = 0; x < getHeaders.length; x++){
+                            html+="<th>"+getHeaders[x]+"</th>";
+                        }
+                        // Remove the headers
+                        lines.splice(0,7);
+                        newSetArray = lines;
                     }else{
                         // CSV File is been edited.
                         Materialize.toast('It seems that the header of the uploaded file i edited\nPlease download the file again', 5000, 'red rounded');
@@ -298,22 +326,26 @@
 
                     // Display the total number of records
                     $("#countRecord").html(newSetArray.length+" "+(newSetArray.length > 1 ? "Records":"Record")+" Found and ready to import!");
+                    
+                    if(newSetArray.length > 1){
+                        // Display Fields to table
+                        for (i = 0; i < newSetArray.length; ++i)
+                        {
+                            // Convert String to array
+                            var record = newSetArray[i].split(",");
 
-                    // Display Fields to table
-                    for (i = 0; i < newSetArray.length; ++i)
-                    {
-                        // Convert String to array
-                        var record = newSetArray[i].split(",");
+                            // Save Record to use in insert
+                            arrayToImport.push(record);
 
-                        // Save Record to use in insert
-                        arrayToImport.push(record);
-
-                        // Generate Records
-                        html+="<tr>";
-                        for(var y = 0; y < record.length; y++){
-                            html+="<td>"+record[y]+"</td>";
+                            // Generate Records
+                            html+="<tr>";
+                            for(var y = 0; y < record.length; y++){
+                                html+="<td>"+record[y]+"</td>";
+                            }
+                            html+="</tr>";
                         }
-                        html+="</tr>";
+                    }else{
+                        html+="<tr><td colspan='"+headersLength+"'>No Record Found</td></tr>"
                     }
                     
                     html+="</tbody>"

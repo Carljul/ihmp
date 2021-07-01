@@ -1,0 +1,7 @@
+Birth Template,,,,,,,,,,,,,,,,,,
+All fields columns that has an asterisk(*) in their column header is important and should not be leave as blank,,,,,,,,,,,,,,,,,,
+Important Note: Assinged Parish Priest will not be inclued in import,,,,,,,,,,,,,,,,,,
+All Date Columns should have this date format Example: 11/12/2021 (Month/Date/Year),,,,,,,,,,,,,,,,,,
+"If Godparents is more than 1 then separate the names with comma (,)",,,,,,,,,,,,,,,,,,
+Do not edit above content,,,,,,,,,,,,,,,,,,
+First Name *,Middle Name *,Last Name *,Born on *,Born in,Fathers First Name,Fathers Middle Name,Fathers Last Name,Mothers First Name,Mothers Middle Name,Mothers Last Name,Address,Baptism Date *,Minister,Godparents,Baptismal Register,Volume,Page,Date Issue

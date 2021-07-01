@@ -62,7 +62,7 @@
                     <b>1. </b>Select the type of certificate<br>  
                     <select class="templateDownloadDropdown" id="templateDownloadDropdown">
                         <option value="" disabled selected>Select template</option>
-                        <option value="mariage">Marriage</option>
+                        <option value="marriage">Marriage</option>
                         <option value="confirmation">Confirmation</option>
                         <option value="birth">Birth</option>
                         <option value="death">Death</option>
