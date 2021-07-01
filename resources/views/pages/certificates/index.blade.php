@@ -511,11 +511,11 @@
         }
         // worker will do the saving of the transaction
         function initiateConfirmationWorker(){
-            // Close and Disable modal button
-            $("#importExportButton").addClass('disabled');
-
             // Worker Main Transaction
             if(localStorage.getItem('transactionsImportConfirmation') != null){
+                
+                // Close and Disable modal button
+                $("#importExportButton").addClass('disabled');
                 if(localStorage.getItem('transactionsImportConfirmation') != "[]"){
                     console.log('Starting saving sequence');
 
