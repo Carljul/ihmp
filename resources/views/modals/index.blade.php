@@ -149,98 +149,99 @@
         <div class="row">
             <div class="col s12 m12">
                 <div class="row">
+                    <div id="printDiv">
+                        <!-- Confirmation Certificate -->
+                        <div class="col s12 fix_height_table sampleClass" style="display: none;" id="confirmationListFilterTableDIV">
+                            <table class="confirmation_group_table striped bordered">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3">Record of</th>
+                                        <th>Confirmation Date</th>
+                                        <th>Date Issued</th>
+                                        <th colspan="3">Fathers' Name</th>
+                                        <th colspan="3">Mothers' Name</th>
+                                        <!-- <th>First Sponsor</th>
+                                        <th>Second Sponsor</th> -->
+                                        <th>Confirmation by</th>
+                                        <th colspan="3">Registration Book Detail</th>
+                                        <th>Priest</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="confirmationListFilterTable">
+                                    <!-- Keep it empty -->
+                                    <tr>
+                                        <td colspan="21">No Records Yet</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                    <!-- Confirmation Certificate -->
-                    <div class="col s12 fix_height_table" style="overflow-x: scroll; display: none;" id="confirmationListFilterTableDIV">
-                        <table class="confirmation_group_table striped">
-                            <thead>
-                                <tr>
-                                    <th>Confirmation Date</th>
-                                    <th>Date Issued</th>
-                                    <th colspan="3">Record of</th>
-                                    <th colspan="3">Fathers' Name</th>
-                                    <th colspan="3">Mothers' Name</th>
-                                    <th>First Sponsor</th>
-                                    <th>Second Sponsor</th>
-                                    <th>Confirmation by</th>
-                                    <th colspan="3">Registration Book Detail</th>
-                                    <th>Priest</th>
-                                </tr>
-                            </thead>
-                            <tbody id="confirmationListFilterTable">
-                                <!-- Keep it empty -->
-                                <tr>
-                                    <td colspan="21">No Records Yet</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        <!-- Marriage Certificate -->
+                        <div class="col s12 fix_height_table" style="display: none;" id="marriageListFilterTableDIV">
+                            <table class="marriage_group_table striped">
+                                <thead>
+                                    <tr>
+                                        <th colspan="13">Husbands Info</th>
+                                        <th colspan="13">Wifes Info</th>
+                                        <th colspan="3">Marriage Details</th>
+                                        <th colspan="4">Other Details</th>
+                                        <th>Priest</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="marriageListFilterTable">
+                                    <!-- Keep it empty -->
+                                    <tr>
+                                        <td colspan="37">No Records Yet</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                    <!-- Marriage Certificate -->
-                    <div class="col s12 fix_height_table" style="overflow-x: scroll; display: none;" id="marriageListFilterTableDIV">
-                        <table class="marriage_group_table striped">
-                            <thead>
-                                <tr>
-                                    <th colspan="13">Husbands Info</th>
-                                    <th colspan="13">Wifes Info</th>
-                                    <th colspan="3">Marriage Details</th>
-                                    <th colspan="4">Other Details</th>
-                                    <th>Priest</th>
-                                </tr>
-                            </thead>
-                            <tbody id="marriageListFilterTable">
-                                <!-- Keep it empty -->
-                                <tr>
-                                    <td colspan="37">No Records Yet</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        <!-- Birth Certificate -->
+                        <div class="col s12 fix_height_table" style="display: none;" id="birthListFilterTableDIV">
+                            <table class="birth_group_table striped">
+                                <thead>
+                                    <tr>
+                                        <th>Born On</th>
+                                        <th colspan="3">Record of</th>
+                                        <th>Born In</th>
+                                        <th>Baptism Date</th>
+                                        <th>Minister</th>
+                                        <th colspan="3">Fathers Name</th>
+                                        <th colspan="3">Mothers Name</th>
+                                        <th>Residents of</th>
+                                        <th>Godparents</th>
+                                        <th colspan="4">Other Details</th>
+                                        <th>Parish Priest</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="birthListFilterTable">
+                                    <!-- Keep it empty -->
+                                    <tr>
+                                        <td colspan="21">No Records Yet</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                    <!-- Birth Certificate -->
-                    <div class="col s12 fix_height_table" style="overflow-x: scroll; display: none;" id="birthListFilterTableDIV">
-                        <table class="birth_group_table striped">
-                            <thead>
-                                <tr>
-                                    <th>Born On</th>
-                                    <th colspan="3">Record of</th>
-                                    <th>Born In</th>
-                                    <th>Baptism Date</th>
-                                    <th>Minister</th>
-                                    <th colspan="3">Fathers Name</th>
-                                    <th colspan="3">Mothers Name</th>
-                                    <th>Residents of</th>
-                                    <th>Godparents</th>
-                                    <th colspan="4">Other Details</th>
-                                    <th>Parish Priest</th>
-                                </tr>
-                            </thead>
-                            <tbody id="birthListFilterTable">
-                                <!-- Keep it empty -->
-                                <tr>
-                                    <td colspan="21">No Records Yet</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Death Certificate -->
-                    <div class="col s12 fix_height_table" style="overflow-x: scroll; display: none;" id="deathListFilterTableDIV">
-                        <table class="death_group_table striped">
-                            <thead>
-                                <tr>
-                                    <th colspan="3">Decease Name</th>
-                                    <th colspan="10">Other Info</th>
-                                    <th>Priest Name</th>
-                                </tr>
-                            </thead>
-                            <tbody id="deathListFilterTable">
-                                <!-- Keep it empty -->
-                                <tr>
-                                    <td colspan="18">No Records Yet</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <!-- Death Certificate -->
+                        <div class="col s12 fix_height_table" style="display: none;" id="deathListFilterTableDIV">
+                            <table class="death_group_table striped">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3">Decease Name</th>
+                                        <th colspan="10">Other Info</th>
+                                        <th>Priest Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="deathListFilterTable">
+                                    <!-- Keep it empty -->
+                                    <tr>
+                                        <td colspan="18">No Records Yet</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
 
@@ -290,6 +291,21 @@
         $('.templateDownloadDropdown').material_select();
 
         // ------------------------------------------- CERTIFICATE FILTER (PRINT) ------------------------------------------- //
+        $("#btnCertificatePrint").click(() => {
+
+            var divContents = document.getElementById("printDiv").innerHTML;
+            var a = window.open('', '', 'height=10000, width=10000');
+            a.document.write(`<html><head><link href='${system_url}/css/materialize.css' rel="stylesheet"></head>`);
+            a.document.write('<body>');
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            setTimeout(() => {
+                a.print();
+            }, 1000)
+        })
+
+
         $("#btnCertificateFilter").click((e) => {
             //get the input values
             let certificate_type = $("#selectFilterCertificateType option:selected").val();
@@ -333,6 +349,10 @@
                                 var metaContent = JSON.parse(dataObject[x]['meta']);
                                 var rootContent = dataObject[x];
                                 html+='<tr>'
+                                +'<!-- Record of -->'
+                                +'<td><label style="font-size: 9px;">First Name</label><br>'+rootContent['firstname']+'</td>'
+                                +'<td><label style="font-size: 9px;">Middle Name</label><br>'+rootContent['middlename']+'</td>'
+                                +'<td><label style="font-size: 9px;">Last Name</label><br>'+rootContent['lastname']+'</td>'
                                 +'<!-- Confirmation Date -->';
                                 var cmonth = metaContent['confirmation_month'];
                                 if(cmonth == null || cmonth == undefined || cmonth == NaN){
@@ -347,11 +367,7 @@
                                 }else{
                                     html+='<td>'+metaContent['date_issued']+'</td>';
                                 }
-                                html+='<!-- Record of -->'
-                                +'<td><label style="font-size: 9px;">First Name</label><br>'+rootContent['firstname']+'</td>'
-                                +'<td><label style="font-size: 9px;">Middle Name</label><br>'+rootContent['middlename']+'</td>'
-                                +'<td><label style="font-size: 9px;">Last Name</label><br>'+rootContent['lastname']+'</td>'
-                                +'<!-- Fathers Name -->'
+                                html+='<!-- Fathers Name -->'
                                 +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['father_firstname']+'</td>'
                                 +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['father_middlename']+'</td>'
                                 +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['father_lastname']+'</td>'
@@ -359,10 +375,6 @@
                                 +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['mother_firstname']+'</td>'
                                 +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['mother_middlename']+'</td>'
                                 +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['mother_lastname']+'</td>'
-                                +'<!-- First Sponsor -->'
-                                +'<td><label style="font-size: 9px;">Full Name</label><br>'+metaContent['first_sponsor']+'</td>'
-                                +'<!-- Second Sponsor -->'
-                                +'<td><label style="font-size: 9px;">Full Name</label><br>'+metaContent['second_sponsor']+'</td>'
                                 +'<!-- Confirmation by -->'
                                 +'<td>'+metaContent['confirmation_by']+'</td>'
                                 +'<!-- Registration Book Detail -->'
