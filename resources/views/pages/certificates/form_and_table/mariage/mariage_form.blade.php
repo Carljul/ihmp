@@ -254,8 +254,7 @@
 
         $("#marriage_date_issued").pickadate({
             selectMonths: true, // Creates a dropdown to control month
-            selectYears: 30, 
-            max: new Date()
+            selectYears: 30
         });
         
         // This will prevent the date picker from closing automatically

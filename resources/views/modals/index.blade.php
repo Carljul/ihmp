@@ -296,7 +296,7 @@
 
 <script>
     $(document).ready(function(){
-        $('#importExport').modal()[0].M_Modal.options.dismissible = false;
+        $('#importExport').modal({dismissible: false});
         $('.templateDownloadDropdown').material_select();
 
         // ------------------------------------------- CERTIFICATE FILTER (PRINT) ------------------------------------------- //

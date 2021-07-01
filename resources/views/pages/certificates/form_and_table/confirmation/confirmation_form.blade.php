@@ -73,7 +73,7 @@
                             <div class="row removeBottomMargin">
                                 <!-- Extract Date to three parts. -->
                                 <div class="input-field col s12 m6">
-                                    <input id="single_confirmation_date" type="text" class="validate datepicker" name="single_confirmation_date">
+                                    <input id="single_confirmation_date" type="text" class="datepicker" name="single_confirmation_date">
                                     <label for="single_confirmation_date">Confirmation Date</label>
                                 </div>
                                 
@@ -157,6 +157,19 @@
 
 <script>
     $('document').ready(function(){
+        // Calendars
+        $("#single_confirmation_date").pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 30,
+        });
+        $("#single_confirmation_date").on('mousedown',function(event){ event.preventDefault(); });
+        $("#single_conrfirmation_date_issued").pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 30,
+        });
+        $("#single_conrfirmation_date_issued").on('mousedown',function(event){ event.preventDefault(); });
+        
+
         // Adding or updating record
         $("#single_confirmation_form").on('submit', function(e){
             e.preventDefault();
