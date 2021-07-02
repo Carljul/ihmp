@@ -15,6 +15,7 @@ const at_valid = 'valid';
 
 /// ======================== Certificates
 const certificate_endpoint = api_server+'certificate';
+const certificate_priest_endpoint = api_server+'cerficatePriest';
 /// ======================== Priests
 const priest_endpoint = api_server+'priest';
 /// ======================== Templates

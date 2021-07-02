@@ -32,6 +32,7 @@ Route::resource('priest', 'PriestController');
 
 // controller for Certificate Model
 Route::resource('certificate', 'CertificateController');
+Route::put('cerficatePriest/{id}', 'CertificateController@updatePriest')->name("certificate.priest");
 
 // controller for Template Model
 Route::resource('template', 'TemplateController');

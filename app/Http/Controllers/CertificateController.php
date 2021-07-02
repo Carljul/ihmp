@@ -351,4 +351,34 @@ class CertificateController extends Controller
         return response()->json($this->customApiResponse($result, 202)); //DELETED
     }
 
+
+    /**
+     * Update Parish Priest for specific records only
+     *
+     * @param  \App\Certificate  $Certificate
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePriest(Request $request){
+        //creating our payload here...
+        $payload = [
+            "priest_id" => (int)$request->priest_id,
+            "created_by"=> (int)$request->created_by,
+            "updated_at" => $this->customCurrentDate()
+        ];
+
+        //update the resource...
+        $result = Certificate::find($request->id);
+
+        //if there is no existsing data to update
+        if(!$result){
+            //return json response
+            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
+        }
+
+        //then proceed with the update
+        $result->update($payload);
+
+        //return json response
+        return response()->json($this->customApiResponse($result, 200)); //OK
+    }
 }

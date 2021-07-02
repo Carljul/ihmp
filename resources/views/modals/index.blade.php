@@ -266,10 +266,35 @@
 
 
 <!-- Adding Priest -->
-<div id="addPriestModalForm" class="modal">
+<div id="assignPriestModalForm" class="modal modal-fixed-footer">
     <div class="modal-content">
-        <h4>Add Parish Priest</h4>
-        <p>Follow the Steps</p>
+        <h4>Assign Parish Priest</h4>
+        <div class="row">
+            <div class="col s12 m6">
+                <div id="paginationPriestDiv"></div>
+            </div>
+            <div class="col s12 m6">
+                <input type="search" class="btnSearchPriestInModal" placeholder="Search . . .">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <table class="striped">
+                    <thead>
+                        <tr>
+                            <th>Clergy Title</th>
+                            <th>First Name</th>
+                            <th>Middle Name</th>
+                            <th>Last Name</th>
+                            <th>Assign Priest</th>
+                        </tr>
+                    </thead>
+                    <tbody id="priestList">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Add Priest and Refresh Dropdown</a>

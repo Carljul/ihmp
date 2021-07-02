@@ -105,6 +105,156 @@ function ordinal_suffix_of(i) {
     return i + "th";
 }
 
+// ==================================== Priest
+function getPriestForModal(url, certificateId){
+    isTokenExist();
+    var AT = localStorage.getItem("AT");
+    checkTokenValidity(AT);
+
+    $.ajax({
+        type: 'GET',
+        url: url == "NA" ? priest_endpoint : url,
+        data: {'isIdSearch':false},
+        success: function(response){
+            var html = "";
+            var priestObject = response.data.data;
+            var prevPageURL = response.data.prev_page_url;
+            var nextPageURL = response.data.next_page_url;
+            var path = response.data.path;
+            var currentPage = response.data.current_page;
+            var lastPage = response.data.last_page;
+            var pageHtml = `<ul class="pagination">
+                            <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPagination ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}"><i class="material-icons">chevron_left</i></a></li>`;
+            
+            if(response.data.length !== 0){
+                for(var x = 0; x < priestObject.length; x++){
+                    html += "<tr>"
+                    +"<td>"+priestObject[x]['prefix']+"</td>"
+                    +"<td>"+priestObject[x]['firstname']+"</td>"
+                    +"<td>"+priestObject[x]['middlename']+"</td>"
+                    +"<td>"+priestObject[x]['lastname']+"</td>"
+                    +"<td>"
+                        +"<button class='btn btn-wave btnAssign' id='btnAssign-"+priestObject[x]['id']+"'><i class='material-icons'>check</i></button>"
+                    +"</td>"
+                    +"</tr>";
+                }
+            }else{
+                html += "<tr>"
+                            +"<td colspan='5' class='center'> No records found</td>"
+                        +"</tr>";
+            }
+
+            if(lastPage > 1){
+                if(currentPage > 2){
+                    pageHtml += `<li class="waves-effect"><a class="btnPagination" url="${path + "?page=" + 1}">${1}...</a></li>`;
+                }
+                for(let i = currentPage - 1; i < (currentPage - 1 )+3; i++){
+                    if(currentPage != lastPage){
+                        if(currentPage == parseInt(i+1)){
+                            pageHtml += `<li class="active"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}">${currentPage}</a></li>`;
+                        }else{
+                            if(parseInt(i+1) >= lastPage){
+
+                            }else{
+                                pageHtml += `<li class="waves-effect"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}">${i+1}</a></li>`;
+                            }
+                        }
+                    }else{
+                        pageHtml += `<li class="waves-effect"><a class="btnPagination" url="${path + "?page=" + i}">${i}</a></li>`;
+                        break;
+                    }
+                }
+                pageHtml += `<li class="waves-effect ${lastPage == currentPage ? "active":""}"><a class="btnPagination" url="${path + "?page=" + lastPage}">... up to ${lastPage}</a></li>`;
+                pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPagination ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>`;
+                //display the pagination
+                $("#paginationPriestDiv").html(pageHtml);
+            }
+
+            //display the data to table
+            $("#priestList").html(html);
+
+            /// Update Priest
+            $(".btnAssign").on("click",function(){
+                var priestId = $(this).attr("id").substr('btnAssign-'.length);
+                showToAssignPriest(priestId, certificateId);
+            });
+
+            // DT: pagination button here...
+            $(document).on('click', '.btnPagination', function(){
+                let url = $(this).attr("url");
+                let status = $(this).attr("class").split(" ")[1];
+                if(status != "disabled"){
+                    getPriestForModal(url, certificateId);
+                }
+            });
+
+
+        },error: function(e){
+            $('#modalSysError').modal('open');
+        }
+    });
+
+    function showToAssignPriest(priestId, certificateId){
+        isTokenExist();
+        var AT = localStorage.getItem("AT");
+        checkTokenValidity(AT);
+        
+        var delagatedId = parseInt(localStorage.getItem('delegatedUser'));
+        var delegated_user = AT.substring(delagatedId+1, AT.length);
+
+
+        if(priestId == undefined || priestId == null){
+            $('#modalSysError').modal('open');
+        }else{
+            $.ajax({
+                type: "GET",
+                url: priest_endpoint+"/"+priestId,
+                data: {'isIdSearch':true},
+                success: function(response){
+                    if(response.status >= 200 && response.status < 400){
+                        var payload = {
+                            "priest_id": priestId,
+                            "created_by": delegated_user
+                        };
+
+                        // Update Records priest
+                        $.ajax({
+                            type: "PUT",
+                            url: certificate_priest_endpoint+"/"+certificateId,
+                            data: payload,
+                            success: function(response){
+                                if(response.status >= 200 && response.status < 400){
+                                    $("#assignPriestModalForm").modal('close');
+                                    printConfirmationCertificate(certificateId);
+                                    var selectedTable = localStorage.getItem('defaultTable');
+                                    if(selectedTable == "confirmation"){
+                                        getConfirmationList("NA");
+                                    }else if(selectedTable == "marriage"){
+                                        getBirthList("NA");
+                                    }else if(selectedTable == "birth"){
+                                        getMarriageList("NA");
+                                    }else if(selectedTable == "death"){
+                                        getDeathList("NA");
+                                    }
+                                }else {
+                                    Materialize.toast('Something Went Wrong:: '+JSON.stringify(response.message), 5000, 'red rounded');
+                                }
+                            }, error: function(e){
+                                Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
+                            }
+                        });
+                    }else{
+                        Materialize.toast('Something Went Wrong:: '+JSON.stringify(response.message), 5000, 'red rounded');
+                    }
+                }, error: function(e){
+                    Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
+                }
+            });
+        }
+    }
+}
+
 // ==================================== Certificates
 
 // Confirmation
@@ -245,18 +395,6 @@ function getConfirmationList(url){
         }
     });
 
-
-    function printConfirmationCertificate(certificateId){
-        isTokenExist();
-        var AT = localStorage.getItem("AT");
-        checkTokenValidity(AT);
-
-        if(certificateId == undefined || certificateId == null){
-            $('#modalSysError').modal('open');
-        }else{
-        }
-
-    }
 
     function showToUpdateConfirmationCertificate(certificateId){
         console.log('certificateId:: ',certificateId);
@@ -437,6 +575,53 @@ function getConfirmationList(url){
 
     }
 }
+
+
+function printConfirmationCertificate(certificateId){
+    alert('Test');
+    isTokenExist();
+    var AT = localStorage.getItem("AT");
+    checkTokenValidity(AT);
+
+    if(certificateId == undefined || certificateId == null){
+        $('#modalSysError').modal('open');
+    }else{
+        $.ajax({
+            type: "GET",
+            url: certificate_endpoint+"/"+certificateId,
+            data: {'certificate_type':'confirmation', 'isIdSearch':'true'},
+            success: function(response){
+                if(response.status >= 200 && response.status < 400){
+                    var rootContent = response.data[0];
+                    // Check if Priest ID is empty
+                    if(rootContent['priest_id'] == null){
+                        if (confirm('This certificate has no parish priest as of the moment\nDo you want to set it first before printing it?')) {
+                            // Call API
+                            getPriestForModal("NA", certificateId);
+                            // Assign priest then recall print
+                            $("#assignPriestModalForm").modal('open');
+                        } else {
+                            alert('else print automatically');
+                        }
+                    }else{
+                        printCertificate('Test');
+                    }
+
+                    function printCertificate(data){
+                        // Print automatically
+                        print();
+                    }
+                }else{
+                    Materialize.toast('Something Went Wrong:: '+JSON.stringify(response.message), 5000, 'red rounded');
+                }
+            }, error: function(e){
+                Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
+            }
+        });
+    }
+
+}
+
 
 // DT: pagination button here...
 // Pagination For Confirmation

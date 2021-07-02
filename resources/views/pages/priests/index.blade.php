@@ -386,7 +386,7 @@
                         data: {'isIdSearch':true},
                         success: function(response){
                             var data = response.data.data;
-                            if(response.status == 200){
+                            if(response.status >= 200 & response.status < 400){
                                 $('#prefix').val(data[0].prefix);
                                 $("label[for='prefix']").addClass('active');
                                 $('#firstname').val(data[0].firstname);
@@ -400,22 +400,10 @@
                                 $('#priestFormHeader').html('Update Priest');
                                 $('#cancelPriestUpdate').removeClass('hide');
                             }else{
-                                var html = "";
-                                html += "<h5>Something went wrong!</h5>"
-                                +""+response.message+"";
-                                $('#modalSysError').modal('open');
-                                $(".errMessage").addClass('hide');
-                                $('.customMessage').html(html);
-                                $(".customMessage").removeClass('hide');
+                                Materialize.toast('Something Went Wrong:: '+JSON.stringify(response.message), 5000, 'red rounded');
                             }
                         }, error: function(e){
-                            var html = "";
-                            html += "<h5>Something went wrong!</h5>"
-                            +""+e.message+"";
-                            $('#modalSysError').modal('open');
-                            $(".errMessage").addClass('hide');
-                            $('.customMessage').html(html);
-                            $(".customMessage").removeClass('hide');
+                            Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
                         }
                     });
                 }
