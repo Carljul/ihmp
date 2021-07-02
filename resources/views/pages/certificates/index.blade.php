@@ -172,7 +172,7 @@
             var selectedOption = $(this).val();
             if(selectedOption == 'special'){
                 $('.priest_select_dropdown').val('');
-                $("#addPriestModalForm").modal('open');
+                location.href="/priest";
             }
         });
 
@@ -246,6 +246,11 @@
                 return false;
             }
         }
+
+        // Clear the import field
+        $("#importCSV").on('click', function(e){
+            $("#importCSV").val('');
+        });
 
         // Uploading Data to Html
         $("#importCSV").change(function(e) {
@@ -412,6 +417,42 @@
                             delegated_user
                         );
                     }else if(getCert == "marriage"){
+                        validateAllFieldsAndCreatePayloadForMarriage(
+                            x,
+                            splitRecord[0], //husband_firstname,
+                            splitRecord[0], //husband_middlename,
+                            splitRecord[0], //husband_lastname,
+                            splitRecord[0], //husband_age,
+                            splitRecord[0], //husband_civil_status,
+                            splitRecord[0], //husband_birthdate,
+                            splitRecord[0], //husband_birth_place,
+                            splitRecord[0], //husband_residence,
+                            splitRecord[0], //husband_baptismdate,
+                            splitRecord[0], //husband_fathersname,
+                            splitRecord[0], //husband_mothersname,
+                            splitRecord[0], //husband_first_witness,
+                            splitRecord[0], //husband_second_witness,
+                            splitRecord[0], //wife_firstname,
+                            splitRecord[0], //wife_middlename,
+                            splitRecord[0], //wife_lastname,
+                            splitRecord[0], //wife_age,
+                            splitRecord[0], //wife_civil_status,
+                            splitRecord[0], //wife_birthdate,
+                            splitRecord[0], //wife_birthplace,
+                            splitRecord[0], //wife_residence,
+                            splitRecord[0], //wife_baptismdate,
+                            splitRecord[0], //wife_fathersname,
+                            splitRecord[0], //wife_mothersname,
+                            splitRecord[0], //wife_firstwitness,
+                            splitRecord[0], //wife_secondwitness,
+                            splitRecord[0], //marriage_place,
+                            splitRecord[0], //marriage_date,
+                            splitRecord[0], //solemnized_by,
+                            splitRecord[0], //marriage_number,
+                            splitRecord[0], //marriage_page,
+                            splitRecord[0], //marriage_line,
+                            delegated_user,
+                        );
                     }else if(getCert == "birth"){
                         validateAllFieldsAndCreatePayloadForBirth(
                             x,
@@ -438,7 +479,24 @@
                             delegated_user, // delegated_user,
                         );
                     }else if(getCert == "death"){
-                        
+                        validateAllFieldsAndCreatePayloadForDeath(
+                            x,
+                            splitRecord[0], //death_firstname,
+                            splitRecord[1], // death_middlename,
+                            splitRecord[2], //death_lastname,
+                            splitRecord[3], //death_age,
+                            splitRecord[4], //death_residence,
+                            splitRecord[5], //date_of_death,
+                            splitRecord[6], //death_place_of_burial,
+                            splitRecord[7], //date_of_burial,
+                            splitRecord[7], //death_informant,
+                            splitRecord[8], //death_book_number,
+                            splitRecord[9], //death_page_number,
+                            splitRecord[10], //death_registry_number,
+                            splitRecord[11], //death_date_issued,
+                            0,
+                            delegated_user
+                        );
                     }
                 }
                 
@@ -649,103 +707,174 @@
         // will validate all fields for Marriage
         function validateAllFieldsAndCreatePayloadForMarriage(
             row,
-            birth_first_name,
-            birth_middle_name,
-            birth_last_name,
-            birth_born_on,
-            birth_born_in,
-            birth_father_first_name,
-            birth_father_middle_name,
-            birth_father_last_name,
-            birth_mothers_first_name,
-            birth_father_middle_name,
-            birth_mother_last_name,
-            birth_resident_of,
-            birth_godparents,
-            birth_baptismal_register,
-            birth_volume,
-            birth_page,
-            birth_date_issued,
-            birth_parish_priest,
-            birth_baptism_date,
-            birth_minister,
+            husband_firstname,
+            husband_middlename,
+            husband_lastname,
+            husband_age,
+            husband_civil_status,
+            husband_birthdate,
+            husband_birth_place,
+            husband_residence,
+            husband_baptismdate,
+            husband_fathersname,
+            husband_mothersname,
+            husband_first_witness,
+            husband_second_witness,
+            wife_firstname,
+            wife_middlename,
+            wife_lastname,
+            wife_age,
+            wife_civil_status,
+            wife_birthdate,
+            wife_birthplace,
+            wife_residence,
+            wife_baptismdate,
+            wife_fathersname,
+            wife_mothersname,
+            wife_firstwitness,
+            wife_secondwitness,
+            marriage_place,
+            marriage_date,
+            solemnized_by,
+            marriage_number,
+            marriage_page,
+            marriage_line,
             delegated_user,
         ){
             /// Validate for all empty rows
             if(
-                birth_first_name == null || birth_first_name == undefined || birth_first_name == "" ||
-                birth_middle_name == null || birth_middle_name == undefined || birth_middle_name == "" ||
-                birth_last_name == null || birth_last_name == undefined || birth_last_name == "" ||
-                birth_born_on == null || birth_born_on == undefined || birth_born_on == "" ||
-                birth_baptism_date == null || birth_baptism_date == undefined || birth_baptism_date == ""||
-                birth_minister == null || birth_minister == undefined || birth_minister == ""
+                husband_firstname == null || husband_firstname == undefined || husband_firstname == "" ||
+                husband_middlename == null || husband_middlename == undefined || husband_middlename == "" ||
+                husband_lastname == null || husband_lastname == undefined || husband_lastname == "" ||
+                isNaN(Date.parse(husband_birthdate)) ||
+                isNaN(Date.parse(husband_baptismdate)) ||
+                wife_firstname == null || wife_firstname == undefined || wife_firstname == "" ||
+                wife_middlename == null || wife_middlename == undefined || wife_middlename == ""||
+                wife_lastname == null || wife_lastname == undefined || wife_lastname == "" ||
+                isNaN(Date.parse(wife_baptismdate)) ||
+                isNaN(Date.parse(wife_birthdate)) ||
+                isNaN(Date.parse(marriage_date))
             ){
                 emptyRowsImportConfirmation.push(row);
-            }else{
-                
-                if(
-                    isNaN(Date.parse(birth_born_on)) ||
-                    isNaN(Date.parse(birth_date_issued)) ||
-                    isNaN(Date.parse(birth_date_issued))
-                ){
-                    emptyRowsImportConfirmation.push(row);
-                }else{
-                    var payloadToCreate;
-                    birth_date_issued = new Date(birth_date_issued);
-                    birth_born_on = new Date(birth_born_on);
-                    birth_baptism_date = new Date(birth_baptism_date);
-                    var metaContent = {
-                        // "husband_firstname":husband_firstname,
-                        // "husband_middlename":husband_middlename,
-                        // "husband_lastname":husband_lastname,
-                        // "husband_age":husband_age,
-                        // "husband_civil_status":husband_civil_status,
-                        // "husband_birthdate":(husband_birth_date.getMonth()+1)+"/"+husband_birth_date.getDate()+"/"+husband_birth_date.getFullYear(),
-                        // "husband_birthplace":husband_birth_place,
-                        // "husband_residence":husband_residence,
-                        // "husband_baptismdate":(husband_baptism_date.getMonth()+1)+"/"+husband_baptism_date.getDate()+"/"+husband_baptism_date.getFullYear(),
-                        // "husband_fathersname":husband_fathers_name,
-                        // "husband_mothersname":husband_mothers_name,
-                        // "husband_firstwitness":husband_first_witness,
-                        // "husband_secondwitness":husband_second_witness,
-                        // "wife_firstname":wife_firstname,
-                        // "wife_middlename":wife_middlename,
-                        // "wife_lastname":wife_lastname,
-                        // "wife_age":wife_age,
-                        // "wife_civil_status":wife_civil_status,
-                        // "wife_birthdate":(wife_birth_date.getMonth()+1)+"/"+wife_birth_date.getDate()+"/"+wife_birth_date.getFullYear(),
-                        // "wife_birthplace":wife_birth_place,
-                        // "wife_residence":wife_residence,
-                        // "wife_baptismdate":(wife_baptism_date.getMonth()+1)+"/"+wife_baptism_date.getDate()+"/"+wife_baptism_date.getFullYear(),
-                        // "wife_fathersname":wife_fathers_name,
-                        // "wife_mothersname":wife_mothers_name,
-                        // "wife_firstwitness":wife_first_witness,
-                        // "wife_secondwitness":wife_second_witness,
-                        // "marriage_place":marraige_place,
-                        // "wife_baptismdate":(wife_baptism_date.getMonth()+1)+"/"+wife_baptism_date.getDate()+"/"+wife_baptism_date.getFullYear(),
-                        // "marriage_date":(marriage_date.getMonth()+1)+"/"+marriage_date.getDate()+"/"+marriage_date.getFullYear(),
-                        // "solemnized_by":marraige_solemnized_by,
-                        // "marriage_number":marriage_no,
-                        // "marriage_page":marriage_page,
-                        // "marriage_line":marriage_line,
-                        // "marriage_day":marriage_date_issued.getDate(),
-                        // "marriage_month":marriage_date_issued.getMonth()+1,
-                        // "marriage_year":marriage_date_issued.getFullYear(),
-                    };
-                    payloadToCreate = {
-                        "firstname": birth_first_name,
-                        "middlename": birth_middle_name,
-                        "lastname": birth_last_name,
-                        "certificate_type": "baptism",
-                        "priest_id": birth_parish_priest == null ? 0:birth_parish_priest,
-                        "meta": JSON.stringify(metaContent),
-                        "created_by": delegated_user,
-                    };
-                    rowsWithValueImportConfirmation.push({
-                        "row": row,
-                        "payload": payloadToCreate,
-                    });
-                }
+            }else{                
+                var payloadToCreate;
+                husband_birth_date = new Date(husband_birth_date);
+                husband_baptism_date = new Date(husband_baptism_date);
+                wife_birth_date = new Date(wife_birth_date);
+                wife_baptism_date = new Date(wife_baptism_date);
+                marriage_date = new Date(marriage_date);
+                var metaContent = {
+                    "husband_firstname":husband_firstname,
+                    "husband_middlename":husband_middlename,
+                    "husband_lastname":husband_lastname,
+                    "husband_age":husband_age,
+                    "husband_civil_status":husband_civil_status,
+                    "husband_birthdate":(husband_birth_date.getMonth()+1)+"/"+husband_birth_date.getDate()+"/"+husband_birth_date.getFullYear(),
+                    "husband_birthplace":husband_birth_place,
+                    "husband_residence":husband_residence,
+                    "husband_baptismdate":(husband_baptism_date.getMonth()+1)+"/"+husband_baptism_date.getDate()+"/"+husband_baptism_date.getFullYear(),
+                    "husband_fathersname":husband_fathers_name,
+                    "husband_mothersname":husband_mothers_name,
+                    "husband_firstwitness":husband_first_witness,
+                    "husband_secondwitness":husband_second_witness,
+                    "wife_firstname":wife_firstname,
+                    "wife_middlename":wife_middlename,
+                    "wife_lastname":wife_lastname,
+                    "wife_age":wife_age,
+                    "wife_civil_status":wife_civil_status,
+                    "wife_birthdate":(wife_birth_date.getMonth()+1)+"/"+wife_birth_date.getDate()+"/"+wife_birth_date.getFullYear(),
+                    "wife_birthplace":wife_birth_place,
+                    "wife_residence":wife_residence,
+                    "wife_baptismdate":(wife_baptism_date.getMonth()+1)+"/"+wife_baptism_date.getDate()+"/"+wife_baptism_date.getFullYear(),
+                    "wife_fathersname":wife_fathers_name,
+                    "wife_mothersname":wife_mothers_name,
+                    "wife_firstwitness":wife_first_witness,
+                    "wife_secondwitness":wife_second_witness,
+                    "marriage_place":marraige_place,
+                    "marriage_date":(marriage_date.getMonth()+1)+"/"+marriage_date.getDate()+"/"+marriage_date.getFullYear(),
+                    "solemnized_by":marraige_solemnized_by,
+                    "marriage_number":marriage_no,
+                    "marriage_page":marriage_page,
+                    "marriage_line":marriage_line,
+                    "marriage_day":marriage_date_issued.getDate(),
+                    "marriage_month":marriage_date_issued.getMonth()+1,
+                    "marriage_year":marriage_date_issued.getFullYear(),
+                };
+                payloadToCreate = {
+                    "firstname": husband_firstname,
+                    "middlename": husband_middlename,
+                    "lastname": husband_lastname,
+                    "certificate_type": "marriage",
+                    "priest_id": 0,
+                    "meta": JSON.stringify(metaContent),
+                    "created_by": delegated_user,
+                };
+                rowsWithValueImportConfirmation.push({
+                    "row": row,
+                    "payload": payloadToCreate,
+                });
+            }
+        }
+
+        // will validate all fields for Death
+        function validateAllFieldsAndCreatePayloadForDeath(
+            row,
+            death_firstname,
+            death_middlename,
+            death_lastname,
+            death_age,
+            death_residence,
+            date_of_death,
+            death_place_of_burial,
+            date_of_burial,
+            death_informant,
+            death_book_number,
+            death_page_number,
+            death_registry_number,
+            death_date_issued,
+            delegated_user,
+        ){
+            /// Validate for all empty rows
+            if(
+                death_firstname == null || death_firstname == undefined || death_firstname == "" ||
+                death_middlename == null || death_middlename == undefined || death_middlename == "" ||
+                death_lastname == null || death_lastname == undefined || death_lastname == "" ||
+                isNaN(Date.parse(date_of_death)) ||
+                isNaN(Date.parse(date_of_burial)) ||
+                isNaN(Date.parse(death_date_issued))
+            ){
+                emptyRowsImportConfirmation.push(row);
+            }else{                
+                var payloadToCreate;
+                date_of_death = new Date(date_of_death);
+                date_of_burial = new Date(date_of_burial);
+                death_date_issued = new Date(death_date_issued);
+                var metaContent = {
+                    "deceased_name":death_firstname+" "+death_middlename+" "+death_lastname,
+                    "age":death_age,
+                    "residence":death_residence,
+                    "date_of_death":(date_of_death.getMonth()+1)+"/"+date_of_death.getDate()+"/"+date_of_death.getFullYear(),
+                    "place_of_burial":death_place_of_burial,
+                    "date_of_burial":(date_of_burial.getMonth()+1)+"/"+date_of_burial.getDate()+"/"+date_of_burial.getFullYear(),
+                    "informant_or_relatives":death_informant,
+                    "book_number":death_book_number,
+                    "page_number":death_page_number,
+                    "registry_number":death_registry_number,
+                    "date_issued":(death_date_issued.getMonth()+1)+"/"+death_date_issued.getDate()+"/"+death_date_issued.getFullYear(),
+                };
+                payloadToCreate = {
+                    "firstname": death_firstname,
+                    "middlename": death_middlename,
+                    "lastname": death_lastname,
+                    "certificate_type": "death",
+                    "priest_id": 0,
+                    "meta": JSON.stringify(metaContent),
+                    "created_by": delegated_user,
+                };
+                rowsWithValueImportConfirmation.push({
+                    "row": row,
+                    "payload": payloadToCreate,
+                });
             }
         }
 

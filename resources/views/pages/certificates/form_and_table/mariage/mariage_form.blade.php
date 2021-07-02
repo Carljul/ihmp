@@ -366,7 +366,6 @@
                         "wife_firstwitness":wife_first_witness,
                         "wife_secondwitness":wife_second_witness,
                         "marriage_place":marraige_place,
-                        "wife_baptismdate":(wife_baptism_date.getMonth()+1)+"/"+wife_baptism_date.getDate()+"/"+wife_baptism_date.getFullYear(),
                         "marriage_date":(marriage_date.getMonth()+1)+"/"+marriage_date.getDate()+"/"+marriage_date.getFullYear(),
                         "solemnized_by":marraige_solemnized_by,
                         "marriage_number":marriage_no,
