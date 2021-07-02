@@ -2,6 +2,6 @@ Marriage Template,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 All fields columns that has an asterisk(*) in their column header is important and should not be leave as blank,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Important Note: Assinged Parish Priest will not be inclued in import,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 All Date Columns should have this date format Example: 11/12/2021 (Month/Date/Year),,,,,,,,,,,,,,,,,,,,,,,,,,,,
-You may leave fields that are not applicable except for the field that has asterisk on it,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+"Civil Status should only save the followings (Single, Widowed, Divorced)",,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Do not edit above content,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Husband First Name *,Husband Middle Name *,Husband Last Name *,Husband Civil Status*,Husband Birth Date *,Husband Birth Place *,Husband Resident of,Husband Fathers Name,Husband Mothers Name,Husband First Witness,Husband Second Witness,Wife First Name *,Wife Middle Name *,Wife Last Name *,Wife Civil Status*,Wife Birth Date *,Wife Birth Place *,Wife Resident of,Wife Fathers Name,Wife  Mothers Name,Wife First Witness,Wife Second Witness,Place of Marriage *,Date of Marriage *,Solemnized By *,Marriages No.,Page,Line,Date Issued
