@@ -646,8 +646,8 @@
             }
         }
         
-        // will validate all fields for birth
-        function validateAllFieldsAndCreatePayloadForBirth(
+        // will validate all fields for Marriage
+        function validateAllFieldsAndCreatePayloadForMarriage(
             row,
             birth_first_name,
             birth_middle_name,
