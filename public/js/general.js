@@ -309,6 +309,9 @@ function printCertificate(personData){
                         // book_number
                         var book_number = metaContent['book_number'];
                         printContent = printContent.replaceAll('cert_no',book_number);
+                        // date_issue
+                        var date_issued = metaContent['date_issued'];
+                        printContent = printContent.replaceAll('date_issue',date_issued);
                         
                     }else if(personData.certificate_type == 'marriage'){
                         alert('m1');
