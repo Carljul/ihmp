@@ -73,12 +73,12 @@ $(document).on('keydown', '#searchARecord', function(e){
                 //set the url to be returned
                 let url = certificate_endpoint+"/"+val+"?certificate_type=marriage";
                 //then recall the function for calling the api
-                getBirthList(url);
+                getMarriageList(url);
             }else if(selectedTable == "birth"){
                 //set the url to be returned
                 let url = certificate_endpoint+"/"+val+"?certificate_type=baptism";
                 //then recall the function for calling the api
-                getMarriageList(url);
+                getBirthList(url);
             }else if(selectedTable == "death"){
                 //set the url to be returned
                 let url = certificate_endpoint+"/"+val+"?certificate_type=death";
@@ -268,7 +268,6 @@ function printCertificate(personData){
                 if(response.data.data.length > 0){
                     // Edit Content before adding to print functionality
                     var printContent = response.data.data[0]['content'];
-                    console.log(personData['content']);
                     // condition to certificate to insert contents of user
                     if(personData.certificate_type == 'confirmation'){
                         // Full name
@@ -363,7 +362,6 @@ function printTypeCertificate(certificateId, certificate_type){
                             "<h5><b>Set Parish Priest</b></h5>This record has no parish priest set as of the moment<br>Do you want to set it first before printing?",
                             { okText: "Yes", cancelText: "No", theme: "modal_flat"}).
                             then(function(args) { 
-                                console.log(args.result);
                                 // This means user clicks No
                                 if(args.result == undefined){
                                     var payload = {
@@ -409,127 +407,122 @@ function getConfirmationList(url){
         url: url == "NA" ? certificate_endpoint+"?certificate_type=confirmation" : url,
         success: function(response){
             var certificateType = 'confirmation';
-            if(response.status >= 200 && response.status < 400){
-                var html = "";
-                var confirmationObject = response.data.data;
+            var html = "";
 
-                if(confirmationObject.length == 0){
-                    html+= "<tr>"
-                    +"<td colspan='21'>No Records Yet</td>"
-                    +"</tr>";
-                    $("#confirmationListTable").html(html);
-                }else{
-                    var prevPageURL = response.data.prev_page_url;
-                    var nextPageURL = response.data.next_page_url;
-                    var path = response.data.path;
-                    var currentPage = response.data.current_page;
-                    var lastPage = response.data.last_page;
-                    var pageHtml = `<ul class="pagination">
-                                    <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginateConfirmation ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
-                    for(var x = 0; x < confirmationObject.length; x++){
-                        var metaContent = JSON.parse(confirmationObject[x]['meta']);
-                        var rootContent = confirmationObject[x];
-                        html+='<tr>'
-                        +'<!-- Actions -->'
-                        +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintCCertificate" id="btnPrintCCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
-                        +'<td><button class="btn waves-effect btn-actions green tooltipped btnUpdateCCertificate" id="btnUpdateCCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Update Record"><i class="material-icons">edit</i></button></td>'
-                        +'<td><button class="btn waves-effect btn-actions red tooltipped btnDeleteCCertificate" id="btnDeleteCCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
-                        +'<!-- Confirmation Date -->';
-                        
-                        html+='<!-- Record of -->'
-                        +'<td><label style="font-size: 9px;">First Name</label><br>'+rootContent['firstname']+'</td>'
-                        +'<td><label style="font-size: 9px;">Middle Name</label><br>'+rootContent['middlename']+'</td>'
-                        +'<td><label style="font-size: 9px;">Last Name</label><br>'+rootContent['lastname']+'</td>'
-                        +'<!-- Fathers Name -->';
-                        var cmonth = metaContent['confirmation_month'];
-                        if(cmonth == null || cmonth == undefined || cmonth == NaN){
-                            html+='<td>Not Set</td>';
-                        }else{
-                            html+='<td>'+metaContent['confirmation_month']+'/'+metaContent['confirmation_day']+'/'+metaContent['confirmation_year']+'</td>';
-                        }
-                        html+='<!-- Date Issued -->';
-                        var dissued = metaContent['date_issued'];
-                        if(dissued == 'NaN/NaN/NaN'){
-                            html+='<td>Not Set</td>';
-                        }else{
-                            html+='<td>'+metaContent['date_issued']+'</td>';
-                        }
-                        html+='<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['father_firstname']+'</td>'
-                        +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['father_middlename']+'</td>'
-                        +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['father_lastname']+'</td>'
-                        +'<!-- Mothers Name -->'
-                        +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['mother_firstname']+'</td>'
-                        +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['mother_middlename']+'</td>'
-                        +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['mother_lastname']+'</td>'
-                        +'<!-- First Sponsor -->'
-                        +'<td><label style="font-size: 9px;">Full Name</label><br>'+metaContent['first_sponsor']+'</td>'
-                        +'<!-- Second Sponsor -->'
-                        +'<td><label style="font-size: 9px;">Full Name</label><br>'+metaContent['second_sponsor']+'</td>'
-                        +'<!-- Confirmation by -->'
-                        +'<td>'+metaContent['confirmation_by']+'</td>'
-                        +'<!-- Registration Book Detail -->'
-                        +'<td><label style="font-size: 9px;">Registration Book</label><br>'+metaContent['registration_book']+'</td>'
-                        +'<td><label style="font-size: 9px;">Book Page</label><br>'+metaContent['book_page']+'</td>'
-                        +'<td><label style="font-size: 9px;">Book Number</label><br>'+metaContent['book_number']+'</td>'
-                        
-                        var pname = rootContent['priest_fname'];
-                        if(pname == null || pname == undefined || pname == NaN){
-                            html+='<td>Not Set</td>';
-                        }else{
-                            html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+rootContent['priest_mname']+' '+rootContent['priest_lname']+'</td>';
-                        }
-                        html+='</tr>';
-                    }
-                    if(lastPage > 1){
-                        generatePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
-                    }
-                }
-
+            if(response.data.length == 0){
+                html+= "<tr>"
+                +"<td colspan='21'>No Records Matched.</td>"
+                +"</tr>";
                 $("#confirmationListTable").html(html);
-                $('.tooltipped').tooltip({delay: 50});
-
-                /// Print Confirmation Certificate
-                $(".btnPrintCCertificate").on('click', function(e){
-                    e.preventDefault();
-                    var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
-                    printTypeCertificate(certificateId, 'confirmation');
-                });
-
-                /// Update Confirmation Certificate
-                $(".btnUpdateCCertificate").on('click', function(e){
-                    e.preventDefault();
-                    var certificateId = $(this).attr("id").substr('btnUpdateCCertificate-'.length);
-                    showToUpdateConfirmationCertificate(certificateId, $(this).attr("id"));
-                });
-
-                /// Delete Confirmation Certificate
-                $(".btnDeleteCCertificate").on("click",function(){
-                    var certificateId = $(this).attr("id").substr('btnDeleteCCertificate-'.length);
-                    
-                    $('#single_confirmation_form').find('input:text, input:password, select')
-                    .each(function () {
-                        $(this).val('');
-                    });
-                    $('#single_confirmation_form').find('input:hidden')
-                    .each(function () {
-                        $(this).val(0);
-                    });
-                    $('#single_confirmation_form').find('label')
-                    .each(function () {
-                        $(this).removeClass('active');
-                    });
-                    $('#single_confirmation_parish_priest').material_select();
-                    $(".btnCancelConfirmationUpdate").addClass('hide');
-                    
-                    // update Form Title
-                    $(".headerConfirmation").html('Add Confirmation');
-
-                    deleteConfirmationCertificate(certificateId);
-                });
             }else{
-                Materialize.toast('Something Went Wrong:: '+JSON.stringify(response.message), 5000, 'red rounded');
-                console.log('["Confirmation Status"]: '+response.status);
+                var confirmationObject = response.data.data;
+                var prevPageURL = response.data.prev_page_url;
+                var nextPageURL = response.data.next_page_url;
+                var path = response.data.path;
+                var currentPage = response.data.current_page;
+                var lastPage = response.data.last_page;
+                var pageHtml = `<ul class="pagination">
+                                <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginateConfirmation ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
+                for(var x = 0; x < confirmationObject.length; x++){
+                    var metaContent = JSON.parse(confirmationObject[x]['meta']);
+                    var rootContent = confirmationObject[x];
+                    html+='<tr>'
+                    +'<!-- Actions -->'
+                    +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintCCertificate" id="btnPrintCCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
+                    +'<td><button class="btn waves-effect btn-actions green tooltipped btnUpdateCCertificate" id="btnUpdateCCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Update Record"><i class="material-icons">edit</i></button></td>'
+                    +'<td><button class="btn waves-effect btn-actions red tooltipped btnDeleteCCertificate" id="btnDeleteCCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
+                    +'<!-- Confirmation Date -->';
+                    
+                    html+='<!-- Record of -->'
+                    +'<td><label style="font-size: 9px;">First Name</label><br>'+rootContent['firstname']+'</td>'
+                    +'<td><label style="font-size: 9px;">Middle Name</label><br>'+rootContent['middlename']+'</td>'
+                    +'<td><label style="font-size: 9px;">Last Name</label><br>'+rootContent['lastname']+'</td>'
+                    +'<!-- Fathers Name -->';
+                    var cmonth = metaContent['confirmation_month'];
+                    if(cmonth == null || cmonth == undefined || cmonth == NaN){
+                        html+='<td>Not Set</td>';
+                    }else{
+                        html+='<td>'+metaContent['confirmation_month']+'/'+metaContent['confirmation_day']+'/'+metaContent['confirmation_year']+'</td>';
+                    }
+                    html+='<!-- Date Issued -->';
+                    var dissued = metaContent['date_issued'];
+                    if(dissued == 'NaN/NaN/NaN'){
+                        html+='<td>Not Set</td>';
+                    }else{
+                        html+='<td>'+metaContent['date_issued']+'</td>';
+                    }
+                    html+='<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['father_firstname']+'</td>'
+                    +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['father_middlename']+'</td>'
+                    +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['father_lastname']+'</td>'
+                    +'<!-- Mothers Name -->'
+                    +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['mother_firstname']+'</td>'
+                    +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['mother_middlename']+'</td>'
+                    +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['mother_lastname']+'</td>'
+                    +'<!-- First Sponsor -->'
+                    +'<td><label style="font-size: 9px;">Full Name</label><br>'+metaContent['first_sponsor']+'</td>'
+                    +'<!-- Second Sponsor -->'
+                    +'<td><label style="font-size: 9px;">Full Name</label><br>'+metaContent['second_sponsor']+'</td>'
+                    +'<!-- Confirmation by -->'
+                    +'<td>'+metaContent['confirmation_by']+'</td>'
+                    +'<!-- Registration Book Detail -->'
+                    +'<td><label style="font-size: 9px;">Registration Book</label><br>'+metaContent['registration_book']+'</td>'
+                    +'<td><label style="font-size: 9px;">Book Page</label><br>'+metaContent['book_page']+'</td>'
+                    +'<td><label style="font-size: 9px;">Book Number</label><br>'+metaContent['book_number']+'</td>'
+                    
+                    var pname = rootContent['priest_fname'];
+                    if(pname == null || pname == undefined || pname == NaN){
+                        html+='<td>Not Set</td>';
+                    }else{
+                        html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+rootContent['priest_mname']+' '+rootContent['priest_lname']+'</td>';
+                    }
+                    html+='</tr>';
+                }
+                if(lastPage > 1){
+                    generatePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                }
             }
+
+            $("#confirmationListTable").html(html);
+            $('.tooltipped').tooltip({delay: 50});
+
+            /// Print Confirmation Certificate
+            $(".btnPrintCCertificate").on('click', function(e){
+                e.preventDefault();
+                var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
+                printTypeCertificate(certificateId, 'confirmation');
+            });
+
+            /// Update Confirmation Certificate
+            $(".btnUpdateCCertificate").on('click', function(e){
+                e.preventDefault();
+                var certificateId = $(this).attr("id").substr('btnUpdateCCertificate-'.length);
+                showToUpdateConfirmationCertificate(certificateId, $(this).attr("id"));
+            });
+
+            /// Delete Confirmation Certificate
+            $(".btnDeleteCCertificate").on("click",function(){
+                var certificateId = $(this).attr("id").substr('btnDeleteCCertificate-'.length);
+                
+                $('#single_confirmation_form').find('input:text, input:password, select')
+                .each(function () {
+                    $(this).val('');
+                });
+                $('#single_confirmation_form').find('input:hidden')
+                .each(function () {
+                    $(this).val(0);
+                });
+                $('#single_confirmation_form').find('label')
+                .each(function () {
+                    $(this).removeClass('active');
+                });
+                $('#single_confirmation_parish_priest').material_select();
+                $(".btnCancelConfirmationUpdate").addClass('hide');
+                
+                // update Form Title
+                $(".headerConfirmation").html('Add Confirmation');
+
+                deleteConfirmationCertificate(certificateId);
+            });
         }, error: function(e){
             Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
             console.log('["Confirmation Error"]: '+e.responseJSON.message);
@@ -538,7 +531,6 @@ function getConfirmationList(url){
 
 
     function showToUpdateConfirmationCertificate(certificateId){
-        console.log('certificateId:: ',certificateId);
         isTokenExist();
         var AT = localStorage.getItem("AT");
         checkTokenValidity(AT);
@@ -729,116 +721,112 @@ function getBirthList(url){
         url: url == "NA" ? certificate_endpoint+"?certificate_type=baptism" : url,
         success: function(response){
             var certificateType = 'baptism';
-            if(response.status >= 200 && response.status < 400){
-                var birthObject = response.data.data;
-                var html = "";
-                if(birthObject.length == 0){
-                    html+= "<tr>"
-                    +"<td colspan='21'>No Records Yet</td>"
-                    +"</tr>";
-                    $("#birthListTable").html(html);
-                }else{
-                    var prevPageURL = response.data.prev_page_url;
-                    var nextPageURL = response.data.next_page_url;
-                    var path = response.data.path;
-                    var currentPage = response.data.current_page;
-                    var lastPage = response.data.last_page;
-                    var pageHtml = `<ul class="pagination">
-                                    <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginationForBirth ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
-                    for(var x = 0; x < birthObject.length; x++){
-                        var metaContent = JSON.parse(birthObject[x]['meta']);
-                        var rootContent = birthObject[x];
-                        html+= '<tr>'
-                            +'<!-- Actions -->'
-                            +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintBCertificate" id="btnPrintBCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
-                            +'<td><button class="btn waves-effect btn-actions green tooltipped btnUpdateBCertificate" id="btnUpdateBCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Update Record"><i class="material-icons">edit</i></button></td>'
-                            +'<td><button class="btn waves-effect btn-actions red tooltipped btnDeleteBCertificate" id="btnDeleteBCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
-                            +'<!-- Record of -->'
-                            +'<td><label style="font-size: 9px;">First Name</label><br>'+rootContent['firstname']+'</td>'
-                            +'<td><label style="font-size: 9px;">Middle Name</label><br>'+rootContent['middlename']+'</td>'
-                            +'<td><label style="font-size: 9px;">Last Name</label><br>'+rootContent['lastname']+'</td>'
-                            +'<!-- Born On -->'
-                            +'<td>'+metaContent['born_on']+'</td>'
-                            +'<!-- Born In -->'
-                            +'<td><label style="font-size: 9px;">Born In</label><br>'+metaContent['born_in']+'</td>'
-                            +'<!-- Born In -->'
-                            +'<td><label style="font-size: 9px;">Baptism Date</label><br>'+metaContent['baptism_date']+'</td>'
-                            +'<td><label style="font-size: 9px;">Minister</label><br>'+metaContent['baptism_minister']+'</td>'
-                            +'<!-- Fathers Name -->'
-                            +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['father_firstname']+'</td>'
-                            +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['father_middlename']+'</td>'
-                            +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['father_lastname']+'</td>'
-                            +'<!-- Mothers Name -->'
-                            +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['mother_firstname']+'</td>'
-                            +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['mother_middlename']+'</td>'
-                            +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['mother_lastname']+'</td>'
-                            +'<!-- Residents of -->'
-                            +'<td><label style="font-size: 9px;">Address</label><br>'+metaContent['resident_of']+'</td>'
-                            +'<!-- Godparents -->'
-                            +'<td><label style="font-size: 9px;">Godparents</label><br>'+metaContent['godparents']+'</td>'
-                            +'<!-- Other Details -->'
-                            +'<td><label style="font-size: 9px;">Baptismal Register</label><br>'+metaContent['baptismal_register']+'</td>'
-                            +'<td><label style="font-size: 9px;">Volume</label><br>'+metaContent['volume']+'</td>'
-                            +'<td><label style="font-size: 9px;">Page Number</label><br>'+metaContent['page']+'</td>'
-                            +'<td><label style="font-size: 9px;">Date Issued</label><br>'+metaContent['date_issued']+'</td>'
-                            +'<!-- Parish Priest -->';
-                            var pname = rootContent['priest_fname'];
-                            if(pname == null || pname == undefined || pname == NaN){
-                                html+='<td><label style="font-size: 9px;">Name</label><br>Not Set</td>';
-                            }else{
-                                html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+rootContent['priest_mname']+' '+rootContent['priest_lname']+'</td>';
-                            }
-                            html+='</tr>';
-                    }
-                    if(lastPage > 1){
-                        generateBirthPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
-                    }
-                }
-    
+            var html = "";
+            if(response.data.length == 0){
+                html+= "<tr>"
+                +"<td colspan='21'>No Records Matched.</td>"
+                +"</tr>";
                 $("#birthListTable").html(html);
-                $('.tooltipped').tooltip({delay: 50});
-
-                /// Print Confirmation Certificate
-                $(".btnPrintCCertificate").on('click', function(){
-                    var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
-                    printBirthCertificate(certificateId, $(this).attr("id"));
-                });
-
-                /// Update Confirmation Certificate
-                $(".btnUpdateBCertificate").on('click', function(e){
-                    e.preventDefault();
-                    var certificateId = $(this).attr("id").substr('btnUpdateBCertificate-'.length);
-                    showToUpdateBirthCertificate(certificateId, $(this).attr("id"));
-                });
-
-                
-                /// Delete Birth Certificate
-                $(".btnDeleteBCertificate").on("click",function(){
-                    var certificateId = $(this).attr("id").substr('btnDeleteBCertificate-'.length);
-                    
-                    $('#single_birth_form').find('input:text, input:password, select')
-                    .each(function () {
-                        $(this).val('');
-                    });
-                    $('#single_birth_form').find('input:hidden')
-                    .each(function () {
-                        $(this).val(0);
-                    });
-                    $('#single_birth_form').find('label')
-                    .each(function () {
-                        $(this).removeClass('active');
-                    });
-                    $('#birth_parish_priest').material_select();
-                    $(".btnCancelConfirmationUpdate").addClass('hide');
-                    
-                    // update Form Title
-                    $(".headerConfirmation").html('Add Confirmation');
-
-                    deleteBirthCertificate(certificateId);
-                });
             }else{
-                console.log('Something is not right:: ',response);
+                var birthObject = response.data.data;
+                var prevPageURL = response.data.prev_page_url;
+                var nextPageURL = response.data.next_page_url;
+                var path = response.data.path;
+                var currentPage = response.data.current_page;
+                var lastPage = response.data.last_page;
+                var pageHtml = `<ul class="pagination">
+                                <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginationForBirth ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
+                for(var x = 0; x < birthObject.length; x++){
+                    var metaContent = JSON.parse(birthObject[x]['meta']);
+                    var rootContent = birthObject[x];
+                    html+= '<tr>'
+                        +'<!-- Actions -->'
+                        +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintBCertificate" id="btnPrintBCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
+                        +'<td><button class="btn waves-effect btn-actions green tooltipped btnUpdateBCertificate" id="btnUpdateBCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Update Record"><i class="material-icons">edit</i></button></td>'
+                        +'<td><button class="btn waves-effect btn-actions red tooltipped btnDeleteBCertificate" id="btnDeleteBCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
+                        +'<!-- Record of -->'
+                        +'<td><label style="font-size: 9px;">First Name</label><br>'+rootContent['firstname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Middle Name</label><br>'+rootContent['middlename']+'</td>'
+                        +'<td><label style="font-size: 9px;">Last Name</label><br>'+rootContent['lastname']+'</td>'
+                        +'<!-- Born On -->'
+                        +'<td>'+metaContent['born_on']+'</td>'
+                        +'<!-- Born In -->'
+                        +'<td><label style="font-size: 9px;">Born In</label><br>'+metaContent['born_in']+'</td>'
+                        +'<!-- Born In -->'
+                        +'<td><label style="font-size: 9px;">Baptism Date</label><br>'+metaContent['baptism_date']+'</td>'
+                        +'<td><label style="font-size: 9px;">Minister</label><br>'+metaContent['baptism_minister']+'</td>'
+                        +'<!-- Fathers Name -->'
+                        +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['father_firstname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['father_middlename']+'</td>'
+                        +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['father_lastname']+'</td>'
+                        +'<!-- Mothers Name -->'
+                        +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['mother_firstname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['mother_middlename']+'</td>'
+                        +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['mother_lastname']+'</td>'
+                        +'<!-- Residents of -->'
+                        +'<td><label style="font-size: 9px;">Address</label><br>'+metaContent['resident_of']+'</td>'
+                        +'<!-- Godparents -->'
+                        +'<td><label style="font-size: 9px;">Godparents</label><br>'+metaContent['godparents']+'</td>'
+                        +'<!-- Other Details -->'
+                        +'<td><label style="font-size: 9px;">Baptismal Register</label><br>'+metaContent['baptismal_register']+'</td>'
+                        +'<td><label style="font-size: 9px;">Volume</label><br>'+metaContent['volume']+'</td>'
+                        +'<td><label style="font-size: 9px;">Page Number</label><br>'+metaContent['page']+'</td>'
+                        +'<td><label style="font-size: 9px;">Date Issued</label><br>'+metaContent['date_issued']+'</td>'
+                        +'<!-- Parish Priest -->';
+                        var pname = rootContent['priest_fname'];
+                        if(pname == null || pname == undefined || pname == NaN){
+                            html+='<td><label style="font-size: 9px;">Name</label><br>Not Set</td>';
+                        }else{
+                            html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+rootContent['priest_mname']+' '+rootContent['priest_lname']+'</td>';
+                        }
+                        html+='</tr>';
+                }
+                if(lastPage > 1){
+                    generateBirthPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                }
             }
+
+            $("#birthListTable").html(html);
+            $('.tooltipped').tooltip({delay: 50});
+
+            /// Print Confirmation Certificate
+            $(".btnPrintCCertificate").on('click', function(){
+                var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
+                printBirthCertificate(certificateId, $(this).attr("id"));
+            });
+
+            /// Update Confirmation Certificate
+            $(".btnUpdateBCertificate").on('click', function(e){
+                e.preventDefault();
+                var certificateId = $(this).attr("id").substr('btnUpdateBCertificate-'.length);
+                showToUpdateBirthCertificate(certificateId, $(this).attr("id"));
+            });
+
+            
+            /// Delete Birth Certificate
+            $(".btnDeleteBCertificate").on("click",function(){
+                var certificateId = $(this).attr("id").substr('btnDeleteBCertificate-'.length);
+                
+                $('#single_birth_form').find('input:text, input:password, select')
+                .each(function () {
+                    $(this).val('');
+                });
+                $('#single_birth_form').find('input:hidden')
+                .each(function () {
+                    $(this).val(0);
+                });
+                $('#single_birth_form').find('label')
+                .each(function () {
+                    $(this).removeClass('active');
+                });
+                $('#birth_parish_priest').material_select();
+                $(".btnCancelConfirmationUpdate").addClass('hide');
+                
+                // update Form Title
+                $(".headerConfirmation").html('Add Confirmation');
+
+                deleteBirthCertificate(certificateId);
+            });
         }, error: function(e){
             console.log('Something is not right:: ',e);
         }
@@ -1062,124 +1050,120 @@ function getMarriageList(url){
         url: url == "NA" ? certificate_endpoint+"?certificate_type=marriage" : url,
         success: function(response){
             var certificateType = 'marriage';
-            if(response.status == 200){
-                var html = "";
-                var marriageObject = response.data.data;
-                
-                if(marriageObject.length == 0){
-                    html+= "<tr>"
-                    +"<td colspan='37'>No Records Yet</td>"
-                    +"</tr>";
-                    $("#marriageListTable").html(html);
-                }else{
-                    var prevPageURL = response.data.prev_page_url;
-                    var nextPageURL = response.data.next_page_url;
-                    var path = response.data.path;
-                    var currentPage = response.data.current_page;
-                    var lastPage = response.data.last_page;
-                    var pageHtml = `<ul class="pagination">
-                                    <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginationForMarriage ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
-                    for(var x = 0; x < marriageObject.length; x++){
-                        var metaContent = JSON.parse(marriageObject[x]['meta']);
-                        var rootContent = marriageObject[x];
-                        html+= '<tr>'
-                            +'<!-- Actions -->'
-                            +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintMCertificate" id="btnPrintMCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
-                            +'<td><button class="btn waves-effect btn-actions green tooltipped btnUpdateMCertificate" id="btnUpdateMCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Update Record"><i class="material-icons">edit</i></button></td>'
-                            +'<td><button class="btn waves-effect btn-actions red tooltipped btnDeleteMCertificate" id="btnDeleteMCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
-                            +'<!-- Husbands Info -->'
-                            +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['husband_firstname']+'</td>'
-                            +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['husband_middlename']+'</td>'
-                            +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['husband_lastname']+'</td>'
-                            +'<td><label style="font-size: 9px;">Civil Status</label><br>'+metaContent['husband_civil_status']+'</td>'
-                            +'<td><label style="font-size: 9px;">Age</label><br>'+metaContent['husband_age']+'</td>'
-                            +'<td><label style="font-size: 9px;">Birth Date</label><br>'+metaContent['husband_birthdate']+'</td>'
-                            +'<td><label style="font-size: 9px;">Birth Place</label><br>'+metaContent['husband_birthplace']+'</td>'
-                            +'<td><label style="font-size: 9px;">Baptism Date</label><br>'+metaContent['husband_baptismdate']+'</td>'
-                            +'<td><label style="font-size: 9px;">Residence Of</label><br>'+metaContent['husband_residence']+'</td>'
-                            +'<td><label style="font-size: 9px;">Fathers Name</label><br>'+metaContent['husband_fathersname']+'</td>'
-                            +'<td><label style="font-size: 9px;">Mothers Name</label><br>'+metaContent['husband_mothersname']+'</td>'
-                            +'<td><label style="font-size: 9px;">First Witness</label><br>'+metaContent['husband_firstwitness']+'</td>'
-                            +'<td><label style="font-size: 9px;">Second Witness</label><br>'+metaContent['husband_secondwitness']+'</td>'
-                            +'<!-- Wifes Info -->'
-                            +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['wife_firstname']+'</td>'
-                            +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['wife_middlename']+'</td>'
-                            +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['wife_lastname']+'</td>'
-                            +'<td><label style="font-size: 9px;">Civil Status</label><br>'+metaContent['wife_civil_status']+'</td>'
-                            +'<td><label style="font-size: 9px;">Age</label><br>'+metaContent['wife_age']+'</td>'
-                            +'<td><label style="font-size: 9px;">Birth Date</label><br>'+metaContent['wife_birthdate']+'</td>'
-                            +'<td><label style="font-size: 9px;">Birth Place</label><br>'+metaContent['wife_birthplace']+'</td>'
-                            +'<td><label style="font-size: 9px;">Baptism Date</label><br>'+metaContent['wife_baptismdate']+'</td>'
-                            +'<td><label style="font-size: 9px;">Residence Of</label><br>'+metaContent['wife_residence']+'</td>'
-                            +'<td><label style="font-size: 9px;">Fathers Name</label><br>'+metaContent['wife_fathersname']+'</td>'
-                            +'<td><label style="font-size: 9px;">Mothers Name</label><br>'+metaContent['wife_mothersname']+'</td>'
-                            +'<td><label style="font-size: 9px;">First Witness</label><br>'+metaContent['wife_firstwitness']+'</td>'
-                            +'<td><label style="font-size: 9px;">Second Witness</label><br>'+metaContent['wife_secondwitness']+'</td>'
-                            +'<!-- Marriage Details -->'
-                            +'<td><label style="font-size: 9px;">Place of Marriage</label><br>'+metaContent['marriage_place']+'</td>'
-                            +'<td><label style="font-size: 9px;">Date of Marriage</label><br>'+metaContent['marriage_date']+'</td>'
-                            +'<td><label style="font-size: 9px;">Solemnize By</label><br>'+metaContent['solemnized_by']+'</td>'
-                            +'<!-- Other Details -->'
-                            +'<td><label style="font-size: 9px;">Marriages No.</label><br>'+metaContent['marriage_number']+'</td>'
-                            +'<td><label style="font-size: 9px;">Page</label><br>'+metaContent['marriage_page']+'</td>'
-                            +'<td><label style="font-size: 9px;">Line</label><br>'+metaContent['marriage_line']+'</td>'
-                            +'<td><label style="font-size: 9px;">Date Issued</label><br>'+metaContent['marriage_day']+'</td>'
-                            +'<!-- Priest Name -->';
-                            var pname = rootContent['priest_fname'];
-                            if(pname == null || pname == undefined || pname == NaN){
-                                html+='<td><label style="font-size: 9px;">Name</label><br>Not Set</td>';
-                            }else{
-                                html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+rootContent['priest_mname']+' '+rootContent['priest_lname']+'</td>';
-                            }
-                            html+='</tr>';
-                    }
-                    if(lastPage > 1){
-                        generateMariagePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
-                    }
-    
-                    $("#marriageListTable").html(html);
-                    $('.tooltipped').tooltip({delay: 50});
-    
-                    /// Print Confirmation Certificate
-                    $(".btnPrintMCertificate").on('click', function(){
-                        var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
-                        printMarriageCertificate(certificateId, $(this).attr("id"));
-                    });
-                    /// Update Confirmation Certificate
-                    $(".btnUpdateMCertificate").on('click', function(e){
-                        e.preventDefault();
-                        var certificateId = $(this).attr("id").substr('btnUpdateBCertificate-'.length);
-                        showToUpdateMarriageCertificate(certificateId, $(this).attr("id"));
-                    });
-
-                    
-                    /// Delete Birth Certificate
-                    $(".btnDeleteMCertificate").on("click",function(){
-                        var certificateId = $(this).attr("id").substr('btnDeleteMCertificate-'.length);
-                        
-                        $('#single_marriage_form').find('input:text, input:password, select')
-                        .each(function () {
-                            $(this).val('');
-                        });
-                        $('#single_marriage_form').find('input:hidden')
-                        .each(function () {
-                            $(this).val(0);
-                        });
-                        $('#single_marriage_form').find('label')
-                        .each(function () {
-                            $(this).removeClass('active');
-                        });
-                        $('#marriage_parish_priest').material_select();
-                        $(".btnCancelMarriageUpdate").addClass('hide');
-                        
-                        // update Form Title
-                        $(".headerMarriage").html('Add Marriage');
-
-                        deleteMarriageCertificate(certificateId);
-                    });
-                }
+            var html = "";
+            
+            if(response.data.length == 0){
+                html+= "<tr>"
+                +"<td colspan='37'>No Records Matched.</td>"
+                +"</tr>";
+                $("#marriageListTable").html(html);
             }else{
-                console.log('Something is not right:: ',response);
+                var marriageObject = response.data.data;
+                var prevPageURL = response.data.prev_page_url;
+                var nextPageURL = response.data.next_page_url;
+                var path = response.data.path;
+                var currentPage = response.data.current_page;
+                var lastPage = response.data.last_page;
+                var pageHtml = `<ul class="pagination">
+                                <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginationForMarriage ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
+                for(var x = 0; x < marriageObject.length; x++){
+                    var metaContent = JSON.parse(marriageObject[x]['meta']);
+                    var rootContent = marriageObject[x];
+                    html+= '<tr>'
+                        +'<!-- Actions -->'
+                        +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintMCertificate" id="btnPrintMCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
+                        +'<td><button class="btn waves-effect btn-actions green tooltipped btnUpdateMCertificate" id="btnUpdateMCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Update Record"><i class="material-icons">edit</i></button></td>'
+                        +'<td><button class="btn waves-effect btn-actions red tooltipped btnDeleteMCertificate" id="btnDeleteMCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
+                        +'<!-- Husbands Info -->'
+                        +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['husband_firstname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['husband_middlename']+'</td>'
+                        +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['husband_lastname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Civil Status</label><br>'+metaContent['husband_civil_status']+'</td>'
+                        +'<td><label style="font-size: 9px;">Age</label><br>'+metaContent['husband_age']+'</td>'
+                        +'<td><label style="font-size: 9px;">Birth Date</label><br>'+metaContent['husband_birthdate']+'</td>'
+                        +'<td><label style="font-size: 9px;">Birth Place</label><br>'+metaContent['husband_birthplace']+'</td>'
+                        +'<td><label style="font-size: 9px;">Baptism Date</label><br>'+metaContent['husband_baptismdate']+'</td>'
+                        +'<td><label style="font-size: 9px;">Residence Of</label><br>'+metaContent['husband_residence']+'</td>'
+                        +'<td><label style="font-size: 9px;">Fathers Name</label><br>'+metaContent['husband_fathersname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Mothers Name</label><br>'+metaContent['husband_mothersname']+'</td>'
+                        +'<td><label style="font-size: 9px;">First Witness</label><br>'+metaContent['husband_firstwitness']+'</td>'
+                        +'<td><label style="font-size: 9px;">Second Witness</label><br>'+metaContent['husband_secondwitness']+'</td>'
+                        +'<!-- Wifes Info -->'
+                        +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['wife_firstname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['wife_middlename']+'</td>'
+                        +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['wife_lastname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Civil Status</label><br>'+metaContent['wife_civil_status']+'</td>'
+                        +'<td><label style="font-size: 9px;">Age</label><br>'+metaContent['wife_age']+'</td>'
+                        +'<td><label style="font-size: 9px;">Birth Date</label><br>'+metaContent['wife_birthdate']+'</td>'
+                        +'<td><label style="font-size: 9px;">Birth Place</label><br>'+metaContent['wife_birthplace']+'</td>'
+                        +'<td><label style="font-size: 9px;">Baptism Date</label><br>'+metaContent['wife_baptismdate']+'</td>'
+                        +'<td><label style="font-size: 9px;">Residence Of</label><br>'+metaContent['wife_residence']+'</td>'
+                        +'<td><label style="font-size: 9px;">Fathers Name</label><br>'+metaContent['wife_fathersname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Mothers Name</label><br>'+metaContent['wife_mothersname']+'</td>'
+                        +'<td><label style="font-size: 9px;">First Witness</label><br>'+metaContent['wife_firstwitness']+'</td>'
+                        +'<td><label style="font-size: 9px;">Second Witness</label><br>'+metaContent['wife_secondwitness']+'</td>'
+                        +'<!-- Marriage Details -->'
+                        +'<td><label style="font-size: 9px;">Place of Marriage</label><br>'+metaContent['marriage_place']+'</td>'
+                        +'<td><label style="font-size: 9px;">Date of Marriage</label><br>'+metaContent['marriage_date']+'</td>'
+                        +'<td><label style="font-size: 9px;">Solemnize By</label><br>'+metaContent['solemnized_by']+'</td>'
+                        +'<!-- Other Details -->'
+                        +'<td><label style="font-size: 9px;">Marriages No.</label><br>'+metaContent['marriage_number']+'</td>'
+                        +'<td><label style="font-size: 9px;">Page</label><br>'+metaContent['marriage_page']+'</td>'
+                        +'<td><label style="font-size: 9px;">Line</label><br>'+metaContent['marriage_line']+'</td>'
+                        +'<td><label style="font-size: 9px;">Date Issued</label><br>'+metaContent['marriage_day']+'</td>'
+                        +'<!-- Priest Name -->';
+                        var pname = rootContent['priest_fname'];
+                        if(pname == null || pname == undefined || pname == NaN){
+                            html+='<td><label style="font-size: 9px;">Name</label><br>Not Set</td>';
+                        }else{
+                            html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+rootContent['priest_mname']+' '+rootContent['priest_lname']+'</td>';
+                        }
+                        html+='</tr>';
+                }
+                if(lastPage > 1){
+                    generateMariagePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                }
+
+                $("#marriageListTable").html(html);
+                $('.tooltipped').tooltip({delay: 50});
+
+                /// Print Confirmation Certificate
+                $(".btnPrintMCertificate").on('click', function(){
+                    var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
+                    printMarriageCertificate(certificateId, $(this).attr("id"));
+                });
+                /// Update Confirmation Certificate
+                $(".btnUpdateMCertificate").on('click', function(e){
+                    e.preventDefault();
+                    var certificateId = $(this).attr("id").substr('btnUpdateBCertificate-'.length);
+                    showToUpdateMarriageCertificate(certificateId, $(this).attr("id"));
+                });
+
+                
+                /// Delete Birth Certificate
+                $(".btnDeleteMCertificate").on("click",function(){
+                    var certificateId = $(this).attr("id").substr('btnDeleteMCertificate-'.length);
+                    
+                    $('#single_marriage_form').find('input:text, input:password, select')
+                    .each(function () {
+                        $(this).val('');
+                    });
+                    $('#single_marriage_form').find('input:hidden')
+                    .each(function () {
+                        $(this).val(0);
+                    });
+                    $('#single_marriage_form').find('label')
+                    .each(function () {
+                        $(this).removeClass('active');
+                    });
+                    $('#marriage_parish_priest').material_select();
+                    $(".btnCancelMarriageUpdate").addClass('hide');
+                    
+                    // update Form Title
+                    $(".headerMarriage").html('Add Marriage');
+
+                    deleteMarriageCertificate(certificateId);
+                });
             }
         }, error: function(e){
             console.log('Something is not right:: ',e);
@@ -1220,7 +1204,6 @@ function getMarriageList(url){
                 url: certificate_endpoint+"/"+certificateId,
                 data: {'certificate_type':'marriage', 'isIdSearch':'true'},
                 success: function(response){
-                    console.log(response);
                     if(response.status >= 200 && response.status < 400){    
                         var metaContent = JSON.parse(response.data[0].meta);
                         var rootContent = response.data[0];
@@ -1463,105 +1446,101 @@ function getDeathList(url){
         url: url == "NA" ? certificate_endpoint+"?certificate_type=death" : url,
         success: function(response){
             var certificateType = 'death';
-            if(response.status == 200){
-                var html = "";
-                var deathObject = response.data.data;
-                if(deathObject.length == 0){
-                    html+= "<tr>"
-                    +"<td colspan='18'>No Records Yet</td>"
-                    +"</tr>";
-                    $("#deathListTable").html(html);
-                }else{
-                    var prevPageURL = response.data.prev_page_url;
-                    var nextPageURL = response.data.next_page_url;
-                    var path = response.data.path;
-                    var currentPage = response.data.current_page;
-                    var lastPage = response.data.last_page;
-                    var pageHtml = `<ul class="pagination">
-                                    <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginationForDeath ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
-                    for(var x = 0; x < deathObject.length; x++){
-                        var metaContent = JSON.parse(deathObject[x]['meta']);
-                        var responseContent = deathObject[x];
-                        html+= '<tr>'
-                                +'<!-- Actions -->'
-                                +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintDCertificate" id="btnPrintDCertificate-'+responseContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
-                                +'<td><button class="btn waves-effect btn-actions green tooltipped btnUpdateDCertificate" id="btnUpdateDCertificate-'+responseContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Update Record"><i class="material-icons">edit</i></button></td>'
-                                +'<td><button class="btn waves-effect btn-actions red tooltipped btnDeleteDCertificate" id="btnDeleteDCertificate-'+responseContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
-                                +'<!-- Decease Name -->'
-                                +'<td><label style="font-size: 9px;">First Name</label><br>'+responseContent['firstname']+'</td>'
-                                +'<td><label style="font-size: 9px;">Middle Name</label><br>'+responseContent['middlename']+'</td>'
-                                +'<td><label style="font-size: 9px;">Last Name</label><br>'+responseContent['lastname']+'</td>'
-                                +'<!-- Other Info -->'
-                                +'<td><label style="font-size: 9px;">Age</label><br>'+metaContent['age']+'</td>'
-                                +'<td><label style="font-size: 9px;">Residence of</label><br>'+metaContent['residence']+'</td>'
-                                +'<td><label style="font-size: 9px;">Date of Death</label><br>'+metaContent['date_of_death']+'</td>'
-                                +'<td><label style="font-size: 9px;">Place of Burial</label><br>'+metaContent['place_of_burial']+'</td>'
-                                +'<td><label style="font-size: 9px;">Date of Burial</label><br>'+metaContent['date_of_burial']+'</td>'
-                                +'<td><label style="font-size: 9px;">Informant or Relatives</label><br>'+metaContent['informant_or_relatives']+'</td>'
-                                +'<td><label style="font-size: 9px;">Book Number</label><br>'+metaContent['book_number']+'</td>'
-                                +'<td><label style="font-size: 9px;">Page Number</label><br>'+metaContent['page_number']+'</td>'
-                                +'<td><label style="font-size: 9px;">Registry Number</label><br>'+metaContent['registry_number']+'</td>'
-                                +'<td><label style="font-size: 9px;">Date Issued</label><br>'+metaContent['date_issued']+'</td>'
-                                +'<!-- Priest Name -->';
-                                var pname = responseContent['priest_fname'];
-                                if(pname == null || pname == undefined || pname == NaN){
-                                    html+='<td><label style="font-size: 9px;">Name</label><br>Not Set</td>';
-                                }else{
-                                    html+='<td><label style="font-size: 9px;">Name</label><br>'+responseContent['priest_fname']+' '+responseContent['priest_mname']+' '+responseContent['priest_lname']+'</td>';
-                                }
-                        +'</tr>';
-                    }
-                    if(lastPage > 1){
-                        generateDeathPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
-                    }
-
-                    $("#deathListTable").html(html);
-                    $('.tooltipped').tooltip({delay: 50});
-
-                    /// Print Confirmation Certificate
-                    $(".btnPrintDCertificate").on('click', function(e){
-                        e.preventDefault();
-                        var certificateId = $(this).attr("id").substr('btnPrintDCertificate-'.length);
-                        printTypeCertificate(certificateId, 'death');
-                    });
-                
-                    /// Update Confirmation Certificate
-                    $(".btnUpdateDCertificate").on('click', function(e){
-                        e.preventDefault();
-                        var certificateId = $(this).attr("id").substr('btnUpdateDCertificate-'.length);
-                        showToUpdateDeathCertificate(certificateId, $(this).attr("id"));
-                    });
-
-                    
-                    /// Delete Birth Certificate
-                    $(".btnDeleteDCertificate").on("click",function(){
-                        var certificateId = $(this).attr("id").substr('btnDeleteDCertificate-'.length);
-                        
-                        $(".btnCancelDeathUpdate").addClass('hide');
-                        
-                        // update Form Title
-                        $(".headerDeath").html('Add Birth');
-
-                        $('#single_death_form').find('input:text, input:password, select')
-                        .each(function () {
-                            $(this).val('');
-                        });
-                        $('#single_death_form').find('input:hidden')
-                        .each(function () {
-                            $(this).val(0);
-                        });
-                        $('#single_death_form').find('label')
-                        .each(function () {
-                            $(this).removeClass('active');
-                        });
-                        $("#death_age").val('');
-                        $('#death_parish_priest').material_select();
-
-                        deleteDeathCertificate(certificateId);
-                    });
-                }
+            var html = "";
+            if(response.data.length == 0){
+                html+= "<tr>"
+                +"<td colspan='18'>No Records Matched.</td>"
+                +"</tr>";
+                $("#deathListTable").html(html);
             }else{
-                console.log('Something is not right:: ',response);
+                var deathObject = response.data.data;
+                var prevPageURL = response.data.prev_page_url;
+                var nextPageURL = response.data.next_page_url;
+                var path = response.data.path;
+                var currentPage = response.data.current_page;
+                var lastPage = response.data.last_page;
+                var pageHtml = `<ul class="pagination">
+                                <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginationForDeath ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
+                for(var x = 0; x < deathObject.length; x++){
+                    var metaContent = JSON.parse(deathObject[x]['meta']);
+                    var responseContent = deathObject[x];
+                    html+= '<tr>'
+                            +'<!-- Actions -->'
+                            +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintDCertificate" id="btnPrintDCertificate-'+responseContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
+                            +'<td><button class="btn waves-effect btn-actions green tooltipped btnUpdateDCertificate" id="btnUpdateDCertificate-'+responseContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Update Record"><i class="material-icons">edit</i></button></td>'
+                            +'<td><button class="btn waves-effect btn-actions red tooltipped btnDeleteDCertificate" id="btnDeleteDCertificate-'+responseContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
+                            +'<!-- Decease Name -->'
+                            +'<td><label style="font-size: 9px;">First Name</label><br>'+responseContent['firstname']+'</td>'
+                            +'<td><label style="font-size: 9px;">Middle Name</label><br>'+responseContent['middlename']+'</td>'
+                            +'<td><label style="font-size: 9px;">Last Name</label><br>'+responseContent['lastname']+'</td>'
+                            +'<!-- Other Info -->'
+                            +'<td><label style="font-size: 9px;">Age</label><br>'+metaContent['age']+'</td>'
+                            +'<td><label style="font-size: 9px;">Residence of</label><br>'+metaContent['residence']+'</td>'
+                            +'<td><label style="font-size: 9px;">Date of Death</label><br>'+metaContent['date_of_death']+'</td>'
+                            +'<td><label style="font-size: 9px;">Place of Burial</label><br>'+metaContent['place_of_burial']+'</td>'
+                            +'<td><label style="font-size: 9px;">Date of Burial</label><br>'+metaContent['date_of_burial']+'</td>'
+                            +'<td><label style="font-size: 9px;">Informant or Relatives</label><br>'+metaContent['informant_or_relatives']+'</td>'
+                            +'<td><label style="font-size: 9px;">Book Number</label><br>'+metaContent['book_number']+'</td>'
+                            +'<td><label style="font-size: 9px;">Page Number</label><br>'+metaContent['page_number']+'</td>'
+                            +'<td><label style="font-size: 9px;">Registry Number</label><br>'+metaContent['registry_number']+'</td>'
+                            +'<td><label style="font-size: 9px;">Date Issued</label><br>'+metaContent['date_issued']+'</td>'
+                            +'<!-- Priest Name -->';
+                            var pname = responseContent['priest_fname'];
+                            if(pname == null || pname == undefined || pname == NaN){
+                                html+='<td><label style="font-size: 9px;">Name</label><br>Not Set</td>';
+                            }else{
+                                html+='<td><label style="font-size: 9px;">Name</label><br>'+responseContent['priest_fname']+' '+responseContent['priest_mname']+' '+responseContent['priest_lname']+'</td>';
+                            }
+                    +'</tr>';
+                }
+                if(lastPage > 1){
+                    generateDeathPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                }
+
+                $("#deathListTable").html(html);
+                $('.tooltipped').tooltip({delay: 50});
+
+                /// Print Confirmation Certificate
+                $(".btnPrintDCertificate").on('click', function(e){
+                    e.preventDefault();
+                    var certificateId = $(this).attr("id").substr('btnPrintDCertificate-'.length);
+                    printTypeCertificate(certificateId, 'death');
+                });
+            
+                /// Update Confirmation Certificate
+                $(".btnUpdateDCertificate").on('click', function(e){
+                    e.preventDefault();
+                    var certificateId = $(this).attr("id").substr('btnUpdateDCertificate-'.length);
+                    showToUpdateDeathCertificate(certificateId, $(this).attr("id"));
+                });
+
+                
+                /// Delete Birth Certificate
+                $(".btnDeleteDCertificate").on("click",function(){
+                    var certificateId = $(this).attr("id").substr('btnDeleteDCertificate-'.length);
+                    
+                    $(".btnCancelDeathUpdate").addClass('hide');
+                    
+                    // update Form Title
+                    $(".headerDeath").html('Add Birth');
+
+                    $('#single_death_form').find('input:text, input:password, select')
+                    .each(function () {
+                        $(this).val('');
+                    });
+                    $('#single_death_form').find('input:hidden')
+                    .each(function () {
+                        $(this).val(0);
+                    });
+                    $('#single_death_form').find('label')
+                    .each(function () {
+                        $(this).removeClass('active');
+                    });
+                    $("#death_age").val('');
+                    $('#death_parish_priest').material_select();
+
+                    deleteDeathCertificate(certificateId);
+                });
             }
         }, error: function(e){
             console.log('Something is not right:: ',e);
@@ -1601,7 +1580,6 @@ function getDeathList(url){
                 url: certificate_endpoint+"/"+certificateId,
                 data: {'certificate_type':'death', 'isIdSearch':'true'},
                 success: function(response){
-                    console.log(response);
                     if(response.status >= 200 && response.status < 400){    
                         var metaContent = JSON.parse(response.data[0].meta);
                         var rootContent = response.data[0];
