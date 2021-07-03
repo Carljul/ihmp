@@ -19,12 +19,15 @@
     <link href="{{ asset('css/materialize.css') }}" rel="stylesheet">
     <link href="{{ asset('css/ihmp.css') }}" rel="stylesheet">
     <link href="{{ asset('css/datatables.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/modal_flat.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/modal_rounded.css') }}" rel="stylesheet">
     
     <!--JavaScript at end of body for optimized loading-->
     <script src="{{ asset('/js/constants.js') }}"></script>
     <script src="{{ asset('/js/materialize.js') }}"></script>
     <script src="{{ asset('/js/general.js') }}"></script>
     <script src="{{ asset('/js/moment.js') }}"></script>
+    <script src="{{ asset('/js/daypilot-modal-3.15.1.min.js') }}"></script>
 </head>
 <body>
     <div id="app">

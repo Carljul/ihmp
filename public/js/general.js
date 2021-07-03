@@ -257,32 +257,69 @@ function getPriestForModal(url, certificateId){
 }
 
 // ==================================== Print
-function printCertificate(data){
+function printCertificate(personData){
     // This will get the certificate saved in the template
     $.ajax({
         type: "GET",
-        url: template_endpoint+"/"+data.certificate_type,
-        data: {'certificate_type':data.certificate_type, 'isIdSearch':'true'},
+        url: template_endpoint+"/"+personData.certificate_type,
+        data: {'certificate_type':personData.certificate_type, 'isIdSearch':'true'},
         success: function(response){
-            console.log('response');
-            console.log(response);
             if(response.status >= 200 && response.status < 400){
                 if(response.data.data.length > 0){
                     // Edit Content before adding to print functionality
                     var printContent = response.data.data[0]['content'];
-
+                    console.log(personData['content']);
                     // condition to certificate to insert contents of user
-                    if(data.certificate_type == 'confirmation'){
-
-                    }else if(data.certificate_type == 'marriage'){
+                    if(personData.certificate_type == 'confirmation'){
+                        // Full name
+                        var fname = personData['content']['firstname']+" "+personData['content']['middlename']+" "+personData['content']['lastname'];
+                        printContent = printContent.replaceAll('fullname',fname);
+                        // Parsing Meta Content
+                        var metaContent = JSON.parse(personData['content']['meta']);
+                        // Fathers Name
+                        var fathersName = metaContent['father_firstname']+" "+metaContent['father_middlename']+" "+metaContent['father_lastname'];
+                        printContent = printContent.replaceAll('fathers_name',fathersName);
+                        // Mothers Name
+                        var motherName = metaContent['mother_firstname']+" "+metaContent['mother_middlename']+" "+metaContent['mother_lastname'];
+                        printContent = printContent.replaceAll('mothers_name',motherName);
+                        // confirmation_day
+                        var confirmation_day = ordinal_suffix_of(metaContent['confirmation_day']);
+                        printContent = printContent.replaceAll('number_day',confirmation_day);
+                        // confirmation_month
+                        var confirmation_month = monthNames[metaContent['confirmation_month'] - 1];
+                        printContent = printContent.replaceAll('month_text',confirmation_month);
+                        // confirmation_year
+                        var confirmation_year = metaContent['confirmation_year'].toString().substring(2);;
+                        printContent = printContent.replaceAll('year',confirmation_year);
+                        // confirmation_by
+                        var confirmation_by = metaContent['confirmation_by'];
+                        printContent = printContent.replaceAll('priest_name',confirmation_by);
+                        // first sponsor
+                        var first_sponsor = metaContent['first_sponsor'];
+                        printContent = printContent.replaceAll('first_sponsor',first_sponsor);
+                        // second sponsor
+                        var second_sponsor = metaContent['second_sponsor'];
+                        printContent = printContent.replaceAll('second_sponsor',second_sponsor);
+                        // registration_book
+                        var registration_book = metaContent['registration_book'];
+                        printContent = printContent.replaceAll('register_book',registration_book);
+                        // book_page
+                        var book_page = metaContent['book_page'];
+                        printContent = printContent.replaceAll('page_number',book_page);
+                        // book_number
+                        var book_number = metaContent['book_number'];
+                        printContent = printContent.replaceAll('cert_no',book_number);
                         
-                    }else if(data.certificate_type == 'birth'){
-                        
-                    }else if(data.certificate_type == 'death'){
-                        
+                    }else if(personData.certificate_type == 'marriage'){
+                        alert('m1');
+                    }else if(personData.certificate_type == 'birth'){
+                        alert('b1');
+                    }else if(personData.certificate_type == 'death'){
+                        alert('d1');
                     }
 
-                    var a = window.open('', '', 'height=1000, width=1000, fullscreen=yes, channelmode=yes', true);
+                    
+                    var a = window.open('', '', 'height=1000, width=1000, fullscreen=yes, channelmode=yes');
                     setTimeout(() => {
                         a.document.write(printContent);
                         a.print();
@@ -318,14 +355,25 @@ function printConfirmationCertificate(certificateId, certificate_type){
                     var rootContent = response.data[0];
                     // Check if Priest ID is empty
                     if(rootContent['priest_id'] == null){
-                        if (confirm('This certificate has no parish priest as of the moment\nDo you want to set it first before printing it?')) {
-                            // Call API
-                            getPriestForModal("NA", certificateId);
-                            // Assign priest then recall print
-                            $("#assignPriestModalForm").modal('open');
-                        } else {
-                            alert('else print automatically');
-                        }
+                        DayPilot.Modal.confirm(
+                            "<h5><b>Set Parish Priest</b></h5>This record has no parish priest set as of the moment<br>Do you want to set it first before printing?",
+                            { okText: "Yes", cancelText: "No", theme: "modal_flat"}).
+                            then(function(args) { 
+                                console.log(args.result);
+                                // This means user clicks No
+                                if(args.result == undefined){
+                                    var payload = {
+                                        "certificate_type":certificate_type,
+                                        "content": rootContent
+                                    };
+                                    printCertificate(payload);
+                                }else{
+                                    // Call API
+                                    getPriestForModal("NA", certificateId);
+                                    // Assign priest then recall print
+                                    $("#assignPriestModalForm").modal('open');
+                                }
+                            });
                     }else{
                         var payload = {
                             "certificate_type":certificate_type,
