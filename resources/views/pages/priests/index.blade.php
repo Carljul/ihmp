@@ -242,8 +242,6 @@
                         var lastPage = response.data.last_page;
                         var pageHtml = `<ul class="pagination">
                                         <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPagination ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}"><i class="material-icons">chevron_left</i></a></li>`;
-                        
-                        console.log("getPriestList", response);
 
                         if(response.data.length !== 0){
                             for(var x = 0; x < priestObject.length; x++){
@@ -263,6 +261,9 @@
                             html += "<tr>"
                                         +"<td colspan='5' class='center'> No records found</td>"
                                     +"</tr>";
+
+                            //display the pagination
+                            $("#paginationDiv").html("");
                         }
 
                         if(lastPage > 1){
@@ -290,6 +291,11 @@
                                         </ul>`;
                             //display the pagination
                             $("#paginationDiv").html(pageHtml);
+                        }
+
+                        if(lastPage == 1){
+                            //display the pagination
+                            $("#paginationDiv").html("");
                         }
 
                         //display the data to table

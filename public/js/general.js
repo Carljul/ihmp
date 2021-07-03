@@ -106,6 +106,29 @@ function ordinal_suffix_of(i) {
 }
 
 // ==================================== Priest
+
+$(document).on('keydown', '.btnSearchPriestInModal', function(e){
+
+    //get the current value
+    let val = $(this).val();
+
+    if(e.keyCode == 13 || e.keyCode == 9){
+        //set the url to be returned
+        let url = priest_endpoint+"/"+val+"?certificate_type=confirmation";
+        getPriestForModal(url, "")
+    }
+
+})
+
+// DT: pagination button here...
+$(document).on('click', '.btnPaginationPriestModal', function(){
+    let url = $(this).attr("url");
+    let status = $(this).attr("class").split(" ")[1];
+    if(status != "disabled"){
+        getPriestForModal(url, "");
+    }
+});
+
 function getPriestForModal(url, certificateId){
     isTokenExist();
     var AT = localStorage.getItem("AT");
@@ -124,7 +147,7 @@ function getPriestForModal(url, certificateId){
             var currentPage = response.data.current_page;
             var lastPage = response.data.last_page;
             var pageHtml = `<ul class="pagination">
-                            <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPagination ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}"><i class="material-icons">chevron_left</i></a></li>`;
+                            <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginationPriestModal ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}"><i class="material-icons">chevron_left</i></a></li>`;
             
             if(response.data.length !== 0){
                 for(var x = 0; x < priestObject.length; x++){
@@ -142,33 +165,41 @@ function getPriestForModal(url, certificateId){
                 html += "<tr>"
                             +"<td colspan='5' class='center'> No records found</td>"
                         +"</tr>";
+
+                //display the pagination
+                $("#paginationPriestDiv").html("");
             }
 
             if(lastPage > 1){
                 if(currentPage > 2){
-                    pageHtml += `<li class="waves-effect"><a class="btnPagination" url="${path + "?page=" + 1}">${1}...</a></li>`;
+                    pageHtml += `<li class="waves-effect"><a class="btnPaginationPriestModal" url="${path + "?page=" + 1}">${1}...</a></li>`;
                 }
                 for(let i = currentPage - 1; i < (currentPage - 1 )+3; i++){
                     if(currentPage != lastPage){
                         if(currentPage == parseInt(i+1)){
-                            pageHtml += `<li class="active"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}">${currentPage}</a></li>`;
+                            pageHtml += `<li class="active"><a class="btnPaginationPriestModal" url="${path + "?page=" + parseInt(i+1)}">${currentPage}</a></li>`;
                         }else{
                             if(parseInt(i+1) >= lastPage){
 
                             }else{
-                                pageHtml += `<li class="waves-effect"><a class="btnPagination" url="${path + "?page=" + parseInt(i+1)}">${i+1}</a></li>`;
+                                pageHtml += `<li class="waves-effect"><a class="btnPaginationPriestModal" url="${path + "?page=" + parseInt(i+1)}">${i+1}</a></li>`;
                             }
                         }
                     }else{
-                        pageHtml += `<li class="waves-effect"><a class="btnPagination" url="${path + "?page=" + i}">${i}</a></li>`;
+                        pageHtml += `<li class="waves-effect"><a class="btnPaginationPriestModal" url="${path + "?page=" + i}">${i}</a></li>`;
                         break;
                     }
                 }
-                pageHtml += `<li class="waves-effect ${lastPage == currentPage ? "active":""}"><a class="btnPagination" url="${path + "?page=" + lastPage}">... up to ${lastPage}</a></li>`;
-                pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPagination ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}"><i class="material-icons">chevron_right</i></a></li>
+                pageHtml += `<li class="waves-effect ${lastPage == currentPage ? "active":""}"><a class="btnPaginationPriestModal" url="${path + "?page=" + lastPage}">... up to ${lastPage}</a></li>`;
+                pageHtml += `<li class='${lastPage == currentPage ? "disabled" : "waves-effect"}'><a class="btnPaginationPriestModal ${lastPage == currentPage ? "disabled" : "waves-effect"}" url="${nextPageURL}"><i class="material-icons">chevron_right</i></a></li>
                             </ul>`;
                 //display the pagination
                 $("#paginationPriestDiv").html(pageHtml);
+            }
+
+            if(lastPage == 1){
+                //display the pagination
+                $("#paginationPriestDiv").html("");
             }
 
             //display the data to table
@@ -178,15 +209,6 @@ function getPriestForModal(url, certificateId){
             $(".btnAssign").on("click",function(){
                 var priestId = $(this).attr("id").substr('btnAssign-'.length);
                 showToAssignPriest(priestId, certificateId);
-            });
-
-            // DT: pagination button here...
-            $(document).on('click', '.btnPagination', function(){
-                let url = $(this).attr("url");
-                let status = $(this).attr("class").split(" ")[1];
-                if(status != "disabled"){
-                    getPriestForModal(url, certificateId);
-                }
             });
 
 
@@ -436,7 +458,7 @@ function printTypeCertificate(certificateId, certificate_type){
 function getConfirmationList(url){
     isTokenExist();
     var AT = localStorage.getItem("AT");
-    checkTokenValidity(AT);  
+    checkTokenValidity(AT);
     
     $.ajax({
         type: "GET",
@@ -444,12 +466,16 @@ function getConfirmationList(url){
         success: function(response){
             var certificateType = 'confirmation';
             var html = "";
+            var pageHtml = "";
 
             if(response.data.length == 0){
                 html+= "<tr>"
                 +"<td colspan='21'>No Records Matched.</td>"
                 +"</tr>";
                 $("#confirmationListTable").html(html);
+                
+                //display the pagination
+                $("#paginationCertificate").html(pageHtml);
             }else{
                 var confirmationObject = response.data.data;
                 var prevPageURL = response.data.prev_page_url;
@@ -457,7 +483,7 @@ function getConfirmationList(url){
                 var path = response.data.path;
                 var currentPage = response.data.current_page;
                 var lastPage = response.data.last_page;
-                var pageHtml = `<ul class="pagination">
+                pageHtml = `<ul class="pagination">
                                 <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginateConfirmation ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
                 for(var x = 0; x < confirmationObject.length; x++){
                     var metaContent = JSON.parse(confirmationObject[x]['meta']);
@@ -515,6 +541,11 @@ function getConfirmationList(url){
                 }
                 if(lastPage > 1){
                     generatePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                }
+
+                if(lastPage == 1){
+                    //display the pagination
+                    $("#paginationCertificate").html("");
                 }
             }
 
@@ -758,11 +789,16 @@ function getBirthList(url){
         success: function(response){
             var certificateType = 'baptism';
             var html = "";
+            var pageHtml = "";
+
             if(response.data.length == 0){
                 html+= "<tr>"
                 +"<td colspan='21'>No Records Matched.</td>"
                 +"</tr>";
                 $("#birthListTable").html(html);
+
+                //display the pagination
+                $("#paginationBirth").html(pageHtml);
             }else{
                 var birthObject = response.data.data;
                 var prevPageURL = response.data.prev_page_url;
@@ -770,7 +806,7 @@ function getBirthList(url){
                 var path = response.data.path;
                 var currentPage = response.data.current_page;
                 var lastPage = response.data.last_page;
-                var pageHtml = `<ul class="pagination">
+                pageHtml = `<ul class="pagination">
                                 <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginationForBirth ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
                 for(var x = 0; x < birthObject.length; x++){
                     var metaContent = JSON.parse(birthObject[x]['meta']);
@@ -819,6 +855,11 @@ function getBirthList(url){
                 }
                 if(lastPage > 1){
                     generateBirthPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                }
+
+                if(lastPage == 1){
+                    //display the pagination
+                    $("#paginationBirth").html("");       
                 }
             }
 
@@ -1087,12 +1128,16 @@ function getMarriageList(url){
         success: function(response){
             var certificateType = 'marriage';
             var html = "";
+            var pageHtml = "";
             
             if(response.data.length == 0){
                 html+= "<tr>"
                 +"<td colspan='37'>No Records Matched.</td>"
                 +"</tr>";
                 $("#marriageListTable").html(html);
+
+                //display the pagination
+                $("#paginationMarriage").html(pageHtml);
             }else{
                 var marriageObject = response.data.data;
                 var prevPageURL = response.data.prev_page_url;
@@ -1100,7 +1145,7 @@ function getMarriageList(url){
                 var path = response.data.path;
                 var currentPage = response.data.current_page;
                 var lastPage = response.data.last_page;
-                var pageHtml = `<ul class="pagination">
+                pageHtml = `<ul class="pagination">
                                 <li class='${currentPage == 1 ? "disabled" : "waves-effect"}'><a class="btnPaginationForMarriage ${currentPage == 1 ? "disabled" : "waves-effect"}" url="${prevPageURL}&certificate_type=${certificateType}"><i class="material-icons">chevron_left</i></a></li>`;
                 for(var x = 0; x < marriageObject.length; x++){
                     var metaContent = JSON.parse(marriageObject[x]['meta']);
@@ -1158,6 +1203,11 @@ function getMarriageList(url){
                 }
                 if(lastPage > 1){
                     generateMariagePagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                }
+
+                if(lastPage == 1){
+                    //display the pagination
+                    $("#paginationMarriage").html("");
                 }
 
                 $("#marriageListTable").html(html);
@@ -1483,11 +1533,16 @@ function getDeathList(url){
         success: function(response){
             var certificateType = 'death';
             var html = "";
+            var pageHtml = "";
+
             if(response.data.length == 0){
                 html+= "<tr>"
                 +"<td colspan='18'>No Records Matched.</td>"
                 +"</tr>";
                 $("#deathListTable").html(html);
+                
+                //display the pagination
+                $("#paginationDeath").html(pageHtml);
             }else{
                 var deathObject = response.data.data;
                 var prevPageURL = response.data.prev_page_url;
@@ -1531,6 +1586,11 @@ function getDeathList(url){
                 }
                 if(lastPage > 1){
                     generateDeathPagination(lastPage, currentPage, pageHtml, path, nextPageURL, certificateType);
+                }
+
+                if(lastPage == 1){
+                    //display the pagination
+                    $("#paginationDeath").html("");
                 }
 
                 $("#deathListTable").html(html);
