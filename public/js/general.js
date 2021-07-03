@@ -316,7 +316,43 @@ function printCertificate(personData){
                     }else if(personData.certificate_type == 'birth'){
                         alert('b1');
                     }else if(personData.certificate_type == 'death'){
-                        alert('d1');
+                        // fullname_system
+                        var fname = personData['content']['firstname']+" "+personData['content']['middlename']+" "+personData['content']['lastname'];
+                        printContent = printContent.replaceAll('fullname_system',fname);
+                        
+                        // Parsing Meta Content
+                        var metaContent = JSON.parse(personData['content']['meta']);
+                        
+                        // age_system
+                        var age = metaContent['age'];
+                        printContent = printContent.replaceAll('age_system',age);
+                        // residence_of_system
+                        var residence = metaContent['residence'];
+                        printContent = printContent.replaceAll('residence_of_system',residence);
+                        // date_of_death_system
+                        var date_of_death = new Date(metaContent['date_of_death']);
+                        printContent = printContent.replaceAll('date_of_death_system',monthNames[date_of_death.getMonth()]+" "+date_of_death.getDate()+", "+date_of_death.getFullYear());
+                        // place_of_burial_system
+                        var place_of_burial = metaContent['place_of_burial'];
+                        printContent = printContent.replaceAll('place_of_burial_system',place_of_burial);
+                        // date_of_burial_system
+                        var date_of_burial = new Date(metaContent['date_of_burial']);
+                        printContent = printContent.replaceAll('date_of_burial_system',monthNames[date_of_burial.getMonth()]+" "+date_of_burial.getDate()+", "+date_of_burial.getFullYear());
+                        // informant_system
+                        var informant_or_relatives = metaContent['informant_or_relatives'];
+                        printContent = printContent.replaceAll('informant_system',informant_or_relatives);
+                        // book_number_system
+                        var book_number = metaContent['book_number'];
+                        printContent = printContent.replaceAll('book_number_system',book_number);
+                        // page_number_system
+                        var page_number = metaContent['page_number'];
+                        printContent = printContent.replaceAll('page_number_system',page_number);
+                        // registry_number_system
+                        var registry_number = metaContent['registry_number'];
+                        printContent = printContent.replaceAll('registry_number_system',registry_number);
+                        // date_issued_system
+                        var date_issued = new Date(metaContent['date_issued']);
+                        printContent = printContent.replaceAll('date_issued_system',monthNames[date_issued.getMonth()]+" "+date_issued.getDate()+", "+date_issued.getFullYear());
                     }
 
                     
