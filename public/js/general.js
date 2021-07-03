@@ -271,7 +271,7 @@ function printCertificate(data){
                     // Edit Content before adding to print functionality
                     var printContent = response.data.data[0]['content'];
 
-                    // condition to certificate
+                    // condition to certificate to insert contents of user
                     if(data.certificate_type == 'confirmation'){
 
                     }else if(data.certificate_type == 'marriage'){
