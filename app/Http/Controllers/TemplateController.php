@@ -71,8 +71,7 @@ class TemplateController extends Controller
     public function show($id, Request $request)
     {
         if($request->isIdSearch && $request->isIdSearch == "true" && $request->isIdSearch == true){
-
-            if($request->template != null || $request->template != undefined){
+            if($request->templateToSearch == null || $request->templateToSearch == 'null'){
                 //return specific row using id
                 $result = Template::where('id', $id)->orderByRaw('id DESC')->paginate($this->getPaginationLimit());
             }else{

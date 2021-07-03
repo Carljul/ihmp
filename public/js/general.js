@@ -262,7 +262,7 @@ function printCertificate(personData){
     $.ajax({
         type: "GET",
         url: template_endpoint+"/"+personData.certificate_type,
-        data: {'certificate_type':personData.certificate_type, 'isIdSearch':'true'},
+        data: {'certificate_type':personData.certificate_type, 'isIdSearch':'true', 'templateToSearch':personData.certificate_type},
         success: function(response){
             if(response.status >= 200 && response.status < 400){
                 if(response.data.data.length > 0){

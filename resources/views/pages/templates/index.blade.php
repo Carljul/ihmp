@@ -324,7 +324,7 @@
                     $.ajax({
                         type: "GET",
                         url: template_endpoint+"/"+templateId,
-                        data: {'isIdSearch':false},
+                        data: {'isIdSearch':false, 'templateToSearch':null},
                         success: function(response){
                             if(response.status == 200){
                                 /// Prepare Delete Confirmation Modal
