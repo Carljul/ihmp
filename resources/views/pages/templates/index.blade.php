@@ -385,6 +385,7 @@
                         data: {'isIdSearch':true},
                         success: function(response){
                             var data = response.data.data;
+                            console.log(response);
                             if(response.status == 200){
                                 $('#content').val(data[0].content);
                                 $("label[for='content']").addClass('active');

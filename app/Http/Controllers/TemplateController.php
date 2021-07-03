@@ -72,9 +72,12 @@ class TemplateController extends Controller
     {
         if($request->isIdSearch && $request->isIdSearch == "true" && $request->isIdSearch == true){
 
-
-            //return specific row using id
-            $result = Template::where('template_type', $id)->orderByRaw('id DESC')->paginate($this->getPaginationLimit());
+            if($request->template != null || $request->template != undefined){
+                //return specific row using id
+                $result = Template::where('id', $id)->orderByRaw('id DESC')->paginate($this->getPaginationLimit());
+            }else{
+                $result = Template::where('template_type', $id)->orderByRaw('id DESC')->paginate($this->getPaginationLimit());
+            }
 
             //if id is not found
             if(!$result){
