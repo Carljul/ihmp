@@ -312,7 +312,44 @@ function printCertificate(personData){
                         var date_issued = metaContent['date_issued'];
                         printContent = printContent.replaceAll('date_issue',date_issued);
                     }else if(personData.certificate_type == 'marriage'){
-                        alert('m1');
+                        // Parsing Meta Content
+                        var metaContent = JSON.parse(personData['content']['meta']);
+                        // husbands_name
+                        var fname = metaContent['firstname']+" "+metaContent['middlename']+" "+metaContent['lastname'];
+                        printContent = printContent.replaceAll('husbands_name',fname);
+                        // husbands_age
+                        var fname = metaContent['firstname'];
+                        printContent = printContent.replaceAll('husbands_name',fname);
+                        // husbands_civil_status
+                        // husbands_date_of_birth
+                        // husbands_residence
+                        // husbands_date_of_baptism
+                        // husbands_fathers_name
+                        // husbands_mothers_name
+                        // husbands_first_witness
+                        // husbands_second_witness
+
+                        // wifes_name
+                        // wifes_age
+                        // wifes_civil_status
+                        // wifes_date_of_birt
+                        // hwifes_residence
+                        // wifes_date_of_baptism
+                        // wifes_fathers_name
+                        // wifes_mothers_name
+                        // wifes_first_witness
+                        // wifes_second_witness
+
+                        // place_of_marriage
+                        // date_of_marriage
+                        // solemnized_by
+                        // marriages_no
+                        // page_no
+                        // line_no
+                        // number_day
+                        // month_text
+                        // year_in_two
+                        // parish_priest
                     }else if(personData.certificate_type == 'birth'){
                         alert('b1');
                     }else if(personData.certificate_type == 'death'){
@@ -1164,9 +1201,10 @@ function getMarriageList(url){
                 $('.tooltipped').tooltip({delay: 50});
 
                 /// Print Confirmation Certificate
-                $(".btnPrintMCertificate").on('click', function(){
-                    var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
-                    printMarriageCertificate(certificateId, $(this).attr("id"));
+                $(".btnPrintMCertificate").on('click', function(e){
+                    e.preventDefault();
+                    var certificateId = $(this).attr("id").substr('btnPrintMCertificate-'.length);
+                    printTypeCertificate(certificateId, 'marriage');
                 });
                 /// Update Confirmation Certificate
                 $(".btnUpdateMCertificate").on('click', function(e){

@@ -770,10 +770,10 @@
                 wife_middlename == null || wife_middlename == undefined || wife_middlename == ""||
                 wife_lastname == null || wife_lastname == undefined || wife_lastname == "" ||
                 isNaN(Date.parse(wife_baptismdate)) ||
-                isNaN(Date.parse(marriage_date)) || 
-                !husband_civil_status.toLowerCase().includes('single') ||
-                !husband_civil_status.toLowerCase().includes('widowed') ||
-                !husband_civil_status.toLowerCase().includes('divorced')
+                isNaN(Date.parse(marriage_date))
+                // !husband_civil_status.toLowerCase().includes('single') ||
+                // !husband_civil_status.toLowerCase().includes('widowed') ||
+                // !husband_civil_status.toLowerCase().includes('divorced')
             ){
                 emptyRowsImportConfirmation.push(row);
             }else{                
