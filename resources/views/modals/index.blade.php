@@ -297,7 +297,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Add Priest and Refresh Dropdown</a>
+        <a href="/priest" class="modal-action modal-close waves-effect waves-green btn-flat">Did not find priest? Add Priest</a>
     </div>
 </div>
 

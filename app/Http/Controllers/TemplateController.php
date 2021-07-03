@@ -74,7 +74,7 @@ class TemplateController extends Controller
 
 
             //return specific row using id
-            $result = Template::where('id', $id)->orderByRaw('id DESC')->paginate($this->getPaginationLimit());
+            $result = Template::where('template_type', $id)->orderByRaw('id DESC')->paginate($this->getPaginationLimit());
 
             //if id is not found
             if(!$result){

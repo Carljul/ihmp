@@ -393,8 +393,6 @@
                 var getCert = localStorage.getItem("templateDropdown");
                 for(var x = 0; x < arrayToImport.length; x++){
                     var splitRecord = arrayToImport[x];
-                    // console.log(arrayToImport);
-                    // TODO:: Create filter between what record needs to be created
                     if(getCert == "confirmation"){
                         validateAllFieldsAndCreatePayloadImportConfirmation(
                             x,
@@ -501,7 +499,7 @@
                     }
                 }
                 
-                if(emptyRowsImportConfirmation.length > 2){
+                if(emptyRowsImportConfirmation.length > 0){
                     Materialize.toast('Number of Records with Issue '+emptyRowsImportConfirmation.length, 5000,'red rounded');
                 }
                 // console.log('emptyRowsImportConfirmation:: ', emptyRowsImportConfirmation);
@@ -531,6 +529,14 @@
                 $("#btnStartImportSequence").addClass('disabled');
                 $("#importExport").modal('close');
                 
+                
+                // Clear Search Input first
+                $("#searchARecord").val('');
+                // Update Dropdown Records
+
+                // reinstalling table base on selected import
+                localStorage.setItem('defaultTable',getCert);
+                setFormSelection();
 
                 // Initiate Worker
                 initiateConfirmationWorker();

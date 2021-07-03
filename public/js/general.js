@@ -226,7 +226,8 @@ function getPriestForModal(url, certificateId){
                             success: function(response){
                                 if(response.status >= 200 && response.status < 400){
                                     $("#assignPriestModalForm").modal('close');
-                                    printConfirmationCertificate(certificateId);
+                                    var certificate_in_storage = localStorage.getItem('defaultTable');
+                                    printConfirmationCertificate(certificateId,certificate_in_storage);
                                     var selectedTable = localStorage.getItem('defaultTable');
                                     if(selectedTable == "confirmation"){
                                         getConfirmationList("NA");
@@ -253,6 +254,94 @@ function getPriestForModal(url, certificateId){
             });
         }
     }
+}
+
+// ==================================== Print
+function printCertificate(data){
+    // This will get the certificate saved in the template
+    $.ajax({
+        type: "GET",
+        url: template_endpoint+"/"+data.certificate_type,
+        data: {'certificate_type':data.certificate_type, 'isIdSearch':'true'},
+        success: function(response){
+            console.log('response');
+            console.log(response);
+            if(response.status >= 200 && response.status < 400){
+                if(response.data.data.length > 0){
+                    // Edit Content before adding to print functionality
+                    var printContent = response.data.data[0]['content'];
+
+                    // condition to certificate
+                    if(data.certificate_type == 'confirmation'){
+
+                    }else if(data.certificate_type == 'marriage'){
+                        
+                    }else if(data.certificate_type == 'birth'){
+                        
+                    }else if(data.certificate_type == 'death'){
+                        
+                    }
+
+                    var a = window.open('', '', 'height=1000, width=1000, fullscreen=yes, channelmode=yes', true);
+                    setTimeout(() => {
+                        a.document.write(printContent);
+                        a.print();
+                        a.close();
+                    }, 1000);
+                }else{
+                    Materialize.toast('Template is unavailable, Please contact your app administrator', 5000, 'red rounded');
+                }
+            }else{
+                Materialize.toast('Certificate Template is not yet ready', 5000, 'red rounded');
+            }
+        }, error: function(e){
+            Materialize.toast('Certificate Template is not yet ready', 5000, 'red rounded');
+        }
+    });
+}
+
+
+function printConfirmationCertificate(certificateId, certificate_type){
+    isTokenExist();
+    var AT = localStorage.getItem("AT");
+    checkTokenValidity(AT);
+
+    if(certificateId == undefined || certificateId == null){
+        $('#modalSysError').modal('open');
+    }else{
+        $.ajax({
+            type: "GET",
+            url: certificate_endpoint+"/"+certificateId,
+            data: {'certificate_type':certificate_type, 'isIdSearch':'true'},
+            success: function(response){
+                if(response.status >= 200 && response.status < 400){
+                    var rootContent = response.data[0];
+                    // Check if Priest ID is empty
+                    if(rootContent['priest_id'] == null){
+                        if (confirm('This certificate has no parish priest as of the moment\nDo you want to set it first before printing it?')) {
+                            // Call API
+                            getPriestForModal("NA", certificateId);
+                            // Assign priest then recall print
+                            $("#assignPriestModalForm").modal('open');
+                        } else {
+                            alert('else print automatically');
+                        }
+                    }else{
+                        var payload = {
+                            "certificate_type":certificate_type,
+                            "content": rootContent
+                        };
+                        printCertificate(payload);
+                    }
+                }else{
+                    Materialize.toast('Something Went Wrong:: '+JSON.stringify(response.message), 5000, 'red rounded');
+                }
+            }, error: function(e){
+                Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
+            }
+        });
+    }
+
 }
 
 // ==================================== Certificates
@@ -351,7 +440,7 @@ function getConfirmationList(url){
                 $(".btnPrintCCertificate").on('click', function(e){
                     e.preventDefault();
                     var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
-                    printConfirmationCertificate(certificateId, $(this).attr("id"));
+                    printConfirmationCertificate(certificateId, 'confirmation');
                 });
 
                 /// Update Confirmation Certificate
@@ -575,67 +664,6 @@ function getConfirmationList(url){
 
     }
 }
-
-
-function printConfirmationCertificate(certificateId){
-    alert('Test');
-    isTokenExist();
-    var AT = localStorage.getItem("AT");
-    checkTokenValidity(AT);
-
-    if(certificateId == undefined || certificateId == null){
-        $('#modalSysError').modal('open');
-    }else{
-        $.ajax({
-            type: "GET",
-            url: certificate_endpoint+"/"+certificateId,
-            data: {'certificate_type':'confirmation', 'isIdSearch':'true'},
-            success: function(response){
-                if(response.status >= 200 && response.status < 400){
-                    var rootContent = response.data[0];
-                    // Check if Priest ID is empty
-                    if(rootContent['priest_id'] == null){
-                        if (confirm('This certificate has no parish priest as of the moment\nDo you want to set it first before printing it?')) {
-                            // Call API
-                            getPriestForModal("NA", certificateId);
-                            // Assign priest then recall print
-                            $("#assignPriestModalForm").modal('open');
-                        } else {
-                            alert('else print automatically');
-                        }
-                    }else{
-                        printCertificate('Test');
-                    }
-
-                    function printCertificate(data){
-                        // Print automatically
-                        print();
-                    }
-                }else{
-                    Materialize.toast('Something Went Wrong:: '+JSON.stringify(response.message), 5000, 'red rounded');
-                }
-            }, error: function(e){
-                Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
-            }
-        });
-    }
-
-}
-
-
-// DT: pagination button here...
-// Pagination For Confirmation
-$(document).on('click', '.btnPaginateConfirmation', function(){
-    let url = $(this).attr("url");
-    let parentClass = $(this).parent().prop('className');
-    if(parentClass != "active"){
-        let status = $(this).attr("class").split(" ")[1];
-        if(status != "disabled"){
-            getConfirmationList(url);
-        }
-    }
-});
-
 
 // Birth
 function getBirthList(url){
@@ -970,16 +998,6 @@ function getBirthList(url){
 
     }
 }
-// DT: pagination button here...
-// Pagination For Birth
-$(document).on('click', '.btnPaginationForBirth', function(){
-    let url = $(this).attr("url");
-    let status = $(this).attr("class").split(" ")[1];
-    if(status != "disabled"){
-        getBirthList(url);
-    }
-});
-
 // Mariage
 function getMarriageList(url){
     isTokenExist();
@@ -1380,16 +1398,6 @@ function getMarriageList(url){
 
     }
 }
-// DT: pagination button here...
-// Pagination For Marriage
-$(document).on('click', '.btnPaginationForMarriage', function(){
-    let url = $(this).attr("url");
-    let status = $(this).attr("class").split(" ")[1];
-    if(status != "disabled"){
-        getMarriageList(url);
-    }
-});
-
 
 // Death
 function getDeathList(url){
@@ -1459,9 +1467,10 @@ function getDeathList(url){
                     $('.tooltipped').tooltip({delay: 50});
 
                     /// Print Confirmation Certificate
-                    $(".btnPrintDCertificate").on('click', function(){
-                        var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
-                        printMarriageCertificate(certificateId, $(this).attr("id"));
+                    $(".btnPrintDCertificate").on('click', function(e){
+                        e.preventDefault();
+                        var certificateId = $(this).attr("id").substr('btnPrintDCertificate-'.length);
+                        printConfirmationCertificate(certificateId, 'death');
                     });
                 
                     /// Update Confirmation Certificate
@@ -1711,6 +1720,19 @@ function getDeathList(url){
     }
 }
 
+
+// ==================================== Paginations
+// DT: pagination button here...
+// Pagination For Birth
+$(document).on('click', '.btnPaginationForBirth', function(){
+    let url = $(this).attr("url");
+    let status = $(this).attr("class").split(" ")[1];
+    if(status != "disabled"){
+        getBirthList(url);
+    }
+});
+
+
 // DT: pagination button here...
 // Pagination For Death
 $(document).on('click', '.btnPaginationForDeath', function(){
@@ -1721,6 +1743,30 @@ $(document).on('click', '.btnPaginationForDeath', function(){
     }
 });
 
+
+// DT: pagination button here...
+// Pagination For Marriage
+$(document).on('click', '.btnPaginationForMarriage', function(){
+    let url = $(this).attr("url");
+    let status = $(this).attr("class").split(" ")[1];
+    if(status != "disabled"){
+        getMarriageList(url);
+    }
+});
+
+
+// DT: pagination button here...
+// Pagination For Confirmation
+$(document).on('click', '.btnPaginateConfirmation', function(){
+    let url = $(this).attr("url");
+    let parentClass = $(this).parent().prop('className');
+    if(parentClass != "active"){
+        let status = $(this).attr("class").split(" ")[1];
+        if(status != "disabled"){
+            getConfirmationList(url);
+        }
+    }
+});
 
 
 
