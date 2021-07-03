@@ -227,7 +227,6 @@ function getPriestForModal(url, certificateId){
                                 if(response.status >= 200 && response.status < 400){
                                     $("#assignPriestModalForm").modal('close');
                                     var certificate_in_storage = localStorage.getItem('defaultTable');
-                                    printConfirmationCertificate(certificateId,certificate_in_storage);
                                     var selectedTable = localStorage.getItem('defaultTable');
                                     if(selectedTable == "confirmation"){
                                         getConfirmationList("NA");
@@ -238,6 +237,7 @@ function getPriestForModal(url, certificateId){
                                     }else if(selectedTable == "death"){
                                         getDeathList("NA");
                                     }
+                                    printTypeCertificate(certificateId,certificate_in_storage);
                                 }else {
                                     Materialize.toast('Something Went Wrong:: '+JSON.stringify(response.message), 5000, 'red rounded');
                                 }
@@ -312,7 +312,6 @@ function printCertificate(personData){
                         // date_issue
                         var date_issued = metaContent['date_issued'];
                         printContent = printContent.replaceAll('date_issue',date_issued);
-                        
                     }else if(personData.certificate_type == 'marriage'){
                         alert('m1');
                     }else if(personData.certificate_type == 'birth'){
@@ -325,9 +324,11 @@ function printCertificate(personData){
                     var a = window.open('', '', 'height=1000, width=1000, fullscreen=yes, channelmode=yes');
                     setTimeout(() => {
                         a.document.write(printContent);
+                    },1000);
+                    setTimeout(() => {
                         a.print();
                         a.close();
-                    }, 1000);
+                    }, 1500);
                 }else{
                     Materialize.toast('Template is unavailable, Please contact your app administrator', 5000, 'red rounded');
                 }
@@ -341,7 +342,7 @@ function printCertificate(personData){
 }
 
 
-function printConfirmationCertificate(certificateId, certificate_type){
+function printTypeCertificate(certificateId, certificate_type){
     isTokenExist();
     var AT = localStorage.getItem("AT");
     checkTokenValidity(AT);
@@ -491,7 +492,7 @@ function getConfirmationList(url){
                 $(".btnPrintCCertificate").on('click', function(e){
                     e.preventDefault();
                     var certificateId = $(this).attr("id").substr('btnPrintCCertificate-'.length);
-                    printConfirmationCertificate(certificateId, 'confirmation');
+                    printTypeCertificate(certificateId, 'confirmation');
                 });
 
                 /// Update Confirmation Certificate
@@ -1521,7 +1522,7 @@ function getDeathList(url){
                     $(".btnPrintDCertificate").on('click', function(e){
                         e.preventDefault();
                         var certificateId = $(this).attr("id").substr('btnPrintDCertificate-'.length);
-                        printConfirmationCertificate(certificateId, 'death');
+                        printTypeCertificate(certificateId, 'death');
                     });
                 
                     /// Update Confirmation Certificate
