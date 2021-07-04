@@ -334,44 +334,113 @@ function printCertificate(personData){
                         var date_issued = metaContent['date_issued'];
                         printContent = printContent.replaceAll('date_issue',date_issued);
                     }else if(personData.certificate_type == 'marriage'){
+                        // Root Content
+                        var rootContent = personData['content'];
+                        console.log(rootContent);
                         // Parsing Meta Content
                         var metaContent = JSON.parse(personData['content']['meta']);
                         // husbands_name
-                        var fname = metaContent['firstname']+" "+metaContent['middlename']+" "+metaContent['lastname'];
+                        var fname = metaContent['husband_firstname']+" "+metaContent['husband_middlename']+" "+metaContent['husband_lastname'];
                         printContent = printContent.replaceAll('husbands_name',fname);
                         // husbands_age
-                        var fname = metaContent['firstname'];
-                        printContent = printContent.replaceAll('husbands_name',fname);
+                        var hage = metaContent['husband_age'];
+                        printContent = printContent.replaceAll('husbands_age',hage);
                         // husbands_civil_status
+                        var husband_civil_status = metaContent['husband_civil_status'];
+                        printContent = printContent.replaceAll('husbands_civil_status',husband_civil_status);
                         // husbands_date_of_birth
+                        var husband_birthdate = metaContent['husband_birthdate'];
+                        printContent = printContent.replaceAll('husbands_date_of_birth',husband_birthdate);
+                        // husbands_place_of_birth
+                        var husband_birthplace = metaContent['husband_birthplace'];
+                        printContent = printContent.replaceAll('husbands_place_of_birth',husband_birthplace);
                         // husbands_residence
+                        var husband_residence = metaContent['husband_residence'];
+                        printContent = printContent.replaceAll('husbands_residence',husband_residence);
                         // husbands_date_of_baptism
+                        var husband_baptismdate = metaContent['husband_baptismdate'];
+                        printContent = printContent.replaceAll('husbands_date_of_baptism',husband_baptismdate);
                         // husbands_fathers_name
+                        var husband_fathersname = metaContent['husband_fathersname'];
+                        printContent = printContent.replaceAll('husbands_fathers_name',husband_fathersname);
                         // husbands_mothers_name
+                        var husband_mothersname = metaContent['husband_mothersname'];
+                        printContent = printContent.replaceAll('husbands_mothers_name',husband_mothersname);
                         // husbands_first_witness
+                        var husband_firstwitness = metaContent['husband_firstwitness'];
+                        printContent = printContent.replaceAll('husbands_first_witness',husband_firstwitness);
                         // husbands_second_witness
+                        var husband_secondwitness = metaContent['husband_secondwitness'];
+                        printContent = printContent.replaceAll('husbands_second_witness',husband_secondwitness);
 
                         // wifes_name
+                        var wfname = metaContent['wife_firstname']+" "+metaContent['wife_middlename']+" "+metaContent['wife_lastname'];
+                        printContent = printContent.replaceAll('wifes_name',wfname);
                         // wifes_age
+                        var wife_age = metaContent['wife_age'];
+                        printContent = printContent.replaceAll('wifes_age',wife_age);
                         // wifes_civil_status
-                        // wifes_date_of_birt
-                        // hwifes_residence
+                        var wife_civil_status = metaContent['wife_civil_status'];
+                        printContent = printContent.replaceAll('wifes_civil_status',wife_civil_status);
+                        // wifes_date_of_birth
+                        var wife_birthdate = metaContent['wife_birthdate'];
+                        printContent = printContent.replaceAll('wifes_date_of_birth',wife_birthdate);
+                        // wifes_place_of_birth
+                        var wife_birthplace = metaContent['wife_birthplace'];
+                        printContent = printContent.replaceAll('wifes_place_of_birth',wife_birthplace);
+                        // wifes_residence
+                        var wife_residence = metaContent['wife_residence'];
+                        printContent = printContent.replaceAll('wifes_residence',wife_residence);
                         // wifes_date_of_baptism
+                        var wife_baptismdate = metaContent['wife_baptismdate'];
+                        printContent = printContent.replaceAll('wifes_date_of_baptism',wife_baptismdate);
                         // wifes_fathers_name
+                        var wife_fathersname = metaContent['wife_fathersname'];
+                        printContent = printContent.replaceAll('wifes_fathers_name',wife_fathersname);
                         // wifes_mothers_name
+                        var wife_mothersname = metaContent['wife_mothersname'];
+                        printContent = printContent.replaceAll('wifes_mothers_name',wife_mothersname);
                         // wifes_first_witness
+                        var wife_firstwitness = metaContent['wife_firstwitness'];
+                        printContent = printContent.replaceAll('wifes_first_witness',wife_firstwitness);
                         // wifes_second_witness
+                        var wife_secondwitness = metaContent['wife_secondwitness'];
+                        printContent = printContent.replaceAll('wifes_second_witness',wife_secondwitness);
 
                         // place_of_marriage
+                        var marriage_place = metaContent['marriage_place'];
+                        printContent = printContent.replaceAll('place_of_marriage',marriage_place);
                         // date_of_marriage
+                        var marriage_date = metaContent['marriage_date'];
+                        printContent = printContent.replaceAll('date_of_marriage',marriage_date);
                         // solemnized_by
+                        var solemnized_by = metaContent['solemnized_by'];
+                        printContent = printContent.replaceAll('solemnized_by',solemnized_by);
                         // marriages_no
+                        var marriage_number = metaContent['marriage_number'];
+                        printContent = printContent.replaceAll('marriages_no',marriage_number);
                         // page_no
+                        var marriage_page = metaContent['marriage_page'];
+                        printContent = printContent.replaceAll('page_no',marriage_page);
                         // line_no
+                        var marriage_line = metaContent['marriage_line'];
+                        printContent = printContent.replaceAll('line_no',marriage_line);
                         // number_day
+                        var marriage_day = metaContent['marriage_day'];
+                        printContent = printContent.replaceAll('number_day',marriage_day);
                         // month_text
+                        var marriage_month = monthNames[metaContent['marriage_month'] - 1];
+                        printContent = printContent.replaceAll('month_text',marriage_month);
                         // year_in_two
+                        var marriage_year = metaContent['marriage_year'].toString().substring(2);
+                        printContent = printContent.replaceAll('year_in_two',marriage_year);
                         // parish_priest
+                        if(rootContent['priest_id'] != null){
+                            var priest_name = rootContent['priest_clergy']+" "+rootContent['priest_fname']+" "+rootContent['priest_mname'].charAt(0)+". "+rootContent['priest_lname'];
+                            printContent = printContent.replaceAll('parish_priest',priest_name);
+                        }else{
+                            printContent = printContent.replaceAll('parish_priest','');
+                        }
                     }else if(personData.certificate_type == 'birth'){
                         alert('b1');
                     }else if(personData.certificate_type == 'death'){

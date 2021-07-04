@@ -21,7 +21,7 @@ class CertificateController extends Controller
         //return all data for Certificate table
         $result = DB::table('certificates')
         ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
-        ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
+        ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname', 'priests.prefix as priest_clergy')
         ->where('certificates.is_deleted', 0)
         ->where('certificates.certificate_type', $request->certificate_type)
         ->orderByRaw('certificates.id DESC')
@@ -214,7 +214,7 @@ class CertificateController extends Controller
 
             $result = DB::table('certificates')
             ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
-            ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
+            ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname', 'priests.prefix as priest_clergy')
             ->where('certificates.is_deleted', 0)
             ->where('certificates.id', $search)
             ->get();
