@@ -574,7 +574,7 @@ function getConfirmationList(url){
             var html = "";
             var pageHtml = "";
 
-            if(response.data.length == 0){
+            if(response.data.length == 0 || response.data.data.length == 0){
                 html+= "<tr>"
                 +"<td colspan='21'>No Records Matched.</td>"
                 +"</tr>";
@@ -897,7 +897,7 @@ function getBirthList(url){
             var html = "";
             var pageHtml = "";
 
-            if(response.data.length == 0){
+            if(response.data.length == 0 || response.data.data.length == 0){
                 html+= "<tr>"
                 +"<td colspan='21'>No Records Matched.</td>"
                 +"</tr>";
@@ -1236,7 +1236,7 @@ function getMarriageList(url){
             var html = "";
             var pageHtml = "";
             
-            if(response.data.length == 0){
+            if(response.data.length == 0 || response.data.data.length == 0){
                 html+= "<tr>"
                 +"<td colspan='37'>No Records Matched.</td>"
                 +"</tr>";
@@ -1642,7 +1642,7 @@ function getDeathList(url){
             var html = "";
             var pageHtml = "";
 
-            if(response.data.length == 0){
+            if(response.data.length == 0 || response.data.data.length == 0){
                 html+= "<tr>"
                 +"<td colspan='18'>No Records Matched.</td>"
                 +"</tr>";

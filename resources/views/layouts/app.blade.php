@@ -106,7 +106,7 @@
                     type: "GET",
                     url: general_controller_endpoint,
                     success: function(response){
-                        console.log(response);
+                        // console.log(response);
                     }, error: function(e){
                         console.log(e);
                     }
