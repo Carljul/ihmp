@@ -393,6 +393,7 @@
                 var getCert = localStorage.getItem("templateDropdown");
                 for(var x = 0; x < arrayToImport.length; x++){
                     var splitRecord = arrayToImport[x];
+                    console.log(splitRecord);
                     if(getCert == "confirmation"){
                         validateAllFieldsAndCreatePayloadImportConfirmation(
                             x,
@@ -417,6 +418,8 @@
                             delegated_user
                         );
                     }else if(getCert == "marriage"){
+                        console.log('validateAllFieldsAndCreatePayloadForMarriage');
+                        console.log(splitRecord[4]);
                         validateAllFieldsAndCreatePayloadForMarriage(
                             x,
                             splitRecord[0], //husband_firstname,
@@ -731,7 +734,7 @@
             husband_middlename,
             husband_lastname,
             husband_civil_status,
-            husband_birthdate,
+            husband_birthdate_import,
             husband_birth_place,
             husband_residence,
             husband_baptismdate,
@@ -765,11 +768,11 @@
                 husband_firstname == null || husband_firstname == undefined || husband_firstname == "" ||
                 husband_middlename == null || husband_middlename == undefined || husband_middlename == "" ||
                 husband_lastname == null || husband_lastname == undefined || husband_lastname == "" ||
-                isNaN(Date.parse(husband_birthdate)) ||
+                isNaN(Date.parse(husband_birthdate_import)) ||
                 wife_firstname == null || wife_firstname == undefined || wife_firstname == "" ||
                 wife_middlename == null || wife_middlename == undefined || wife_middlename == ""||
                 wife_lastname == null || wife_lastname == undefined || wife_lastname == "" ||
-                isNaN(Date.parse(wife_baptismdate)) ||
+                isNaN(Date.parse(wife_birthdate)) ||
                 isNaN(Date.parse(marriage_date))
                 // !husband_civil_status.toLowerCase().includes('single') ||
                 // !husband_civil_status.toLowerCase().includes('widowed') ||
@@ -778,44 +781,46 @@
                 emptyRowsImportConfirmation.push(row);
             }else{                
                 var payloadToCreate;
-                husband_birth_date = new Date(husband_birth_date);
-                husband_baptism_date = new Date(husband_baptism_date);
-                wife_birth_date = new Date(wife_birth_date);
-                wife_baptism_date = new Date(wife_baptism_date);
+                console.log(husband_birthdate_import);
+                husband_birthdate_import = new Date(husband_birthdate_import);
+                husband_baptismdate = new Date(husband_baptismdate);
+                wife_birthdate = new Date(wife_birthdate);
+                wife_baptismdate = new Date(wife_baptismdate);
                 marriage_date = new Date(marriage_date);
                 marriage_date_issue = new Date(marriage_date_issue);
+                
                 
                 var metaContent = {
                     "husband_firstname":husband_firstname,
                     "husband_middlename":husband_middlename,
                     "husband_lastname":husband_lastname,
-                    "husband_age":getAge(husband_birth_date),
+                    "husband_age":getAge(husband_birthdate_import),
                     "husband_civil_status":husband_civil_status,
-                    "husband_birthdate":(husband_birth_date.getMonth()+1)+"/"+husband_birth_date.getDate()+"/"+husband_birth_date.getFullYear(),
+                    "husband_birthdate":(husband_birthdate_import.getMonth()+1)+"/"+husband_birthdate_import.getDate()+"/"+husband_birthdate_import.getFullYear(),
                     "husband_birthplace":husband_birth_place,
                     "husband_residence":husband_residence,
-                    "husband_baptismdate":(husband_baptism_date.getMonth()+1)+"/"+husband_baptism_date.getDate()+"/"+husband_baptism_date.getFullYear(),
-                    "husband_fathersname":husband_fathers_name,
-                    "husband_mothersname":husband_mothers_name,
+                    "husband_baptismdate":(husband_baptismdate.getMonth()+1)+"/"+husband_baptismdate.getDate()+"/"+husband_baptismdate.getFullYear(),
+                    "husband_fathersname":husband_fathersname,
+                    "husband_mothersname":husband_mothersname,
                     "husband_firstwitness":husband_first_witness,
                     "husband_secondwitness":husband_second_witness,
                     "wife_firstname":wife_firstname,
                     "wife_middlename":wife_middlename,
                     "wife_lastname":wife_lastname,
-                    "wife_age":getAge(wife_birth_date),
+                    "wife_age":getAge(wife_birthdate),
                     "wife_civil_status":wife_civil_status,
-                    "wife_birthdate":(wife_birth_date.getMonth()+1)+"/"+wife_birth_date.getDate()+"/"+wife_birth_date.getFullYear(),
-                    "wife_birthplace":wife_birth_place,
+                    "wife_birthdate":(wife_birthdate.getMonth()+1)+"/"+wife_birthdate.getDate()+"/"+wife_birthdate.getFullYear(),
+                    "wife_birthplace":wife_birthplace,
                     "wife_residence":wife_residence,
-                    "wife_baptismdate":(wife_baptism_date.getMonth()+1)+"/"+wife_baptism_date.getDate()+"/"+wife_baptism_date.getFullYear(),
-                    "wife_fathersname":wife_fathers_name,
-                    "wife_mothersname":wife_mothers_name,
-                    "wife_firstwitness":wife_first_witness,
-                    "wife_secondwitness":wife_second_witness,
-                    "marriage_place":marraige_place,
+                    "wife_baptismdate":(wife_baptismdate.getMonth()+1)+"/"+wife_baptismdate.getDate()+"/"+wife_baptismdate.getFullYear(),
+                    "wife_fathersname":wife_fathersname,
+                    "wife_mothersname":wife_mothersname,
+                    "wife_firstwitness":wife_firstwitness,
+                    "wife_secondwitness":wife_secondwitness,
+                    "marriage_place":marriage_place,
                     "marriage_date":(marriage_date.getMonth()+1)+"/"+marriage_date.getDate()+"/"+marriage_date.getFullYear(),
-                    "solemnized_by":marraige_solemnized_by,
-                    "marriage_number":marriage_no,
+                    "solemnized_by":solemnized_by,
+                    "marriage_number":marriage_number,
                     "marriage_page":marriage_page,
                     "marriage_line":marriage_line,
                     "marriage_day":marriage_date_issue.getDate(),
