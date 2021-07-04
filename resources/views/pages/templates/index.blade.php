@@ -30,6 +30,7 @@
                                                     <th>Template Type</th>
                                                     <th>Content</th>
                                                     <th>Is Template</th>
+                                                    <th>Updated at</th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
@@ -245,11 +246,13 @@
                         if(response.data.length !== 0){
                             for(var x = 0; x < templateObject.length; x++){
                                 let istemplate = templateObject[x]['is_template'] === 1 ? "True" : "False"
+                                let updatedDate = new Date(templateObject[x]['updated_at']);
                                 html += "<tr>"
                                 +"<td>"+templateObject[x]['id']+"</td>"
                                 +"<td>"+templateObject[x]['template_type']+"</td>"
                                 +"<td>"+templateObject[x]['template_type'].charAt(0).toUpperCase() + templateObject[x]['template_type'].slice(1)+" template is added</td>"
                                 +"<td>"+istemplate+"</td>"
+                                +"<td>"+monthNames[updatedDate.getMonth()+1]+" "+updatedDate.getDate()+", "+updatedDate.getFullYear()+"</td>"
                                 +"<td>"
                                     +"<button class='btn btn-wave btnDelete' id='btnDelete-"+templateObject[x]['id']+"'><i class='material-icons'>delete</i></button>"
                                     +" "
