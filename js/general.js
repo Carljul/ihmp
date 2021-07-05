@@ -302,10 +302,10 @@ function printCertificate(personData){
                         var metaContent = JSON.parse(personData['content']['meta']);
                         // Fathers Name
                         var fathersName = metaContent['father_firstname']+" "+metaContent['father_middlename']+" "+metaContent['father_lastname'];
-                        printContent = printContent.replaceAll('fathers_name',fathersName);
+                        printContent = printContent.replaceAll('fathers_name',fathersName == ''?'&nbsp;':fathersName);
                         // Mothers Name
                         var motherName = metaContent['mother_firstname']+" "+metaContent['mother_middlename']+" "+metaContent['mother_lastname'];
-                        printContent = printContent.replaceAll('mothers_name',motherName);
+                        printContent = printContent.replaceAll('mothers_name',motherName == ''?'&nbsp;':motherName);
                         // confirmation_day
                         var confirmation_day = ordinal_suffix_of(metaContent['confirmation_day']);
                         printContent = printContent.replaceAll('number_day',confirmation_day);
@@ -317,22 +317,22 @@ function printCertificate(personData){
                         printContent = printContent.replaceAll('year',confirmation_year);
                         // confirmation_by
                         var confirmation_by = metaContent['confirmation_by'];
-                        printContent = printContent.replaceAll('priest_name',confirmation_by);
+                        printContent = printContent.replaceAll('priest_name',confirmation_by == ''?'&nbsp;':confirmation_by);
                         // first sponsor
                         var first_sponsor = metaContent['first_sponsor'];
-                        printContent = printContent.replaceAll('first_sponsor',first_sponsor);
+                        printContent = printContent.replaceAll('first_sponsor',first_sponsor == ''?'&nbsp;':first_sponsor);
                         // second sponsor
                         var second_sponsor = metaContent['second_sponsor'];
-                        printContent = printContent.replaceAll('second_sponsor',second_sponsor);
+                        printContent = printContent.replaceAll('second_sponsor',second_sponsor == ''?'&nbsp;':second_sponsor);
                         // registration_book
                         var registration_book = metaContent['registration_book'];
-                        printContent = printContent.replaceAll('register_book',registration_book);
+                        printContent = printContent.replaceAll('register_book',registration_book == ''?'&nbsp;':registration_book);
                         // book_page
                         var book_page = metaContent['book_page'];
-                        printContent = printContent.replaceAll('page_number',book_page);
+                        printContent = printContent.replaceAll('page_number',book_page == ''?'&nbsp;':book_page);
                         // book_number
                         var book_number = metaContent['book_number'];
-                        printContent = printContent.replaceAll('cert_no',book_number);
+                        printContent = printContent.replaceAll('cert_no',book_number == ''?'&nbsp;':book_number);
                         // date_issue
                         var date_issued = new Date(metaContent['date_issued']);
                         printContent = printContent.replaceAll('date_issue',monthNames[date_issued.getMonth()]+" "+date_issued.getDate()+", "+date_issued.getFullYear());
@@ -359,22 +359,22 @@ function printCertificate(personData){
                         printContent = printContent.replaceAll('husbands_place_of_birth',husband_birthplace);
                         // husbands_residence
                         var husband_residence = metaContent['husband_residence'];
-                        printContent = printContent.replaceAll('husbands_residence',husband_residence);
+                        printContent = printContent.replaceAll('husbands_residence',husband_residence == ''?'&nbsp;':husband_residence);
                         // husbands_date_of_baptism
                         var husband_baptismdate = new Date(metaContent['husband_baptismdate']);
                         printContent = printContent.replaceAll('husbands_date_of_baptism',monthNames[husband_baptismdate.getMonth()-1]+" "+husband_baptismdate.getDate()+", "+husband_baptismdate.getFullYear());
                         // husbands_fathers_name
                         var husband_fathersname = metaContent['husband_fathersname'];
-                        printContent = printContent.replaceAll('husbands_fathers_name',husband_fathersname);
+                        printContent = printContent.replaceAll('husbands_fathers_name',husband_fathersname == ''?'&nbsp;':husband_fathersname);
                         // husbands_mothers_name
                         var husband_mothersname = metaContent['husband_mothersname'];
-                        printContent = printContent.replaceAll('husbands_mothers_name',husband_mothersname);
+                        printContent = printContent.replaceAll('husbands_mothers_name',husband_mothersname == ''?'&nbsp;':husband_mothersname);
                         // husbands_first_witness
                         var husband_firstwitness = metaContent['husband_firstwitness'];
-                        printContent = printContent.replaceAll('husbands_first_witness',husband_firstwitness);
+                        printContent = printContent.replaceAll('husbands_first_witness',husband_firstwitness == ''?'&nbsp;':husband_firstwitness);
                         // husbands_second_witness
                         var husband_secondwitness = metaContent['husband_secondwitness'];
-                        printContent = printContent.replaceAll('husbands_second_witness',husband_secondwitness);
+                        printContent = printContent.replaceAll('husbands_second_witness',husband_secondwitness == ''?'&nbsp;':husband_secondwitness);
 
                         // wifes_name
                         var wfname = metaContent['wife_firstname']+" "+metaContent['wife_middlename']+" "+metaContent['wife_lastname'];
@@ -393,7 +393,7 @@ function printCertificate(personData){
                         printContent = printContent.replaceAll('wifes_place_of_birth',wife_birthplace);
                         // wifes_residence
                         var wife_residence = metaContent['wife_residence'];
-                        printContent = printContent.replaceAll('wifes_residence',wife_residence);
+                        printContent = printContent.replaceAll('wifes_residence',wife_residence == ''?'&nbsp;':wife_residence);
                         // wifes_date_of_baptism
                         var wife_baptismdate = new Date(metaContent['wife_baptismdate']);
                         printContent = printContent.replaceAll('wifes_date_of_baptism',monthNames[wife_baptismdate.getMonth()-1]+" "+wife_baptismdate.getDate()+", "+wife_baptismdate.getFullYear());
@@ -402,13 +402,13 @@ function printCertificate(personData){
                         printContent = printContent.replaceAll('wifes_fathers_name',wife_fathersname == ''?'&nbsp;':wife_fathersname);
                         // wifes_mothers_name
                         var wife_mothersname = metaContent['wife_mothersname'];
-                        printContent = printContent.replaceAll('wifes_mothers_name',wife_mothersname);
+                        printContent = printContent.replaceAll('wifes_mothers_name',wife_mothersname == ''?'&nbsp;':wife_mothersname);
                         // wifes_first_witness
                         var wife_firstwitness = metaContent['wife_firstwitness'];
-                        printContent = printContent.replaceAll('wifes_first_witness',wife_firstwitness);
+                        printContent = printContent.replaceAll('wifes_first_witness',wife_firstwitness == ''?'&nbsp;':wife_firstwitness);
                         // wifes_second_witness
                         var wife_secondwitness = metaContent['wife_secondwitness'];
-                        printContent = printContent.replaceAll('wifes_second_witness',wife_secondwitness);
+                        printContent = printContent.replaceAll('wifes_second_witness',wife_secondwitness == ''?'&nbsp;':wife_secondwitness);
 
                         // place_of_marriage
                         var marriage_place = metaContent['marriage_place'];
@@ -421,13 +421,13 @@ function printCertificate(personData){
                         printContent = printContent.replaceAll('solemnized_by',solemnized_by);
                         // marriages_no
                         var marriage_number = metaContent['marriage_number'];
-                        printContent = printContent.replaceAll('marriages_no',marriage_number);
+                        printContent = printContent.replaceAll('marriages_no',marriage_number == ''?'&nbsp;':marriage_number);
                         // page_no
                         var marriage_page = metaContent['marriage_page'];
-                        printContent = printContent.replaceAll('page_no',marriage_page);
+                        printContent = printContent.replaceAll('page_no',marriage_page == ''?'&nbsp;':marriage_page);
                         // line_no
                         var marriage_line = metaContent['marriage_line'];
-                        printContent = printContent.replaceAll('line_no',marriage_line);
+                        printContent = printContent.replaceAll('line_no',marriage_line == ''?'&nbsp;':marriage_line);
                         // number_day
                         var marriage_day = ordinal_suffix_of(metaContent['marriage_day']);
                         printContent = printContent.replaceAll('number_day',marriage_day);
@@ -458,34 +458,34 @@ function printCertificate(personData){
                         printContent = printContent.replaceAll('born_on_date',monthNames[born_on.getMonth() - 1]+" "+born_on.getDate()+", "+born_on.getFullYear());
                         // born_in_date
                         var born_in = metaContent['born_in'];
-                        printContent = printContent.replaceAll('born_in_date',born_in);
+                        printContent = printContent.replaceAll('born_in_date',born_in == ''?'&nbsp;':born_in);
                         // fathers_name
                         var father_fullname = metaContent['father_firstname']+" "+metaContent['father_middlename']+" "+metaContent['father_lastname'];
-                        printContent = printContent.replaceAll('fathers_name',father_fullname);
+                        printContent = printContent.replaceAll('fathers_name',father_fullname == ''?'&nbsp;':father_fullname);
                         // mothers_name
                         var mothers_fullname = metaContent['mother_firstname']+" "+metaContent['mother_middlename']+" "+metaContent['mother_lastname'];
-                        printContent = printContent.replaceAll('mothers_name',mothers_fullname);
+                        printContent = printContent.replaceAll('mothers_name',mothers_fullname == ''?'&nbsp;':mothers_fullname);
                         // residents_of
                         var resident_of = metaContent['resident_of'];
-                        printContent = printContent.replaceAll('residents_of',resident_of);
+                        printContent = printContent.replaceAll('residents_of',resident_of == ''?'&nbsp;':resident_of);
                         // date_of_baptism
                         var baptism_date = new Date(metaContent['baptism_date']);
                         printContent = printContent.replaceAll('date_of_baptism',monthNames[baptism_date.getMonth()-1]+" "+baptism_date.getDate()+", "+baptism_date.getFullYear());
                         // minister_of
                         var baptism_minister = metaContent['baptism_minister'];
-                        printContent = printContent.replaceAll('minister_of',baptism_minister);
+                        printContent = printContent.replaceAll('minister_of',baptism_minister == ''?'&nbsp;':baptism_minister);
                         // godparentes_list
                         var godparents = metaContent['godparents'];
-                        printContent = printContent.replaceAll('godparents_list',godparents);
+                        printContent = printContent.replaceAll('godparents_list',godparents == ''?'&nbsp;':godparents);
                         // baptismal_register
                         var baptismal_register = metaContent['baptismal_register'];
-                        printContent = printContent.replaceAll('baptismal_register',baptismal_register);
+                        printContent = printContent.replaceAll('baptismal_register',baptismal_register == ''?'&nbsp;':baptismal_register);
                         // volume_number
                         var volume = metaContent['volume'];
-                        printContent = printContent.replaceAll('volume_number',volume);
+                        printContent = printContent.replaceAll('volume_number',volume == ''?'&nbsp;':volume);
                         // page_number
                         var page = metaContent['page'];
-                        printContent = printContent.replaceAll('page_number',page);
+                        printContent = printContent.replaceAll('page_number',page == ''?'&nbsp;':page);
                         // parish_priest
                         if(rootContent['priest_id'] != null){
                             var priest_name = rootContent['priest_clergy']+" "+rootContent['priest_fname']+" "+rootContent['priest_mname'].charAt(0)+". "+rootContent['priest_lname'];
@@ -506,10 +506,10 @@ function printCertificate(personData){
                         
                         // age_system
                         var age = metaContent['age'];
-                        printContent = printContent.replaceAll('age_system',age);
+                        printContent = printContent.replaceAll('age_system',age == ''?'&nbsp;':age);
                         // residence_of_system
                         var residence = metaContent['residence'];
-                        printContent = printContent.replaceAll('residence_of_system',residence);
+                        printContent = printContent.replaceAll('residence_of_system',residence == ''?'&nbsp;':residence);
                         // date_of_death_system
                         var date_of_death = new Date(metaContent['date_of_death']);
                         printContent = printContent.replaceAll('date_of_death_system',monthNames[date_of_death.getMonth()]+" "+date_of_death.getDate()+", "+date_of_death.getFullYear());
@@ -521,16 +521,16 @@ function printCertificate(personData){
                         printContent = printContent.replaceAll('date_of_burial_system',monthNames[date_of_burial.getMonth()]+" "+date_of_burial.getDate()+", "+date_of_burial.getFullYear());
                         // informant_system
                         var informant_or_relatives = metaContent['informant_or_relatives'];
-                        printContent = printContent.replaceAll('informant_system',informant_or_relatives);
+                        printContent = printContent.replaceAll('informant_system',informant_or_relatives == ''?'&nbsp;':informant_or_relatives);
                         // book_number_system
                         var book_number = metaContent['book_number'];
-                        printContent = printContent.replaceAll('book_number_system',book_number);
+                        printContent = printContent.replaceAll('book_number_system',book_number == ''?'&nbsp;':book_number);
                         // page_number_system
                         var page_number = metaContent['page_number'];
-                        printContent = printContent.replaceAll('page_number_system',page_number);
+                        printContent = printContent.replaceAll('page_number_system',page_number == ''?'&nbsp;':page_number);
                         // registry_number_system
                         var registry_number = metaContent['registry_number'];
-                        printContent = printContent.replaceAll('registry_number_system',registry_number);
+                        printContent = printContent.replaceAll('registry_number_system',registry_number == ''?'&nbsp;':registry_number);
                         // date_issued_system
                         var date_issued = new Date(metaContent['date_issued']);
                         printContent = printContent.replaceAll('date_issued_system',monthNames[date_issued.getMonth()]+" "+date_issued.getDate()+", "+date_issued.getFullYear());
