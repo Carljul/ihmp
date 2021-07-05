@@ -26,7 +26,7 @@
                                         <table>
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th>Prefix</th>
                                                     <th>First Name</th>
                                                     <th>Middle Name</th>
                                                     <th>Last Name</th>
@@ -144,11 +144,11 @@
                         url: priest_endpoint+"/"+pid,
                         data: payload,
                         success: function(data){
-                            if(data.status >= 200 && response.status < 400){
+                            if(data.status >= 200 && data.status < 400){
                                 getPriestList("NA");
                             }else{
-                                Materialize.toast('Something Went Wrong:: '+JSON.stringify(response.message), 5000, 'red rounded');
-                                console.log('["Confirmation Status"]: '+response.status);
+                                Materialize.toast('Something Went Wrong:: '+JSON.stringify(data.message), 5000, 'red rounded');
+                                console.log('["Confirmation Status"]: '+data.status);
                             }
                         }, error: function(e){
                             Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');

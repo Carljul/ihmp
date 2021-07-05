@@ -96,10 +96,10 @@ class PriestController extends Controller
 
             //return specific row using search
             $result = Priest::where('id', $search)
-                    ->orWhere('firstname', $search)
-                    ->orWhere('middlename', $search)
-                    ->orWhere('lastname', $search)
-                    ->orWhere('prefix', $search)
+                    ->orWhere('firstname', 'LIKE', '%'.$search.'%')
+                    ->orWhere('middlename', 'LIKE', '%'.$search.'%')
+                    ->orWhere('lastname', 'LIKE', '%'.$search.'%')
+                    ->orWhere('prefix', 'LIKE', '%'.$search.'%')
                     ->orderByRaw('id DESC')
                     ->paginate($this->getPaginationLimit());
 
