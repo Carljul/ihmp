@@ -104,15 +104,6 @@
             getPriestList("NA");
 
             // -------------------------------- EVENTS ----------------------------------- //
-
-            $("#btnRefresh").on('click', function(e){
-                $(".errMessage").addClass('hide');
-                $(".errorProgressIndicator").removeClass('hide');
-                $(this).delay(3000).queue(function(){
-                    location.reload();
-                });
-            });
-            
             /// Save
             $("#priest_form").on('submit', function(e){
                 e.preventDefault();

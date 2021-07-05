@@ -150,8 +150,8 @@
                             resetPassword(userId);
                         });
                     }, error: function(e){
-                        Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
-                        console.log('["Confirmation Error"]: '+e.responseJSON.message);
+                        Materialize.toast('Something Went Wrong:: '+e, 5000, 'red rounded');
+                        console.log('["Confirmation Error"]: '+e);
                     }
                 });
             }

@@ -109,14 +109,6 @@
             getTemplateList("NA");
 
             // -------------------------------- EVENTS ----------------------------------- //
-
-            $("#btnRefresh").on('click', function(e){
-                $(".errMessage").addClass('hide');
-                $(".errorProgressIndicator").removeClass('hide');
-                $(this).delay(3000).queue(function(){
-                    location.reload();
-                });
-            });
             
             /// Save
             $("#template_form").on('submit', function(e){

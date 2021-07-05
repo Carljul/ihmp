@@ -52,6 +52,17 @@ function isTokenExist(){
     }
 }
 
+$(document).ready(function(){
+    $("#btnRefresh").on('click', function(e){
+        $(".errMessage").addClass('hide');
+        $(".errorProgressIndicator").removeClass('hide');
+        $(this).delay(1000).queue(function(){
+            location.reload();
+        });
+    });
+});
+
+
 //added search handler
 $(document).on('keydown', '#searchARecord', function(e){
     let val = $("#searchARecord").val();
