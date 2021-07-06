@@ -39,6 +39,7 @@ Route::resource('template', 'TemplateController');
 
 // controller for Users Model
 Route::resource('user', 'UserController');
+Route::put('userInfo/{id}', 'UserController@updateInfo')->name("user.updateinfo");
 
 // controller for General Controller
 Route::get('general', 'GeneralController@connectivity')->name('general.connectivity');

@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Traits\GlobalFunction;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -57,15 +58,22 @@ class UserController extends Controller
     public function show($search, Request $request)
     {
         if($request->isIdSearch && $request->isIdSearch == "true" && $request->isIdSearch == true){
-
-            //return specific row using search
-            $result = DB::table('users')
-            ->leftJoin('roles', 'roles.id','=','users.role_id')
-            ->select('users.*','roles.display_name as role_name', 'roles.id as role_id')
-            ->where('users.role_id','!=', 3)
-            ->where('users.id','=',$request->id)
-            ->paginate($this->getPaginationLimit());
-
+            if($request->isOwnedAccount != null || $request->isOwnedAccount != undefined || $request->isOwnedAccount != ''){
+                //return specific row using search
+                $result = DB::table('users')
+                ->leftJoin('roles', 'roles.id','=','users.role_id')
+                ->select('users.*','roles.display_name as role_name', 'roles.id as role_id')
+                ->where('users.id','=',$request->id)->get();
+            }else{
+                //return specific row using search
+                $result = DB::table('users')
+                ->leftJoin('roles', 'roles.id','=','users.role_id')
+                ->select('users.*','roles.display_name as role_name', 'roles.id as role_id')
+                ->where('users.role_id','!=', 3)
+                ->where('users.id','=',$request->id)
+                ->paginate($this->getPaginationLimit());
+            }
+            
             //if search is not found
             if(count($result) == 0){
                 //return json response
@@ -155,5 +163,39 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function updateInfo(Request $request, $id){
+        
+        $payload;
+        if($request->password == null || $request->password == ''){
+            $payload = [
+                "name" => $request->name,
+                "email"=> $request->email,
+                "updated_at" => $this->customCurrentDate()
+            ];
+        }else{
+            $payload = [
+                "name" => $request->name,
+                "email" => $request->email,
+                "password" => Hash::make($request->password),
+                "updated_at" => $this->customCurrentDate()
+            ];
+        }
+
+        //update the resource...
+        $result = User::find($request->id);
+
+        //if there is no existsing data to update
+        if(!$result){
+            //return json response
+            return response()->json($this->customApiResponse([], 404)); //ID NOT FOUND
+        }
+
+        //then proceed with the update
+        $result->update($payload);
+
+        //return json response
+        return response()->json($this->customApiResponse($result, 200)); //OK
     }
 }

@@ -25,6 +25,7 @@ Route::get('/certificate', 'CertificatesViewController@index')->name('certificat
 Route::get('/priest', 'PriestViewController@index')->name('priest')->middleware('auth');
 Route::get('/template', 'TemplateViewController@index')->name('template')->middleware('auth');
 Route::get('/user', 'UserViewController@index')->name('user')->middleware('auth');
+Route::get('/profile', 'ProfileViewController@index')->name('profile')->middleware('auth');
 // Download Route
 Route::get('download/{filename}', function($filename)
 {

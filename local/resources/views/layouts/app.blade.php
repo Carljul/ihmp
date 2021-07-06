@@ -36,7 +36,7 @@
         @else
         <!-- Dropdown Structure -->
         <ul id="dropdown1" class="dropdown-content">
-            <li><a href="/ihmp/admin/users/{{Auth::user()->id}}/edit">Profile</a></li>
+            <li><a href="/ihmp/profile">Profile</a></li>
             <li class="divider"></li>
             <li>
                 <a id="logout_out_link" class="dropdown-item"
