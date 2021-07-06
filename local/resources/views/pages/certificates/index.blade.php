@@ -38,7 +38,7 @@
                 <label>Choose your option to Add</label> -->
             </div>
             <!-- Modal Trigger -->
-            <a class="waves-effect waves-light btn modal-trigger right" href="#importExport" id="importExportButton">
+            <a class="waves-effect waves-light btn modal-trigger right purple" href="#importExport" id="importExportButton">
                 <i class="material-icons left">cloud_upload</i>Import
             </a>
         </div>

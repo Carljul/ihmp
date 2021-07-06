@@ -20,7 +20,7 @@
                                     </div>
 
                                     <div class="col s12">
-                                        <table>
+                                        <table class="striped">
                                             <thead>
                                                 <tr>
                                                     <th colspan="3">Actions</th>

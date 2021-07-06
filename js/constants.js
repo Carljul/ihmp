@@ -2,7 +2,7 @@
     
 /// Development Environment
 const protocol = 'http://';
-const base_url = '192.168.1.10/ihmp';
+const base_url = 'localhost/ihmp';
 const api_server = protocol+''+base_url+/api/;
 const system_url = protocol+''+base_url+'/';
 
@@ -22,6 +22,7 @@ const priest_endpoint = api_server+'priest';
 const template_endpoint = api_server+'template';
 /// ======================== Users
 const user_endpoint = api_server+'user';
+const user_info_endpoint = api_server+'userInfo';
 /// ======================== Verifying Access Token
 const access_token_endpoint = api_server+'accesstoken';
 /// ======================== General Controller

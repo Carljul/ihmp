@@ -23,7 +23,7 @@
                                     </div>
 
                                     <div class="col s12">
-                                        <table>
+                                        <table class="striped">
                                             <thead>
                                                 <tr>
                                                     <th>Prefix</th>
@@ -242,9 +242,9 @@
                                 +"<td>"+priestObject[x]['middlename']+"</td>"
                                 +"<td>"+priestObject[x]['lastname']+"</td>"
                                 +"<td>"
-                                    +"<button class='btn btn-wave btnDelete' id='btnDelete-"+priestObject[x]['id']+"'><i class='material-icons'>delete</i></button>"
+                                    +"<button class='btn btn-wave btnDelete red' id='btnDelete-"+priestObject[x]['id']+"'><i class='material-icons'>delete</i></button>"
                                     +" "
-                                    +"<button class='btn btn-wave btnUpdate' id='btnUpdate-"+priestObject[x]['id']+"'><i class='material-icons'>edit</i></button>"
+                                    +"<button class='btn btn-wave btnUpdate blue' id='btnUpdate-"+priestObject[x]['id']+"'><i class='material-icons'>edit</i></button>"
                                 +"</td>"
                                 +"</tr>";
                             }

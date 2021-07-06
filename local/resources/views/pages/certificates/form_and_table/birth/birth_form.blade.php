@@ -186,6 +186,14 @@
         // This will prevent the date picker from closing automatically
         $('#birth_baptism_date').on('mousedown',function(event){ event.preventDefault(); });
 
+        
+        $("#birth_date_issue").pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 30,
+        });
+        // This will prevent the date picker from closing automatically
+        $('#birth_date_issue').on('mousedown',function(event){ event.preventDefault(); });
+
         // Add Record
         $("#single_birth_form").on('submit', function(e){
             e.preventDefault();

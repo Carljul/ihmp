@@ -78,6 +78,10 @@
                         success: function(response){
                             if(response.status >= 200 && response.status < 400){
                                 Materialize.toast('Updated', 5000, 'green rounded');
+                                
+                                $("#password").val('');
+                                $("#current-password").val('');
+                                getUser();
                             }else{
                                 Materialize.toast('Something Went Wrong::'+response.message, 5000, 'red rounded');
                             }
@@ -100,6 +104,9 @@
                             success: function(response){
                                 if(response.status >= 200 && response.status < 400){
                                     Materialize.toast('Updated', 5000, 'green rounded');
+                                    $("#password").val('');
+                                    $("#current-password").val('');
+                                    getUser();
                                 }else{
                                     Materialize.toast('Something Went Wrong::'+response.message, 5000, 'red rounded');
                                 }

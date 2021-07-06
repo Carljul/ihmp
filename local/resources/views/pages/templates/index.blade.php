@@ -23,7 +23,7 @@
                                     </div>
 
                                     <div class="col s12">
-                                        <table>
+                                        <table class="striped">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
@@ -246,9 +246,9 @@
                                 +"<td>"+istemplate+"</td>"
                                 +"<td>"+monthNames[updatedDate.getMonth()+1]+" "+updatedDate.getDate()+", "+updatedDate.getFullYear()+"</td>"
                                 +"<td>"
-                                    +"<button class='btn btn-wave btnDelete' id='btnDelete-"+templateObject[x]['id']+"'><i class='material-icons'>delete</i></button>"
+                                    +"<button class='btn btn-wave btnDelete red' id='btnDelete-"+templateObject[x]['id']+"'><i class='material-icons'>delete</i></button>"
                                     +" "
-                                    +"<button class='btn btn-wave btnUpdate' id='btnUpdate-"+templateObject[x]['id']+"'><i class='material-icons'>edit</i></button>"
+                                    +"<button class='btn btn-wave btnUpdate blue' id='btnUpdate-"+templateObject[x]['id']+"'><i class='material-icons'>edit</i></button>"
                                 +"</td>"
                                 +"</tr>";
                             }

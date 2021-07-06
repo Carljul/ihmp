@@ -115,7 +115,21 @@
         });
         // This will prevent the date picker from closing automatically
         $('#death_date_of_death').on('mousedown',function(event){ event.preventDefault(); });
+        
+        $("#death_date_of_burial").pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 30
+        });
+        // This will prevent the date picker from closing automatically
+        $('#death_date_of_burial').on('mousedown',function(event){ event.preventDefault(); });
 
+        $("#death_date_issued").pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 30
+        });
+        // This will prevent the date picker from closing automatically
+        $('#death_date_issued').on('mousedown',function(event){ event.preventDefault(); });
+        
         // Saving Death Certificate
         $("#single_death_form").on('submit', function(e){
             e.preventDefault();
