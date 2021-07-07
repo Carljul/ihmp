@@ -23,6 +23,7 @@ class UserController extends Controller
         ->leftJoin('roles', 'roles.id','=','users.role_id')
         ->select('users.*','roles.display_name as role_name', 'roles.id as role_id')
         ->where('users.role_id','!=', 3)
+        ->orderByRaw('users.id DESC')
         ->paginate($this->getPaginationLimit());
         //returning json response
         return response()->json($this->customApiResponse($result, 200)); //OK
@@ -57,12 +58,14 @@ class UserController extends Controller
      */
     public function show($search, Request $request)
     {
+        
         if($request->isIdSearch && $request->isIdSearch == "true" && $request->isIdSearch == true){
-            if($request->isOwnedAccount != null || $request->isOwnedAccount != undefined || $request->isOwnedAccount != ''){
-                //return specific row using search
+            if($request->isOwnedAccount != null || $request->isOwnedAccount != ''){
+                //return specific row using search  
                 $result = DB::table('users')
                 ->leftJoin('roles', 'roles.id','=','users.role_id')
                 ->select('users.*','roles.display_name as role_name', 'roles.id as role_id')
+                ->orderByRaw('users.id DESC')
                 ->where('users.id','=',$request->id)->get();
             }else{
                 //return specific row using search
@@ -71,6 +74,7 @@ class UserController extends Controller
                 ->select('users.*','roles.display_name as role_name', 'roles.id as role_id')
                 ->where('users.role_id','!=', 3)
                 ->where('users.id','=',$request->id)
+                ->orderByRaw('users.id DESC')
                 ->paginate($this->getPaginationLimit());
             }
             
@@ -84,12 +88,14 @@ class UserController extends Controller
             return response()->json($this->customApiResponse($result, 200)); //OK
 
         }else{
-
             // return specific row using search
-            $result = User::where('role_id', '!=', "3")
-                    ->where('name', 'LIKE', '%'.$search.'%')
-                    ->orWhere('email', 'LIKE', '%'.$search.'%')
-                    ->orderByRaw('id DESC')
+            $result = DB::table('users')
+                    ->leftJoin('roles', 'roles.id','=','users.role_id')
+                    ->select('users.*','roles.display_name as role_name', 'roles.id as role_id')
+                    ->where('role_id', '!=', "3")
+                    ->where('users.name', 'LIKE', '%'.$search.'%')
+                    ->orWhere('users.email', 'LIKE', '%'.$search.'%')
+                    ->orderByRaw('users.id DESC')
                     ->paginate($this->getPaginationLimit());
 
             // if search is not found

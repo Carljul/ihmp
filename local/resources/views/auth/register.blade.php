@@ -23,7 +23,7 @@
     }
 </style>
 <div class="row">
-    <div class="col s12 m6 fullscreen" style="background-image: url('../storage/bg/ihmp.jpg');">
+    <div class="col s12 m6 fullscreen" style="background-image: url('../ihmp/storage/bg/ihmp.jpg');">
         &nbsp;
     </div>
     <div class="col s12 m6">
@@ -42,7 +42,7 @@
                         <div class="card">
                             <div class="card-content green white-text">
                                 {{$successMessage}} 
-                                <a href="/" class="white-text">Go to login</a>
+                                <a href="/ihmp/login" class="white-text">Go to login</a>
                             </div>
                         </div>
                     @endif
@@ -102,7 +102,7 @@
                                 {{ __('Register') }}
                             </button>
 
-                            <a href="/" style="margin-left: 10px;">Login Instead?</a>
+                            <a href="/ihmp" style="margin-left: 10px;">Login Instead?</a>
                         </div>
                     </div>
                 </form>

@@ -13,7 +13,7 @@
                                         <h5>Users</h5>
                                     </div>
                                     <div class="col s12 m4">
-                                        <input type="search" class="btnSearch" placeholder="Search . . .">
+                                        <input type="search" class="btnSearchUser" placeholder="Search . . .">
                                     </div>
                                     <div class="col s12 m4">
                                         <div id="paginationDiv" class="right"></div>
@@ -88,7 +88,7 @@
                             }
                         }else{
                             html += "<tr>"
-                                        +"<td colspan='5' class='center'> No records found</td>"
+                                        +"<td colspan='7' class='center'> No records found</td>"
                                     +"</tr>";
 
                             //display the pagination
@@ -166,10 +166,10 @@
             });
 
             //added search handler
-            $(document).on('keydown', '.btnSearch', function(e){
+            $(document).on('keydown', '.btnSearchUser', function(e){
                 if(e.keyCode == 13 || e.keyCode == 9){
                     
-                    let val = $(".btnSearch").val();
+                    let val = $(".btnSearchUser").val();
 
                     //set the url to be returned
                     let url = `${api_server}user/${val}`;
@@ -183,6 +183,9 @@
                 isTokenExist();
                 var AT = localStorage.getItem("AT");
                 checkTokenValidity(AT);
+
+                // Clear Search Field
+                $(".btnSearchUser").val('');
                 
                 if(userId == undefined || userId == null){
                     $('#modalSysError').modal('open');
@@ -227,6 +230,9 @@
                 isTokenExist();
                 var AT = localStorage.getItem("AT");
                 checkTokenValidity(AT);
+
+                // Clear Search Field
+                $(".btnSearchUser").val('');
                 
                 if(userId == undefined || userId == null){
                     $('#modalSysError').modal('open');
@@ -271,6 +277,9 @@
                 isTokenExist();
                 var AT = localStorage.getItem("AT");
                 checkTokenValidity(AT);
+
+                // Clear Search Field
+                $(".btnSearchUser").val('');
                 
                 if(userId == undefined || userId == null){
                     $('#modalSysError').modal('open');
@@ -290,7 +299,7 @@
                                     data: {'isResetPassword':true, "id":userId},
                                     success: function(response){
                                         if(response.status >= 200 && response.status < 400){
-                                            getUserList();
+                                            getUserList("NA");
                                             Materialize.toast('Successfully Reset Password: Default Password (1234567890)', 5000, 'green rounded');
                                         }else{
                                             Materialize.toast('Something Went Wrong::('+response.status+')', 5000, 'red rounded');
