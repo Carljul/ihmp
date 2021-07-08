@@ -141,7 +141,7 @@
                     html += "<option value='' disabled selected>Select Parish Priest</option>";
                     for(var x = 0; x < priestObject.length; x++){
                         var trimed_middle_name = priestObject[x]['middlename'].charAt(0)+".";
-                        var trimed_prefix = priestObject[x]['prefix'].substring(0,3)+".";
+                        var trimed_prefix = priestObject[x]['prefix'];
                         html += "<option value='"+priestObject[x]['id']+"'>"+trimed_prefix+" "+priestObject[x]['firstname']+" "+trimed_middle_name+" "+priestObject[x]['lastname']+"</option>";
                     }
                     html += "<option value='special'>Add Parish Priest</option>";
@@ -393,7 +393,7 @@
                 var getCert = localStorage.getItem("templateDropdown");
                 for(var x = 0; x < arrayToImport.length; x++){
                     var splitRecord = arrayToImport[x];
-                    console.log(splitRecord);
+                    // console.log(splitRecord);
                     if(getCert == "confirmation"){
                         validateAllFieldsAndCreatePayloadImportConfirmation(
                             x,
@@ -418,8 +418,8 @@
                             delegated_user
                         );
                     }else if(getCert == "marriage"){
-                        console.log('validateAllFieldsAndCreatePayloadForMarriage');
-                        console.log(splitRecord[4]);
+                        // console.log('validateAllFieldsAndCreatePayloadForMarriage');
+                        // console.log(splitRecord[4]);
                         validateAllFieldsAndCreatePayloadForMarriage(
                             x,
                             splitRecord[0], //husband_firstname,
@@ -538,8 +538,8 @@
                 // Update Dropdown Records
 
                 // reinstalling table base on selected import
-                localStorage.setItem('defaultTable',getCert);
-                setFormSelection();
+                // localStorage.setItem('defaultTable',getCert);
+                // setFormSelection();
 
                 // Initiate Worker
                 initiateConfirmationWorker();
@@ -591,7 +591,6 @@
             /// Validate for all empty rows
             if(
                 firstname == null || firstname == undefined || firstname == "" ||
-                middlename == null || middlename == undefined || middlename == "" ||
                 lastname == null || lastname == undefined || lastname == "" ||
                 confirmation_date == null || confirmation_date == undefined || confirmation_date == ""
             ){
@@ -672,7 +671,6 @@
             /// Validate for all empty rows
             if(
                 birth_first_name == null || birth_first_name == undefined || birth_first_name == "" ||
-                birth_middle_name == null || birth_middle_name == undefined || birth_middle_name == "" ||
                 birth_last_name == null || birth_last_name == undefined || birth_last_name == "" ||
                 birth_born_on == null || birth_born_on == undefined || birth_born_on == "" ||
                 birth_baptism_date == null || birth_baptism_date == undefined || birth_baptism_date == ""||
@@ -766,7 +764,6 @@
             /// Validate for all empty rows
             if(
                 husband_firstname == null || husband_firstname == undefined || husband_firstname == "" ||
-                husband_middlename == null || husband_middlename == undefined || husband_middlename == "" ||
                 husband_lastname == null || husband_lastname == undefined || husband_lastname == "" ||
                 isNaN(Date.parse(husband_birthdate_import)) ||
                 wife_firstname == null || wife_firstname == undefined || wife_firstname == "" ||
@@ -864,7 +861,6 @@
             /// Validate for all empty rows
             if(
                 death_firstname == null || death_firstname == undefined || death_firstname == "" ||
-                death_middlename == null || death_middlename == undefined || death_middlename == "" ||
                 death_lastname == null || death_lastname == undefined || death_lastname == "" ||
                 isNaN(Date.parse(date_of_death)) ||
                 isNaN(Date.parse(date_of_burial)) ||

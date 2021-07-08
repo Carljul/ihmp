@@ -159,83 +159,87 @@
                 var payload, metaContent;
                 var delagatedId = parseInt(localStorage.getItem('delegatedUser'));
                 var delegated_user = AT.substring(delagatedId+1, AT.length);
-
-                metaContent = {
-                    "deceased_name":death_firstname+" "+death_middlename+" "+death_lastname,
-                    "age":death_age,
-                    "residence":death_residence,
-                    "date_of_death":(death_date_of_death.getMonth()+1)+"/"+death_date_of_death.getDate()+"/"+death_date_of_death.getFullYear(),
-                    "place_of_burial":death_place_of_burial,
-                    "date_of_burial":(death_date_of_burial.getMonth()+1)+"/"+death_date_of_burial.getDate()+"/"+death_date_of_burial.getFullYear(),
-                    "informant_or_relatives":death_informant,
-                    "book_number":death_book_number,
-                    "page_number":death_page_number,
-                    "registry_number":death_registry_number,
-                    "date_issued":(death_date_issued.getMonth()+1)+"/"+death_date_issued.getDate()+"/"+death_date_issued.getFullYear(),
-                };
                 
-                // 0 for add
-                // 1 for update
-                if(dis_update == 0){
-                    payload={
-                        "firstname": death_firstname,
-                        "middlename": death_middlename,
-                        "lastname": death_lastname,
-                        "certificate_type": "death",
-                        "priest_id": death_parish_priest == null ? 0:death_parish_priest,
-                        "meta": JSON.stringify(metaContent),
-                        "created_by": delegated_user,
-                    };
-                    $.ajax({
-                        type: "POST",
-                        url: certificate_endpoint,
-                        data: JSON.stringify(payload),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function(response){
-                            if(response.status == 201){
-                                getDeathList('NA');
-                                clearDeathInputFields();
-                            }else{
-                                console.log('something is not right: '+response.status);
-                                getDeathList('NA');
-                                clearDeathInputFields();
-                            }
-                        }, error: function(e){
-                            console.log('something is not right: '+e);
-                        }
-                    });
+                if(death_firstname == "" || death_lastname == ""){
+                    Materialize.toast('First Name and Last Name are required fields', 5000, 'red rounded');
                 }else{
-                    payload = {
-                        "id": did,
-                        "firstname": death_firstname,
-                        "middlename": death_middlename,
-                        "lastname": death_lastname,
-                        "certificate_type": "death",
-                        "priest_id": death_parish_priest == null ? 0:death_parish_priest,
-                        "meta": JSON.stringify(metaContent),
-                        "created_by": delegated_user,
+                    metaContent = {
+                        "deceased_name":death_firstname+" "+death_middlename+" "+death_lastname,
+                        "age":death_age,
+                        "residence":death_residence,
+                        "date_of_death":(death_date_of_death.getMonth()+1)+"/"+death_date_of_death.getDate()+"/"+death_date_of_death.getFullYear(),
+                        "place_of_burial":death_place_of_burial,
+                        "date_of_burial":(death_date_of_burial.getMonth()+1)+"/"+death_date_of_burial.getDate()+"/"+death_date_of_burial.getFullYear(),
+                        "informant_or_relatives":death_informant,
+                        "book_number":death_book_number,
+                        "page_number":death_page_number,
+                        "registry_number":death_registry_number,
+                        "date_issued":(death_date_issued.getMonth()+1)+"/"+death_date_issued.getDate()+"/"+death_date_issued.getFullYear(),
                     };
 
-                    $.ajax({
-                        type: "PUT",
-                        url: certificate_endpoint+"/"+did,
-                        data: JSON.stringify(payload),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function(response){
-                            if(response.status == 200){
-                                getDeathList('NA');
-                                clearDeathInputFields();
-                            }else{
-                                console.log('something is not right: '+response.status);
-                                getDeathList('NA');
-                                clearDeathInputFields();
+                    // 0 for add
+                    // 1 for update
+                    if(dis_update == 0){
+                        payload={
+                            "firstname": death_firstname,
+                            "middlename": death_middlename,
+                            "lastname": death_lastname,
+                            "certificate_type": "death",
+                            "priest_id": death_parish_priest == null ? 0:death_parish_priest,
+                            "meta": JSON.stringify(metaContent),
+                            "created_by": delegated_user,
+                        };
+                        $.ajax({
+                            type: "POST",
+                            url: certificate_endpoint,
+                            data: JSON.stringify(payload),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(response){
+                                if(response.status == 201){
+                                    getDeathList('NA');
+                                    clearDeathInputFields();
+                                }else{
+                                    console.log('something is not right: '+response.status);
+                                    getDeathList('NA');
+                                    clearDeathInputFields();
+                                }
+                            }, error: function(e){
+                                console.log('something is not right: '+e);
                             }
-                        }, error: function(e){
-                            console.log('something is not right: '+e);
-                        }
-                    });
+                        });
+                    }else{
+                        payload = {
+                            "id": did,
+                            "firstname": death_firstname,
+                            "middlename": death_middlename,
+                            "lastname": death_lastname,
+                            "certificate_type": "death",
+                            "priest_id": death_parish_priest == null ? 0:death_parish_priest,
+                            "meta": JSON.stringify(metaContent),
+                            "created_by": delegated_user,
+                        };
+
+                        $.ajax({
+                            type: "PUT",
+                            url: certificate_endpoint+"/"+did,
+                            data: JSON.stringify(payload),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(response){
+                                if(response.status == 200){
+                                    getDeathList('NA');
+                                    clearDeathInputFields();
+                                }else{
+                                    console.log('something is not right: '+response.status);
+                                    getDeathList('NA');
+                                    clearDeathInputFields();
+                                }
+                            }, error: function(e){
+                                console.log('something is not right: '+e);
+                            }
+                        });
+                    }
                 }
             }
         });

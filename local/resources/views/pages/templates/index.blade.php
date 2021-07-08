@@ -72,9 +72,12 @@
                                         <label>Template Type</label>
                                     </div>
                                 </div>
+                                <style>
+                                    textarea.materialize-textarea{height: 100px !important;}
+                                </style>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <textarea id="content" type="text" class="validate materialize-textarea" name="content"></textarea>
+                                        <textarea id="content" type="text" class="validate materialize-textarea" name="content" row='10'></textarea>
                                         <label for="content">Content</label>
                                     </div>
                                 </div>
@@ -192,7 +195,8 @@
                 }
             });
 
-            $('#cancelTemplateUpdate').on('click', function(){
+            $('#cancelTemplateUpdate').on('click', function(e){
+                e.preventDefault();
                 clearForm();
                 $(this).addClass('hide');
                 $('#templateFormHeader').html('Add Template');
@@ -237,7 +241,7 @@
 
                         if(response.data.length !== 0){
                             for(var x = 0; x < templateObject.length; x++){
-                                let istemplate = templateObject[x]['is_template'] === 1 ? "True" : "False"
+                                let istemplate = templateObject[x]['is_template'] === 1 ? "Yes" : "No"
                                 let updatedDate = new Date(templateObject[x]['updated_at']);
                                 html += "<tr>"
                                 +"<td>"+templateObject[x]['id']+"</td>"
@@ -381,7 +385,7 @@
                         success: function(response){
                             var data = response.data.data;
                             console.log(response);
-                            if(response.status == 200){
+                            if(response.status >= 200 && response.status < 400){
                                 $('#content').val(data[0].content);
                                 $("label[for='content']").addClass('active');
                                 $('#selectTemplateType').val(data[0].template_type);
@@ -394,23 +398,16 @@
                                 $('#tid').val(templateId);
                                 $('#templateFormHeader').html('Update Template');
                                 $('#cancelTemplateUpdate').removeClass('hide');
+
+                                $('#template_form').find('select')
+                                .each(function () {
+                                    $(this).material_select();
+                                });
                             }else{
-                                var html = "";
-                                html += "<h5>Something went wrong!</h5>"
-                                +""+response.message+"";
-                                $('#modalSysError').modal('open');
-                                $(".errMessage").addClass('hide');
-                                $('.customMessage').html(html);
-                                $(".customMessage").removeClass('hide');
+                                Materialize.toast('Something Went Wrong:: ('+response.status+')',5000, 'red rounded');
                             }
                         }, error: function(e){
-                            var html = "";
-                            html += "<h5>Something went wrong!</h5>"
-                            +""+e.message+"";
-                            $('#modalSysError').modal('open');
-                            $(".errMessage").addClass('hide');
-                            $('.customMessage').html(html);
-                            $(".customMessage").removeClass('hide');
+                            Materialize.toast('Something Went Wrong:: ('+e+')',5000, 'red rounded');
                         }
                     });
                 }

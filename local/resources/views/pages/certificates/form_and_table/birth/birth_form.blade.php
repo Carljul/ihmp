@@ -230,86 +230,89 @@
                 var delegated_user = AT.substring(delagatedId+1, AT.length);
                 var birth_baptism_date = new Date($("#birth_baptism_date").val());
 
-                
-                metaContent = {
-                    "born_on": (birth_date.getMonth()+1)+"/"+birth_date.getDate()+"/"+birth_date.getFullYear(),
-                    "born_in": birth_location,
-                    "father_firstname": birth_father_firstname,
-                    "father_middlename": birth_father_middlename,
-                    "father_lastname": birth_father_lastname,
-                    "mother_firstname": birth_mother_firstname,
-                    "mother_middlename": birth_mother_middlename,
-                    "mother_lastname": birth_mother_lastname,
-                    "resident_of": birth_address,
-                    "baptism_date": (birth_baptism_date.getMonth()+1)+"/"+birth_baptism_date.getDate()+"/"+birth_baptism_date.getFullYear(),
-                    "baptism_minister": birth_minister,
-                    "godparents": birth_godparents,
-                    "baptismal_register": birth_baptismal_register,
-                    "volume": birth_volume,
-                    "page": birth_page,
-                    "date_issued": (birth_date_issue.getMonth()+1)+"/"+birth_date_issue.getDate()+"/"+birth_date_issue.getFullYear(),
-                };
-                // 0 for add
-                // 1 for update
-                if(bis_update == 0){
-                    payload = {
-                        "firstname": birth_firstname,
-                        "middlename": birth_middlename,
-                        "lastname": birth_lastname,
-                        "certificate_type": "baptism",
-                        "priest_id": birth_parish_priest == null ? 0:birth_parish_priest,
-                        "meta": JSON.stringify(metaContent),
-                        "created_by": delegated_user,
-                    };
-                    
-                    $.ajax({
-                        type: "POST",
-                        url: certificate_endpoint,
-                        data: JSON.stringify(payload),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function(response){
-                            if(response.status == 201){
-                                getBirthList('NA');
-                                clearBirthInputFields();
-                            }else{
-                                console.log('something is not right: '+response.status);
-                            }
-                        }, error: function(e){
-                            console.log('something is not right: '+e);
-                        }
-                    });
+                if(birth_firstname == "" || birth_lastname == "" || birth_date.toString() == "Invalid Date"){
+                    Materialize.toast('First Name, Last Name, and Birth Date are required Fields', 5000, 'red rounded');
                 }else{
-                    payload = {
-                        "id": bid,
-                        "firstname": birth_firstname,
-                        "middlename": birth_middlename,
-                        "lastname": birth_lastname,
-                        "certificate_type": "baptism",
-                        "priest_id": birth_parish_priest == null ? 0:birth_parish_priest,
-                        "meta": JSON.stringify(metaContent),
-                        "created_by": delegated_user,
+                    metaContent = {
+                        "born_on": (birth_date.getMonth()+1)+"/"+birth_date.getDate()+"/"+birth_date.getFullYear(),
+                        "born_in": birth_location,
+                        "father_firstname": birth_father_firstname,
+                        "father_middlename": birth_father_middlename,
+                        "father_lastname": birth_father_lastname,
+                        "mother_firstname": birth_mother_firstname,
+                        "mother_middlename": birth_mother_middlename,
+                        "mother_lastname": birth_mother_lastname,
+                        "resident_of": birth_address,
+                        "baptism_date": (birth_baptism_date.getMonth()+1)+"/"+birth_baptism_date.getDate()+"/"+birth_baptism_date.getFullYear(),
+                        "baptism_minister": birth_minister,
+                        "godparents": birth_godparents,
+                        "baptismal_register": birth_baptismal_register,
+                        "volume": birth_volume,
+                        "page": birth_page,
+                        "date_issued": (birth_date_issue.getMonth()+1)+"/"+birth_date_issue.getDate()+"/"+birth_date_issue.getFullYear(),
                     };
-
-                    $.ajax({
-                        type: "PUT",
-                        url: certificate_endpoint+"/"+bid,
-                        data: JSON.stringify(payload),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function(response){
-                            if(response.status == 200){
-                                getBirthList('NA');
-                                clearBirthInputFields();
-                            }else{
-                                console.log('something is not right: '+response.status);
-                                getBirthList('NA');
-                                clearBirthInputFields();
+                    // 0 for add
+                    // 1 for update
+                    if(bis_update == 0){
+                        payload = {
+                            "firstname": birth_firstname,
+                            "middlename": birth_middlename,
+                            "lastname": birth_lastname,
+                            "certificate_type": "baptism",
+                            "priest_id": birth_parish_priest == null ? 0:birth_parish_priest,
+                            "meta": JSON.stringify(metaContent),
+                            "created_by": delegated_user,
+                        };
+                        
+                        $.ajax({
+                            type: "POST",
+                            url: certificate_endpoint,
+                            data: JSON.stringify(payload),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(response){
+                                if(response.status == 201){
+                                    getBirthList('NA');
+                                    clearBirthInputFields();
+                                }else{
+                                    console.log('something is not right: '+response.status);
+                                }
+                            }, error: function(e){
+                                console.log('something is not right: '+e);
                             }
+                        });
+                    }else{
+                        payload = {
+                            "id": bid,
+                            "firstname": birth_firstname,
+                            "middlename": birth_middlename,
+                            "lastname": birth_lastname,
+                            "certificate_type": "baptism",
+                            "priest_id": birth_parish_priest == null ? 0:birth_parish_priest,
+                            "meta": JSON.stringify(metaContent),
+                            "created_by": delegated_user,
+                        };
+
+                        $.ajax({
+                            type: "PUT",
+                            url: certificate_endpoint+"/"+bid,
+                            data: JSON.stringify(payload),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(response){
+                                if(response.status == 200){
+                                    getBirthList('NA');
+                                    clearBirthInputFields();
+                                }else{
+                                    console.log('something is not right: '+response.status);
+                                    getBirthList('NA');
+                                    clearBirthInputFields();
+                                }
                         }, error: function(e){
                             console.log('something is not right: '+e);
                         }
                     });
+                }
                 }
             }
         });

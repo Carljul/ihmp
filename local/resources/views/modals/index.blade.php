@@ -59,7 +59,7 @@
         <div class="row">
             <div class="col s12">              
                 <div class="input-field col s3">
-                    <b>1. </b>Select the type of certificate<br>  
+                    <b>1. </b>Select the type of record<br>  
                     <select class="templateDownloadDropdown" id="templateDownloadDropdown">
                         <option value="" disabled selected>Select template</option>
                         <option value="marriage">Marriage</option>
@@ -67,7 +67,7 @@
                         <option value="birth">Birth</option>
                         <option value="death">Death</option>
                     </select>
-                    <label>Select Parish Priest</label>
+                    <label>Select record</label>
                 </div>
                 <div class="col s3">
                     <b>2. </b>Download your template. (You can skip this step if you already downloaded this file before)

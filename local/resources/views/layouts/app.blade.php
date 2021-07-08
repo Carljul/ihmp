@@ -15,6 +15,9 @@
     <!--Import Google Icon Font-->
     <link href="{{ asset('css/icon.css') }}" rel="stylesheet">
 
+    <!-- Tab Icon -->
+    <link href="{{ asset('storage/') }}/{{setting('site.logo')}}" rel="icon">
+
     <!-- Styles -->
     <link href="{{ asset('css/materialize.css') }}" rel="stylesheet">
     <link href="{{ asset('css/ihmp.css') }}" rel="stylesheet">

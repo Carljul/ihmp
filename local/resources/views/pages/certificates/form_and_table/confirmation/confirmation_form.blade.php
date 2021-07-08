@@ -195,7 +195,7 @@
                 var single_confirmation_mother_lastname = $('#single_confirmation_mother_lastname').val();
                 var single_confirmation_date = new Date($('#single_confirmation_date').val());
                 var single_confirmation_converted_month = single_confirmation_date.getMonth() + 1;
-                console.log('single_confirmation_converted_month',single_confirmation_converted_month);
+                
                 var single_confirmation_converted_date = single_confirmation_date.getDate();
                 var single_confirmation_converted_year = single_confirmation_date.getFullYear();
 
@@ -215,93 +215,105 @@
                 var delagatedId = parseInt(localStorage.getItem('delegatedUser'));
                 var delegated_user = AT.substring(delagatedId+1, AT.length);
 
-                metaContent = {
-                    "father_firstname": single_confirmation_father_firstname,
-                    "father_middlename": single_confirmation_father_middlename,
-                    "father_lastname": single_confirmation_father_lastname,
-                    "mother_firstname": single_confirmation_mother_firstname,
-                    "mother_middlename": single_confirmation_mother_middlename,
-                    "mother_lastname": single_confirmation_mother_lastname,
-                    "confirmation_day":single_confirmation_converted_date,
-                    "confirmation_month":single_confirmation_converted_month,
-                    "confirmation_year":single_confirmation_converted_year,
-                    "confirmation_by":single_confirmation_by,
-                    "first_sponsor":single_confirmation_fsponsor_firstname,
-                    "second_sponsor":single_confirmation_ssponsor_firstname,
-                    "registration_book":single_confirmation_register_book,
-                    "book_page":single_confirmation_book_page,
-                    "book_number":single_confirmation_book_number,
-                    "date_issued":single_conrfirmation_date_issued
-                };
-                // 0 for add
-                // 1 for update
-                
-                $("#btnSaveConfirmationForm").prop('disabled', true);
-                if(cis_update == 0){                    
-                    payload = {
-                        "firstname": single_confirmation_firstname,
-                        "middlename": single_confirmation_middlename,
-                        "lastname": single_confirmation_lastname,
-                        "certificate_type": "confirmation",
-                        "priest_id": single_confirmation_parish_priest == null ? 0:single_confirmation_parish_priest,
-                        "meta": JSON.stringify(metaContent),
-                        "created_by": delegated_user,
-                    };
-                    $.ajax({
-                        type: "POST",
-                        url: certificate_endpoint,
-                        data: JSON.stringify(payload),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function(response){
-                            if(response.status >= 200 && response.status < 400){
-                                Materialize.toast('Added', 5000, 'green rounded');
-                                getConfirmationList('NA');
-                                clearConfirmationInputFields();
-                            }else{
-                                Materialize.toast('Something Went Wrong:: '+response.message, 5000, 'red rounded');
-                                console.log('["Confirmation Status"]: '+response.status);
-                            }
-                            $("#btnSaveConfirmationForm").removeAttr('disabled');
-                        }, error: function(e){
-                            Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
-                            console.log('["Confirmation Error"]: '+e.responseJSON.message);
-                            
-                            $("#btnSaveConfirmationForm").removeAttr('disabled');
-                        }
-                    });
+                if(single_confirmation_firstname == "" || single_confirmation_lastname == "" || single_confirmation_date.toString() == "Invalid Date"){
+                    Materialize.toast('First Name and Last Name are required Fields', 5000, 'red rounded');
+                }else if(single_confirmation_father_middlename != "" || single_confirmation_father_lastname != "" && single_confirmation_father_firstname == ""){
+                    Materialize.toast('Saving parents record failed! Please complete fathers information', 5000, 'red rounded');
+                }else if(single_confirmation_mother_middlename != "" || single_confirmation_mother_lastname != "" && single_confirmation_mother_firstname == ""){
+                    Materialize.toast('Saving parents record failed! Please complete mothers information', 5000, 'red rounded');
+                }else if(single_confirmation_mother_lastname == "" && single_confirmation_mother_firstname != ""){
+                    Materialize.toast('Saving parents record failed! Please complete mothers information', 5000, 'red rounded');
+                }else if(single_confirmation_father_lastname == "" && single_confirmation_father_firstname != ""){
+                    Materialize.toast('Saving parents record failed! Please complete fathers information', 5000, 'red rounded');
                 }else{
-                    payload = {
-                        "id": cid,
-                        "firstname": single_confirmation_firstname,
-                        "middlename": single_confirmation_middlename,
-                        "lastname": single_confirmation_lastname,
-                        "certificate_type": "confirmation",
-                        "priest_id": single_confirmation_parish_priest == null ? 0:single_confirmation_parish_priest,
-                        "meta": JSON.stringify(metaContent),
-                        "created_by": delegated_user,
+                    metaContent = {
+                        "father_firstname": single_confirmation_father_firstname,
+                        "father_middlename": single_confirmation_father_middlename,
+                        "father_lastname": single_confirmation_father_lastname,
+                        "mother_firstname": single_confirmation_mother_firstname,
+                        "mother_middlename": single_confirmation_mother_middlename,
+                        "mother_lastname": single_confirmation_mother_lastname,
+                        "confirmation_day":single_confirmation_converted_date,
+                        "confirmation_month":single_confirmation_converted_month,
+                        "confirmation_year":single_confirmation_converted_year,
+                        "confirmation_by":single_confirmation_by,
+                        "first_sponsor":single_confirmation_fsponsor_firstname,
+                        "second_sponsor":single_confirmation_ssponsor_firstname,
+                        "registration_book":single_confirmation_register_book,
+                        "book_page":single_confirmation_book_page,
+                        "book_number":single_confirmation_book_number,
+                        "date_issued":single_conrfirmation_date_issued
                     };
-                    $.ajax({
-                        type: "PUT",
-                        url: certificate_endpoint+"/"+cid,
-                        data: payload,
-                        success: function(response){
-                            if(response.status >= 200 && response.status < 400){
-                                Materialize.toast('Updated', 5000, 'green rounded');
-                                clearConfirmationInputFields();
-                                getConfirmationList('NA');
-                            }else{
-                                Materialize.toast('Something Went Wrong:: '+response.message, 5000, 'red rounded');
-                                console.log('["Confirmation Status"]: '+response.status);
+                    // 0 for add
+                    // 1 for update
+                    
+                    $("#btnSaveConfirmationForm").prop('disabled', true);
+                    if(cis_update == 0){                    
+                        payload = {
+                            "firstname": single_confirmation_firstname,
+                            "middlename": single_confirmation_middlename,
+                            "lastname": single_confirmation_lastname,
+                            "certificate_type": "confirmation",
+                            "priest_id": single_confirmation_parish_priest == null ? 0:single_confirmation_parish_priest,
+                            "meta": JSON.stringify(metaContent),
+                            "created_by": delegated_user,
+                        };
+                        $.ajax({
+                            type: "POST",
+                            url: certificate_endpoint,
+                            data: JSON.stringify(payload),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(response){
+                                if(response.status >= 200 && response.status < 400){
+                                    Materialize.toast('Added', 5000, 'green rounded');
+                                    getConfirmationList('NA');
+                                    clearConfirmationInputFields();
+                                }else{
+                                    Materialize.toast('Something Went Wrong:: '+response.message, 5000, 'red rounded');
+                                    console.log('["Confirmation Status"]: '+response.status);
+                                }
+                                $("#btnSaveConfirmationForm").removeAttr('disabled');
+                            }, error: function(e){
+                                Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
+                                console.log('["Confirmation Error"]: '+e.responseJSON.message);
+                                
+                                $("#btnSaveConfirmationForm").removeAttr('disabled');
                             }
-                            $("#btnSaveConfirmationForm").removeAttr('disabled');
-                        }, error: function(e){
-                            Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
-                            console.log('["Confirmation Error"]: '+e.responseJSON.message);
-                            
-                            $("#btnSaveConfirmationForm").removeAttr('disabled');
-                        }
-                    });
+                        });
+                    }else{
+                        payload = {
+                            "id": cid,
+                            "firstname": single_confirmation_firstname,
+                            "middlename": single_confirmation_middlename,
+                            "lastname": single_confirmation_lastname,
+                            "certificate_type": "confirmation",
+                            "priest_id": single_confirmation_parish_priest == null ? 0:single_confirmation_parish_priest,
+                            "meta": JSON.stringify(metaContent),
+                            "created_by": delegated_user,
+                        };
+                        $.ajax({
+                            type: "PUT",
+                            url: certificate_endpoint+"/"+cid,
+                            data: payload,
+                            success: function(response){
+                                if(response.status >= 200 && response.status < 400){
+                                    Materialize.toast('Updated', 5000, 'green rounded');
+                                    clearConfirmationInputFields();
+                                    getConfirmationList('NA');
+                                }else{
+                                    Materialize.toast('Something Went Wrong:: '+response.message, 5000, 'red rounded');
+                                    console.log('["Confirmation Status"]: '+response.status);
+                                }
+                                $("#btnSaveConfirmationForm").removeAttr('disabled');
+                            }, error: function(e){
+                                Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
+                                console.log('["Confirmation Error"]: '+e.responseJSON.message);
+                                
+                                $("#btnSaveConfirmationForm").removeAttr('disabled');
+                            }
+                        });
+                    }
                 }
             }
         });

@@ -9,28 +9,26 @@
                         <div class="card">
                             <div class="card-content">
                                 <div class="row">
-                                    <div class="col s6">
+                                    <div class="col s4">
                                         <h5>{{$title}}</h5>
                                     </div>
-                                    <div class="col s6">
-                                        <div id="paginationDiv" class="right"></div>
-                                    </div>
-
                                     <!-- search -->
-                                    <div class="col s12 m6"></div>
-                                    <div class="col s12 m6">
+                                    <div class="col s12 m4">
                                         <input type="search" class="btnSearch" placeholder="Search . . .">
+                                    </div>
+                                    <div class="col s4">
+                                        <div id="paginationDiv" class="right"></div>
                                     </div>
 
                                     <div class="col s12">
                                         <table class="striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Prefix</th>
+                                                    <th>Actions</th>
+                                                    <th>Clergy Title</th>
                                                     <th>First Name</th>
                                                     <th>Middle Name</th>
                                                     <th>Last Name</th>
-                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="appendPriestList">
@@ -237,15 +235,15 @@
                         if(response.data.length !== 0){
                             for(var x = 0; x < priestObject.length; x++){
                                 html += "<tr>"
-                                +"<td>"+priestObject[x]['prefix']+"</td>"
-                                +"<td>"+priestObject[x]['firstname']+"</td>"
-                                +"<td>"+priestObject[x]['middlename']+"</td>"
-                                +"<td>"+priestObject[x]['lastname']+"</td>"
                                 +"<td>"
                                     +"<button class='btn btn-wave btnDelete red' id='btnDelete-"+priestObject[x]['id']+"'><i class='material-icons'>delete</i></button>"
                                     +" "
                                     +"<button class='btn btn-wave btnUpdate blue' id='btnUpdate-"+priestObject[x]['id']+"'><i class='material-icons'>edit</i></button>"
                                 +"</td>"
+                                +"<td>"+priestObject[x]['prefix']+"</td>"
+                                +"<td>"+priestObject[x]['firstname']+"</td>"
+                                +"<td>"+priestObject[x]['middlename']+"</td>"
+                                +"<td>"+priestObject[x]['lastname']+"</td>"
                                 +"</tr>";
                             }
                         }else{

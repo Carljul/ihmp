@@ -20,10 +20,11 @@
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
+        background-image: url('../ihmp/storage/bg/ihmp.jpg');
     }
 </style>
 <div class="row">
-    <div class="col s12 m6 fullscreen" style="background-image: url('../ihmp/storage/bg/ihmp.jpg');">
+    <div class="col s12 m6 fullscreen">
         &nbsp;
     </div>
     <div class="col s12 m6">

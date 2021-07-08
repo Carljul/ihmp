@@ -333,7 +333,11 @@
                 var delagatedId = parseInt(localStorage.getItem('delegatedUser'));
                 var delegated_user = AT.substring(delagatedId+1, AT.length);
 
-                if(husband_age < age_limit){
+                if(husband_firstname == "" || husband_lastname == "" || husband_civil_status == "" || husband_birth_date.toString() == "Invalid Date"){
+                    Materialize.toast('Husbands First Name, Last Name, Civil Status, and Birth Date are required Fields', 5000, 'red rounded');
+                }else if(wife_firstname == "" || wife_lastname == "" || wife_civil_status == "" || wife_birth_date.toString() == "Invalid Date"){
+                    Materialize.toast('Wifes First Name, Last Name, Civil Status, and Birth Date are required Fields', 5000, 'red rounded');
+                } else if(husband_age < age_limit){
                     Materialize.toast('Can\'t Save Record: Husband\'s age is too young', 5000, 'red rounded');
                 } else if(wife_age < age_limit){
                     Materialize.toast('Can\'t Save Record: Wife\'s age is too young', 5000, 'red rounded');
