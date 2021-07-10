@@ -72,7 +72,7 @@ https://drive.google.com/file/d/1Zyftj5n4U-RveERHDIqvCFxBYbUyWtDQ/view?usp=shari
 
 Final Billing
 
-https://drive.google.com/file/d/1Zyftj5n4U-RveERHDIqvCFxBYbUyWtDQ/view?usp=sharing
+https://drive.google.com/file/d/1H_rnbu1q7wgiyIBRLeu0bsygmmYaEPbB/view?usp=sharing
 
 Downpayment Made: 15,000 Pesos last May 18, 2021
 
