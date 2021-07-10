@@ -297,7 +297,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a href="/priest" class="modal-action modal-close waves-effect waves-green btn-flat">Did not find priest? Add Priest</a>
+        <a href="/ihmp/priest" class="modal-action modal-close waves-effect waves-green btn-flat">Did not find priest? Add Priest</a>
     </div>
 </div>
 

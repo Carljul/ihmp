@@ -92,6 +92,8 @@ class PriestController extends Controller
             //return json response
             return response()->json($this->customApiResponse($result, 200)); //OK
 
+        }else if($request->isDropdown == true || $request->isDropdown == "true"){
+            return response()->json($this->customApiResponse(Priest::all(), 200));
         }else{
 
             //return specific row using search

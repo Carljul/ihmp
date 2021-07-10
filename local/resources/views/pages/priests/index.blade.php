@@ -117,58 +117,64 @@
                 var middlename = $('#middlename').val();
                 var lastname = $('#lastname').val();
                 var payload;
-
-                /// It's either update or add
-                if(is_update == 1){
-                    payload = {
-                        'id': pid,
-                        'is_deleted': is_deleted,
-                        'prefix':prefix,
-                        'firstname': firstname,
-                        'middlename': middlename,
-                        'lastname': lastname
-                    };
-                    $.ajax({
-                        type: "PUT",
-                        url: priest_endpoint+"/"+pid,
-                        data: payload,
-                        success: function(data){
-                            if(data.status >= 200 && data.status < 400){
-                                getPriestList("NA");
-                            }else{
-                                Materialize.toast('Something Went Wrong:: '+JSON.stringify(data.message), 5000, 'red rounded');
-                                console.log('["Confirmation Status"]: '+data.status);
-                            }
-                        }, error: function(e){
-                            Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
-                            console.log('["Confirmation Error"]: '+e.responseJSON.message);
-                        }
-                    });
+                
+                if(prefix == "" || firstname == "" || lastname == ""){
+                    Materialize.toast('Required fields are Clergy Title, First Name, and Last Name', 5000, 'red rounded');
                 }else{
-                    payload = {
-                        'is_deleted': is_deleted,
-                        'prefix':prefix,
-                        'firstname': firstname,
-                        'middlename': middlename,
-                        'lastname': lastname
-                    };
-                    $.ajax({
-                        type: "POST",
-                        url: priest_endpoint,
-                        data: payload,
-                        success: function(data){
-                            if(data.status == 201){
-                                getPriestList("NA");
-                                clearForm();
-                            }else{
-                                $('#modalSysError').modal('open');
+                    /// It's either update or add
+                    if(is_update == 1){
+                        payload = {
+                            'id': pid,
+                            'is_deleted': is_deleted,
+                            'prefix':prefix,
+                            'firstname': firstname,
+                            'middlename': middlename,
+                            'lastname': lastname
+                        };
+                        $.ajax({
+                            type: "PUT",
+                            url: priest_endpoint+"/"+pid,
+                            data: payload,
+                            success: function(data){
+                                if(data.status >= 200 && data.status < 400){
+                                    Materialize.toast('Updated', 5000, 'green rounded');
+                                    getPriestList("NA");
+                                    clearForm();
+                                }else{
+                                    Materialize.toast('Something Went Wrong:: '+JSON.stringify(data.message), 5000, 'red rounded');
+                                    console.log('["Confirmation Status"]: '+data.status);
+                                }
+                            }, error: function(e){
+                                Materialize.toast('Something Went Wrong:: '+e.responseJSON.message, 5000, 'red rounded');
+                                console.log('["Confirmation Error"]: '+e.responseJSON.message);
                             }
-                        }, error: function(e){
-                            console.log('Something went wrong: '+e);
-                        }
-                    });
+                        });
+                    }else{
+                        payload = {
+                            'is_deleted': is_deleted,
+                            'prefix':prefix,
+                            'firstname': firstname,
+                            'middlename': middlename,
+                            'lastname': lastname
+                        };
+                        $.ajax({
+                            type: "POST",
+                            url: priest_endpoint,
+                            data: payload,
+                            success: function(data){
+                                if(data.status >= 200 && response.status < 400){
+                                    Materialize.toast('Added', 5000, 'green rounded');
+                                    getPriestList("NA");
+                                    clearForm();
+                                }else{
+                                    $('#modalSysError').modal('open');
+                                }
+                            }, error: function(e){
+                                console.log('Something went wrong: '+e);
+                            }
+                        });
+                    }
                 }
-
                 /// Clear Input fields
                 $('#is_deleted').val(0);
                 $('#is_update').val(0);
@@ -177,6 +183,8 @@
                 $('#firstname').val('');
                 $('#middlename').val('');
                 $('#lastname').val('');
+                $('#priestFormHeader').html('Add Priest');
+                $('#cancelPriestUpdate').addClass('hide');
             });
 
             // DT: pagination button here...
@@ -188,7 +196,8 @@
                 }
             });
 
-            $('#cancelPriestUpdate').on('click', function(){
+            $('#cancelPriestUpdate').on('click', function(e){
+                e.preventDefault();
                 clearForm();
                 $(this).addClass('hide');
                 $('#priestFormHeader').html('Add Priest');
@@ -234,6 +243,7 @@
 
                         if(response.data.length !== 0){
                             for(var x = 0; x < priestObject.length; x++){
+                                var middlename = priestObject[x]['middlename'] == null ? '':priestObject[x]['middlename'];
                                 html += "<tr>"
                                 +"<td>"
                                     +"<button class='btn btn-wave btnDelete red' id='btnDelete-"+priestObject[x]['id']+"'><i class='material-icons'>delete</i></button>"
@@ -242,7 +252,7 @@
                                 +"</td>"
                                 +"<td>"+priestObject[x]['prefix']+"</td>"
                                 +"<td>"+priestObject[x]['firstname']+"</td>"
-                                +"<td>"+priestObject[x]['middlename']+"</td>"
+                                +"<td>"+middlename+"</td>"
                                 +"<td>"+priestObject[x]['lastname']+"</td>"
                                 +"</tr>";
                             }
@@ -292,6 +302,18 @@
 
                         /// Delete Priest
                         $(".btnDelete").on("click",function(){
+                            clearForm();
+                            
+                            /// Clear Input fields
+                            $('#is_deleted').val(0);
+                            $('#is_update').val(0);
+                            $('#pid').val(0);
+                            $('#prefix').val('');
+                            $('#firstname').val('');
+                            $('#middlename').val('');
+                            $('#lastname').val('');
+                            $('#priestFormHeader').html('Add Priest');
+                            $('#cancelPriestUpdate').addClass('hide');
                             var priestId = $(this).attr("id").substr('btnDelete-'.length);
                             deletePriest(priestId);
                         });

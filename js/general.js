@@ -162,10 +162,11 @@ function getPriestForModal(url, certificateId){
             
             if(response.data.length !== 0){
                 for(var x = 0; x < priestObject.length; x++){
+                    var midname = priestObject[x]['middlename'] == null || priestObject[x]['middlename'] == "null" ? '':priestObject[x]['middlename'];
                     html += "<tr>"
                     +"<td>"+priestObject[x]['prefix']+"</td>"
                     +"<td>"+priestObject[x]['firstname']+"</td>"
-                    +"<td>"+priestObject[x]['middlename']+"</td>"
+                    +"<td>"+midname+"</td>"
                     +"<td>"+priestObject[x]['lastname']+"</td>"
                     +"<td>"
                         +"<button class='btn btn-wave btnAssign' id='btnAssign-"+priestObject[x]['id']+"'><i class='material-icons'>check</i></button>"
@@ -450,7 +451,8 @@ function printCertificate(personData){
                         printContent = printContent.replaceAll('year_in_two',marriage_year);
                         // parish_priest
                         if(rootContent['priest_id'] != null){
-                            var priest_name = rootContent['priest_clergy']+" "+rootContent['priest_fname']+" "+rootContent['priest_mname'].charAt(0)+". "+rootContent['priest_lname'];
+                            var mname = rootContent['priest_mname'] == null ? '':rootContent['priest_mname'].charAt(0)+". ";
+                            var priest_name = rootContent['priest_clergy']+" "+rootContent['priest_fname']+" "+mname+" "+rootContent['priest_lname'];
                             printContent = printContent.replaceAll('parish_priest',priest_name);
                         }else{
                             printContent = printContent.replaceAll('parish_priest','');
@@ -499,7 +501,8 @@ function printCertificate(personData){
                         printContent = printContent.replaceAll('page_number',page == ''?'&nbsp;':page);
                         // parish_priest
                         if(rootContent['priest_id'] != null){
-                            var priest_name = rootContent['priest_clergy']+" "+rootContent['priest_fname']+" "+rootContent['priest_mname'].charAt(0)+". "+rootContent['priest_lname'];
+                            var mname = rootContent['priest_mname'] == null ? '':rootContent['priest_mname'].charAt(0)+".";
+                            var priest_name = rootContent['priest_clergy']+" "+rootContent['priest_fname']+" "+mname+" "+rootContent['priest_lname'];
                             printContent = printContent.replaceAll('parish_priest',priest_name);
                         }else{
                             printContent = printContent.replaceAll('parish_priest','');
@@ -705,7 +708,8 @@ function getConfirmationList(url){
                     if(pname == null || pname == undefined || pname == NaN){
                         html+='<td>Not Set</td>';
                     }else{
-                        html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+rootContent['priest_mname']+' '+rootContent['priest_lname']+'</td>';
+                        var mname = rootContent['priest_mname'] == null ? '':rootContent['priest_mname'];
+                        html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+mname+' '+rootContent['priest_lname']+'</td>';
                     }
                     html+='</tr>';
                 }
@@ -1019,7 +1023,8 @@ function getBirthList(url){
                         if(pname == null || pname == undefined || pname == NaN){
                             html+='<td><label style="font-size: 9px;">Name</label><br>Not Set</td>';
                         }else{
-                            html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+rootContent['priest_mname']+' '+rootContent['priest_lname']+'</td>';
+                            var mname = rootContent['priest_mname'] == null ? '':rootContent['priest_mname'];
+                            html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+mname+' '+rootContent['priest_lname']+'</td>';
                         }
                         html+='</tr>';
                 }
@@ -1367,7 +1372,8 @@ function getMarriageList(url){
                         if(pname == null || pname == undefined || pname == NaN){
                             html+='<td><label style="font-size: 9px;">Name</label><br>Not Set</td>';
                         }else{
-                            html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+rootContent['priest_mname']+' '+rootContent['priest_lname']+'</td>';
+                            var mname = rootContent['priest_mname'] == null ? '':rootContent['priest_mname'];
+                            html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+mname+' '+rootContent['priest_lname']+'</td>';
                         }
                         html+='</tr>';
                 }
@@ -1750,7 +1756,8 @@ function getDeathList(url){
                             if(pname == null || pname == undefined || pname == NaN){
                                 html+='<td><label style="font-size: 9px;">Name</label><br>Not Set</td>';
                             }else{
-                                html+='<td><label style="font-size: 9px;">Name</label><br>'+responseContent['priest_fname']+' '+responseContent['priest_mname']+' '+responseContent['priest_lname']+'</td>';
+                                var mname = responseContent['priest_mname'] == null ? '':responseContent['priest_mname'];
+                                html+='<td><label style="font-size: 9px;">Name</label><br>'+responseContent['priest_fname']+' '+mname+' '+responseContent['priest_lname']+'</td>';
                             }
                     +'</tr>';
                 }

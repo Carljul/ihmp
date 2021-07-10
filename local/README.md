@@ -49,6 +49,15 @@ Front End Scaffold
 https://materializecss.com/getting-started.html
 
 
+<!-- 
+    Software Manual
+    Added By Jul
+    date added: July 11, 2021
+-->
+System Manual
+
+https://drive.google.com/file/d/1Um5liMMom2eIQrH8mw2wzyVkY7m3PZa7/view?usp=sharing
+
 
 /// Database Seeding for Voyager
 php artisan db:seed --class=DataTypesTableSeeder

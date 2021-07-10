@@ -133,14 +133,22 @@
 
             $.ajax({
                 type: 'GET',
-                url: priest_endpoint,
+                url: priest_endpoint+"/0",
+                data: {"isDropdown": true},
                 success: function(response){
                     var html = "";
-                    var priestObject = response.data.data;
+                    var priestObject = response.data;
                     $(".priest_select_dropdown").html('');
                     html += "<option value='' disabled selected>Select Parish Priest</option>";
                     for(var x = 0; x < priestObject.length; x++){
-                        var trimed_middle_name = priestObject[x]['middlename'].charAt(0)+".";
+                        var midname = priestObject[x]['middlename'] == null ? '':priestObject[x]['middlename'];
+                        var trimed_middle_name;
+                        if(midname == ""){
+                            trimed_middle_name = midname;
+                        }else{
+                            trimed_middle_name = priestObject[x]['middlename'].charAt(0)+".";
+                        }
+                        
                         var trimed_prefix = priestObject[x]['prefix'];
                         html += "<option value='"+priestObject[x]['id']+"'>"+trimed_prefix+" "+priestObject[x]['firstname']+" "+trimed_middle_name+" "+priestObject[x]['lastname']+"</option>";
                     }
