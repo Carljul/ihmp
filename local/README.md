@@ -58,6 +58,23 @@ System Manual
 
 https://drive.google.com/file/d/1Um5liMMom2eIQrH8mw2wzyVkY7m3PZa7/view?usp=sharing
 
+Proposed Flow
+
+https://drive.google.com/file/d/1XKZblyB2VbIcXBqpicP7qPIVudZQmt8W/view?usp=sharing
+
+Updated Database
+
+https://drive.google.com/drive/folders/1Nf9W8WB4gSKUwBJ1h9ZoTcjSuSR_8jh5?usp=sharing
+
+Functional Cost Analysis
+
+https://drive.google.com/file/d/1Zyftj5n4U-RveERHDIqvCFxBYbUyWtDQ/view?usp=sharing
+
+Final Billing
+
+https://drive.google.com/file/d/1Zyftj5n4U-RveERHDIqvCFxBYbUyWtDQ/view?usp=sharing
+
+Downpayment Made: 15,000 Pesos last May 18, 2021
 
 /// Database Seeding for Voyager
 php artisan db:seed --class=DataTypesTableSeeder
