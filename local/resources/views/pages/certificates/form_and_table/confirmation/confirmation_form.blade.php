@@ -217,14 +217,18 @@
 
                 if(single_confirmation_firstname == "" || single_confirmation_lastname == "" || single_confirmation_date.toString() == "Invalid Date"){
                     Materialize.toast('First Name and Last Name are required Fields', 5000, 'red rounded');
-                }else if(single_confirmation_father_middlename != "" || single_confirmation_father_lastname != "" && single_confirmation_father_firstname == ""){
-                    Materialize.toast('Saving parents record failed! Please complete fathers information', 5000, 'red rounded');
-                }else if(single_confirmation_mother_middlename != "" || single_confirmation_mother_lastname != "" && single_confirmation_mother_firstname == ""){
-                    Materialize.toast('Saving parents record failed! Please complete mothers information', 5000, 'red rounded');
+                }else if(single_confirmation_father_middlename != "" && single_confirmation_father_firstname == ""){
+                    Materialize.toast('Saving failed! Incomplete Fathers Information', 5000, 'red rounded');
+                }else if(single_confirmation_father_lastname != "" && single_confirmation_father_firstname == ""){
+                    Materialize.toast('Saving failed! Incomplete Fathers Information', 5000, 'red rounded');
+                }else if(single_confirmation_mother_middlename != "" && single_confirmation_mother_firstname == ""){
+                    Materialize.toast('Saving failed! Incomplete Mothers Information', 5000, 'red rounded');
+                }else if(single_confirmation_mother_lastname != "" && single_confirmation_mother_firstname == ""){
+                    Materialize.toast('Saving failed! Incomplete Mothers Information', 5000, 'red rounded');
                 }else if(single_confirmation_mother_lastname == "" && single_confirmation_mother_firstname != ""){
-                    Materialize.toast('Saving parents record failed! Please complete mothers information', 5000, 'red rounded');
+                    Materialize.toast('Saving failed! Incomplete Mothers Information', 5000, 'red rounded');
                 }else if(single_confirmation_father_lastname == "" && single_confirmation_father_firstname != ""){
-                    Materialize.toast('Saving parents record failed! Please complete fathers information', 5000, 'red rounded');
+                    Materialize.toast('Saving failed! Incomplete Fathers Information', 5000, 'red rounded');
                 }else{
                     metaContent = {
                         "father_firstname": single_confirmation_father_firstname,

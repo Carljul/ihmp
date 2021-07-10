@@ -232,6 +232,14 @@
 
                 if(birth_firstname == "" || birth_lastname == "" || birth_date.toString() == "Invalid Date"){
                     Materialize.toast('First Name, Last Name, and Birth Date are required Fields', 5000, 'red rounded');
+                }else if(birth_father_firstname == "" && birth_father_middlename != ""){
+                    Materialize.toast('Saving failed! Incomplete Fathers Information', 5000, 'red rounded');
+                }else if(birth_father_firstname == "" && birth_father_lastname != ""){
+                    Materialize.toast('Saving failed! Incomplete Fathers Information', 5000, 'red rounded');
+                }else if(birth_mother_firstname == "" && birth_mother_middlename != ""){
+                    Materialize.toast('Saving failed! Incomplete Mothers Information', 5000, 'red rounded');
+                }else if(birth_mother_firstname == "" && birth_mother_lastname != ""){
+                    Materialize.toast('Saving failed! Incomplete Mothers Information', 5000, 'red rounded');
                 }else{
                     metaContent = {
                         "born_on": (birth_date.getMonth()+1)+"/"+birth_date.getDate()+"/"+birth_date.getFullYear(),
@@ -271,7 +279,8 @@
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function(response){
-                                if(response.status == 201){
+                                if(response.status >= 200 && response.status < 400){
+                                    Materialize.toast('Added', 5000, 'green rounded');
                                     getBirthList('NA');
                                     clearBirthInputFields();
                                 }else{
@@ -300,7 +309,8 @@
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function(response){
-                                if(response.status == 200){
+                                if(response.status >= 200 && response.status < 400){
+                                    Materialize.toast('Upated', 5000, 'green rounded');
                                     getBirthList('NA');
                                     clearBirthInputFields();
                                 }else{
