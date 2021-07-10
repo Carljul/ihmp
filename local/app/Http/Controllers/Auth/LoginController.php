@@ -82,7 +82,7 @@ class LoginController extends Controller
                 // login form with an error message.
                 $this->incrementLoginAttempts($request);
                 throw ValidationException::withMessages([
-                    $this->username() => [trans('This is account is not yet activated')],
+                    $this->username() => [trans('This account is not yet activate')],
                 ]);
             }
         }else{
