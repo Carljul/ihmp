@@ -59,7 +59,7 @@
                 <a href="#!" class="brand-logo">{{ setting('site.title') }}</a>
                 <ul class="right hide-on-med-and-down">
                     <li class="certificate"><a href="/ihmp/certificate">Manage Records</a></li>
-                    <li class="priest"><a href="/ihmp/priest">Manage Priest</a></li>
+                    <li class="priest"><a href="/ihmp/priest">Manage Priests</a></li>
                 @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
                     <li><a href="/ihmp/user">Manage Users</a></li>
                 @endif

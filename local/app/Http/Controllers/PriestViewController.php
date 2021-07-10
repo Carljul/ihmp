@@ -8,6 +8,6 @@ class PriestViewController extends Controller
 {
     //returns Priest Controller View
     public function index(){
-        return view('pages.priests.index', ['title'=>'Manage Priest']);
+        return view('pages.priests.index', ['title'=>'Manage Priests']);
     }
 }
