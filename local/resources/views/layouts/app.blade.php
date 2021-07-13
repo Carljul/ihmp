@@ -35,7 +35,7 @@
 <body>
     <div id="app">
         @guest
-        
+            <a href="IHMP_SOR Manual.pdf" style="position: absolute; bottom: 20px; right: 40px;" download>Download Manual</a>
         @else
         <!-- Dropdown Structure -->
         <ul id="dropdown1" class="dropdown-content">
