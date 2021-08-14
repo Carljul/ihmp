@@ -409,59 +409,64 @@
                             splitRecord[0], // Firstname
                             splitRecord[1], // Middle Name
                             splitRecord[2], // Last Name
-                            splitRecord[3], // Fathers First name
-                            splitRecord[4], // Fathers Middle name
-                            splitRecord[5], // Fathers Last name
-                            splitRecord[6], // Mothers First name
-                            splitRecord[7], // Mothers Middle name
-                            splitRecord[8], // Mothers Last name
-                            splitRecord[9], // Confirmation Date
-                            splitRecord[10], // Date Issued
-                            splitRecord[11], // Confirmation By
-                            splitRecord[12], // First Sponsor
-                            splitRecord[13], // Second Sponsor
-                            splitRecord[14], // Register Book
-                            splitRecord[15], // Book Page
-                            splitRecord[16], // Number
+                            splitRecord[3], // Extension
+                            splitRecord[4], // Fathers First name
+                            splitRecord[5], // Fathers Middle name
+                            splitRecord[6], // Fathers Last name
+                            splitRecord[7], // Fathers Extension
+                            splitRecord[8], // Mothers First name
+                            splitRecord[9], // Mothers Middle name
+                            splitRecord[10], // Mothers Extension
+                            splitRecord[11], // Mothers Last name
+                            splitRecord[12], // Confirmation Date
+                            splitRecord[13], // Date Issued
+                            splitRecord[14], // Confirmation By
+                            splitRecord[15], // First Sponsor
+                            splitRecord[16], // Second Sponsor
+                            splitRecord[17], // Register Book
+                            splitRecord[18], // Book Page
+                            splitRecord[19], // Number
                             0,
                             delegated_user
                         );
                     }else if(getCert == "marriage"){
-                        // console.log('validateAllFieldsAndCreatePayloadForMarriage');
-                        // console.log(splitRecord[4]);
+                        console.log('validateAllFieldsAndCreatePayloadForMarriage');
+                        console.log(splitRecord[4]);
                         validateAllFieldsAndCreatePayloadForMarriage(
                             x,
                             splitRecord[0], //husband_firstname,
                             splitRecord[1], //husband_middlename,
                             splitRecord[2], //husband_lastname,
-                            splitRecord[3], //husband_civil_status,
-                            splitRecord[4], //husband_birthdate,
+                            splitRecord[3], //husband_extension,
+                            splitRecord[4], //husband_civil_status,
+                            splitRecord[5], //husband_birthdate,
                             splitRecord[6], //husband_birth_place,
                             splitRecord[7], //husband_residence,
-                            splitRecord[5], //husband_baptismdate,
-                            splitRecord[8], //husband_fathersname,
-                            splitRecord[9], //husband_mothersname,
-                            splitRecord[10], //husband_first_witness,
-                            splitRecord[11], //husband_second_witness,
-                            splitRecord[12], //wife_firstname,
-                            splitRecord[13], //wife_middlename,
-                            splitRecord[14], //wife_lastname,
-                            splitRecord[15], //wife_civil_status,
-                            splitRecord[16], //wife_birthdate,
-                            splitRecord[18], //wife_birthplace,
-                            splitRecord[19], //wife_residence,
-                            splitRecord[17], //wife_baptismdate,
-                            splitRecord[20], //wife_fathersname,
-                            splitRecord[21], //wife_mothersname,
-                            splitRecord[22], //wife_firstwitness,
-                            splitRecord[23], //wife_secondwitness,
-                            splitRecord[24], //marriage_place,
-                            splitRecord[25], //marriage_date,
-                            splitRecord[26], //solemnized_by,
-                            splitRecord[27], //marriage_number,
-                            splitRecord[28], //marriage_page,
-                            splitRecord[29], //marriage_line,
-                            splitRecord[30], //marriage_date_issue,
+                            splitRecord[8], //husband_baptismdate,
+                            splitRecord[9], //husband_fathersname,
+                            splitRecord[10], //husband_mothersname,
+                            splitRecord[11], //husband_first_witness,
+                            splitRecord[12], //husband_second_witness,
+                            splitRecord[13], //wife_firstname,
+                            splitRecord[14], //wife_middlename,
+                            splitRecord[15], //wife_lastname,
+                            splitRecord[16], //wife_extension,
+                            splitRecord[17], //wife_civil_status,
+                            splitRecord[18], //wife_birthdate,
+                            splitRecord[19], //wife_birthplace,
+                            splitRecord[20], //wife_residence,
+                            splitRecord[21], //wife_baptismdate,
+                            splitRecord[22], //wife_fathersname,
+                            splitRecord[23], //wife_mothersname,
+                            splitRecord[24], //wife_firstwitness,
+                            splitRecord[25], //wife_secondwitness,
+                            splitRecord[26], //marriage_place,
+                            splitRecord[27], //marriage_date,
+                            splitRecord[28], //solemnized_by,
+                            splitRecord[29], //marriage_number,
+                            splitRecord[30], //marriage_page,
+                            splitRecord[31], //marriage_line,
+                            splitRecord[32], //marriage_date_issue,
                             delegated_user,
                         );
                     }else if(getCert == "birth"){
@@ -470,23 +475,26 @@
                             splitRecord[0], // Firstname
                             splitRecord[1], // Middle Name
                             splitRecord[2], // Last Name
-                            splitRecord[3], // birth_born_on,
-                            splitRecord[4], // birth_born_in,
-                            splitRecord[5], // birth_father_first_name,
-                            splitRecord[6], // birth_father_middle_name,
-                            splitRecord[7], // birth_father_last_name,
-                            splitRecord[8], // birth_mothers_first_name,
-                            splitRecord[9], // birth_father_middle_name,
-                            splitRecord[10], // birth_mother_last_name,
-                            splitRecord[11], // birth_resident_of,
-                            splitRecord[14], // birth_godparents,
-                            splitRecord[15], // birth_baptismal_register,
-                            splitRecord[16], // birth_volume,
-                            splitRecord[17], // birth_page,
-                            splitRecord[18], // birth_date_issued,
+                            splitRecord[3], // Extension
+                            splitRecord[4], // birth_born_on,
+                            splitRecord[5], // birth_born_in,
+                            splitRecord[6], // birth_father_first_name,
+                            splitRecord[7], // birth_father_middle_name,
+                            splitRecord[8], // birth_father_last_name,
+                            splitRecord[9], // birth_father_extension,
+                            splitRecord[10], // birth_mothers_first_name,
+                            splitRecord[11], // birth_father_middle_name,
+                            splitRecord[12], // birth_mother_last_name,
+                            splitRecord[13], // birth_mother_extension,
+                            splitRecord[14], // birth_resident_of,
+                            splitRecord[15], // birth_baptism_date,
+                            splitRecord[16], // birth_minister,
+                            splitRecord[17], // birth_godparents,
+                            splitRecord[18], // birth_baptismal_register,
+                            splitRecord[19], // birth_volume,
+                            splitRecord[20], // birth_page,
+                            splitRecord[21], // birth_date_issued,
                             0, // birth_parish_priest,
-                            splitRecord[12], // birth_baptism_date,
-                            splitRecord[13], // birth_minister,
                             delegated_user, // delegated_user,
                         );
                     }else if(getCert == "death"){
@@ -495,16 +503,17 @@
                             splitRecord[0], //death_firstname,
                             splitRecord[1], // death_middlename,
                             splitRecord[2], //death_lastname,
-                            splitRecord[3], //death_age,
-                            splitRecord[4], //death_residence,
-                            splitRecord[5], //date_of_death,
-                            splitRecord[6], //death_place_of_burial,
-                            splitRecord[7], //date_of_burial,
-                            splitRecord[7], //death_informant,
-                            splitRecord[8], //death_book_number,
-                            splitRecord[9], //death_page_number,
-                            splitRecord[10], //death_registry_number,
-                            splitRecord[11], //death_date_issued,
+                            splitRecord[3], //extension,
+                            splitRecord[4], //death_age,
+                            splitRecord[5], //death_residence,
+                            splitRecord[6], //date_of_death,
+                            splitRecord[7], //death_place_of_burial,
+                            splitRecord[8], //date_of_burial,
+                            splitRecord[9], //death_informant,
+                            splitRecord[10], //death_book_number,
+                            splitRecord[11], //death_page_number,
+                            splitRecord[12], //death_registry_number,
+                            splitRecord[13], //death_date_issued,
                             0,
                             delegated_user
                         );
