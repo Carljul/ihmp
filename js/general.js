@@ -308,15 +308,15 @@ function printCertificate(personData){
                         // Source Link
                         printContent = printContent.replaceAll('sourceLink', `${system_url}/css/materialize.css`);
                         // Full name
-                        var fname = personData['content']['firstname']+" "+personData['content']['middlename']+" "+personData['content']['lastname'];
+                        var fname = personData['content']['firstname']+" "+personData['content']['middlename']+" "+personData['content']['lastname']+" "+personData['content']['suffix'];
                         printContent = printContent.replaceAll('fullname',fname);
                         // Parsing Meta Content
                         var metaContent = JSON.parse(personData['content']['meta']);
                         // Fathers Name
-                        var fathersName = metaContent['father_firstname']+" "+metaContent['father_middlename']+" "+metaContent['father_lastname'];
+                        var fathersName = metaContent['father_firstname']+" "+metaContent['father_middlename']+" "+metaContent['father_lastname']+" "+metaContent['father_suffix'];
                         printContent = printContent.replaceAll('fathers_name',fathersName == ''?'&nbsp;':fathersName);
                         // Mothers Name
-                        var motherName = metaContent['mother_firstname']+" "+metaContent['mother_middlename']+" "+metaContent['mother_lastname'];
+                        var motherName = metaContent['mother_firstname']+" "+metaContent['mother_middlename']+" "+metaContent['mother_lastname']+" "+metaContent['mother_suffix'];
                         printContent = printContent.replaceAll('mothers_name',motherName == ''?'&nbsp;':motherName);
                         // confirmation_day
                         var confirmation_day = ordinal_suffix_of(metaContent['confirmation_day']);
@@ -355,7 +355,7 @@ function printCertificate(personData){
                         // Parsing Meta Content
                         var metaContent = JSON.parse(personData['content']['meta']);
                         // husbands_name
-                        var fname = metaContent['husband_firstname']+" "+metaContent['husband_middlename']+" "+metaContent['husband_lastname'];
+                        var fname = metaContent['husband_firstname']+" "+metaContent['husband_middlename']+" "+metaContent['husband_lastname']+" "+metaContent['husband_suffix'];
                         printContent = printContent.replaceAll('husbands_name',fname);
                         // husbands_age
                         var hage = metaContent['husband_age'];
@@ -389,7 +389,7 @@ function printCertificate(personData){
                         printContent = printContent.replaceAll('husbands_second_witness',husband_secondwitness == ''?'&nbsp;':husband_secondwitness);
 
                         // wifes_name
-                        var wfname = metaContent['wife_firstname']+" "+metaContent['wife_middlename']+" "+metaContent['wife_lastname'];
+                        var wfname = metaContent['wife_firstname']+" "+metaContent['wife_middlename']+" "+metaContent['wife_lastname']+" "+metaContent['wife_suffix'];
                         printContent = printContent.replaceAll('wifes_name',wfname);
                         // wifes_age
                         var wife_age = metaContent['wife_age'];
@@ -464,7 +464,7 @@ function printCertificate(personData){
                         var metaContent = JSON.parse(personData['content']['meta']);
 
                         // fullname
-                        var fname = rootContent['firstname']+" "+rootContent['middlename']+" "+rootContent['lastname'];
+                        var fname = rootContent['firstname']+" "+rootContent['middlename']+" "+rootContent['lastname']+" "+rootContent['suffix'];
                         printContent = printContent.replaceAll('fullname',fname);
                         // born_on_date
                         var born_on = new Date(metaContent['born_on']);
@@ -473,10 +473,10 @@ function printCertificate(personData){
                         var born_in = metaContent['born_in'];
                         printContent = printContent.replaceAll('born_in_date',born_in == ''?'&nbsp;':born_in);
                         // fathers_name
-                        var father_fullname = metaContent['father_firstname']+" "+metaContent['father_middlename']+" "+metaContent['father_lastname'];
+                        var father_fullname = metaContent['father_firstname']+" "+metaContent['father_middlename']+" "+metaContent['father_lastname']+" "+metaContent['father_suffix'];
                         printContent = printContent.replaceAll('fathers_name',father_fullname == ''?'&nbsp;':father_fullname);
                         // mothers_name
-                        var mothers_fullname = metaContent['mother_firstname']+" "+metaContent['mother_middlename']+" "+metaContent['mother_lastname'];
+                        var mothers_fullname = metaContent['mother_firstname']+" "+metaContent['mother_middlename']+" "+metaContent['mother_lastname']+" "+metaContent['mother_suffix'];
                         printContent = printContent.replaceAll('mothers_name',mothers_fullname == ''?'&nbsp;':mothers_fullname);
                         // residents_of
                         var resident_of = metaContent['resident_of'];
@@ -508,11 +508,15 @@ function printCertificate(personData){
                             printContent = printContent.replaceAll('parish_priest','');
                         }
                         // date_issued
-                        var date_issued = new Date(metaContent['date_issued']);
-                        printContent = printContent.replaceAll('date_issued',monthNames[date_issued.getMonth()-1]+" "+date_issued.getDate()+", "+date_issued.getFullYear());
+                        if(metaContent['date_issued'] == 'NaN/NaN/NaN'){
+                            printContent = printContent.replaceAll('date_issued','');
+                        }else{
+                            var date_issued = new Date(metaContent['date_issued']);
+                            printContent = printContent.replaceAll('date_issued',monthNames[date_issued.getMonth()-1]+" "+date_issued.getDate()+", "+date_issued.getFullYear());
+                        }
                     }else if(personData.certificate_type == 'death'){
                         // fullname_system
-                        var fname = personData['content']['firstname']+" "+personData['content']['middlename']+" "+personData['content']['lastname'];
+                        var fname = personData['content']['firstname']+" "+personData['content']['middlename']+" "+personData['content']['lastname']+" "+personData['content']['suffix'];
                         printContent = printContent.replaceAll('fullname_system',fname);
                         
                         // Parsing Meta Content
@@ -554,11 +558,11 @@ function printCertificate(personData){
                     var a = window.open('', '', 'height=1000, width=1000, fullscreen=yes, channelmode=yes');
                     setTimeout(() => {
                         a.document.write(printContent);
-                    },1000);
-                    setTimeout(() => {
-                        a.print();
-                        a.close();
-                    }, 1500);
+                    },1000); // make this 2 seconds
+                    // setTimeout(() => {
+                    //     a.print();
+                    //     a.close();
+                    // }, 1500); // make this 2.5 seconds
                 }else{
                     Materialize.toast('Template is unavailable, Please contact your app administrator', 5000, 'red rounded');
                 }
@@ -661,6 +665,7 @@ function getConfirmationList(url){
                 for(var x = 0; x < confirmationObject.length; x++){
                     var metaContent = JSON.parse(confirmationObject[x]['meta']);
                     var rootContent = confirmationObject[x];
+                    var suffix = rootContent['suffix'] == null ? '':rootContent['suffix'];
                     html+='<tr>'
                     +'<!-- Actions -->'
                     +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintCCertificate" id="btnPrintCCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
@@ -672,6 +677,7 @@ function getConfirmationList(url){
                     +'<td><label style="font-size: 9px;">First Name</label><br>'+rootContent['firstname']+'</td>'
                     +'<td><label style="font-size: 9px;">Middle Name</label><br>'+rootContent['middlename']+'</td>'
                     +'<td><label style="font-size: 9px;">Last Name</label><br>'+rootContent['lastname']+'</td>'
+                    +'<td><label style="font-size: 9px;">Extension</label><br>'+suffix+'</td>'
                     +'<!-- Fathers Name -->';
                     var cmonth = metaContent['confirmation_month'];
                     if(cmonth == null || cmonth == undefined || cmonth == NaN){
@@ -689,10 +695,12 @@ function getConfirmationList(url){
                     html+='<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['father_firstname']+'</td>'
                     +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['father_middlename']+'</td>'
                     +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['father_lastname']+'</td>'
+                    +'<td><label style="font-size: 9px;">Extension</label><br>'+metaContent['father_suffix']+'</td>'
                     +'<!-- Mothers Name -->'
                     +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['mother_firstname']+'</td>'
                     +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['mother_middlename']+'</td>'
                     +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['mother_lastname']+'</td>'
+                    +'<td><label style="font-size: 9px;">Extension</label><br>'+metaContent['mother_suffix']+'</td>'
                     +'<!-- First Sponsor -->'
                     +'<td><label style="font-size: 9px;">Full Name</label><br>'+metaContent['first_sponsor']+'</td>'
                     +'<!-- Second Sponsor -->'
@@ -709,7 +717,7 @@ function getConfirmationList(url){
                         html+='<td>Not Set</td>';
                     }else{
                         var mname = rootContent['priest_mname'] == null ? '':rootContent['priest_mname'];
-                        html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+mname+' '+rootContent['priest_lname']+'</td>';
+                        html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_clergy']+' '+rootContent['priest_fname']+' '+mname+' '+rootContent['priest_lname']+'</td>';
                     }
                     html+='</tr>';
                 }
@@ -798,12 +806,15 @@ function getConfirmationList(url){
                         $('#single_confirmation_firstname').val(response.data[0].firstname);
                         $('#single_confirmation_middlename').val(response.data[0].middlename);
                         $('#single_confirmation_lastname').val(response.data[0].lastname);
+                        $('#single_confirmation_extension').val(response.data[0].suffix);
                         $('#single_confirmation_father_firstname').val(metaContent.father_firstname);
                         $('#single_confirmation_father_middlename').val(metaContent.father_middlename);
                         $('#single_confirmation_father_lastname').val(metaContent.father_lastname);
+                        $('#single_confirmation_father_extension').val(metaContent.father_suffix);
                         $('#single_confirmation_mother_firstname').val(metaContent.mother_firstname);
-                        $('#single_confirmation_mother_middlename').val(metaContent.mother_firstname);
-                        $('#single_confirmation_mother_lastname').val(metaContent.mother_firstname);
+                        $('#single_confirmation_mother_middlename').val(metaContent.mother_middlename);
+                        $('#single_confirmation_mother_lastname').val(metaContent.mother_lastname);
+                        $('#single_confirmation_mother_extension').val(metaContent.mother_suffix);
                         
                         if(metaContent.confirmation_month != null){
                             // Confirmation Date
@@ -985,6 +996,17 @@ function getBirthList(url){
                 for(var x = 0; x < birthObject.length; x++){
                     var metaContent = JSON.parse(birthObject[x]['meta']);
                     var rootContent = birthObject[x];
+                    console.log("Testing"+metaContent['date_issued']);
+                    var dateIssued = "Not Set";
+                    if(metaContent['date_issued'] != "NaN/NaN/NaN"){
+                        dateIssued = metaContent['date_issued'];
+                    }
+                    
+                    var suffix = rootContent['suffix'] == null ? '':rootContent['suffix'];
+                    var father_suffix = metaContent['father_suffix'] == undefined ? '':metaContent['father_suffix'];
+                    var mother_suffix = metaContent['mother_suffix'] == undefined ? '':metaContent['mother_suffix'];
+                    var midName = rootContent['middlename'] == null ? '':rootContent['middlename'];
+                    
                     html+= '<tr>'
                         +'<!-- Actions -->'
                         +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintBCertificate" id="btnPrintBCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
@@ -992,8 +1014,9 @@ function getBirthList(url){
                         +'<td><button class="btn waves-effect btn-actions red tooltipped btnDeleteBCertificate" id="btnDeleteBCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
                         +'<!-- Record of -->'
                         +'<td><label style="font-size: 9px;">First Name</label><br>'+rootContent['firstname']+'</td>'
-                        +'<td><label style="font-size: 9px;">Middle Name</label><br>'+rootContent['middlename']+'</td>'
+                        +'<td><label style="font-size: 9px;">Middle Name</label><br>'+midName+'</td>'
                         +'<td><label style="font-size: 9px;">Last Name</label><br>'+rootContent['lastname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Extension</label><br>'+suffix+'</td>'
                         +'<!-- Born On -->'
                         +'<td>'+metaContent['born_on']+'</td>'
                         +'<!-- Born In -->'
@@ -1005,10 +1028,12 @@ function getBirthList(url){
                         +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['father_firstname']+'</td>'
                         +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['father_middlename']+'</td>'
                         +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['father_lastname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Extension</label><br>'+father_suffix+'</td>'
                         +'<!-- Mothers Name -->'
                         +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['mother_firstname']+'</td>'
                         +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['mother_middlename']+'</td>'
                         +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['mother_lastname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Extension</label><br>'+mother_suffix+'</td>'
                         +'<!-- Residents of -->'
                         +'<td><label style="font-size: 9px;">Address</label><br>'+metaContent['resident_of']+'</td>'
                         +'<!-- Godparents -->'
@@ -1017,14 +1042,14 @@ function getBirthList(url){
                         +'<td><label style="font-size: 9px;">Baptismal Register</label><br>'+metaContent['baptismal_register']+'</td>'
                         +'<td><label style="font-size: 9px;">Volume</label><br>'+metaContent['volume']+'</td>'
                         +'<td><label style="font-size: 9px;">Page Number</label><br>'+metaContent['page']+'</td>'
-                        +'<td><label style="font-size: 9px;">Date Issued</label><br>'+metaContent['date_issued']+'</td>'
+                        +'<td><label style="font-size: 9px;">Date Issued</label><br>'+dateIssued+'</td>'
                         +'<!-- Parish Priest -->';
                         var pname = rootContent['priest_fname'];
                         if(pname == null || pname == undefined || pname == NaN){
                             html+='<td><label style="font-size: 9px;">Name</label><br>Not Set</td>';
                         }else{
                             var mname = rootContent['priest_mname'] == null ? '':rootContent['priest_mname'];
-                            html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_fname']+' '+mname+' '+rootContent['priest_lname']+'</td>';
+                            html+='<td><label style="font-size: 9px;">Name</label><br>'+rootContent['priest_clergy']+' '+rootContent['priest_fname']+' '+mname+' '+rootContent['priest_lname']+'</td>';
                         }
                         html+='</tr>';
                 }
@@ -1124,6 +1149,7 @@ function getBirthList(url){
                         $('#birth_firstname').val(responseContent.firstname);
                         $('#birth_middlename').val(responseContent.middlename);
                         $('#birth_lastname').val(responseContent.lastname);
+                        $('#birth_extension').val(responseContent.suffix);
 
 
                         if(metaContent.born_on != null){
@@ -1142,9 +1168,11 @@ function getBirthList(url){
                         $('#birth_father_firstname').val(metaContent.father_firstname);
                         $('#birth_father_middlename').val(metaContent.father_middlename);
                         $('#birth_father_lastname').val(metaContent.father_lastname);
+                        $('#birth_father_extension').val(metaContent.father_suffix);
                         $('#birth_mother_firstname').val(metaContent.mother_firstname);
                         $('#birth_mother_middlename').val(metaContent.mother_middlename);
                         $('#birth_mother_lastname').val(metaContent.mother_lastname);
+                        $('#birth_mother_extension').val(metaContent.mother_suffix);
                         $('#birth_address').val(metaContent.resident_of);
 
                         if(metaContent.baptism_date != 'NaN/NaN/NaN' || metaContent.baptism_date != null){
@@ -1325,6 +1353,8 @@ function getMarriageList(url){
                 for(var x = 0; x < marriageObject.length; x++){
                     var metaContent = JSON.parse(marriageObject[x]['meta']);
                     var rootContent = marriageObject[x];
+                    var husband_suffix = metaContent['husband_suffix'] == undefined ? '':metaContent['husband_suffix']; 
+                    var wife_suffix = metaContent['wife_suffix'] == undefined ? '':metaContent['wife_suffix']; 
                     html+= '<tr>'
                         +'<!-- Actions -->'
                         +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintMCertificate" id="btnPrintMCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
@@ -1334,6 +1364,7 @@ function getMarriageList(url){
                         +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['husband_firstname']+'</td>'
                         +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['husband_middlename']+'</td>'
                         +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['husband_lastname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Extension</label><br>'+husband_suffix+'</td>'
                         +'<td><label style="font-size: 9px;">Civil Status</label><br>'+metaContent['husband_civil_status']+'</td>'
                         +'<td><label style="font-size: 9px;">Age</label><br>'+metaContent['husband_age']+'</td>'
                         +'<td><label style="font-size: 9px;">Birth Date</label><br>'+metaContent['husband_birthdate']+'</td>'
@@ -1348,6 +1379,7 @@ function getMarriageList(url){
                         +'<td><label style="font-size: 9px;">First Name</label><br>'+metaContent['wife_firstname']+'</td>'
                         +'<td><label style="font-size: 9px;">Middle Name</label><br>'+metaContent['wife_middlename']+'</td>'
                         +'<td><label style="font-size: 9px;">Last Name</label><br>'+metaContent['wife_lastname']+'</td>'
+                        +'<td><label style="font-size: 9px;">Extension</label><br>'+wife_suffix+'</td>'
                         +'<td><label style="font-size: 9px;">Civil Status</label><br>'+metaContent['wife_civil_status']+'</td>'
                         +'<td><label style="font-size: 9px;">Age</label><br>'+metaContent['wife_age']+'</td>'
                         +'<td><label style="font-size: 9px;">Birth Date</label><br>'+metaContent['wife_birthdate']+'</td>'
@@ -1475,6 +1507,7 @@ function getMarriageList(url){
                         $("#husband_firstname").val(metaContent.husband_firstname);
                         $("#husband_middlename").val(metaContent.husband_middlename);
                         $("#husband_lastname").val(metaContent.husband_lastname);
+                        $("#husband_extension").val(metaContent.husband_suffix);
                         
                         $("#husband_civil_status").val(metaContent.wife_civil_status);
                         $("#husband_civil_status").material_select();
@@ -1514,6 +1547,7 @@ function getMarriageList(url){
                         $("#wife_firstname").val(metaContent.wife_firstname);
                         $("#wife_middlename").val(metaContent.wife_middlename);
                         $("#wife_lastname").val(metaContent.wife_lastname);
+                        $("#wife_extension").val(metaContent.wife_suffix);
 
 
                         $("#wife_civil_status").val(metaContent.wife_civil_status);
@@ -1731,6 +1765,7 @@ function getDeathList(url){
                 for(var x = 0; x < deathObject.length; x++){
                     var metaContent = JSON.parse(deathObject[x]['meta']);
                     var responseContent = deathObject[x];
+                    var suffix = responseContent['suffix'] == null ? '':responseContent['suffix'];
                     html+= '<tr>'
                             +'<!-- Actions -->'
                             +'<td><button class="btn waves-effect btn-actions blue tooltipped btnPrintDCertificate" id="btnPrintDCertificate-'+responseContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Print Record"><i class="material-icons">print</i></button></td>'
@@ -1740,6 +1775,7 @@ function getDeathList(url){
                             +'<td><label style="font-size: 9px;">First Name</label><br>'+responseContent['firstname']+'</td>'
                             +'<td><label style="font-size: 9px;">Middle Name</label><br>'+responseContent['middlename']+'</td>'
                             +'<td><label style="font-size: 9px;">Last Name</label><br>'+responseContent['lastname']+'</td>'
+                            +'<td><label style="font-size: 9px;">Extension</label><br>'+suffix+'</td>'
                             +'<!-- Other Info -->'
                             +'<td><label style="font-size: 9px;">Age</label><br>'+metaContent['age']+'</td>'
                             +'<td><label style="font-size: 9px;">Residence of</label><br>'+metaContent['residence']+'</td>'
@@ -1862,6 +1898,7 @@ function getDeathList(url){
                         $("#death_firstname").val(rootContent['firstname']);
                         $("#death_middlename").val(rootContent['middlename']);
                         $("#death_lastname").val(rootContent['lastname']);
+                        $("#death_extension").val(rootContent['suffix']);
                         $("#death_age").val(metaContent.age);
                         $("#death_residence").val(metaContent.residence);
                         

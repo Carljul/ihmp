@@ -51,9 +51,11 @@ class CertificateController extends Controller
                 "father_firstname" => $content->{"father_firstname"},
                 "father_middlename" => $content->{"father_middlename"},
                 "father_lastname" => $content->{"father_lastname"},
+                "father_suffix" => $content->{"father_suffix"},
                 "mother_firstname" => $content->{"mother_firstname"},
                 "mother_middlename" => $content->{"mother_middlename"},
                 "mother_lastname" => $content->{"mother_lastname"},
+                "mother_suffix" => $content->{"mother_suffix"},
                 "confirmation_day" => $content->{"confirmation_day"},
                 "confirmation_month" => $content->{"confirmation_month"},
                 "confirmation_year" => $content->{"confirmation_year"},
@@ -80,9 +82,11 @@ class CertificateController extends Controller
                 "father_firstname" => $content->{"father_firstname"},
                 "father_middlename" => $content->{"father_middlename"},
                 "father_lastname" => $content->{"father_lastname"},
+                "father_suffix" => $content->{"father_suffix"},
                 "mother_firstname" => $content->{"mother_firstname"},
                 "mother_middlename" => $content->{"mother_middlename"},
                 "mother_lastname" => $content->{"mother_lastname"},
+                "mother_suffix" => $content->{"mother_suffix"},
                 "resident_of" => $content->{"resident_of"},
                 "baptism_date" => $content->{"baptism_date"},
                 "baptism_minister" => $content->{"baptism_minister"},
@@ -105,6 +109,7 @@ class CertificateController extends Controller
                 "husband_firstname" => $content->{"husband_firstname"},
                 "husband_middlename" => $content->{"husband_middlename"},
                 "husband_lastname" => $content->{"husband_lastname"},
+                "husband_suffix" => $content->{"husband_suffix"},
                 "husband_age" => $content->{"husband_age"},
                 "husband_civil_status" => $content->{"husband_civil_status"},
                 "husband_birthdate" => $content->{"husband_birthdate"},
@@ -118,6 +123,7 @@ class CertificateController extends Controller
                 "wife_firstname" => $content->{"wife_firstname"},
                 "wife_middlename" => $content->{"wife_middlename"},
                 "wife_lastname" => $content->{"wife_lastname"},
+                "wife_suffix" => $content->{"wife_suffix"},
                 "wife_age" => $content->{"wife_age"},
                 "wife_civil_status" => $content->{"wife_civil_status"},
                 "wife_birthdate" => $content->{"wife_birthdate"},
@@ -143,7 +149,7 @@ class CertificateController extends Controller
             $metaContent = json_encode($metaContent);
         }
 
-        //meta content validations for marriage
+        //meta content validations for death
         if($request->certificate_type == "death"){
 
             
@@ -185,6 +191,7 @@ class CertificateController extends Controller
             "firstname" => $request->firstname,
             "middlename" => $request->middlename,
             "lastname" => $request->lastname,
+            "suffix" => $request->suffix,
             "certificate_type" => $request->certificate_type,
             "priest_id" => $request->priest_id,
             "meta" => $metaContent,
@@ -296,6 +303,7 @@ class CertificateController extends Controller
             "firstname" => $request->firstname,
             "middlename" => $request->middlename,
             "lastname" => $request->lastname,
+            "suffix" => $request->suffix,
             "certificate_type" => $request->certificate_type,
             "priest_id" => $request->priest_id,
             "meta" => $request->meta,

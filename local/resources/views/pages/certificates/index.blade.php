@@ -152,6 +152,7 @@
                         var trimed_prefix = priestObject[x]['prefix'];
                         html += "<option value='"+priestObject[x]['id']+"'>"+trimed_prefix+" "+priestObject[x]['firstname']+" "+trimed_middle_name+" "+priestObject[x]['lastname']+"</option>";
                     }
+                    html += "<option value='0'>Unset Parish Priest</option>";
                     html += "<option value='special'>Add Parish Priest</option>";
                     $(".priest_select_dropdown").html(html);
                     $('.priest_select_dropdown').material_select();
@@ -180,7 +181,7 @@
             var selectedOption = $(this).val();
             if(selectedOption == 'special'){
                 $('.priest_select_dropdown').val('');
-                location.href="/priest";
+                location.href="/ihmp/priest";
             }
         });
 

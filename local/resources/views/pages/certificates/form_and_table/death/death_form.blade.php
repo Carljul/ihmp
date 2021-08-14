@@ -12,19 +12,23 @@
                         <div class="col s12">
                             <b>Deceased name</b>
                             <div class="row removeBottomMargin">
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input type="hidden" value="0" id="dis_update" name="dis_update">
                                     <input type="hidden" value="0" id="did" name="did">
                                     <input id="death_firstname" type="text" class="validate" name="death_firstname">
                                     <label for="death_firstname">First Name</label>
                                 </div>
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="death_middlename" type="text" class="validate" name="death_middlename">
                                     <label for="death_middlename">Middle Name</label>
                                 </div>
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="death_lastname" type="text" class="validate" name="death_lastname">
                                     <label for="death_lastname">Last Name</label>
+                                </div>
+                                <div class="input-field col s12 m3">
+                                    <input id="death_extension" type="text" class="validate" name="death_extension">
+                                    <label for="death_extension">Extension</label>
                                 </div>
                             </div>
                         </div>
@@ -145,6 +149,7 @@
                 var death_firstname = $("#death_firstname").val();
                 var death_middlename = $("#death_middlename").val();
                 var death_lastname = $("#death_lastname").val();
+                var death_extension = $("#death_extension").val();
                 var death_age = $("#death_age").val();
                 var death_residence = $("#death_residence").val();
                 var death_date_of_death = new Date($("#death_date_of_death").val());
@@ -164,7 +169,7 @@
                     Materialize.toast('First Name and Last Name are required fields', 5000, 'red rounded');
                 }else{
                     metaContent = {
-                        "deceased_name":death_firstname+" "+death_middlename+" "+death_lastname,
+                        "deceased_name":death_firstname+" "+death_middlename+" "+death_lastname+" "+death_extension,
                         "age":death_age,
                         "residence":death_residence,
                         "date_of_death":(death_date_of_death.getMonth()+1)+"/"+death_date_of_death.getDate()+"/"+death_date_of_death.getFullYear(),
@@ -184,6 +189,7 @@
                             "firstname": death_firstname,
                             "middlename": death_middlename,
                             "lastname": death_lastname,
+                            "suffix": death_extension,
                             "certificate_type": "death",
                             "priest_id": death_parish_priest == null ? 0:death_parish_priest,
                             "meta": JSON.stringify(metaContent),
@@ -214,6 +220,7 @@
                             "firstname": death_firstname,
                             "middlename": death_middlename,
                             "lastname": death_lastname,
+                            "suffix": death_extension,
                             "certificate_type": "death",
                             "priest_id": death_parish_priest == null ? 0:death_parish_priest,
                             "meta": JSON.stringify(metaContent),

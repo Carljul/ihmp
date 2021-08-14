@@ -12,19 +12,23 @@
                         <div class="col s12">
                             <b>Record of</b>
                             <div class="row removeBottomMargin">
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input type="hidden" value="0" id="bis_update" name="bis_update">
                                     <input type="hidden" value="0" id="bid" name="bid">
                                     <input id="birth_firstname" type="text" class="validate" name="birth_firstname">
                                     <label for="birth_firstname">First Name</label>
                                 </div>
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="birth_middlename" type="text" class="validate" name="birth_middlename">
                                     <label for="birth_middlename">Middle Name</label>
                                 </div>
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="birth_lastname" type="text" class="validate" name="birth_lastname">
                                     <label for="birth_lastname">Last Name</label>
+                                </div>
+                                <div class="input-field col s12 m3">
+                                    <input id="birth_extension" type="text" class="validate" name="birth_extension">
+                                    <label for="birth_extension">Extension</label>
                                 </div>
                             </div>
                         </div>
@@ -48,17 +52,21 @@
                         <div class="col s12">
                             <b>Fathers' Name</b>
                             <div class="row removeBottomMargin">
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="birth_father_firstname" type="text" class="validate" name="birth_father_firstname">
                                     <label for="birth_father_firstname">First Name</label>
                                 </div>
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="birth_father_middlename" type="text" class="validate" name="birth_father_middlename">
                                     <label for="birth_father_middlename">Middle Name</label>
                                 </div>
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="birth_father_lastname" type="text" class="validate" name="birth_father_lastname">
                                     <label for="birth_father_lastname">Last Name</label>
+                                </div>
+                                <div class="input-field col s12 m3">
+                                    <input id="birth_father_extension" type="text" class="validate" name="birth_father_extension">
+                                    <label for="birth_father_extension">Extension</label>
                                 </div>
                             </div>
                         </div>
@@ -67,17 +75,21 @@
                         <div class="col s12">
                             <b>Mothers' Name</b>
                             <div class="row removeBottomMargin">
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="birth_mother_firstname" type="text" class="validate" name="birth_mother_firstname">
                                     <label for="birth_mother_firstname">First Name</label>
                                 </div>
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="birth_mother_middlename" type="text" class="validate" name="birth_mother_middlename">
                                     <label for="birth_mother_middlename">Middle Name</label>
                                 </div>
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="birth_mother_lastname" type="text" class="validate" name="birth_mother_lastname">
                                     <label for="birth_mother_lastname">Last Name</label>
+                                </div>
+                                <div class="input-field col s12 m3">
+                                    <input id="birth_mother_extension" type="text" class="validate" name="birth_mother_extension">
+                                    <label for="birth_mother_extension">Extension</label>
                                 </div>
                             </div>
                         </div>
@@ -209,14 +221,17 @@
                 var birth_firstname = $('#birth_firstname').val();
                 var birth_middlename = $('#birth_middlename').val();
                 var birth_lastname = $('#birth_lastname').val();
+                var birth_extension = $('#birth_extension').val();
                 var birth_date = new Date($('#birth_date').val());
                 var birth_location = $('#birth_location').val();
                 var birth_father_firstname = $('#birth_father_firstname').val();
                 var birth_father_middlename = $('#birth_father_middlename').val();
                 var birth_father_lastname = $('#birth_father_lastname').val();
+                var birth_father_extension = $('#birth_father_extension').val();
                 var birth_mother_firstname = $('#birth_mother_firstname').val();
                 var birth_mother_middlename = $('#birth_mother_middlename').val();
                 var birth_mother_lastname = $('#birth_mother_lastname').val();
+                var birth_mother_extension = $('#birth_mother_extension').val();
                 var birth_address = $('#birth_address').val();
                 var birth_minister = $("#birth_minister").val();
                 var birth_godparents = $('#birth_godparents').val();
@@ -247,9 +262,11 @@
                         "father_firstname": birth_father_firstname,
                         "father_middlename": birth_father_middlename,
                         "father_lastname": birth_father_lastname,
+                        "father_suffix": birth_father_extension,
                         "mother_firstname": birth_mother_firstname,
                         "mother_middlename": birth_mother_middlename,
                         "mother_lastname": birth_mother_lastname,
+                        "mother_suffix": birth_mother_extension,
                         "resident_of": birth_address,
                         "baptism_date": (birth_baptism_date.getMonth()+1)+"/"+birth_baptism_date.getDate()+"/"+birth_baptism_date.getFullYear(),
                         "baptism_minister": birth_minister,
@@ -264,8 +281,9 @@
                     if(bis_update == 0){
                         payload = {
                             "firstname": birth_firstname,
-                            "middlename": birth_middlename,
+                            "middlename": birth_middlename == null ? '':birth_middlename,
                             "lastname": birth_lastname,
+                            "suffix": birth_extension,
                             "certificate_type": "baptism",
                             "priest_id": birth_parish_priest == null ? 0:birth_parish_priest,
                             "meta": JSON.stringify(metaContent),
@@ -294,8 +312,9 @@
                         payload = {
                             "id": bid,
                             "firstname": birth_firstname,
-                            "middlename": birth_middlename,
+                            "middlename": birth_middlename == null ? '':birth_middlename,
                             "lastname": birth_lastname,
+                            "suffix": birth_extension,
                             "certificate_type": "baptism",
                             "priest_id": birth_parish_priest == null ? 0:birth_parish_priest,
                             "meta": JSON.stringify(metaContent),

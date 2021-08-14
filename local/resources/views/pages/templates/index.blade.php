@@ -248,7 +248,7 @@
                                 +"<td>"+templateObject[x]['template_type']+"</td>"
                                 +"<td>"+templateObject[x]['template_type'].charAt(0).toUpperCase() + templateObject[x]['template_type'].slice(1)+" template is added</td>"
                                 +"<td>"+istemplate+"</td>"
-                                +"<td>"+monthNames[updatedDate.getMonth()+1]+" "+updatedDate.getDate()+", "+updatedDate.getFullYear()+"</td>"
+                                +"<td>"+monthNames[updatedDate.getMonth()+1]+" "+updatedDate.getDate()+", "+updatedDate.getFullYear()+" "+updatedDate.getTime()+"</td>"
                                 +"<td>"
                                     +"<button class='btn btn-wave btnDelete red' id='btnDelete-"+templateObject[x]['id']+"'><i class='material-icons'>delete</i></button>"
                                     +" "

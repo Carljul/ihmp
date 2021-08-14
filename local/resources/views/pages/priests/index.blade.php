@@ -27,8 +27,9 @@
                                                     <th>Actions</th>
                                                     <th>Clergy Title</th>
                                                     <th>First Name</th>
-                                                    <th>Middle Name</th>
+                                                    <th>Middle Name / Initial</th>
                                                     <th>Last Name</th>
+                                                    <th>Extension</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="appendPriestList">
@@ -72,13 +73,19 @@
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <input id="middlename" type="text" class="validate" name="middlename">
-                                        <label for="middlename">Middle Name</label>
+                                        <label for="middlename">Middle Name / Initial</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <input id="lastname" type="text" class="validate" name="lastname">
                                         <label for="lastname">Last Name</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input id="extension" type="text" class="validate" name="extension">
+                                        <label for="extension">Extension</label>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -116,6 +123,7 @@
                 var firstname = $('#firstname').val();
                 var middlename = $('#middlename').val();
                 var lastname = $('#lastname').val();
+                var extension = $('#extension').val();
                 var payload;
                 
                 if(prefix == "" || firstname == "" || lastname == ""){
@@ -129,7 +137,8 @@
                             'prefix':prefix,
                             'firstname': firstname,
                             'middlename': middlename,
-                            'lastname': lastname
+                            'lastname': lastname,
+                            'suffix': extension
                         };
                         $.ajax({
                             type: "PUT",
@@ -155,14 +164,15 @@
                             'prefix':prefix,
                             'firstname': firstname,
                             'middlename': middlename,
-                            'lastname': lastname
+                            'lastname': lastname,
+                            'suffix': extension
                         };
                         $.ajax({
                             type: "POST",
                             url: priest_endpoint,
                             data: payload,
                             success: function(data){
-                                if(data.status >= 200 && response.status < 400){
+                                if(data.status == 201){
                                     Materialize.toast('Added', 5000, 'green rounded');
                                     getPriestList("NA");
                                     clearForm();
@@ -243,6 +253,7 @@
 
                         if(response.data.length !== 0){
                             for(var x = 0; x < priestObject.length; x++){
+                                var suffix = priestObject[x]['suffix'] == null ? '':priestObject[x]['suffix'];
                                 var middlename = priestObject[x]['middlename'] == null ? '':priestObject[x]['middlename'];
                                 html += "<tr>"
                                 +"<td>"
@@ -254,6 +265,7 @@
                                 +"<td>"+priestObject[x]['firstname']+"</td>"
                                 +"<td>"+middlename+"</td>"
                                 +"<td>"+priestObject[x]['lastname']+"</td>"
+                                +"<td>"+suffix+"</td>"
                                 +"</tr>";
                             }
                         }else{
@@ -309,6 +321,7 @@
                             $('#is_update').val(0);
                             $('#pid').val(0);
                             $('#prefix').val('');
+                            $('#extension').val('');
                             $('#firstname').val('');
                             $('#middlename').val('');
                             $('#lastname').val('');

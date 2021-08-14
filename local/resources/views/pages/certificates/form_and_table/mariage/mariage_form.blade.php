@@ -20,11 +20,15 @@
                                 </div>
                                 <div class="input-field col s12">
                                     <input id="husband_middlename" type="text" class="validate" name="husband_middlename">
-                                    <label for="husband_middlename">Middle Name</label>
+                                    <label for="husband_middlename">Middle Name / Initial</label>
                                 </div>
                                 <div class="input-field col s12">
                                     <input id="husband_lastname" type="text" class="validate" name="husband_lastname">
                                     <label for="husband_lastname">Last Name</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input id="husband_extension" type="text" class="validate" name="husband_extension">
+                                    <label for="husband_extension">Extension</label>
                                 </div>
                                 <div class="input-field col s12">
                                     <select id="husband_civil_status" class="">
@@ -79,11 +83,15 @@
                                 </div>
                                 <div class="input-field col s12">
                                     <input id="wife_middlename" type="text" class="validate" name="wife_middlename">
-                                    <label for="wife_middlename">Middle Name</label>
+                                    <label for="wife_middlename">Middle Name / Initial</label>
                                 </div>
                                 <div class="input-field col s12">
                                     <input id="wife_lastname" type="text" class="validate" name="wife_lastname">
                                     <label for="wife_lastname">Last Name</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input id="wife_extension" type="text" class="validate" name="wife_extension">
+                                    <label for="wife_extension">Extension</label>
                                 </div>
                                 <div class="input-field col s12">
                                     <select id="wife_civil_status" class="">
@@ -293,6 +301,7 @@
                 var husband_firstname = $("#husband_firstname").val();
                 var husband_middlename = $("#husband_middlename").val();
                 var husband_lastname = $("#husband_lastname").val();
+                var husband_extension = $("#husband_extension").val();
                 var husband_civil_status = $("#husband_civil_status").val();
                 var husband_birth_date = new Date($("#husband_birth_date").val());
                 var husband_age = getAge(husband_birth_date);
@@ -307,6 +316,7 @@
                 var wife_firstname = $("#wife_firstname").val();
                 var wife_middlename = $("#wife_middlename").val();
                 var wife_lastname = $("#wife_lastname").val();
+                var wife_extension = $("#wife_extension").val();
                 var wife_civil_status = $("#wife_civil_status").val();
                 var wife_birth_date = new Date($("#wife_birth_date").val());
                 var wife_age = getAge(wife_birth_date);
@@ -346,6 +356,7 @@
                         "husband_firstname":husband_firstname,
                         "husband_middlename":husband_middlename,
                         "husband_lastname":husband_lastname,
+                        "husband_suffix":husband_extension,
                         "husband_age":husband_age,
                         "husband_civil_status":husband_civil_status,
                         "husband_birthdate":(husband_birth_date.getMonth()+1)+"/"+husband_birth_date.getDate()+"/"+husband_birth_date.getFullYear(),
@@ -359,6 +370,7 @@
                         "wife_firstname":wife_firstname,
                         "wife_middlename":wife_middlename,
                         "wife_lastname":wife_lastname,
+                        "wife_suffix":wife_extension,
                         "wife_age":wife_age,
                         "wife_civil_status":wife_civil_status,
                         "wife_birthdate":(wife_birth_date.getMonth()+1)+"/"+wife_birth_date.getDate()+"/"+wife_birth_date.getFullYear(),
@@ -387,6 +399,7 @@
                             "firstname": husband_firstname,
                             "middlename": husband_middlename,
                             "lastname": husband_lastname,
+                            "suffix": husband_extension,
                             "certificate_type": "marriage",
                             "priest_id": marriage_parish_priest == null ? 0:marriage_parish_priest,
                             "meta": JSON.stringify(metaContent),
@@ -417,6 +430,7 @@
                             "firstname": husband_firstname,
                             "middlename": husband_middlename,
                             "lastname": husband_lastname,
+                            "suffix": husband_extension,
                             "certificate_type": "marriage",
                             "priest_id": marriage_parish_priest == null ? 0:marriage_parish_priest,
                             "meta": JSON.stringify(metaContent),

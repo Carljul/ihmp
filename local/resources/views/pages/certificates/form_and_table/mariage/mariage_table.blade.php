@@ -15,8 +15,8 @@
                     <thead>
                         <tr>
                             <th colspan="3">Actions</th>
-                            <th colspan="13">Husbands Info</th>
-                            <th colspan="13">Wifes Info</th>
+                            <th colspan="14">Husbands Info</th>
+                            <th colspan="14">Wifes Info</th>
                             <th colspan="3">Marriage Details</th>
                             <th colspan="4">Other Details</th>
                             <th>Priest</th>

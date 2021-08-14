@@ -12,19 +12,23 @@
                         <div class="col s12">
                             <b>Record of</b>
                             <div class="row removeBottomMargin">
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input type="hidden" value="0" id="cis_update" name="cis_update">
                                     <input type="hidden" value="0" id="cid" name="cid">
                                     <input id="single_confirmation_firstname" type="text" class="validate" name="single_confirmation_firstname">
                                     <label for="single_confirmation_firstname">First Name</label>
                                 </div>
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="single_confirmation_middlename" type="text" class="validate" name="single_confirmation_middlename">
                                     <label for="single_confirmation_middlename">Middle Name</label>
                                 </div>
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="single_confirmation_lastname" type="text" class="validate" name="single_confirmation_lastname">
                                     <label for="single_confirmation_lastname">Last Name</label>
+                                </div>
+                                <div class="input-field col s12 m3">
+                                    <input id="single_confirmation_extension" type="text" class="validate" name="single_confirmation_extension">
+                                    <label for="single_confirmation_extension">Extension</label>
                                 </div>
                             </div>
                         </div>
@@ -33,17 +37,21 @@
                         <div class="col s12">
                             <b>Fathers' Name</b>
                             <div class="row removeBottomMargin">
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="single_confirmation_father_firstname" type="text" class="validate" name="single_confirmation_father_firstname">
                                     <label for="single_confirmation_father_firstname">First Name</label>
                                 </div>
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="single_confirmation_father_middlename" type="text" class="validate" name="single_confirmation_father_middlename">
                                     <label for="single_confirmation_father_middlename">Middle Name</label>
                                 </div>
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="single_confirmation_father_lastname" type="text" class="validate" name="single_confirmation_father_lastname">
                                     <label for="single_confirmation_father_lastname">Last Name</label>
+                                </div>
+                                <div class="input-field col s12 m3">
+                                    <input id="single_confirmation_father_extension" type="text" class="validate" name="single_confirmation_father_extension">
+                                    <label for="single_confirmation_father_extension">Extension</label>
                                 </div>
                             </div>
                         </div>
@@ -52,17 +60,21 @@
                         <div class="col s12">
                             <b>Mothers' Name</b>
                             <div class="row removeBottomMargin">
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="single_confirmation_mother_firstname" type="text" name="single_confirmation_mother_firstname">
                                     <label for="single_confirmation_mother_firstname">First Name</label>
                                 </div>
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="single_confirmation_mother_middlename" type="text" name="single_confirmation_mother_middlename">
                                     <label for="single_confirmation_mother_middlename">Middle Name</label>
                                 </div>
-                                <div class="input-field col s12 m4">
+                                <div class="input-field col s12 m3">
                                     <input id="single_confirmation_mother_lastname" type="text" name="single_confirmation_mother_lastname">
                                     <label for="single_confirmation_mother_lastname">Last Name</label>
+                                </div>
+                                <div class="input-field col s12 m3">
+                                    <input id="single_confirmation_mother_extension" type="text" name="single_confirmation_mother_extension">
+                                    <label for="single_confirmation_mother_extension">Extension</label>
                                 </div>
                             </div>
                         </div>
@@ -185,14 +197,17 @@
                 var single_confirmation_firstname = $('#single_confirmation_firstname').val();
                 var single_confirmation_middlename = $('#single_confirmation_middlename').val();
                 var single_confirmation_lastname = $('#single_confirmation_lastname').val();
+                var single_confirmation_extension = $('#single_confirmation_extension').val();
                 
                 var single_confirmation_father_firstname = $('#single_confirmation_father_firstname').val();
                 var single_confirmation_father_middlename = $('#single_confirmation_father_middlename').val();
                 var single_confirmation_father_lastname = $('#single_confirmation_father_lastname').val();
+                var single_confirmation_father_extension = $('#single_confirmation_father_extension').val();
 
                 var single_confirmation_mother_firstname = $('#single_confirmation_mother_firstname').val();
                 var single_confirmation_mother_middlename = $('#single_confirmation_mother_middlename').val();
                 var single_confirmation_mother_lastname = $('#single_confirmation_mother_lastname').val();
+                var single_confirmation_mother_extension = $('#single_confirmation_mother_extension').val();
                 var single_confirmation_date = new Date($('#single_confirmation_date').val());
                 var single_confirmation_converted_month = single_confirmation_date.getMonth() + 1;
                 
@@ -234,9 +249,11 @@
                         "father_firstname": single_confirmation_father_firstname,
                         "father_middlename": single_confirmation_father_middlename,
                         "father_lastname": single_confirmation_father_lastname,
+                        "father_suffix": single_confirmation_father_extension,
                         "mother_firstname": single_confirmation_mother_firstname,
                         "mother_middlename": single_confirmation_mother_middlename,
                         "mother_lastname": single_confirmation_mother_lastname,
+                        "mother_suffix": single_confirmation_mother_extension,
                         "confirmation_day":single_confirmation_converted_date,
                         "confirmation_month":single_confirmation_converted_month,
                         "confirmation_year":single_confirmation_converted_year,
@@ -257,6 +274,7 @@
                             "firstname": single_confirmation_firstname,
                             "middlename": single_confirmation_middlename,
                             "lastname": single_confirmation_lastname,
+                            "suffix": single_confirmation_extension,
                             "certificate_type": "confirmation",
                             "priest_id": single_confirmation_parish_priest == null ? 0:single_confirmation_parish_priest,
                             "meta": JSON.stringify(metaContent),
@@ -291,6 +309,7 @@
                             "firstname": single_confirmation_firstname,
                             "middlename": single_confirmation_middlename,
                             "lastname": single_confirmation_lastname,
+                            "suffix": single_confirmation_extension,
                             "certificate_type": "confirmation",
                             "priest_id": single_confirmation_parish_priest == null ? 0:single_confirmation_parish_priest,
                             "meta": JSON.stringify(metaContent),

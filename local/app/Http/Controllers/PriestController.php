@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Priest;
 use Illuminate\Http\Request;
 use App\Traits\GlobalFunction;
+use Illuminate\Support\Facades\DB;
 
 class PriestController extends Controller
 {
@@ -20,11 +21,11 @@ class PriestController extends Controller
         // $result = Priest::where('is_deleted', 0)->orderByRaw('id DESC')->offset(0)->limit(10)->get();
         $result = Priest::where('is_deleted', 0)->orderByRaw('id DESC')->paginate($this->getPaginationLimit());
         
-        //get all records from priest
-        $resultAllCount = Priest::all();
+        // //get all records from priest
+        // $resultAllCount = Priest::all();
 
         //returning json response
-        return response()->json(['data' => $result, 'dataCount' => count($resultAllCount), 'status' => 200]); //OK
+        return response()->json(['data' => $result, 'dataCount' => count($result), 'status' => 200]); //OK
     }
 
     /**
@@ -49,6 +50,7 @@ class PriestController extends Controller
                 "firstname" => $request->firstname,
                 "middlename"=> $request->middlename,
                 "lastname"=> $request->lastname,
+                "suffix"=> $request->suffix,
                 "prefix"=> $request->prefix,
                 "is_deleted"=> $request->is_deleted == "" ? false : $request->is_deleted,
                 "created_at" => $this->customCurrentDate(),
@@ -80,6 +82,7 @@ class PriestController extends Controller
 
             //return specific row using search
             $result = Priest::where('id', $search)
+                    ->where('is_deleted', 0)
                     ->orderByRaw('id DESC')
                     ->paginate($this->getPaginationLimit());
 
@@ -93,11 +96,20 @@ class PriestController extends Controller
             return response()->json($this->customApiResponse($result, 200)); //OK
 
         }else if($request->isDropdown == true || $request->isDropdown == "true"){
-            return response()->json($this->customApiResponse(Priest::all(), 200));
+            
+            $result = DB::table("priests")->where('is_deleted','0')->get();
+            // dd($result);
+            return response()->json($this->customApiResponse($result, 200));
+            //return specific row using search
+            // $result = Priest::where('is_deleted', 0);
+
+            // return response()->json($this->customApiResponse(Priest::all(), 200));
+            // return response()->json($this->customApiResponse($result, 200));
         }else{
 
             //return specific row using search
             $result = Priest::where('id', $search)
+                    ->where('is_deleted', 0)
                     ->orWhere('firstname', 'LIKE', '%'.$search.'%')
                     ->orWhere('middlename', 'LIKE', '%'.$search.'%')
                     ->orWhere('lastname', 'LIKE', '%'.$search.'%')
@@ -132,6 +144,7 @@ class PriestController extends Controller
             "middlename"=> $request->middlename,
             "lastname"=> $request->lastname,
             "prefix"=> $request->prefix,
+            "suffix"=> $request->suffix,
             "is_deleted"=> $request->is_deleted == "" ? false : $request->is_deleted,
             "updated_at" => $this->customCurrentDate()
         ];

@@ -15,13 +15,13 @@
                     <thead>
                         <tr>
                             <th colspan="3">Actions</th>
-                            <th colspan="3">Record of</th>
+                            <th colspan="4">Record of</th>
                             <th>Born On</th>
                             <th>Born In</th>
                             <th>Baptism Date</th>
                             <th>Minister</th>
-                            <th colspan="3">Fathers Name</th>
-                            <th colspan="3">Mothers Name</th>
+                            <th colspan="4">Fathers Name</th>
+                            <th colspan="4">Mothers Name</th>
                             <th>Residents of</th>
                             <th>Godparents</th>
                             <th colspan="4">Other Details</th>
