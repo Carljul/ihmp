@@ -109,6 +109,32 @@
 
 <script>
     $(document).ready(function(){
+        // Return array of string values, or NULL if CSV string not well formed.
+        function CSVtoArray(text) {
+            var re_valid = /^\s*(?:'[^'\\]*(?:\\[\S\s][^'\\]*)*'|"[^"\\]*(?:\\[\S\s][^"\\]*)*"|[^,'"\s\\]*(?:\s+[^,'"\s\\]+)*)\s*(?:,\s*(?:'[^'\\]*(?:\\[\S\s][^'\\]*)*'|"[^"\\]*(?:\\[\S\s][^"\\]*)*"|[^,'"\s\\]*(?:\s+[^,'"\s\\]+)*)\s*)*$/;
+            var re_value = /(?!\s*$)\s*(?:'([^'\\]*(?:\\[\S\s][^'\\]*)*)'|"([^"\\]*(?:\\[\S\s][^"\\]*)*)"|([^,'"\s\\]*(?:\s+[^,'"\s\\]+)*))\s*(?:,|$)/g;
+
+            // Return NULL if input string is not well formed CSV string.
+            if (!re_valid.test(text)) return null;
+
+            var a = []; // Initialize array to receive values.
+            text.replace(re_value, // "Walk" the string using replace with callback.
+                function(m0, m1, m2, m3) {
+
+                    // Remove backslash from \' in single quoted values.
+                    if (m1 !== undefined) a.push(m1.replace(/\\'/g, "'"));
+
+                    // Remove backslash from \" in double quoted values.
+                    else if (m2 !== undefined) a.push(m2.replace(/\\"/g, '"'));
+                    else if (m3 !== undefined) a.push(m3);
+                    return ''; // Return empty string.
+                });
+
+            // Handle special case of empty last value.
+            if (/,\s*$/.test(text)) a.push('');
+            return a;
+        };
+
         $(".certificate").addClass('active');
         $(".priest").removeClass('active');
         isTokenExist();
@@ -350,13 +376,15 @@
                         $("#countRecord").html(newSetArray.length+" "+(newSetArray.length > 1 ? "Records":"Record")+" found and ready to import!"):
                         $("#countRecord").html('It seems you uploaded an empty file');
 
+
+
                         if(newSetArray.length > 0){
                             $("#btnStartImportSequence").removeClass('disabled');
                             // Display Fields to table
                             for (i = 0; i < newSetArray.length; ++i)
                             {
                                 // Convert String to array
-                                var record = newSetArray[i].split(",");
+                                var record = CSVtoArray(newSetArray[i]);
 
                                 // Save Record to use in insert
                                 arrayToImport.push(record);
@@ -378,13 +406,13 @@
                         $("#showDataToImport").html(html);
 
                         // TODO:: Generate Import Sequence
-                        console.log(arrayToImport);
+                        // console.log(arrayToImport);
                     }else{
                         Materialize.toast('Uploaded file is different from the one selected', 5000, 'red rounded');
                         return false;
                     }
                 };
-                reader.readAsText(e.target.files.item(0));
+                reader.readAsBinaryString(e.target.files.item(0));
             }
             return false;
         });
@@ -402,7 +430,7 @@
                 var getCert = localStorage.getItem("templateDropdown");
                 for(var x = 0; x < arrayToImport.length; x++){
                     var splitRecord = arrayToImport[x];
-                    console.log(splitRecord);
+                    // console.log(splitRecord);
                     if(getCert == "confirmation"){
                         validateAllFieldsAndCreatePayloadImportConfirmation(
                             x,
@@ -430,8 +458,8 @@
                             delegated_user
                         );
                     }else if(getCert == "marriage"){
-                        console.log('validateAllFieldsAndCreatePayloadForMarriage');
-                        console.log(splitRecord[4]);
+                        // console.log('validateAllFieldsAndCreatePayloadForMarriage');
+                        // console.log(splitRecord[4]);
                         validateAllFieldsAndCreatePayloadForMarriage(
                             x,
                             splitRecord[0], //husband_firstname,
