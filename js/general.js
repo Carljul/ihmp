@@ -559,10 +559,10 @@ function printCertificate(personData){
                     setTimeout(() => {
                         a.document.write(printContent);
                     },1000); // make this 2 seconds
-                    // setTimeout(() => {
-                    //     a.print();
-                    //     a.close();
-                    // }, 1500); // make this 2.5 seconds
+                    setTimeout(() => {
+                        a.print();
+                        a.close();
+                    }, 1500); // make this 2.5 seconds
                 }else{
                     Materialize.toast('Template is unavailable, Please contact your app administrator', 5000, 'red rounded');
                 }
