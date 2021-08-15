@@ -24,7 +24,7 @@
     <link href="{{ asset('css/datatables.css') }}" rel="stylesheet">
     <link href="{{ asset('css/modal_flat.css') }}" rel="stylesheet">
     <link href="{{ asset('css/modal_rounded.css') }}" rel="stylesheet">
-    
+
     <!--JavaScript at end of body for optimized loading-->
     <script src="{{ asset('/js/constants.js') }}"></script>
     <script src="{{ asset('/js/materialize.js') }}"></script>
@@ -48,7 +48,7 @@
                     document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                 </a>
-                
+
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
@@ -56,7 +56,7 @@
         </ul>
         <nav class="blue darken-3">
             <div class="container nav-wrapper">
-                <a href="#!" class="brand-logo">{{ setting('site.title') }}</a>
+                <a href="/ihmp" class="brand-logo">{{ setting('site.title') }}</a>
                 <ul class="right hide-on-med-and-down">
                     <li class="certificate"><a href="/ihmp/certificate">Manage Records</a></li>
                     <li class="priest"><a href="/ihmp/priest">Manage Priests</a></li>
@@ -83,7 +83,7 @@
             @yield('content')
         </main>
     </div>
-    
+
     @extends('modals.index')
 
      <script type="text/javascript">
@@ -98,7 +98,7 @@
             $("#selectFilterCertificateType").material_select(); //DC: added here the dropdown for filter certificate type
             $("#selectForm").material_select();
             $('.modal').modal();
-            $('.datepicker').pickadate();            
+            $('.datepicker').pickadate();
             $('.datepicker').on('mousedown',function(event){ event.preventDefault(); });
 
             checkConnection();
