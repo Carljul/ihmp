@@ -462,9 +462,12 @@ function printCertificate(personData){
                         var rootContent = personData['content'];
                         // Parsing Meta Content
                         var metaContent = JSON.parse(personData['content']['meta']);
-
+                        var suffix = rootContent['suffix'];
+                        if(rootContent['suffix'] == null){
+                            suffix = "";
+                        }
                         // fullname
-                        var fname = rootContent['firstname']+" "+rootContent['middlename']+" "+rootContent['lastname']+" "+rootContent['suffix'];
+                        var fname = rootContent['firstname']+" "+rootContent['middlename']+" "+rootContent['lastname']+" "+suffix;
                         printContent = printContent.replaceAll('fullname',fname);
                         // born_on_date
                         var born_on = new Date(metaContent['born_on']);
