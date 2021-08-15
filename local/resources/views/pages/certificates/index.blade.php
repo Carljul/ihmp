@@ -65,7 +65,7 @@
             <div id="confirmationForm" class="hide">
                 <!-- Single Add Form -->
                 <div class="singleConfirmation hide">
-                    @include('pages.certificates.form_and_table.confirmation.confirmation_form')                    
+                    @include('pages.certificates.form_and_table.confirmation.confirmation_form')
                 </div>
                 <!-- Multiple Add Form -->
                 <div class="groupConfirmation hide">
@@ -75,7 +75,7 @@
             <div id="marriageForm" class="hide">
                 <!-- Single Add Form -->
                 <div class="singleMarriage hide">
-                    @include('pages.certificates.form_and_table.mariage.mariage_form')                    
+                    @include('pages.certificates.form_and_table.mariage.mariage_form')
                 </div>
                 <!-- Multiple Add Form -->
                 <div class="groupMarriage hide">
@@ -85,7 +85,7 @@
             <div id="birthForm" class="hide">
                 <!-- Single Add Form -->
                 <div class="singleBirth hide">
-                    @include('pages.certificates.form_and_table.birth.birth_form')                    
+                    @include('pages.certificates.form_and_table.birth.birth_form')
                 </div>
                 <!-- Multiple Add Form -->
                 <div class="groupBirth hide">
@@ -95,7 +95,7 @@
             <div id="deathForm" class="hide">
                 <!-- Single Add Form -->
                 <div class="singleDeath hide">
-                    @include('pages.certificates.form_and_table.death.death_form')                    
+                    @include('pages.certificates.form_and_table.death.death_form')
                 </div>
                 <!-- Multiple Add Form -->
                 <div class="groupDeath hide">
@@ -148,7 +148,7 @@
                         }else{
                             trimed_middle_name = priestObject[x]['middlename'].charAt(0)+".";
                         }
-                        
+
                         var trimed_prefix = priestObject[x]['prefix'];
                         html += "<option value='"+priestObject[x]['id']+"'>"+trimed_prefix+" "+priestObject[x]['firstname']+" "+trimed_middle_name+" "+priestObject[x]['lastname']+"</option>";
                     }
@@ -234,7 +234,7 @@
         // will return unique values of array
         function getUnique(array){
             var uniqueArray = [];
-            
+
             // Loop through array values
             for(i=0; i < array.length; i++){
                 if(array[i] != ""){
@@ -272,7 +272,7 @@
             if($.inArray(ext, ["csv"]) == -1) {
                 Materialize.toast('Uploaded file is not csv file', 5000, 'red rounded');
                 return false;
-            } 
+            }
             if (e.target.files != undefined) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
@@ -346,7 +346,7 @@
                         newSetArray = getUnique(newSetArray);
 
                         // Display the total number of records
-                        newSetArray.length > 0 ? 
+                        newSetArray.length > 0 ?
                         $("#countRecord").html(newSetArray.length+" "+(newSetArray.length > 1 ? "Records":"Record")+" found and ready to import!"):
                         $("#countRecord").html('It seems you uploaded an empty file');
 
@@ -482,7 +482,7 @@
                             splitRecord[7], // birth_father_middle_name,
                             splitRecord[8], // birth_father_last_name,
                             splitRecord[9], // birth_father_extension,
-                            splitRecord[10], // birth_mothers_first_name,
+                            splitRecord[10], // birth_mother_first_name,
                             splitRecord[11], // birth_father_middle_name,
                             splitRecord[12], // birth_mother_last_name,
                             splitRecord[13], // birth_mother_extension,
@@ -519,7 +519,7 @@
                         );
                     }
                 }
-                
+
                 if(emptyRowsImportConfirmation.length > 0){
                     Materialize.toast('Number of Records with Issue '+emptyRowsImportConfirmation.length, 5000,'red rounded');
                 }
@@ -549,8 +549,8 @@
                 $("#uploadFile").addClass('disabled');
                 $("#btnStartImportSequence").addClass('disabled');
                 $("#importExport").modal('close');
-                
-                
+
+
                 // Clear Search Input first
                 $("#searchARecord").val('');
                 // Update Dropdown Records
@@ -589,12 +589,15 @@
             firstname,
             middlename,
             lastname,
+            extension,
             father_firstname,
             father_middlename,
             father_lastname,
+            father_extension,
             mother_firstname,
             mother_middlename,
             mother_lastname,
+            mother_extension,
             confirmation_date,
             date_issued,
             confirmation_by,
@@ -630,9 +633,11 @@
                         "father_firstname": father_firstname,
                         "father_middlename": father_middlename,
                         "father_lastname": father_lastname,
+                        "father_suffix": father_extension,
                         "mother_firstname": mother_firstname,
                         "mother_middlename": mother_middlename,
                         "mother_lastname": mother_lastname,
+                        "mother_suffix": mother_extension,
                         "confirmation_day":single_confirmation_converted_date,
                         "confirmation_month":single_confirmation_converted_month,
                         "confirmation_year":single_confirmation_converted_year,
@@ -648,6 +653,7 @@
                         "firstname": firstname,
                         "middlename": middlename,
                         "lastname": lastname,
+                        "suffix": extension,
                         "certificate_type": "confirmation",
                         "priest_id": priest_id,
                         "meta": JSON.stringify(metaContent),
@@ -667,13 +673,15 @@
             birth_first_name,
             birth_middle_name,
             birth_last_name,
+            birth_extension,
             birth_born_on,
             birth_born_in,
             birth_father_first_name,
             birth_father_middle_name,
             birth_father_last_name,
-            birth_mothers_first_name,
-            birth_father_middle_name,
+            birth_father_extension,
+            birth_mother_first_name,
+            birth_mother_middle_name,
             birth_mother_last_name,
             birth_resident_of,
             birth_godparents,
@@ -688,15 +696,13 @@
         ){
             /// Validate for all empty rows
             if(
-                birth_first_name == null || birth_first_name == undefined || birth_first_name == "" ||
-                birth_last_name == null || birth_last_name == undefined || birth_last_name == "" ||
-                birth_born_on == null || birth_born_on == undefined || birth_born_on == "" ||
-                birth_baptism_date == null || birth_baptism_date == undefined || birth_baptism_date == ""||
-                birth_minister == null || birth_minister == undefined || birth_minister == ""
+                birth_first_name == null || birth_first_name == undefined || birth_first_name == "" &&
+                birth_last_name == null || birth_last_name == undefined || birth_last_name == "" &&
+                birth_born_on == null || birth_born_on == undefined || birth_born_on == "" &&
+                birth_baptism_date == null || birth_baptism_date == undefined || birth_baptism_date == ""
             ){
                 emptyRowsImportConfirmation.push(row);
             }else{
-                
                 if(
                     isNaN(Date.parse(birth_born_on)) ||
                     isNaN(Date.parse(birth_date_issued)) ||
@@ -708,15 +714,17 @@
                     birth_date_issued = new Date(birth_date_issued);
                     birth_born_on = new Date(birth_born_on);
                     birth_baptism_date = new Date(birth_baptism_date);
-                    var metaContent = {                    
+                    var metaContent = {
                         "born_on":birth_born_on.getMonth()+"/"+birth_born_on.getDate()+"/"+birth_born_on.getFullYear(),
                         "born_in":birth_born_in,
                         "father_firstname":birth_father_first_name,
                         "father_middlename":birth_father_middle_name,
                         "father_lastname":birth_father_last_name,
-                        "mother_firstname":birth_mothers_first_name,
-                        "mother_middlename":birth_father_middle_name,
+                        "father_suffix":birth_father_extension,
+                        "mother_firstname":birth_mother_first_name,
+                        "mother_middlename":birth_mother_middle_name,
                         "mother_lastname":birth_mother_last_name,
+                        "mother_suffix":birth_mother_extension,
                         "resident_of":birth_resident_of,
                         "baptism_date":birth_baptism_date.getMonth()+"/"+birth_baptism_date.getDate()+"/"+birth_baptism_date.getFullYear(),
                         "baptism_minister":birth_minister,
@@ -730,6 +738,7 @@
                         "firstname": birth_first_name,
                         "middlename": birth_middle_name,
                         "lastname": birth_last_name,
+                        "suffix": birth_extension,
                         "certificate_type": "baptism",
                         "priest_id": birth_parish_priest == null ? 0:birth_parish_priest,
                         "meta": JSON.stringify(metaContent),
@@ -742,13 +751,14 @@
                 }
             }
         }
-        
+
         // will validate all fields for Marriage
         function validateAllFieldsAndCreatePayloadForMarriage(
             row,
             husband_firstname,
             husband_middlename,
             husband_lastname,
+            husband_extension,
             husband_civil_status,
             husband_birthdate_import,
             husband_birth_place,
@@ -761,6 +771,7 @@
             wife_firstname,
             wife_middlename,
             wife_lastname,
+            wife_extension,
             wife_civil_status,
             wife_birthdate,
             wife_birthplace,
@@ -794,7 +805,7 @@
                 // !husband_civil_status.toLowerCase().includes('divorced')
             ){
                 emptyRowsImportConfirmation.push(row);
-            }else{                
+            }else{
                 var payloadToCreate;
                 console.log(husband_birthdate_import);
                 husband_birthdate_import = new Date(husband_birthdate_import);
@@ -803,12 +814,13 @@
                 wife_baptismdate = new Date(wife_baptismdate);
                 marriage_date = new Date(marriage_date);
                 marriage_date_issue = new Date(marriage_date_issue);
-                
-                
+
+
                 var metaContent = {
                     "husband_firstname":husband_firstname,
                     "husband_middlename":husband_middlename,
                     "husband_lastname":husband_lastname,
+                    "husband_suffix":husband_extension,
                     "husband_age":getAge(husband_birthdate_import),
                     "husband_civil_status":husband_civil_status,
                     "husband_birthdate":(husband_birthdate_import.getMonth()+1)+"/"+husband_birthdate_import.getDate()+"/"+husband_birthdate_import.getFullYear(),
@@ -822,6 +834,7 @@
                     "wife_firstname":wife_firstname,
                     "wife_middlename":wife_middlename,
                     "wife_lastname":wife_lastname,
+                    "wife_extension":wife_extension,
                     "wife_age":getAge(wife_birthdate),
                     "wife_civil_status":wife_civil_status,
                     "wife_birthdate":(wife_birthdate.getMonth()+1)+"/"+wife_birthdate.getDate()+"/"+wife_birthdate.getFullYear(),
@@ -846,6 +859,7 @@
                     "firstname": husband_firstname,
                     "middlename": husband_middlename,
                     "lastname": husband_lastname,
+                    "suffix": husband_extension,
                     "certificate_type": "marriage",
                     "priest_id": 0,
                     "meta": JSON.stringify(metaContent),
@@ -864,6 +878,7 @@
             death_firstname,
             death_middlename,
             death_lastname,
+            death_extension,
             death_age,
             death_residence,
             date_of_death,
@@ -885,13 +900,13 @@
                 isNaN(Date.parse(death_date_issued))
             ){
                 emptyRowsImportConfirmation.push(row);
-            }else{                
+            }else{
                 var payloadToCreate;
                 date_of_death = new Date(date_of_death);
                 date_of_burial = new Date(date_of_burial);
                 death_date_issued = new Date(death_date_issued);
                 var metaContent = {
-                    "deceased_name":death_firstname+" "+death_middlename+" "+death_lastname,
+                    "deceased_name":death_firstname+" "+death_middlename+" "+death_lastname+" "+death_extension,
                     "age":death_age,
                     "residence":death_residence,
                     "date_of_death":(date_of_death.getMonth()+1)+"/"+date_of_death.getDate()+"/"+date_of_death.getFullYear(),
@@ -907,6 +922,7 @@
                     "firstname": death_firstname,
                     "middlename": death_middlename,
                     "lastname": death_lastname,
+                    "suffix": death_extension,
                     "certificate_type": "death",
                     "priest_id": 0,
                     "meta": JSON.stringify(metaContent),
@@ -925,7 +941,7 @@
                 var dropdownVal = localStorage.getItem("templateDropdown");
                 // Worker Main Transaction
                 if(localStorage.getItem('transactionsImportConfirmation') != null){
-                    
+
                     // Close and Disable modal button
                     $("#importExportButton").addClass('disabled');
                     if(localStorage.getItem('transactionsImportConfirmation') != "[]"){
@@ -936,11 +952,11 @@
 
                         // Convert Transaction string to iterable
                         var convertedListOfTranscations = JSON.parse(listOfTransactions);
-                        
+
                         // Show the progress indicator
                         $("#importProgress").removeClass('hide');
                         $("#importInProgressMessage").html('Import in progress ('+convertedListOfTranscations.length+' Records left)');
-                        
+
                         // always get the first record
                         var toSavePayload = convertedListOfTranscations[0]['payload'];
                         var currentRow = convertedListOfTranscations[0]['row'];
@@ -967,7 +983,7 @@
                 localStorage.removeItem('transactionsImportConfirmation');
             }
         }
-        
+
 
         function savingConfirmationRecord(row, payload, listOfTransactions){
             $.ajax({
@@ -986,13 +1002,13 @@
                         // update the table
                         if(localStorage.getItem("templateDropdown") != null){
                             var getCert = localStorage.getItem("templateDropdown");
-                            if(getCert == 'confirmation'){                        
+                            if(getCert == 'confirmation'){
                                 getConfirmationList('NA');
-                            }else if(getCert == 'marriage'){                        
+                            }else if(getCert == 'marriage'){
                                 getMarriageList('NA');
-                            }else if(getCert == 'birth'){                        
+                            }else if(getCert == 'birth'){
                                 getBirthList('NA');
-                            }else if(getCert == 'death'){                        
+                            }else if(getCert == 'death'){
                                 getDeathList('NA');
                             }
                         }
@@ -1006,7 +1022,7 @@
                         $("#errorImports").removeClass("hide");
                         $("#errorImportMessage").html("Some record already exists ("+errorSavingRecords.length+")");
                     }
-                    
+
                     // call again initiate worker after 3 seconds to create a recursive effect
                     setTimeout(function(){
                         initiateConfirmationWorker();
