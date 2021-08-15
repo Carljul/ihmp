@@ -2,7 +2,7 @@
     
 /// Development Environment
 const protocol = 'http://';
-const base_url = '192.168.1.37/ihmp';
+const base_url = '192.168.10.37/ihmp';
 const api_server = protocol+''+base_url+/api/;
 const system_url = protocol+''+base_url+'/';
 

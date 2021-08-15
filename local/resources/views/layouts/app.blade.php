@@ -120,10 +120,10 @@
             function setLogoutForm(){
                 if(localStorage.getItem('AT') != null){
                     var at = localStorage.getItem('AT');
-                    alert('logout form:: '+'http://192.168.1.37');
+                    alert('logout form:: '+'http://192.168.10.37');
                     var user_id = at.substring(33, at.length);
-                    $("#logout_out_link").attr('href','http://192.168.1.37/ihmp/'+'logout?token_key='+at+'&user_id='+user_id);
-                    $("#logout-form").prop('action','http://192.168.1.37/ihmp/'+'logout?token_key='+at+'&user_id='+user_id);
+                    $("#logout_out_link").attr('href','http://192.168.10.37/ihmp/'+'logout?token_key='+at+'&user_id='+user_id);
+                    $("#logout-form").prop('action','http://192.168.10.37/ihmp/'+'logout?token_key='+at+'&user_id='+user_id);
                 }
             }
         });

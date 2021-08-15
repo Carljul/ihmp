@@ -402,7 +402,7 @@
                 var getCert = localStorage.getItem("templateDropdown");
                 for(var x = 0; x < arrayToImport.length; x++){
                     var splitRecord = arrayToImport[x];
-                    // console.log(splitRecord);
+                    console.log(splitRecord);
                     if(getCert == "confirmation"){
                         validateAllFieldsAndCreatePayloadImportConfirmation(
                             x,
@@ -955,7 +955,7 @@
 
                         // Show the progress indicator
                         $("#importProgress").removeClass('hide');
-                        $("#importInProgressMessage").html('Import in progress ('+convertedListOfTranscations.length+' Records left)');
+                        $("#importInProgressMessage").html('Import in progress ('+convertedListOfTranscations.length+' Records left) <button class="btn btn-info" id="closeImportInProgress">Stop</button>');
 
                         // always get the first record
                         var toSavePayload = convertedListOfTranscations[0]['payload'];
@@ -963,6 +963,14 @@
 
                         // create the condition to initiate a recursive command
                         savingConfirmationRecord(currentRow, toSavePayload, convertedListOfTranscations);
+                        // Will remove the Import Dialog
+                        $("#closeImportInProgress").on('click', function(){
+                            var test = confirm('Are you sure you want to stop the import in progress?');
+                            if(test){
+                                $("#importProgress").addClass('hide');
+                                localStorage.removeItem('transactionsImportConfirmation');
+                            }
+                        });
                     }else{
                         $("#errorImports").css('right', '5%');
                         $("#importInProgressMessage").html('Records Imported');
