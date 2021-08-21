@@ -308,9 +308,9 @@ function printCertificate(personData){
                         // Source Link
                         printContent = printContent.replaceAll('sourceLink', `${system_url}/css/materialize.css`);
                         // Middle name
-                        let middlename = personData['content']['middlename'] == null ? "" : personData['content']['middlename'];
+                        var confirmation_middlename = personData['content']['middlename'] == null ? "" : personData['content']['middlename'];
                         // Full name
-                        var fname = personData['content']['firstname']+" "+middlename+" "+personData['content']['lastname']+" "+personData['content']['suffix'];
+                        var fname = personData['content']['firstname']+" "+confirmation_middlename+" "+personData['content']['lastname']+" "+personData['content']['suffix'];
                         printContent = printContent.replaceAll('fullname',fname);
                         // Parsing Meta Content
                         var metaContent = JSON.parse(personData['content']['meta']);
@@ -357,9 +357,9 @@ function printCertificate(personData){
                         // Parsing Meta Content
                         var metaContent = JSON.parse(personData['content']['meta']);
                         // Middle name
-                        let middlename = metaContent['husband_middlename'] == null ? "" : metaContent['husband_middlename'];
+                        var husband_middlename = metaContent['husband_middlename'] == null ? "" : metaContent['husband_middlename'];
                         // husbands_name
-                        var fname = metaContent['husband_firstname']+" "+middlename+" "+metaContent['husband_lastname']+" "+metaContent['husband_suffix'];
+                        var fname = metaContent['husband_firstname']+" "+husband_middlename+" "+metaContent['husband_lastname']+" "+metaContent['husband_suffix'];
                         printContent = printContent.replaceAll('husbands_name',fname);
                         // husbands_age
                         var hage = metaContent['husband_age'];
@@ -393,9 +393,9 @@ function printCertificate(personData){
                         printContent = printContent.replaceAll('husbands_second_witness',husband_secondwitness == ''?'&nbsp;':husband_secondwitness);
 
                         // Middle name
-                        let middlename = metaContent['wife_middlename'] == null ? "" : metaContent['wife_middlename'];
+                        var wife_middlename = metaContent['wife_middlename'] == null ? "" : metaContent['wife_middlename'];
                         // wifes_name
-                        var wfname = metaContent['wife_firstname']+" "+middlename+" "+metaContent['wife_lastname']+" "+metaContent['wife_suffix'];
+                        var wfname = metaContent['wife_firstname']+" "+wife_middlename+" "+metaContent['wife_lastname']+" "+metaContent['wife_suffix'];
                         printContent = printContent.replaceAll('wifes_name',wfname);
                         // wifes_age
                         var wife_age = metaContent['wife_age'];
@@ -473,9 +473,12 @@ function printCertificate(personData){
                             suffix = "";
                         }
                         // Middle name
-                        let middlename = rootContent['middlename'] == null ? "" : rootContent['middlename'];
+                        let birth_middlename = rootContent['middlename'] == null ? "" : rootContent['middlename'];
+                        // Middle name
+                        let birth_father_middlename = rootContent['father_middlename'] == null ? "" : rootContent['father_middlename'];
+                        let birth_mother_middlename = rootContent['mother_middlename'] == null ? "" : rootContent['mother_middlename'];
                         // fullname
-                        var fname = rootContent['firstname']+" "+middlename+" "+rootContent['lastname']+" "+suffix;
+                        var fname = rootContent['firstname']+" "+birth_middlename+" "+rootContent['lastname']+" "+suffix;
                         printContent = printContent.replaceAll('fullname',fname);
                         // born_on_date
                         var born_on = new Date(metaContent['born_on']);
@@ -484,10 +487,10 @@ function printCertificate(personData){
                         var born_in = metaContent['born_in'];
                         printContent = printContent.replaceAll('born_in_date',born_in == ''?'&nbsp;':born_in);
                         // fathers_name
-                        var father_fullname = metaContent['father_firstname']+" "+metaContent['father_middlename']+" "+metaContent['father_lastname']+" "+metaContent['father_suffix'];
+                        var father_fullname = metaContent['father_firstname']+" "+birth_father_middlename+" "+metaContent['father_lastname']+" "+metaContent['father_suffix'];
                         printContent = printContent.replaceAll('fathers_name',father_fullname == ''?'&nbsp;':father_fullname);
                         // mothers_name
-                        var mothers_fullname = metaContent['mother_firstname']+" "+metaContent['mother_middlename']+" "+metaContent['mother_lastname']+" "+metaContent['mother_suffix'];
+                        var mothers_fullname = metaContent['mother_firstname']+" "+birth_mother_middlename+" "+metaContent['mother_lastname']+" "+metaContent['mother_suffix'];
                         printContent = printContent.replaceAll('mothers_name',mothers_fullname == ''?'&nbsp;':mothers_fullname);
                         // residents_of
                         var resident_of = metaContent['resident_of'];
