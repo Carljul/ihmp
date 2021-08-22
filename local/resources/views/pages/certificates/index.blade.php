@@ -498,6 +498,7 @@
                             delegated_user,
                         );
                     }else if(getCert == "birth"){
+                        console.log("splitRecord", splitRecord);
                         validateAllFieldsAndCreatePayloadForBirth(
                             x,
                             splitRecord[0], // Firstname
@@ -711,15 +712,16 @@
             birth_mother_first_name,
             birth_mother_middle_name,
             birth_mother_last_name,
+            birth_mother_extension,
             birth_resident_of,
+            birth_baptism_date,
+            birth_minister,
             birth_godparents,
             birth_baptismal_register,
             birth_volume,
             birth_page,
             birth_date_issued,
             birth_parish_priest,
-            birth_baptism_date,
-            birth_minister,
             delegated_user,
         ){
             /// Validate for all empty rows
@@ -733,8 +735,7 @@
             }else{
                 if(
                     isNaN(Date.parse(birth_born_on)) ||
-                    isNaN(Date.parse(birth_date_issued)) ||
-                    isNaN(Date.parse(birth_date_issued))
+                    isNaN(Date.parse(birth_baptism_date))
                 ){
                     emptyRowsImportConfirmation.push(row);
                 }else{
