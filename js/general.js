@@ -586,7 +586,15 @@ function printCertificate(personData){
                         Materialize.toast('Template is unavailable, Please contact your app administrator', 5000, 'red rounded');
                     }
                 }else{
-                    Materialize.toast('Templates is under construction', 5000, 'red rounded');
+                    var meta_to_print = personData['content']['meta'];
+                    console.log(meta_to_print);
+
+                    var cons = personData['content'];
+                    delete cons['meta'];
+                    var content_to_print = JSON.stringify(cons);
+
+                    
+                    window.location.href = "print/"+personData.certificate_type+"/"+content_to_print+"/"+meta_to_print;
                 }
             }else{
                 Materialize.toast('Certificate Template is not yet ready', 5000, 'red rounded');
