@@ -210,9 +210,9 @@
         </div>
         <script>
             print();
-            // setTimeout(function(){
-            //     location.href="/ihmp/certificate";
-            // },1000);
+            setTimeout(function(){
+                location.href="/ihmp/certificate";
+            },1000);
         </script>
     </body>
 </html>
