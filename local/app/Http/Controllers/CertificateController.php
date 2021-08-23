@@ -21,7 +21,7 @@ class CertificateController extends Controller
         //return all data for Certificate table
         $result = DB::table('certificates')
         ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
-        ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname', 'priests.prefix as priest_clergy')
+        ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname', 'priests.prefix as priest_clergy', 'priests.suffix as priest_suffix')
         ->where('certificates.is_deleted', 0)
         ->where('certificates.certificate_type', $request->certificate_type)
         ->orderByRaw('certificates.id DESC')
@@ -74,7 +74,7 @@ class CertificateController extends Controller
 
         //meta content validations for baptism
         if($request->certificate_type == "baptism"){
-            
+
             //set our meta here...
             $metaContent = [
                 "born_on" => $content->{"born_on"},
@@ -152,7 +152,7 @@ class CertificateController extends Controller
         //meta content validations for death
         if($request->certificate_type == "death"){
 
-            
+
             //set our meta here...
             $metaContent = [
                 "deceased_name" => $content->{"deceased_name"},
@@ -164,7 +164,7 @@ class CertificateController extends Controller
                 "informant_or_relatives" => $content->{"informant_or_relatives"},
                 "book_number" => $content->{"book_number"},
                 "page_number" => $content->{"page_number"},
-                "registry_number" => $content->{"registry_number"}, 
+                "registry_number" => $content->{"registry_number"},
                 "date_issued" => $content->{"date_issued"}
             ];
 
@@ -221,7 +221,7 @@ class CertificateController extends Controller
 
             $result = DB::table('certificates')
             ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
-            ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname', 'priests.prefix as priest_clergy')
+            ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname', 'priests.prefix as priest_clergy', 'priests.suffix as priest_suffix')
             ->where('certificates.is_deleted', 0)
             ->where('certificates.id', $search)
             ->get();
@@ -277,7 +277,7 @@ class CertificateController extends Controller
             })
             ->orderByRaw('certificates.id DESC')
             ->paginate($this->getPaginationLimit());
-            
+
             //if search is not found
             if(count($result) == 0){
                 //return json response
