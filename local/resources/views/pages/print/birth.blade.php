@@ -67,6 +67,7 @@
                 position: absolute;
                 top: 990px;
                 width: 100%;
+                margin-bottom: 0px;
             }
             .bottom-border{
                 border-bottom: 1px solid black;
@@ -98,7 +99,7 @@
 
                 .logo{
                     position: absolute;
-                    left: 200px !important;
+                    left: 220px !important;
                     top: 450px !important;
                 }
                 .logo img{
