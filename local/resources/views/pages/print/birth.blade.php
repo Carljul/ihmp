@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Birth Certificate</title>
+        <title>{{$content->firstname}} {{$content->middlename}} {{$content->lastname}} {{$content->suffix ?? ''}}</title>
         <link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}">
         <style>
             .old-english{

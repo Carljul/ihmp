@@ -14,7 +14,6 @@ class PrintController extends Controller
             return view('pages.print.marriage', ["content" => json_decode($content), "meta"=>json_decode($meta)]);
         }else if($certificate_type == 'birth'){
             $godparents = explode(',', json_decode($meta)->godparents);
-            // $godparents = ['Julcarl L. Selma','Julcarl L. Selma','Julcarl L. Selma','Julcarl L. Selma','Julcarl L. Selma','Julcarl L. Selma','Julcarl L. Selma','Julcarl L. Selma','Julcarl L. Selma','Julcarl L. Selma','Julcarl L. Selma','Julcarl L. Selma','Julcarl L. Selma','Julcarl L. Selma','Julcarl L. Selma'];
             return view('pages.print.birth', ["content" => json_decode($content), "meta"=>json_decode($meta), "godparents" => $godparents]);
         }else if($certificate_type == 'death'){
             return view('pages.print.death', ["content" => json_decode($content), "meta"=>json_decode($meta)]);
