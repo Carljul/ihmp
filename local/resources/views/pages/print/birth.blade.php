@@ -78,7 +78,7 @@
                 z-index: -1;
                 opacity: 0.1;
                 left: 0px;
-                top: 579px;
+                top: 569px;
             }
             @media print{
                 body{
