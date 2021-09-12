@@ -236,11 +236,11 @@
         <img src="{{asset('storage/logo/ihm.jpg')}}" alt="background" class="churchBG">
     </div>
 
-    {{-- <script>
+    <script>
         print();
         setTimeout(function(){
             location.href="/ihmp/certificate";
         },1000);
-    </script> --}}
+    </script>
 </body>
 </html>
