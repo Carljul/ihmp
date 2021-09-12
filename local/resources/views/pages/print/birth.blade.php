@@ -1,3 +1,10 @@
+@php
+
+    function deathDateGetFullStringFormat($date){
+        return date('F d, Y',strtotime($date));
+    }
+@endphp
+
 <html>
     <head>
         <title>{{$content->firstname}} {{$content->middlename}} {{$content->lastname}} {{$content->suffix ?? ''}}</title>
@@ -196,7 +203,7 @@
                     Baptismal Register: <span class="underline">&nbsp;&nbsp;&nbsp;{{$meta->baptismal_register}}&nbsp;&nbsp;&nbsp;</span><br>
                     Volume: <span class="underline">&nbsp;&nbsp;&nbsp;{{$meta->volume}}&nbsp;&nbsp;&nbsp;</span>
                     Page: <span class="underline">&nbsp;&nbsp;&nbsp;{{$meta->page}}&nbsp;&nbsp;&nbsp;</span><br>
-                    Date Issue: <span class="underline">&nbsp;&nbsp;&nbsp;{{$meta->date_issued == "NaN//NaN//NaN" ? "":date('F d, Y', strtotime(str_replace("//","/",$meta->date_issued)))}}&nbsp;&nbsp;&nbsp;</span>
+                    Date Issue: <span class="underline">&nbsp;&nbsp;&nbsp;{{$meta->date_issued == "NaN//NaN//NaN" ? "":deathDateGetFullStringFormat(date('F d, Y', strtotime(str_replace("//","/",$meta->date_issued))))}}&nbsp;&nbsp;&nbsp;</span>
                 </div>
                 <div class="col s6">
                     <center>

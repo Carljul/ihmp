@@ -48,7 +48,7 @@
         .priest{
             position: absolute;
             bottom: 7%;
-            left: 47%;
+            left: 40%;
         }
         table.custom-table{
             width: 30%;

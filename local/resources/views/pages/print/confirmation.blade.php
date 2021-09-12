@@ -18,6 +18,10 @@
         $list = ['January','February','March','April','May','June','July','August','September','October','November','December'];
         return $list[$index - 1];
     }
+    
+    function deathDateGetFullStringFormat($date){
+        return date('F d, Y',strtotime($date));
+    }
 @endphp
 <html>
     <head>
@@ -98,7 +102,7 @@
                         <div class="col s3">
                             <center>
                                 @if($meta->date_issued != 'NaN/NaN/NaN')
-                                    <span class="underline">&nbsp;&nbsp;{{$meta->date_issued}}&nbsp;&nbsp;</span><br>
+                                    <span class="underline">&nbsp;&nbsp;{{deathDateGetFullStringFormat($meta->date_issued)}}&nbsp;&nbsp;</span><br>
                                 @else
                                     <span class="underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
                                 @endif
