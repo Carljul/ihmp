@@ -26,6 +26,8 @@ Route::get('/priest', 'PriestViewController@index')->name('priest')->middleware(
 Route::get('/template', 'TemplateViewController@index')->name('template')->middleware('auth');
 Route::get('/user', 'UserViewController@index')->name('user')->middleware('auth');
 Route::get('/profile', 'ProfileViewController@index')->name('profile')->middleware('auth');
+Route::get('/maintenance', 'MaintenanceController@index')->name('maintenance')->middleware('auth');
+Route::get('/maintenance/{id}', 'MaintenanceController@delete_records')->name("maintenance.delete_records");
 Route::get('/print/{certType}/{content}/{meta?}', 'PrintController@index')->where('meta', '(.*)')->middleware('auth');
 // Download Route
 Route::get('download/{filename}', function($filename)
