@@ -65,6 +65,7 @@
                 @endif
                 @if(Auth::user()->role_id == 3)
                     <li><a href="/ihmp/template">Manage Templates</a></li>
+                    <li><a href="/ihmp/maintenace">Maintenance</a></li>
                 @endif
                     <!-- Dropdown Trigger -->
                     <li>
