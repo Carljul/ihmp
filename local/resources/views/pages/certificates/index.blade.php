@@ -393,8 +393,10 @@
 
                                 // Generate Records
                                 html+="<tr>";
-                                for(var y = 0; y < record.length; y++){
-                                    html+="<td>"+record[y]+"</td>";
+                                if(record != null){
+                                    for(var y = 0; y < record.length; y++){
+                                        html+="<td>"+record[y]+"</td>";
+                                    }
                                 }
                                 html+="</tr>";
                             }
@@ -433,129 +435,143 @@
                 for(var x = 0; x < arrayToImport.length; x++){
                     var splitRecord = arrayToImport[x];
                     // console.log(splitRecord);
-                    if(getCert == "confirmation"){
-                        validateAllFieldsAndCreatePayloadImportConfirmation(
-                            x,
-                            splitRecord[0], // Firstname
-                            splitRecord[1], // Middle Name
-                            splitRecord[2], // Last Name
-                            splitRecord[3], // Extension
-                            splitRecord[4], // Fathers First name
-                            splitRecord[5], // Fathers Middle name
-                            splitRecord[6], // Fathers Last name
-                            splitRecord[7], // Fathers Extension
-                            splitRecord[8], // Mothers First name
-                            splitRecord[9], // Mothers Middle name
-                            splitRecord[10], // Mothers Extension
-                            splitRecord[11], // Mothers Last name
-                            splitRecord[12], // Confirmation Date
-                            splitRecord[13], // Date Issued
-                            splitRecord[14], // Confirmation By
-                            splitRecord[15], // First Sponsor
-                            splitRecord[16], // Second Sponsor
-                            splitRecord[17], // Register Book
-                            splitRecord[18], // Book Page
-                            splitRecord[19], // Number
-                            0,
-                            delegated_user
-                        );
-                    }else if(getCert == "marriage"){
-                        // console.log('validateAllFieldsAndCreatePayloadForMarriage');
-                        // console.log(splitRecord[4]);
-                        validateAllFieldsAndCreatePayloadForMarriage(
-                            x,
-                            splitRecord[0], //husband_firstname,
-                            splitRecord[1], //husband_middlename,
-                            splitRecord[2], //husband_lastname,
-                            splitRecord[3], //husband_extension,
-                            splitRecord[4], //husband_civil_status,
-                            splitRecord[5], //husband_birthdate,
-                            splitRecord[6], //husband_birth_place,
-                            splitRecord[7], //husband_residence,
-                            splitRecord[8], //husband_baptismdate,
-                            splitRecord[9], //husband_fathersname,
-                            splitRecord[10], //husband_mothersname,
-                            splitRecord[11], //husband_first_witness,
-                            splitRecord[12], //husband_second_witness,
-                            splitRecord[13], //wife_firstname,
-                            splitRecord[14], //wife_middlename,
-                            splitRecord[15], //wife_lastname,
-                            splitRecord[16], //wife_extension,
-                            splitRecord[17], //wife_civil_status,
-                            splitRecord[18], //wife_birthdate,
-                            splitRecord[19], //wife_birthplace,
-                            splitRecord[20], //wife_residence,
-                            splitRecord[21], //wife_baptismdate,
-                            splitRecord[22], //wife_fathersname,
-                            splitRecord[23], //wife_mothersname,
-                            splitRecord[24], //wife_firstwitness,
-                            splitRecord[25], //wife_secondwitness,
-                            splitRecord[26], //marriage_place,
-                            splitRecord[27], //marriage_date,
-                            splitRecord[28], //solemnized_by,
-                            splitRecord[29], //marriage_number,
-                            splitRecord[30], //marriage_page,
-                            splitRecord[31], //marriage_line,
-                            splitRecord[32], //marriage_date_issue,
-                            delegated_user,
-                        );
-                    }else if(getCert == "birth"){
-                        console.log("splitRecord", splitRecord);
-                        validateAllFieldsAndCreatePayloadForBirth(
-                            x,
-                            splitRecord[0], // Firstname
-                            splitRecord[1], // Middle Name
-                            splitRecord[2], // Last Name
-                            splitRecord[3], // Extension
-                            splitRecord[4], // birth_born_on,
-                            splitRecord[5], // birth_born_in,
-                            splitRecord[6], // birth_father_first_name,
-                            splitRecord[7], // birth_father_middle_name,
-                            splitRecord[8], // birth_father_last_name,
-                            splitRecord[9], // birth_father_extension,
-                            splitRecord[10], // birth_mother_first_name,
-                            splitRecord[11], // birth_father_middle_name,
-                            splitRecord[12], // birth_mother_last_name,
-                            splitRecord[13], // birth_mother_extension,
-                            splitRecord[14], // birth_resident_of,
-                            splitRecord[15], // birth_baptism_date,
-                            splitRecord[16], // birth_minister,
-                            splitRecord[17], // birth_godparents,
-                            splitRecord[18], // birth_baptismal_register,
-                            splitRecord[19], // birth_volume,
-                            splitRecord[20], // birth_page,
-                            splitRecord[21], // birth_date_issued,
-                            0, // birth_parish_priest,
-                            delegated_user, // delegated_user,
-                        );
-                    }else if(getCert == "death"){
-                        validateAllFieldsAndCreatePayloadForDeath(
-                            x,
-                            splitRecord[0], //death_firstname,
-                            splitRecord[1], // death_middlename,
-                            splitRecord[2], //death_lastname,
-                            splitRecord[3], //extension,
-                            splitRecord[4], //death_age,
-                            splitRecord[5], //death_residence,
-                            splitRecord[6], //date_of_death,
-                            splitRecord[7], //death_place_of_burial,
-                            splitRecord[8], //date_of_burial,
-                            splitRecord[9], //death_informant,
-                            splitRecord[10], //death_book_number,
-                            splitRecord[11], //death_page_number,
-                            splitRecord[12], //death_registry_number,
-                            splitRecord[13], //death_date_issued,
-                            0,
-                            delegated_user
-                        );
+                    if(splitRecord != null){
+                        if(getCert == "confirmation"){
+                            validateAllFieldsAndCreatePayloadImportConfirmation(
+                                x,
+                                splitRecord[0], // Firstname
+                                splitRecord[1], // Middle Name
+                                splitRecord[2], // Last Name
+                                splitRecord[3], // Extension
+                                splitRecord[4], // Fathers First name
+                                splitRecord[5], // Fathers Middle name
+                                splitRecord[6], // Fathers Last name
+                                splitRecord[7], // Fathers Extension
+                                splitRecord[8], // Mothers First name
+                                splitRecord[9], // Mothers Middle name
+                                splitRecord[10], // Mothers Extension
+                                splitRecord[11], // Mothers Last name
+                                splitRecord[12], // Confirmation Date
+                                splitRecord[13], // Date Issued
+                                splitRecord[14], // Confirmation By
+                                splitRecord[15], // First Sponsor
+                                splitRecord[16], // Second Sponsor
+                                splitRecord[17], // Register Book
+                                splitRecord[18], // Book Page
+                                splitRecord[19], // Number
+                                0,
+                                delegated_user
+                            );
+                        }else if(getCert == "marriage"){
+                            validateAllFieldsAndCreatePayloadForMarriage(
+                                x,
+                                splitRecord[0], //husband_firstname,
+                                splitRecord[1], //husband_middlename,
+                                splitRecord[2], //husband_lastname,
+                                splitRecord[3], //husband_extension,
+                                splitRecord[4], //husband_civil_status,
+                                splitRecord[5], //husband_birthdate,
+                                splitRecord[6], //husband_birth_place,
+                                splitRecord[7], //husband_residence,
+                                splitRecord[8], //husband_baptismdate,
+                                splitRecord[9], //husband_fathersname,
+                                splitRecord[10], //husband_mothersname,
+                                splitRecord[11], //husband_first_witness,
+                                splitRecord[12], //husband_second_witness,
+                                splitRecord[13], //wife_firstname,
+                                splitRecord[14], //wife_middlename,
+                                splitRecord[15], //wife_lastname,
+                                splitRecord[16], //wife_extension,
+                                splitRecord[17], //wife_civil_status,
+                                splitRecord[18], //wife_birthdate,
+                                splitRecord[19], //wife_birthplace,
+                                splitRecord[20], //wife_residence,
+                                splitRecord[21], //wife_baptismdate,
+                                splitRecord[22], //wife_fathersname,
+                                splitRecord[23], //wife_mothersname,
+                                splitRecord[24], //wife_firstwitness,
+                                splitRecord[25], //wife_secondwitness,
+                                splitRecord[26], //marriage_place,
+                                splitRecord[27], //marriage_date,
+                                splitRecord[28], //solemnized_by,
+                                splitRecord[29], //marriage_number,
+                                splitRecord[30], //marriage_page,
+                                splitRecord[31], //marriage_line,
+                                splitRecord[32], //marriage_date_issue,
+                                delegated_user,
+                            );
+                        }else if(getCert == "birth"){
+                            validateAllFieldsAndCreatePayloadForBirth(
+                                x,
+                                splitRecord[0], // Firstname
+                                splitRecord[1], // Middle Name
+                                splitRecord[2], // Last Name
+                                splitRecord[3], // Extension
+                                splitRecord[4], // birth_born_on,
+                                splitRecord[5], // birth_born_in,
+                                splitRecord[6], // birth_father_first_name,
+                                splitRecord[7], // birth_father_middle_name,
+                                splitRecord[8], // birth_father_last_name,
+                                splitRecord[9], // birth_father_extension,
+                                splitRecord[10], // birth_mother_first_name,
+                                splitRecord[11], // birth_father_middle_name,
+                                splitRecord[12], // birth_mother_last_name,
+                                splitRecord[13], // birth_mother_extension,
+                                splitRecord[14], // birth_resident_of,
+                                splitRecord[15], // birth_baptism_date,
+                                splitRecord[16], // birth_minister,
+                                splitRecord[17], // birth_godparents,
+                                splitRecord[18], // birth_baptismal_register,
+                                splitRecord[19], // birth_volume,
+                                splitRecord[20], // birth_page,
+                                splitRecord[21], // birth_date_issued,
+                                0, // birth_parish_priest,
+                                delegated_user, // delegated_user,
+                            );
+                        }else if(getCert == "death"){
+                            validateAllFieldsAndCreatePayloadForDeath(
+                                x,
+                                splitRecord[0], //death_firstname,
+                                splitRecord[1], // death_middlename,
+                                splitRecord[2], //death_lastname,
+                                splitRecord[3], //extension,
+                                splitRecord[4], //death_age,
+                                splitRecord[5], //death_residence,
+                                splitRecord[6], //date_of_death,
+                                splitRecord[7], //death_place_of_burial,
+                                splitRecord[8], //date_of_burial,
+                                splitRecord[9], //death_informant,
+                                splitRecord[10], //death_book_number,
+                                splitRecord[11], //death_page_number,
+                                splitRecord[12], //death_registry_number,
+                                splitRecord[13], //death_date_issued,
+                                0,
+                                delegated_user
+                            );
+                        }
                     }
                 }
 
                 if(emptyRowsImportConfirmation.length > 0){
-                    Materialize.toast('Number of Records with Issue '+emptyRowsImportConfirmation.length, 5000,'red rounded');
+
+                    var error_list_html = '';
+                    console.log("emptyRowsImportConfirmation:",emptyRowsImportConfirmation);
+                    for(var x = 0; x < emptyRowsImportConfirmation.length; x++){
+                        error_list_html += "<tr>"
+                            +"<td>"+emptyRowsImportConfirmation[x]['first_name']+"</td>"
+                            +"<td>"+emptyRowsImportConfirmation[x]['last_name']+"</td>"
+                            +"</tr>";
+                    }
+                    $("#errorListContent").html(error_list_html);
+
+                    var $toastContent = $('<span>Number of Records with Issue '+emptyRowsImportConfirmation.length+'</span>').add($('<button class="btn-flat toast-action" id="show_error_list">Show List</button>'));
+                    Materialize.toast($toastContent, 30000, 'red rounded');
                 }
-                // console.log('emptyRowsImportConfirmation:: ', emptyRowsImportConfirmation);
-                // console.log('rowsWithValueImportConfirmation:: ', rowsWithValueImportConfirmation);
+
+                $("#show_error_list").click(function(){
+                    Materialize.Toast.removeAll();
+                    $("#errorListModal").modal('open');
+                });
 
                 // Store rowsWithValueImportConfirmation to localStorage
                 if(rowsWithValueImportConfirmation.length > 0){
@@ -650,9 +666,17 @@
                 Materialize.toast('Number of Records with Issue'+emptyRowsImportConfirmation.length, 5000,'red rounded');
             }else{
                 if(isNaN(Date.parse(confirmation_date))){
-                    emptyRowsImportConfirmation.push(row);
+                    emptyRowsImportConfirmation.push({
+                        "row": row,
+                        "first_name": firstname,
+                        "last_name": lastname,
+                    });
                 }else if(isNaN(Date.parse(date_issued))){
-                    emptyRowsImportConfirmation.push(row);
+                    emptyRowsImportConfirmation.push({
+                        "row": row,
+                        "first_name": firstname,
+                        "last_name": lastname,
+                    });
                 }else{
                     var payloadToCreate;
                     var single_confirmation_date = new Date(confirmation_date);
@@ -733,13 +757,21 @@
                 birth_born_on == null || birth_born_on == undefined || birth_born_on == "" &&
                 birth_baptism_date == null || birth_baptism_date == undefined || birth_baptism_date == ""
             ){
-                emptyRowsImportConfirmation.push(row);
+                emptyRowsImportConfirmation.push({
+                        "row": row,
+                        "first_name": birth_first_name,
+                        "last_name": birth_last_name,
+                    });
             }else{
                 if(
                     isNaN(Date.parse(birth_born_on)) ||
                     isNaN(Date.parse(birth_baptism_date))
                 ){
-                    emptyRowsImportConfirmation.push(row);
+                    emptyRowsImportConfirmation.push({
+                        "row": row,
+                        "first_name": birth_first_name,
+                        "last_name": birth_last_name,
+                    });
                 }else{
                     var payloadToCreate;
                     birth_date_issued = new Date(birth_date_issued);
@@ -835,7 +867,11 @@
                 // !husband_civil_status.toLowerCase().includes('widowed') ||
                 // !husband_civil_status.toLowerCase().includes('divorced')
             ){
-                emptyRowsImportConfirmation.push(row);
+                emptyRowsImportConfirmation.push({
+                        "row": row,
+                        "first_name": husband_firstname,
+                        "last_name": husband_lastname,
+                    });
             }else{
                 var payloadToCreate;
                 console.log(husband_birthdate_import);
@@ -930,7 +966,11 @@
                 isNaN(Date.parse(date_of_burial)) ||
                 isNaN(Date.parse(death_date_issued))
             ){
-                emptyRowsImportConfirmation.push(row);
+                emptyRowsImportConfirmation.push({
+                        "row": row,
+                        "first_name": death_firstname,
+                        "last_name": death_lastname,
+                    });
             }else{
                 var payloadToCreate;
                 date_of_death = new Date(date_of_death);
@@ -999,7 +1039,9 @@
                             var test = confirm('Are you sure you want to stop the import in progress?');
                             if(test){
                                 $("#importProgress").addClass('hide');
+                                $("#errorImports").addClass('hide');
                                 localStorage.removeItem('transactionsImportConfirmation');
+                                window.location.href = '/ihmp/certificate';
                             }
                         });
                     }else{
@@ -1057,7 +1099,6 @@
                             "payload": payload,
                             "message": "Duplicated"
                         });
-                        $("#errorImports").css('right', '24%');
                         $("#errorImports").removeClass("hide");
                         $("#errorImportMessage").html("Some record already exists ("+errorSavingRecords.length+")");
                     }

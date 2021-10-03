@@ -260,6 +260,6 @@ a#btnCertificateFilter {
 #errorImports{
     float: right;
     position: absolute;
-    bottom: 5px;
-    right: 24%;
+    bottom: 99px;
+    right: 5%;
 }

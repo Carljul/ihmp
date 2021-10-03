@@ -31,7 +31,7 @@
                 <br>
                 If issue persists, please contact your Software Developer
             </p>
-            
+
             <button class="waves-effect waves-green btn btn-block" id="btnRefresh">Refresh</button>
         </div>
         <div class="customMessage hide">
@@ -45,7 +45,7 @@
     <div class="modal-content center errorProgressIndicator">
         <h4>Are you sure you want to delete <span id="recordToDelete"></span>?</h4>
         <div id="buttonConfirmation">
-        
+
         </div>
     </div>
 </div>
@@ -57,9 +57,9 @@
         <h4>Import Your CSV File Here</h4>
         <p>Follow the Steps</p>
         <div class="row">
-            <div class="col s12">              
+            <div class="col s12">
                 <div class="input-field col s3">
-                    <b>1. </b>Select the type of record<br>  
+                    <b>1. </b>Select the type of record<br>
                     <select class="templateDownloadDropdown" id="templateDownloadDropdown">
                         <option value="" disabled selected>Select template</option>
                         <option value="marriage">Marriage</option>
@@ -76,7 +76,7 @@
                 <div class="col s3">
                     <b>3. </b>Select your template and upload
                     <form enctype='multipart/form-data' method='post'>
-                    
+
                         <label>Upload CSV file Here</label>
 
                         <div class="file-field input-field">
@@ -319,6 +319,27 @@
     </div>
 </div>
 
+<div id="errorListModal"  class="modal">
+    <div class="modal-content center">
+        <div class="row">
+            <div class="col s12">
+                Make Sure to copy the content of this popup as when notification closes you wont get the second time to look on to this list
+                <table class="striped">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="errorListContent">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function(){
         $('#importExport').modal({dismissible: false});
@@ -416,7 +437,7 @@
                                 +'<td><label style="font-size: 9px;">Registration Book</label><br>'+metaContent['registration_book']+'</td>'
                                 +'<td><label style="font-size: 9px;">Book Page</label><br>'+metaContent['book_page']+'</td>'
                                 +'<td><label style="font-size: 9px;">Book Number</label><br>'+metaContent['book_number']+'</td>'
-                                
+
                                 html+='</tr>';
                             }
                         }
@@ -538,7 +559,7 @@
                             }
                         }
                     }
-                    
+
                     //display the div
                     $(`#${divToShow}`).css("display", "block");
                     //hide the other DIVS
@@ -552,7 +573,7 @@
                     console.log('["Confirmation Error"]: '+e.responseJSON.message);
                 }
             });
-            
+
         })
     });
 </script>
