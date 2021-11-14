@@ -144,6 +144,11 @@
         .logo-container img{
             width: 45%;
         }
+        .logo-container img.curl{
+            position: absolute;
+            top: 10px;
+            width: 19%;
+        }
         .logo-container div span.leftMessage{
             position: relative;
             font-size: 25px;
@@ -396,6 +401,7 @@
                 </div>
                 <div class="logo-container">
                     <div><span class="leftMessage">"Go therefore make<br>disciples of all the nations;</span></div>
+                    <img src="{{asset('storage/bg/certificates/bgCurl.png')}}" class="curl" alt="">
                     <img src="{{asset('storage/bg/certificates/bgBaptist.png')}}" alt="">
                     <div><span class="rightMessage">baptize them in the name of<br>the Father and of the<br>Son and of the Holy<br>Spirit."</span></div>
                 </div>
