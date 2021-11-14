@@ -50,6 +50,11 @@ Route::get('download/{filename}', function($filename)
 })
 ->where('filename', '[A-Za-z0-9\-\_\.]+');
 
+// Test Route
+Route::get('/test', function(){
+    return view('welcome');
+});
+
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });

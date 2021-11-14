@@ -4,223 +4,569 @@
         return date('F d, Y',strtotime($date));
     }
 @endphp
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<html>
-    <head>
-        <title>{{$content->firstname}} {{$content->middlename}} {{$content->lastname}} {{$content->suffix ?? ''}}</title>
-        <link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}">
-        <style>
-            .old-english{
-                font-family: "Euclid Fraktur", "Old English Text MT", fantasy, serif;
-            }
-            .opacity-01{
-                opacity: 0.1;
-            }
-            .logo-size{
-                width: 300px;
-                height: auto;
-            }
-            .text-size-8{
-                font-size: 12px;
-                font-style: italic;
-            }
-            .custom-right{
-                top: 200px;
-                position: absolute;
-                right: 15px !important;
-            }
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-            .custom-left{
-                top: 200px;
-                position: absolute;
-                left: 15px !important;
-            }
-            .m-negative-top{
-                margin-top: -92px;
-            }
+    <title>{{ setting('site.title') }}</title>
 
-            .this_is_to_certify{
-                position: absolute;
-                top: 410px !important;
-            }
+    <!-- Scripts -->
+    <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
 
-            .logo{
-                position: absolute;
-                left: 153px;
-            }
-            .underline{
-                text-decoration: underline;
-            }
-            .moveBody{
-                position: absolute;
-                top: 500px;
-                width: 90%;
-            }
-            .moveBody p{
-                text-align: justify;
-                font-size: 18px;
-            }
-            .sacramentOfBaptism{
-                position: absolute;
-                top: 700px;
-                width: 90%;
-            }
-            .godParents{
-                position: absolute;
-                top: 800px;
-                width: 90%;
-            }
-            .churchRecord{
-                position: absolute;
-                top: 990px;
-                width: 100%;
-                margin-bottom: 0px;
-            }
-            .bottom-border{
-                border-bottom: 1px solid black;
-            }
-            .certificate_background{
-                width: 100%;
-                position: absolute;
-                z-index: -1;
-                opacity: 0.1;
-                left: 0px;
-                top: 569px;
-            }
-            @media print{
-                body{
-                    margin: 45px !important;
-                }
-                .custom-left{
-                    margin-left: 50px;
-                }
-                .custom-right{
-                    margin-right: 50px;
-                }
-                .this_is_to_certify{
-                    left: 0px !important;
-                }
-                .this_is_to_certify h5{
-                    font-weight: bold;
-                }
+    <!--Import Google Icon Font-->
+    <link href="{{ asset('css/icon.css') }}" rel="stylesheet">
 
-                .logo{
-                    position: absolute;
-                    left: 220px !important;
-                    top: 450px !important;
-                }
-                .logo img{
-                    position: absolute;
-                    left: 65px;
-                    top: -320px;
-                }
-            }
+    <!-- Tab Icon -->
+    <link href="{{ asset('storage/') }}/{{setting('site.logo')}}" rel="icon">
 
-            @page{
-                size: portrait;
-            }
-        </style>
-    </head>
-    <body class="body">
-        <div class="center-align old-english">
-            <div class="row">
-                <h5>Archdiocesan Shrine of the Immculate Heart of Mary</h5>
-                <h6>Minglanilla, Cebu 6046<br>Tel.No.260-3462</h6>
-            </div>
-        </div>
+    <!-- Styles -->
+    <link href="{{ asset('css/materialize.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/ihmp.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/datatables.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/modal_flat.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/modal_rounded.css') }}" rel="stylesheet">
 
-        <div class="row center-align">
-            <div class="col m4">
-                <div class="text-size-8 custom-left">Go therfore, make<br>disciples of all<br>the nations;</div>
-            </div>
-            <div class="col m4">
-                <center>
-                <div class="logo">
-                    <img src="{{asset('storage/logo/certificate.jpg')}}" alt="logo" class="responsive-img circle logo-size opacity-01">
-                    <h3 class="old-english m-negative-top">Certificate of Baptism</h3>
+    <!--JavaScript at end of body for optimized loading-->
+    <script src="{{ asset('/js/constants.js') }}"></script>
+    <script src="{{ asset('/js/materialize.js') }}"></script>
+    <script src="{{ asset('/js/general.js') }}"></script>
+    <script src="{{ asset('/js/moment.js') }}"></script>
+    <script src="{{ asset('/js/daypilot-modal-3.15.1.min.js') }}"></script>
+    <style>
+
+        /* This is my main site's font */
+        @font-face {
+            font-family: 'GreatVibes';
+            src: url("{{asset('fonts/GreatVibes-Regular.ttf')}}")
+        }
+
+        @font-face {
+            font-family: 'Anton-Regular';
+            src: url("{{asset('fonts/Anton-Regular.ttf')}}")
+        }
+
+        @font-face {
+            font-family: 'LiberBaskerVille-Bold';
+            src: url("{{asset('fonts/LiberBaskerVille-Bold.ttf')}}")
+        }
+
+        @font-face {
+            font-family: 'LibreBaskerville-Italic';
+            src: url("{{asset('fonts/LibreBaskerville-Italic.ttf')}}")
+        }
+
+        @font-face {
+            font-family: 'LibreBaskerville-Regular';
+            src: url("{{asset('fonts/LibreBaskerville-Regular.ttf')}}")
+        }
+
+        @font-face {
+            font-family: 'Balgin-Light';
+            src: url("{{asset('fonts/Balgin-Light.ttf')}}")
+        }
+        @font-face {
+            font-family: 'OpenSans';
+            src: url("{{asset('fonts/OpenSans-VariableFont_wdth,wght.ttf')}}")
+        }
+
+        .certficate-background {
+            position: relative;
+        }
+
+        .certficate-background:before {
+            content: ' ';
+            display: block;
+            position: absolute;
+            left: 0;
+            top: -20px;
+            opacity: 0.3;
+            width: 100%;
+            height: 100vh;
+            background-size: cover;
+            background-position-y: 27%;
+            background-image: url("{{ asset('storage/bg/certificates/bgBird.png') }}") !important;
+        }
+
+        .inner-container{
+            width: 100%;
+            height: 100vh;
+            border-top: 15px solid #6486aa;
+            border-bottom: 15px solid #6486aa;
+            position: relative;
+        }
+
+        .main-content {
+            display: block;
+            margin-top: 5px;
+            width: 100%;
+            height: 96vh;
+            border-top: 5px solid #6486aa;
+            border-bottom: 5px solid #6486aa;
+        }
+        .main-content .header span {
+            display: block;
+            text-align: center;
+            color: #6486aa;
+            font-family: 'Balgin-Light';
+        }
+        .main-content .header .rcaoc {
+            letter-spacing: 5px;
+        }
+        .main-content .header .asihm {
+            font-size: 20px;
+            letter-spacing: 6.4px;
+            font-family: 'Anton-Regular';
+        }
+
+        .main-content .header .mczip {
+            letter-spacing: 5px;
+        }
+        .main-content .header .contact {
+            font-size: 15px;
+        }
+
+        .logo-container {
+            position: relative;
+            display: flex;
+            color: #6486aa;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-container div{
+            text-align: center;
+        }
+        .logo-container img{
+            width: 45%;
+        }
+        .logo-container div span.leftMessage{
+            position: relative;
+            font-size: 25px;
+            font-family: 'GreatVibes';
+            line-height: 1;
+            top: -15px;
+            left: 17%;
+        }
+        .logo-container div span.rightMessage{
+            position: relative;
+            font-size: 25px;
+            left: -22%;
+            font-family: 'GreatVibes';
+            line-height: 1;
+            top: 3px;
+        }
+
+        .cob {
+            text-align: center;
+            font-size: 72px;
+            position: absolute;
+            font-family: 'GreatVibes';
+            margin-top: -10.5%;
+            margin-left: 15.5%;
+        }
+        .content {
+            margin: 0 48px;
+            position: relative;
+            font-size: 16px;
+        }
+        .content .breaker{
+            width: 98%;
+            background-color: #6486aa93;
+            border: 2px solid #6486aa93;
+            border-radius: 2px;
+            margin-top: 0px;
+        }
+        .tct {
+            font-weight: 500;
+            margin: 0;
+        }
+        .born-date-place-container{
+            display: flex;
+            font-family: 'OpenSans';
+        }
+        .born-date-place-container .born-on-content,
+        .born-date-place-container .born-in-content{
+            width: 40%;
+            border-bottom: 1px solid black;
+            position: relative;
+            top: -4px;
+            margin: 0 2px;
+            text-align: center;
+        }
+        .born-date-place-container .born-in-content{
+            width: 45% !important;
+        }
+
+        .parents-container{
+            display: flex;
+            font-family: 'OpenSans';
+        }
+
+        .parents-container .father-content,
+        .parents-container .mother-content{
+            width: 41.7%;
+            border-bottom: 1px solid black;
+            position: relative;
+            top: -4px;
+            margin: 0 2px;
+            text-align: center;
+        }
+        .childsName {
+            text-align: center;
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+        .residents-container {
+            display: flex;
+        }
+        .residents-container .resident-content {
+            border-bottom: 1px solid black;
+            position: relative;
+            top: -4px;
+            width: 83.5%;
+            margin: 0 2px;
+            text-align: center;
+        }
+        .iggtrt {
+            text-align: center;
+            color: #6486aa;
+            font-family: 'GreatVibes';
+            margin-top: 2px;
+            font-size: 20px;
+        }
+        .sob {
+            font-family: 'GreatVibes';
+            text-align: center;
+            position: relative;
+            margin-top: -40px;
+            margin-bottom: 0;
+            font-size: 80px;
+        }
+        .date-minister-container {
+            display: flex;
+            justify-content: center;
+            margin-top: -8px;
+        }
+        .date-minister-container div.dmc{
+            width: 20%;
+            text-align: center;
+        }
+        .date-minister-container div.dmc.date-baptism{
+            width: 50%;
+            text-align: center;
+        }
+        .date-minister-container div.dmc.minister{
+            width: 50%;
+            text-align: center;
+        }
+
+        .date-minister-container div.dmc .label hr {
+            width: 80%;
+            text-align: center;
+            margin-bottom: 1px;
+            margin-top: 0;
+        }
+        .godparents-container {
+            display: flex;
+        }
+        .godparents-container .godparents-content{
+            border-bottom: 1px solid black;
+            width: 100%;
+            position: relative;
+            top: -4px;
+        }
+
+        .godparents-content2,
+        .godparents-content3,
+        .godparents-content4 {
+            width: 100%;
+            height: 18px;
+            border-bottom: 1px solid black;
+        }
+        .godparents-content4{
+            margin-bottom: 5px;
+        }
+
+        .purpose-container {
+            display: flex;
+        }
+        .purpose-container .purpose-content {
+            border-bottom: 1px solid black;
+            width: 100%;
+            position: relative;
+            top: -4px;
+        }
+        .baptismal-container {
+            display: flex;
+        }
+
+        .baptismal-container .pannel.left-pannel{
+            width: 50%;
+        }
+
+
+        .baptismal-container .pannel.center-pannel{
+            width: 15%;
+        }
+
+        .baptismal-container .pannel.right-pannel{
+            width: 40%;
+            position: relative;
+            top: 30px;
+        }
+
+        .baptismal-container .left-pannel .container {
+            display: flex;
+            width: 100%;
+        }
+        .baptismal-container .left-pannel .container .baptismal-register-content {
+            width: 50%;
+            border-bottom: 1px solid black;
+            position: relative;
+            top: -4px;
+            margin-left: 2px;
+        }
+        .baptismal-container .left-pannel .container .contents {
+            text-align: center;
+        }
+
+        .baptismal-container .left-pannel .container.vp .contents {
+            position: relative;
+            border-bottom: 1px solid black;
+            width: 31%;
+            top: -4px;
+        }
+
+        .baptismal-container .left-pannel .container.di .contents {
+            position: relative;
+            border-bottom: 1px solid black;
+            width: 65%;
+            top: -4px;
+        }
+
+        .baptismal-container .right-pannel {
+            text-align: center;
+        }
+        .baptismal-container .center-pannel p{
+            position: relative;
+            top: 15px;
+        }
+        .baptismal-container .right-pannel .parish-priest-label .line,
+        .date-minister-container .dmc .label .line{
+            width: 90%;
+            margin: 0 0 0 24px;
+            border-bottom: 1px solid black;
+        }
+        .date-minister-container .dmc .label .line{
+            width: 80%;
+            margin-left: 10%;
+        }
+
+        @media print{
+            * {
+                -webkit-print-color-adjust: exact;
+            }
+        }
+        @page{
+            size: portrait;
+        }
+    </style>
+    <script>
+        print();
+        setTimeout(function(){
+            location.href="/ihmp/certificate";
+        },1000);
+    </script>
+</head>
+<body>
+    <div class="certficate-background">
+        <div class="inner-container">
+            <div class="main-content">
+                <div class="header">
+                    <span class="rcaoc">ROMAN CATHOLIC ARCHDIOCESE OF CEBU</span>
+                    <span class="asihm">ARCHDIOCESAN SHRINE OF THE IMMACULATE HEART OF MARY</span>
+                    <span class="mczip">Minglanilla, Cebu 6046</span>
+                    <span class="contact">Tel . no. 260-3462/ Facebook page: https://www.facebook.com/ASIHM1857/</span>
                 </div>
-            </center>
-            </div>
-            <div class="col m4">
-                <div class="text-size-8 custom-right">baptize them on the name<br>of the Father and of the Son<br>and of the Holy Spirit.</div>
-            </div>
-        </div>
-        <div class="row center-align">
-            <div class="col s12 this_is_to_certify">
-                <strong>This is to certify that:</strong>
-                <h5>{{$content->firstname}} {{$content->middlename}} {{$content->lastname}} {{$content->suffix ?? ''}}</h5>
-                <hr style="width: 500px; border: 1px solid black;">
-            </div>
-        </div>
-        <div class="row">
-            <div class="moveBody">
-                <p>
-                    Born on <b><span class="underline">&nbsp;&nbsp;{{date('F d, Y', strtotime(str_replace("//","/",$meta->born_on)))}}&nbsp;&nbsp;</span></b>
-                    in <b><span class="underline">&nbsp;&nbsp;{{$meta->born_in}}&nbsp;&nbsp;</span></b>
-                    Child of <b><i><span class="underline">&nbsp;&nbsp;{{$meta->father_firstname}} {{$meta->father_middlename}} {{$meta->father_lastname}} {{$meta->father_suffix}}&nbsp;&nbsp;</span></i></b>
-                    and <b><i><span class="underline">&nbsp;&nbsp;{{$meta->mother_firstname}} {{$meta->mother_middlename}} {{$meta->mother_lastname}} {{$meta->mother_suffix}}&nbsp;&nbsp;</span></i></b>
-                    Residents of <b><span class="underline">&nbsp;&nbsp;{{$meta->resident_of}}&nbsp;&nbsp;</span></b>
-                </p>
-                <center>
-                    <span>in God's good time received the</span>
-                    <h3 class="old-english">Sacrament of Baptism</h3>
-                </center>
-            </div>
-        </div>
-        <div class="row sacramentOfBaptism">
-            <div class="container-fluid center-align">
-                <div class="col s6">
-                    {{date('F d, Y', strtotime(str_replace("//","/",$meta->baptism_date)))}}
-                    <br>
-                    <hr>
-                    Date of Baptism
+                <div class="logo-container">
+                    <div><span class="leftMessage">"Go therefore make<br>disciples of all the nations;</span></div>
+                    <img src="{{asset('storage/bg/certificates/bgBaptist.png')}}" alt="">
+                    <div><span class="rightMessage">baptize them in the name of<br>the Father and of the<br>Son and of the Holy<br>Spirit."</span></div>
                 </div>
-                <div class="col s6">
-                    <span style="font-size: 20px; font-weight: bold;">{{$meta->baptism_minister}}</span>
-                    <br>
-                    <hr style="margin-top: 1.5px;">
-                    Minister of Baptism
-                </div>
-            </div>
-        </div>
-        <img src="{{ asset('storage/logo/john_the_baptist.jpg') }}" alt="bg" class="certificate_background">
-        <div class="row godParents">
-            <div class="container-fluid">
-                <div class="col s12">
-                    Godparents:
-                </div>
-                <br>
-                @foreach ($godparents as $godparent)
-                    <div class="col {{count($godparents) == 2 ? "s6":(count($godparents) == 1 ?"s12":"s4")}} center-align">
-                        <span>{{$godparent}}<br><hr style="margin-top: 0px;"></span>
+                <div class="content">
+                    <p class="cob">Certificate of Baptism</p>
+                    <p class="tct">This is to certify that:</p>
+                    {{-- Child Name --}}
+                    <div class="childsName">{{$content->firstname}} {{$content->middlename}} {{$content->lastname}} {{$content->suffix ?? ''}}</div>
+                    <hr class="breaker">
+                    {{-- Born Details --}}
+                    <div class="born-date-place-container">
+                        <div class="born-on">
+                            Born on
+                        </div>
+                        <div class="born-on-content">
+                            {{date('F d, Y', strtotime(str_replace("//","/",$meta->born_on)))}}
+                        </div>
+                        <div class="born-in">
+                            in
+                        </div>
+                        <div class="born-in-content">
+                            {{$meta->born_in}}
+                        </div>
                     </div>
-                @endforeach
+                    {{-- Parent --}}
+                    <div class="parents-container">
+                        <div class="born-on">
+                            Child of
+                        </div>
+                        <div class="father-content">
+                            {{$meta->father_firstname}} {{$meta->father_middlename}} {{$meta->father_lastname}} {{$meta->father_suffix}}
+                        </div>
+                        <div class="born-in">
+                            and
+                        </div>
+                        <div class="mother-content">
+                            {{$meta->mother_firstname}} {{$meta->mother_middlename}} {{$meta->mother_lastname}} {{$meta->mother_suffix}}
+                        </div>
+                    </div>
+                    {{-- Residents --}}
+                    <div class="residents-container">
+                        <div class="resident">
+                            Residents of
+                        </div>
+                        <div class="resident-content">
+                            {{$meta->resident_of}}
+                        </div>
+                    </div>
+                    <p class="iggtrt">in God's good time received the</p>
+                    <p class="sob">Sacrament of Baptism</p>
+                    {{-- Date and Minister --}}
+                    <div class="date-minister-container">
+                        <div class="dmc date-baptism">
+                            <div class="db-content">
+                                {{date('F d, Y', strtotime(str_replace("//","/",$meta->baptism_date)))}}
+                            </div>
+                            <div class="label">
+                                <div class="line"></div>
+                                Date of Baptism
+                            </div>
+                        </div>
+                        <div></div>
+                        <div class="dmc minister">
+                            <div class="minister-content">
+                                {{$meta->baptism_minister}}
+                            </div>
+                            <div class="label">
+                                <div class="line"></div>
+                                Minister of Baptism
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Godparents --}}
+                    <div class="godparents-container">
+                        <div class="godparents-label">
+                            Godparents:
+                        </div>
+                        <div class="godparents-content">&nbsp;&nbsp;
+                            @foreach ($godparents as $key => $godparent)
+                                @if(count($godparents) > 3)
+                                    {{ $godparent }}@if($key < 3), @endif
+                                @else
+                                    {{ $godparent }}@if(count($godparents) > 1 && $key != count($godparents) - 1), @endif
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="godparents-content2">
+                        @foreach ($godparents as $key => $godparent)
+                            @if(count($godparents) > 7)
+                                @if($key >= 4)
+                                    {{ $godparent }}@if($key < 7) , @endif
+                                @endif
+                            @else
+                                @if($key >= 4)
+                                    {{ $godparent }}@if(count($godparents) > 4 && $key != count($godparents) - 1), @endif
+                                @endif
+                            @endif
+                        @endforeach
+                    </div>
+                    <div class="godparents-content3">
+                        @foreach ($godparents as $key => $godparent)
+                            @if(count($godparents) > 11)
+                                @if($key >= 8)
+                                    {{ $godparent }}@if($key < 11) , @endif
+                                @endif
+                            @else
+                                @if($key >= 8)
+                                    {{ $godparent }}@if(count($godparents) > 8) , @endif
+                                @endif
+                            @endif
+                        @endforeach
+                    </div>
+                    <div class="godparents-content4">
+                        @foreach ($godparents as $key => $godparent)
+                            @if(count($godparents) > 12)
+                                @if($key >= 12)
+                                    {{ $godparent }}@if(count($godparents) - 1 != $key) , @endif
+                                @endif
+                            @else
+                                @if($key >= 12)
+                                    {{ $godparent }}@if(count($godparents) +-1 != $key) , @endif
+                                @endif
+                            @endif
+                        @endforeach
+                    </div>
+                    {{-- Purpose --}}
+                    <div class="purpose-container">
+                        <div class="purpose-label">
+                            Purpose:
+                        </div>
+                        <div class="purpose-content">
+
+                        </div>
+                    </div>
+                    {{-- Baptismal Info --}}
+                    <div class="baptismal-container">
+                        <div class="pannel left-pannel">
+                            <div class="container">
+                                <div class="baptismal-register-label">Baptismal Register:</div>
+                                <div class="baptismal-register-content contents">{{$meta->baptismal_register}}</div>
+                            </div>
+                            <div class="container vp">
+                                <div class="volume-label">Volume:</div>
+                                <div class="volume-content contents">{{$meta->volume}}</div>
+                                <div class="page-label">Page:</div>
+                                <div class="page-content contents">{{$meta->page}}</div>
+                            </div>
+                            <div class="container di">
+                                <div class="date-issued-label">Date Issued:</div>
+                                <div class="date-issued-content contents">{{$meta->date_issued == "NaN//NaN//NaN" ? "":deathDateGetFullStringFormat(date('F d, Y', strtotime(str_replace("//","/",$meta->date_issued))))}}</div>
+                            </div>
+                        </div>
+                        <div class="pannel center-pannel">
+                            <p>PARISH SEAL</p>
+                        </div>
+                        <div class="pannel right-pannel">
+                            @if(empty($content->priest_fname))
+                            <div class="parish-priest-content contents">&nbsp;</div>
+                            @else
+                            <div class="parish-priest-content contents">{{$content->priest_clergy}} {{$content->priest_fname}} {{$content->priest_mname}} {{$content->priest_lname}} {{$content->priest_suffix}}</div>
+                            @endif
+                            <div class="parish-priest-label">
+                                <div class="line"></div>
+                                Parish Priest
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row churchRecord">
-            <div class="container-fluid">
-                <div class="col s6">
-                    Baptismal Register: <span class="underline">&nbsp;&nbsp;&nbsp;{{$meta->baptismal_register}}&nbsp;&nbsp;&nbsp;</span><br>
-                    Volume: <span class="underline">&nbsp;&nbsp;&nbsp;{{$meta->volume}}&nbsp;&nbsp;&nbsp;</span>
-                    Page: <span class="underline">&nbsp;&nbsp;&nbsp;{{$meta->page}}&nbsp;&nbsp;&nbsp;</span><br>
-                    Date Issue: <span class="underline">&nbsp;&nbsp;&nbsp;{{$meta->date_issued == "NaN//NaN//NaN" ? "":deathDateGetFullStringFormat(date('F d, Y', strtotime(str_replace("//","/",$meta->date_issued))))}}&nbsp;&nbsp;&nbsp;</span>
-                </div>
-                <div class="col s6">
-                    <center>
-                        <p>
-                            <strong><span class="underline">{{$content->priest_clergy}} {{$content->priest_fname}} {{$content->priest_mname}} {{$content->priest_lname}} {{$content->priest_suffix}}</span></strong>
-                            <br>
-                            Parish Priest
-                        </p>
-                    </center>
-                </div>
-            </div>
-        </div>
-        <script>
-            print();
-            setTimeout(function(){
-                location.href="/ihmp/certificate";
-            },1000);
-        </script>
-    </body>
+    </div>
+</body>
 </html>
