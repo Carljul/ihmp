@@ -32,11 +32,7 @@
     <link href="{{ asset('css/modal_rounded.css') }}" rel="stylesheet">
 
     <!--JavaScript at end of body for optimized loading-->
-    <script src="{{ asset('/js/constants.js') }}"></script>
-    <script src="{{ asset('/js/materialize.js') }}"></script>
-    <script src="{{ asset('/js/general.js') }}"></script>
-    <script src="{{ asset('/js/moment.js') }}"></script>
-    <script src="{{ asset('/js/daypilot-modal-3.15.1.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <style>
 
         /* This is my main site's font */
@@ -382,12 +378,6 @@
             size: portrait;
         }
     </style>
-    <script>
-        print();
-        setTimeout(function(){
-            location.href="/ihmp/certificate";
-        },1000);
-    </script>
 </head>
 <body>
     <div class="certficate-background">
@@ -574,5 +564,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        let purpose = prompt("Please Enter Certificate Purpose", "");
+
+        $('.purpose-content').html('&nbsp;&nbsp;'+purpose);
+        print();
+
+        setTimeout(function(){
+            location.href="/ihmp/certificate";
+        },1000);
+    </script>
 </body>
 </html>
