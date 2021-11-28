@@ -249,7 +249,7 @@
                     </div>
                     <div class="col s6" style="position: relative;">
                         <div class="row center" style="position: absolute; right: 0; top: 25px;">
-                            <div class="col s12" style="border-bottom: 1px solid #20548b;">@if($content->priest_fname != null){{$content->priest_clergy}} {{$content->priest_fname}} {{$content->priest_mname}} {{$content->priest_lname}} {{$content->priest_suffix}}@endif</div>
+                            <div class="col s12" style="color: black; border-bottom: 1px solid #20548b;">@if($content->priest_fname != null){{$content->priest_clergy}} {{$content->priest_fname}} {{$content->priest_mname}} {{$content->priest_lname}} {{$content->priest_suffix}}@endif</div>
                             <div class="col s12">Parish Priest</div>
                         </div>
                     </div>
@@ -258,5 +258,12 @@
         </div>
     </div>
     <div class="toFade backgroundImage"></div>
+
+    <script>
+        print();
+        setTimeout(function(){
+            location.href="/ihmp/certificate";
+        },1000);
+    </script>
 </body>
 </html>
