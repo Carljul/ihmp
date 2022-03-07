@@ -961,10 +961,7 @@
             /// Validate for all empty rows
             if(
                 death_firstname == null || death_firstname == undefined || death_firstname == "" ||
-                death_lastname == null || death_lastname == undefined || death_lastname == "" ||
-                isNaN(Date.parse(date_of_death)) ||
-                isNaN(Date.parse(date_of_burial)) ||
-                isNaN(Date.parse(death_date_issued))
+                death_lastname == null || death_lastname == undefined || death_lastname == ""
             ){
                 emptyRowsImportConfirmation.push({
                         "row": row,
@@ -973,21 +970,21 @@
                     });
             }else{
                 var payloadToCreate;
-                date_of_death = new Date(date_of_death);
-                date_of_burial = new Date(date_of_burial);
-                death_date_issued = new Date(death_date_issued);
+                date_of_death = date_of_death ? new Date(date_of_death):null;
+                date_of_burial = date_of_burial ? new Date(date_of_burial):null;
+                death_date_issued = death_date_issued ? new Date(death_date_issued):null;
                 var metaContent = {
                     "deceased_name":death_firstname+" "+death_middlename+" "+death_lastname+" "+death_extension,
                     "age":death_age,
                     "residence":death_residence,
-                    "date_of_death":(date_of_death.getMonth()+1)+"/"+date_of_death.getDate()+"/"+date_of_death.getFullYear(),
+                    "date_of_death": date_of_death == null ? '' : (date_of_death.getMonth()+1)+"/"+date_of_death.getDate()+"/"+date_of_death.getFullYear(),
                     "place_of_burial":death_place_of_burial,
-                    "date_of_burial":(date_of_burial.getMonth()+1)+"/"+date_of_burial.getDate()+"/"+date_of_burial.getFullYear(),
+                    "date_of_burial": date_of_burial == null ? '' : (date_of_burial.getMonth()+1)+"/"+date_of_burial.getDate()+"/"+date_of_burial.getFullYear(),
                     "informant_or_relatives":death_informant,
                     "book_number":death_book_number,
                     "page_number":death_page_number,
                     "registry_number":death_registry_number,
-                    "date_issued":(death_date_issued.getMonth()+1)+"/"+death_date_issued.getDate()+"/"+death_date_issued.getFullYear(),
+                    "date_issued":death_date_issued == null ? '' : (death_date_issued.getMonth()+1)+"/"+death_date_issued.getDate()+"/"+death_date_issued.getFullYear(),
                 };
                 payloadToCreate = {
                     "firstname": death_firstname,
