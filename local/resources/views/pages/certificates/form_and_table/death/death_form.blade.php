@@ -38,7 +38,7 @@
                             <b>Other Info</b>
                             <div class="row removeBottomMargin">
                                 <div class="input-field col s12 m4">
-                                    <input id="death_age" type="number" class="validate" name="death_age">
+                                    <input id="death_age" type="text" class="validate" name="death_age">
                                     <label for="death_age">Age</label>
                                 </div>
                                 <div class="input-field col s12 m4">
@@ -114,12 +114,12 @@
     $(document).ready(function(){
         $("#death_date_of_death").pickadate({
             selectMonths: true, // Creates a dropdown to control month
-            selectYears: 30, 
+            selectYears: 30,
             max: new Date()
         });
         // This will prevent the date picker from closing automatically
         $('#death_date_of_death').on('mousedown',function(event){ event.preventDefault(); });
-        
+
         $("#death_date_of_burial").pickadate({
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 30
@@ -133,7 +133,7 @@
         });
         // This will prevent the date picker from closing automatically
         $('#death_date_issued').on('mousedown',function(event){ event.preventDefault(); });
-        
+
         // Saving Death Certificate
         $("#single_death_form").on('submit', function(e){
             e.preventDefault();
@@ -152,19 +152,19 @@
                 var death_extension = $("#death_extension").val();
                 var death_age = $("#death_age").val();
                 var death_residence = $("#death_residence").val();
-                var death_date_of_death = new Date($("#death_date_of_death").val());
+                var death_date_of_death = $("#death_date_of_death").val() ? new Date($("#death_date_of_death").val()):null;
                 var death_place_of_burial = $("#death_place_of_burial").val();
-                var death_date_of_burial = new Date($("#death_date_of_burial").val());
+                var death_date_of_burial = $("#death_date_of_burial").val() ? new Date($("#death_date_of_burial").val()) : null;
                 var death_informant = $("#death_informant").val();
                 var death_book_number = $("#death_book_number").val();
                 var death_page_number = $("#death_page_number").val();
                 var death_registry_number = $("#death_registry_number").val();
-                var death_date_issued = new Date($("#death_date_issued").val());
+                var death_date_issued = $("#death_date_issued").val() ? new Date($("#death_date_issued").val()) : null;
                 var death_parish_priest = $("#death_parish_priest").val();
                 var payload, metaContent;
                 var delagatedId = parseInt(localStorage.getItem('delegatedUser'));
                 var delegated_user = AT.substring(delagatedId+1, AT.length);
-                
+
                 if(death_firstname == "" || death_lastname == ""){
                     Materialize.toast('First Name and Last Name are required fields', 5000, 'red rounded');
                 }else{
@@ -172,14 +172,14 @@
                         "deceased_name":death_firstname+" "+death_middlename+" "+death_lastname+" "+death_extension,
                         "age":death_age,
                         "residence":death_residence,
-                        "date_of_death":(death_date_of_death.getMonth()+1)+"/"+death_date_of_death.getDate()+"/"+death_date_of_death.getFullYear(),
+                        "date_of_death":death_date_of_death == null ? '' :(death_date_of_death.getMonth()+1)+"/"+death_date_of_death.getDate()+"/"+death_date_of_death.getFullYear(),
                         "place_of_burial":death_place_of_burial,
-                        "date_of_burial":(death_date_of_burial.getMonth()+1)+"/"+death_date_of_burial.getDate()+"/"+death_date_of_burial.getFullYear(),
+                        "date_of_burial":death_date_of_burial == null ? '' :(death_date_of_burial.getMonth()+1)+"/"+death_date_of_burial.getDate()+"/"+death_date_of_burial.getFullYear(),
                         "informant_or_relatives":death_informant,
                         "book_number":death_book_number,
                         "page_number":death_page_number,
                         "registry_number":death_registry_number,
-                        "date_issued":(death_date_issued.getMonth()+1)+"/"+death_date_issued.getDate()+"/"+death_date_issued.getFullYear(),
+                        "date_issued":death_date_issued == null ? '' :(death_date_issued.getMonth()+1)+"/"+death_date_issued.getDate()+"/"+death_date_issued.getFullYear(),
                     };
 
                     // 0 for add
@@ -259,7 +259,7 @@
         // clear field
         function clearDeathInputFields(){
             $(".btnCancelDeathUpdate").addClass('hide');
-            
+
             // update Form Title
             $(".headerDeath").html('Add Death');
 
