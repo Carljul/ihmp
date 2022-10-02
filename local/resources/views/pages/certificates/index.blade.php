@@ -671,12 +671,6 @@
                         "first_name": firstname,
                         "last_name": lastname,
                     });
-                }else if(isNaN(Date.parse(date_issued))){
-                    emptyRowsImportConfirmation.push({
-                        "row": row,
-                        "first_name": firstname,
-                        "last_name": lastname,
-                    });
                 }else{
                     var payloadToCreate;
                     var single_confirmation_date = new Date(confirmation_date);
