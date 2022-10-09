@@ -551,7 +551,7 @@
                         }
                     }
                 }
-
+                
                 if(emptyRowsImportConfirmation.length > 0){
 
                     var error_list_html = '';
@@ -857,9 +857,6 @@
                 wife_lastname == null || wife_lastname == undefined || wife_lastname == "" ||
                 isNaN(Date.parse(wife_birthdate)) ||
                 isNaN(Date.parse(marriage_date))
-                // !husband_civil_status.toLowerCase().includes('single') ||
-                // !husband_civil_status.toLowerCase().includes('widowed') ||
-                // !husband_civil_status.toLowerCase().includes('divorced')
             ){
                 emptyRowsImportConfirmation.push({
                         "row": row,
@@ -868,7 +865,6 @@
                     });
             }else{
                 var payloadToCreate;
-                console.log(husband_birthdate_import);
                 husband_birthdate_import = new Date(husband_birthdate_import);
                 husband_baptismdate = new Date(husband_baptismdate);
                 wife_birthdate = new Date(wife_birthdate);
@@ -895,7 +891,7 @@
                     "wife_firstname":wife_firstname,
                     "wife_middlename":wife_middlename,
                     "wife_lastname":wife_lastname,
-                    "wife_extension":wife_extension,
+                    "wife_suffix":wife_extension,
                     "wife_age":getAge(wife_birthdate),
                     "wife_civil_status":wife_civil_status,
                     "wife_birthdate":(wife_birthdate.getMonth()+1)+"/"+wife_birthdate.getDate()+"/"+wife_birthdate.getFullYear(),
