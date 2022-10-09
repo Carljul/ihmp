@@ -702,10 +702,10 @@ function getConfirmationList(url){
                     +'<td><button class="btn waves-effect btn-actions green tooltipped btnUpdateCCertificate" id="btnUpdateCCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Update Record"><i class="material-icons">edit</i></button></td>'
                     +'<td><button class="btn waves-effect btn-actions red tooltipped btnDeleteCCertificate" id="btnDeleteCCertificate-'+rootContent['id']+'" data-position="bottom" data-delay="50" data-tooltip="Delete Record"><i class="material-icons">delete</i></button></td>'
                     +'<!-- Confirmation Date -->';
-                    
+
                     html+='<!-- Record of -->'
                     +'<td><label style="font-size: 9px;">First Name</label><br>'+rootContent['firstname']+'</td>'
-                    +'<td><label style="font-size: 9px;">Middle Name</label><br>'+(rootContent['middlename'] ?? '')+'</td>'
+                    +'<td><label style="font-size: 9px;">Middle Name</label><br>'+(rootContent['middlename'] == null || rootContent['middlename'] == 'null' ? '' : rootContent['middlename'])+'</td>'
                     +'<td><label style="font-size: 9px;">Last Name</label><br>'+rootContent['lastname']+'</td>'
                     +'<td><label style="font-size: 9px;">Extension</label><br>'+suffix+'</td>'
                     +'<!-- Fathers Name -->';

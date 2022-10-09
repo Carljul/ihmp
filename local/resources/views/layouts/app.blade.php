@@ -19,18 +19,18 @@
     <link href="{{ asset('storage/') }}/{{setting('site.logo')}}" rel="icon">
 
     <!-- Styles -->
-    <link href="{{ asset('css/materialize.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/ihmp.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/datatables.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/modal_flat.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/modal_rounded.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/materialize.css?v='.strtotime(now())) }}" rel="stylesheet">
+    <link href="{{ asset('css/ihmp.css?v='.strtotime(now())) }}" rel="stylesheet">
+    <link href="{{ asset('css/datatables.css?v='.strtotime(now())) }}" rel="stylesheet">
+    <link href="{{ asset('css/modal_flat.css?v='.strtotime(now())) }}" rel="stylesheet">
+    <link href="{{ asset('css/modal_rounded.css?v='.strtotime(now())) }}" rel="stylesheet">
 
     <!--JavaScript at end of body for optimized loading-->
-    <script src="{{ asset('/js/constants.js') }}"></script>
-    <script src="{{ asset('/js/materialize.js') }}"></script>
-    <script src="{{ asset('/js/general.js') }}"></script>
-    <script src="{{ asset('/js/moment.js') }}"></script>
-    <script src="{{ asset('/js/daypilot-modal-3.15.1.min.js') }}"></script>
+    <script src="{{ asset('/js/constants.js?v='.strtotime(now())) }}"></script>
+    <script src="{{ asset('/js/materialize.js?v='.strtotime(now())) }}"></script>
+    <script src="{{ asset('/js/general.js?v='.strtotime(now())) }}"></script>
+    <script src="{{ asset('/js/moment.js?v='.strtotime(now())) }}"></script>
+    <script src="{{ asset('/js/daypilot-modal-3.15.1.min.js?v='.strtotime(now())) }}"></script>
 </head>
 <body>
     <div id="app">

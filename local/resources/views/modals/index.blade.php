@@ -407,7 +407,7 @@
                                 html+='<tr>'
                                 +'<!-- Record of -->'
                                 +'<td><label style="font-size: 9px;">First Name</label><br>'+rootContent['firstname']+'</td>'
-                                +'<td><label style="font-size: 9px;">Middle Name</label><br>'+rootContent['middlename']+'</td>'
+                                +'<td><label style="font-size: 9px;">Middle Name</label><br>'+(rootContent['middlename'] == null ? '' : rootContent['middlename'])+'</td>'
                                 +'<td><label style="font-size: 9px;">Last Name</label><br>'+rootContent['lastname']+'</td>'
                                 +'<!-- Confirmation Date -->';
                                 var cmonth = metaContent['confirmation_month'];
