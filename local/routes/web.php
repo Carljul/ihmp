@@ -103,7 +103,7 @@ Route::get('backup_db', function () {
     $output = $structure . $data;
     fwrite($file_handle, $output);
     fclose($file_handle);
-    echo "DB backup ready ".$file_name;
+    return redirect()->back()->with(['msg' => 'Database backedup']);
 });
 
 // Test Route
