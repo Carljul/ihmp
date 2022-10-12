@@ -25,6 +25,17 @@
                     </div>
                 </form>
             </div>
+            <div class="col s12 m3">
+                <form action="/ihmp/backup_db">
+                    @csrf
+                    <div class="card">
+                        <div class="card-content">
+                            Perform DB Backup
+                            <button class="btn btn-waves" type="submit">Download Database</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 @endsection
