@@ -172,27 +172,22 @@ class CertificateController extends Controller
             $metaContent = json_encode($metaContent);
         }
 
-        //create a query for checking the validation
-        $checkDuplication = Certificate::where('meta', $metaContent)
-                ->where('firstname', $request->firstname)
-                ->where('middlename', $request->middlename)
-                ->where('lastname', $request->lastname)
-                ->where('certificate_type', $request->certificate_type)
-                ->where('priest_id', $request->priest_id)
-                ->get();
+        // //create a query for checking the validation
+        // $checkDuplication = Certificate::where('meta', $metaContent)
+        //         ->where('firstname', $request->firstname)
+        //         ->where('middlename', $request->middlename)
+        //         ->where('lastname', $request->lastname)
+        //         ->where('certificate_type', $request->certificate_type)
+        //         ->where('priest_id', $request->priest_id)
+        //         ->get();
 
-        //check if there is any duplication
-        if(count($checkDuplication) !== 0){
-            return response()->json($this->customApiResponse([], 400)); //Duplicated
-        }
+        // //check if there is any duplication
+        // if(count($checkDuplication) !== 0){
+        //     return response()->json($this->customApiResponse([], 400)); //Duplicated
+        // }
 
         //creating our payload here...
         $payload = [
-            "firstname" => $request->firstname,
-            "middlename" => $request->middlename,
-            "lastname" => $request->lastname,
-            "suffix" => $request->suffix,
-            "certificate_type" => $request->certificate_type,
             "priest_id" => $request->priest_id,
             "meta" => $metaContent,
             "is_deleted"=> $request->is_deleted == "" ? false : $request->is_deleted,
@@ -203,7 +198,13 @@ class CertificateController extends Controller
         ];
 
         //inserting the new resource...
-        $result = Certificate::insert($payload);
+        $result = Certificate::updateOrCreate([
+            "firstname" => $request->firstname,
+            "middlename" => $request->middlename,
+            "lastname" => $request->lastname,
+            "suffix" => $request->suffix,
+            "certificate_type" => $request->certificate_type
+        ], $payload);
 
         //return json response
         return response()->json($this->customApiResponse($result, 201)); //CREATED
@@ -263,7 +264,7 @@ class CertificateController extends Controller
             // return specific row using search
             $result = DB::table('certificates')
             ->leftJoin('priests', 'priests.id','=','certificates.priest_id')
-            ->select('certificates.*', 'priests.id as priest_id','priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
+            ->select('certificates.*', 'priests.id as priest_id','priests.prefix as priest_clergy', 'priests.firstname as priest_fname','priests.middlename as priest_mname','priests.lastname as priest_lname')
             ->where('certificates.is_deleted', 0)
             ->where('certificates.certificate_type', $request->certificate_type)
             ->where(function($query) use ($search){
